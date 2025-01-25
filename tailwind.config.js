@@ -17,6 +17,12 @@ module.exports = {
         xl: '1280px',
       },
     },
+    colors: {
+      primary: "#253466",
+      white: "#ffffff",
+      "light-white": "#D3D6E0",
+      "light-black": "#333333",
+    },
     borderRadius: {
       0.5: '2px',
       1: '4px',
@@ -39,10 +45,18 @@ module.exports = {
       110: '110%',
       120: '120%',
       130: '130%',
+      132: '132%',
       140: '140%',
       150: '150%',
       160: '160%',
       170: '170%',
+    },
+    boxShadow: {
+      "nav": "0px 0px 23.6px 0px #0000001A",
+      "hero": "8px 8px 6px 0px #253466",
+    },
+    backgroundImage: {
+      "company-rank": "url('/src/assets/images/png/company-rank.png')",
     },
     extend: {
       colors: {

@@ -1,10 +1,20 @@
-import { useEffect } from 'react'
 import './App.css'
+import Navbar from './components/common/Navbar'
+import Hero from './components/Hero'
+import CompanyRank from './components/CompanyRank'
+import AboutUs from './components/AboutUs'
+import OnlineCourse from './components/OnlineCourse'
 
 function App() {
   return (
     <>
-      <p className="text-[200px] text-red-600">Accounting-club</p>
+      <div className='overflow-hidden'>
+        <Navbar />
+        <Hero />
+      </div>
+      <CompanyRank />
+      <AboutUs />
+      <OnlineCourse />
     </>
   )
 }
