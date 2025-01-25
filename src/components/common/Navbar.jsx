@@ -53,12 +53,12 @@ const Navbar = () => {
                                 )}
                             </Link>
                             {obj.subLinks && (
-                                <div className="absolute hidden group-hover:block bg-white shadow-md rounded-md w-40">
+                                <div className="absolute  w-fit opacity-0 group-hover:opacity-100 bg-white duration-300 shadow-nav rounded-4 -left-6">
                                     {obj.subLinks.map((subLink, subIndex) => (
                                         <Link
                                             key={subIndex}
                                             to={subLink.url}
-                                            className="block px-4 py-2 text-slate hover:bg-gray-100"
+                                            className="block px-4 py-2 text-slate hover:bg-gray-100 text-nowrap"
                                         >
                                             {subLink.title}
                                         </Link>
@@ -78,7 +78,7 @@ const Navbar = () => {
                         <Button path={"/"} transparentBtn="Sign up" />
                         <Button bgBtn="Student’s Login" />
                     </div>
-                    <button onClick={toggleMenu} className="relative z-40 bg-primary rounded-1">
+                    <button onClick={toggleMenu} className="relative z-40 bg-primary rounded-1 p-[2px] md:p-[10px]">
                         <Icons
                             iconName={menuOpen ? "close" : "hamburger"}
                             className="size-6"
@@ -93,20 +93,20 @@ const Navbar = () => {
             >
                 {NAV_LINKS.map((obj, index) => (
                     <div key={index} className="relative">
-                        <button
+                        <Link
+                        to={obj.url}
                             className="flex items-center gap-2 font-normal text-base leading-150 text-white"
-                            onClick={() => toggleDropdown(index)}
-                        >
+                            onClick={() => toggleDropdown(index)}>
                             {obj.title}
-                            {obj.subLinks && <Icons iconName="dropdown" className="size-4" />}
-                        </button>
+                            {obj.subLinks && <Icons iconName="dropdownWhite" className="size-4 stroke-white" />}
+                        </Link>
                         {dropdownOpen === index && obj.subLinks && (
-                            <div className="bg-gray-100 rounded-md mt-2">
+                            <div className="bg-gray-100 rounded-md mt-2 flex items-center gap-4">
                                 {obj.subLinks.map((subLink, subIndex) => (
                                     <Link
                                         key={subIndex}
-                                        to={subLink.url}
-                                        className="font-normal text-base leading-150"
+                                        to={obj.url}
+                                        className="font-normal text-base leading-150 text-white"
                                     >
                                         {subLink.title}
                                     </Link>
@@ -116,8 +116,8 @@ const Navbar = () => {
                     </div>
                 ))}
                 <div className="flex max-sm:flex-col gap-3 md:hidden items-center">
-                    <Button className="max-sm:w-full text-center" path={"/"} transparentBtn="Sign up" />
-                    <Button className="max-sm:w-full text-center bg-white !text-primary" bgBtn="Student’s Login" />
+                    <Button className="max-sm:w-full text-center bg-white !text-primary hover:!text-white !border hover:!bg-[transparent] hover:!border-white" path={"/"} transparentBtn="Sign up" />
+                    <Button className="max-sm:w-full text-center bg-white !text-primary hover:!text-white !border hover:!bg-[transparent] hover:!border-white" bgBtn="Student’s Login" />
                 </div>
             </div>
             {menuOpen && (

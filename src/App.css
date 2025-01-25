@@ -16,3 +16,7 @@ html {
 .custom-pagination .dot-active {
   @apply bg-secondary
 }
+
+.wrapper {
+  padding-bottom: 60px !important;
+}

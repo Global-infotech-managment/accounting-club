@@ -32,9 +32,9 @@ const Hero = () => {
                                     <h1 className="leading-[132%] font-bold text-3xl md:text-4xl lg:text-5xl xl:text-[56px]">{slide.title}</h1>
                                     <p className="text-light-black max-sm:text-sm mt-3 md:mt-4 lg:max-w-[535px]">
                                         {slide.description}</p>
-                                    <div className="flex max-sm:flex-col items-center gap-4 sm:gap-5 mt-5 sm:mt-6 md:mt-8 lg:mt-10">
-                                        <Button className='max-sm:w-full max-sm:text-center' bgBtn="Know More" />
-                                        <Button className='max-sm:w-full max-sm:text-center' transparentBtn="Request Callback" />
+                                    <div className="flex flex-wrap sm:items-center gap-4 sm:gap-5 mt-5 sm:mt-6 md:mt-8 lg:mt-10">
+                                        <Button className='max-sm:px-3 max-sm:py-2 max-sm:text-center' bgBtn="Know More" />
+                                        <Button className='max-sm:px-3 max-sm:py-2 max-sm:text-center' transparentBtn="Request Callback" />
                                     </div>
                                 </div>
                                 <img className="lg:max-w-[582px] w-full" src={slide.image} alt={slide.title} />

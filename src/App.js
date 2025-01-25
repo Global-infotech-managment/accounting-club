@@ -11,8 +11,8 @@ function App() {
       <div className='overflow-hidden'>
         <Navbar />
         <Hero />
+        <CompanyRank />
       </div>
-      <CompanyRank />
       <AboutUs />
       <OnlineCourse />
     </>
