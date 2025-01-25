@@ -26,7 +26,7 @@ const Navbar = () => {
 
     return (
         <header className="relative z-10 py-3 md:py-5 shadow-nav">
-            <div className="max-w-[1184px] px-3 mx-auto flex justify-between items-center gap-6">
+            <div className="lg:max-w-[1184px] px-3 container flex justify-between items-center gap-6">
                 <Link to="/">
                     <img
                         src={PageLogo}
@@ -42,8 +42,8 @@ const Navbar = () => {
                         <div key={index} className="relative group">
                             <Link
                                 to={obj.url}
-                                className={`transition-all duration-300 flex items-center gap-2 font-normal text-light-black text-base leading-150 ${obj.title === "Home"
-                                    ? ""
+                                className={`transition-all relative duration-300 flex items-center gap-2 font-normal text-light-black text-base leading-150 ${obj.title === "Home"
+                                    ? "text-primary before:h-px before:w-full before:bg-primary before:absolute before:bottom-0 before:left-0 duration-300"
                                     : ""
                                     }`}
                             >

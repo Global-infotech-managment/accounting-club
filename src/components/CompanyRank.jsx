@@ -2,7 +2,7 @@ import React from 'react'
 
 const CompanyRank = () => {
     return (
-        <div className='max-w-[1200px] container px-3'>
+        <div className='lg:max-w-[1200px] container px-3'>
             <div className='mt-14 bg-company-rank sm:bg-[length:100%_100%] bg-[length:104%_100%] bg-no-repeat bg-center flex justify-between gap-2 sm:gap-5 md:gap-7 items-center px-3 sm:px-12 md:px-16 lg:px-20 py-3 sm:py-7 md:py-9'>
                 <div>
                     <h2 className='leading-132 text-2xl sm:text-3xl md:text-4xl max-sm:text-center lg:text-[44px] text-white font-bold'>900+</h2>

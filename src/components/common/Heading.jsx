@@ -1,8 +1,16 @@
 import React from 'react'
 
-const Heading = () => {
+const Heading = ({ firstText, middleText, lastText, className }) => {
     return (
-        <div>Heading</div>
+        <h1 className={`leading-132 text-3xl sm:text-4xl md:text-5xl font-bold ${className} ${middleText ? 'text-secondary' : '!text-black'}`}>
+            {firstText && (
+                <span className='text-black'>{firstText}{" "}</span>
+            )}
+            <span>{middleText}{" "}</span>
+            {lastText && (
+                <span className='text-black'>{lastText}</span>
+            )}
+        </h1>
     )
 }
 

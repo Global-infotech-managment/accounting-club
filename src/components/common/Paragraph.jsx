@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Paragraph = () => {
+const Paragraph = ({ text, className }) => {
     return (
-        <div>Paragraph</div>
+        <p className={`text-black text-opacity-80 max-sm:text-sm ${className}`}>{text}</p>
     )
 }
 

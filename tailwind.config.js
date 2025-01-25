@@ -19,8 +19,11 @@ module.exports = {
     },
     colors: {
       primary: "#253466",
+      secondary: "#E5413F",
       white: "#ffffff",
+      black: "#000000",
       "light-white": "#D3D6E0",
+      "light-thin": "#F8F8F8",
       "light-black": "#333333",
     },
     borderRadius: {
@@ -66,7 +69,7 @@ module.exports = {
       fontSize: {
         '3xl': '28px',
         '4xl': '32px',
-        '5xl': '36px',
+        // '5xl': '36px',
       },
     },
   },

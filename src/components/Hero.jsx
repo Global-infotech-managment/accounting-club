@@ -20,7 +20,7 @@ const Hero = () => {
 
     return (
         <div className="relative">
-            <div className="mt-12 sm:mt-16 md:mt-24 lg:mt-[129px] mx-auto max-w-[1184px] px-3 w-full relative">
+            <div className="mt-12 sm:mt-16 md:mt-24 lg:mt-[129px] container lg:max-w-[1184px] px-3 w-full relative">
                 <img className="absolute -top-10 pointer-events-none z-0 right-5 max-lg:hidden xl:-right-7" src={HeroEllipse} alt="hero ellipse" />
                 <Swiper effect="fade" className="hero-slider relative z-40" modules={[EffectFade]} spaceBetween={50}
                     slidesPerView={1} fadeEffect={{ crossFade: true }}
@@ -37,7 +37,7 @@ const Hero = () => {
                                         <Button className='max-sm:w-full max-sm:text-center' transparentBtn="Request Callback" />
                                     </div>
                                 </div>
-                                <img className="lg:max-w-[582px] w-full" src={slide.image} alt={`Slide ${index + 1}`} />
+                                <img className="lg:max-w-[582px] w-full" src={slide.image} alt={slide.title} />
                             </div>
                         </SwiperSlide>
                     ))}
