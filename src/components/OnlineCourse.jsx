@@ -19,8 +19,8 @@ const OnlineCourse = () => {
     return (
         <div className="relative">
             <div className="container lg:max-w-[1184px] px-3 my-16 md:my-24 lg:my-[120px] relative z-20">
-                <Heading className="text-center" middleText="Online" lastText="Courses" />
-                <Paragraph className="max-w-[619px] mx-auto mt-3 sm:mt-4 mb-4 md:mb-6 lg:mb-10 text-center"
+                <Heading className="lg:text-center" middleText="Online" lastText="Courses" />
+                <Paragraph className="lg:max-w-[619px] lg:mx-auto mt-3 sm:mt-4 mb-4 md:mb-6 lg:mb-10 lg:text-center"
                     text="Be an Accounting and taxation expert in few days even if you don't have any Accounting background. Choose a program as per your requirement" />
                 <Swiper onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
                     breakpoints={{

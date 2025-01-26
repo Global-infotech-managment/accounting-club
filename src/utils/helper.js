@@ -5,6 +5,7 @@ import LevelThreeImg from '../assets/images/png/level-three.png'
 import ProfileImg from '../assets/images/png/profile-photo.png'
 import ProfilePriya from '../assets/images/png/priya-profile.png'
 import StopSymbol from '../assets/images/png/stop-symbol.png'
+import Icons from "../components/common/Icons";
 
 export const NAV_LINKS = [
     {
@@ -123,3 +124,29 @@ export const studentData = [
         stopSymbol: StopSymbol,
     },
 ];
+
+export const menuData = {
+    "Quick Links": [
+        { name: "Home", link: "/home" },
+        { name: "About Us", link: "/about-us" },
+        { name: "Features", link: "/features" },
+        { name: "Course Info", link: "/course-info" },
+    ],
+    "Others Links": [
+        { name: "New Student's Registration", link: "/sign-up" },
+        { name: "Buy a Course", link: "/" },
+        { name: "Play Classes", link: "/" },
+        { name: "New Student's Registration", link: "/sign-up" },
+    ],
+    "Help": [
+        { name: "Contact Us", link: "/contact-us" },
+        { name: "Forget password", link: "/" },
+        { name: "FAQs", link: "/faq" },
+        { name: "Terms of Use", link: "/terms" },
+    ],
+    "Follow us on": [
+        { name: <Icons iconName="twitter" />, link: "https://x.com/?lang=en&mx=2" },
+        { name: <Icons iconName="facebook" />, link: "https://www.facebook.com" },
+        { name: <Icons iconName="instagram" />, link: "https://www.instagram.com/" },
+    ],
+};

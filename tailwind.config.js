@@ -61,6 +61,7 @@ module.exports = {
     backgroundImage: {
       "company-rank": "url('/src/assets/images/png/company-rank.png')",
       "journey": "url('/src/assets/images/png/journey-bg.png')",
+      "footer-gradient": "linear-gradient(90deg, rgba(255, 255, 255, 0.1) 5.5%, #FFFFFF 52.75%, rgba(255, 255, 255, 0.1) 95%)"
     },
     extend: {
       colors: {

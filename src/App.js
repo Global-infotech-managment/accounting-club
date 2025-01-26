@@ -6,6 +6,7 @@ import AboutUs from './components/AboutUs'
 import OnlineCourse from './components/OnlineCourse'
 import StudentSay from './components/StudentSay'
 import JourneyStart from './components/JourneyStart'
+import Footer from './components/common/Footer'
 
 function App() {
   return (
@@ -18,7 +19,10 @@ function App() {
       <AboutUs />
       <OnlineCourse />
       <StudentSay />
-      <JourneyStart />
+      <div className='relative'>
+        <JourneyStart />
+        <Footer />
+      </div>
     </>
   )
 }
