@@ -10,8 +10,6 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(null)
   const location = useLocation()
-
-  // Scroll to section on location change
   useEffect(() => {
     if (location.hash) {
       const sectionId = location.hash.replace('#', '')
