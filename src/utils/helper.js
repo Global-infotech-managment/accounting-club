@@ -2,6 +2,9 @@ import HeroSlider from "../assets/images/png/hero-slider.png";
 import LevelOneImg from '../assets/images/png/level-one.png'
 import LevelTwoImg from '../assets/images/png/level-two.png'
 import LevelThreeImg from '../assets/images/png/level-three.png'
+import ProfileImg from '../assets/images/png/profile-photo.png'
+import ProfilePriya from '../assets/images/png/priya-profile.png'
+import StopSymbol from '../assets/images/png/stop-symbol.png'
 
 export const NAV_LINKS = [
     {
@@ -101,3 +104,22 @@ export const onlineCourse = [
         readMore: "Read more",
     },
 ]
+
+export const studentData = [
+    {
+        id: 1,
+        title: "Exceptional Training!",
+        text: "Thanks to the practical techniques, I secured a great job immediately after completing my course. Truly life-changing!",
+        name: "Yogesh Rajput",
+        profileImg: ProfileImg,
+        stopSymbol: StopSymbol,
+    },
+    {
+        id: 2,
+        title: "Practical & Professional!",
+        text: "The course content was tailored perfectly to industry needs. I feel fully prepared to handle real-world accounting challenges now.",
+        name: "Priya Sharma",
+        profileImg: ProfilePriya,
+        stopSymbol: StopSymbol,
+    },
+];

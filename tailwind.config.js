@@ -60,6 +60,7 @@ module.exports = {
     },
     backgroundImage: {
       "company-rank": "url('/src/assets/images/png/company-rank.png')",
+      "journey": "url('/src/assets/images/png/journey-bg.png')",
     },
     extend: {
       colors: {

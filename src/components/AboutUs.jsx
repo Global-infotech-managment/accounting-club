@@ -8,7 +8,7 @@ import AboutUsEllipseBottom from '../assets/images/png/about-us-ellipse-bottom.p
 
 const AboutUs = () => {
     return (
-        <div className='container lg:max-w-[1184px] px-3 w-full mt-16 md:mt-24 lg:mt-[140px] relative'>
+        <div className='container lg:max-w-[1184px] px-3 w-full mt-16 md:mt-24 lg:mt-[140px] relative z-20'>
             <div className='p-4 sm:p-6 md:p-10 rounded-6 bg-light-thin flex justify-between items-center max-lg:flex-col-reverse relative gap-10 lg:gap-6'>
                 <div className='w-full'>
                     <img className='lg:max-w-[492px] w-full' src={AboutUsImg} alt="about us" />

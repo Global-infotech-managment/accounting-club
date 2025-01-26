@@ -106,7 +106,7 @@ const Navbar = () => {
                                     <Link
                                         key={subIndex}
                                         to={obj.url}
-                                        className="font-normal text-base leading-150 text-white"
+                        z                className="font-normal text-base leading-150 text-white"
                                     >
                                         {subLink.title}
                                     </Link>
@@ -116,8 +116,8 @@ const Navbar = () => {
                     </div>
                 ))}
                 <div className="flex max-sm:flex-col gap-3 md:hidden items-center">
-                    <Button className="max-sm:w-full text-center bg-white !text-primary hover:!text-white !border hover:!bg-[transparent] hover:!border-white" path={"/"} transparentBtn="Sign up" />
-                    <Button className="max-sm:w-full text-center bg-white !text-primary hover:!text-white !border hover:!bg-[transparent] hover:!border-white" bgBtn="Student’s Login" />
+                    <Button className="max-sm:w-full text-center bg-white text-primary hover:!text-white !border hover:!bg-[transparent] hover:!border-white" path={"/"} transparentBtn="Sign up" />
+                    <Button className="max-sm:w-full text-center border border-white hover:bg-white text-primary hover:!text-primary" bgBtn="Student’s Login" />
                 </div>
             </div>
             {menuOpen && (

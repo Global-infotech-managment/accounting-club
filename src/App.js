@@ -4,6 +4,8 @@ import Hero from './components/Hero'
 import CompanyRank from './components/CompanyRank'
 import AboutUs from './components/AboutUs'
 import OnlineCourse from './components/OnlineCourse'
+import StudentSay from './components/StudentSay'
+import JourneyStart from './components/JourneyStart'
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
       </div>
       <AboutUs />
       <OnlineCourse />
+      <StudentSay />
+      <JourneyStart />
     </>
   )
 }
