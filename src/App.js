@@ -10,7 +10,7 @@ import Footer from './components/common/Footer'
 
 function App() {
   return (
-    <>
+    <div className='max-w-[1920px] mx-auto'>
       <div className='overflow-hidden'>
         <Navbar />
         <Hero />
@@ -23,7 +23,7 @@ function App() {
         <JourneyStart />
         <Footer />
       </div>
-    </>
+    </div>
   )
 }
 

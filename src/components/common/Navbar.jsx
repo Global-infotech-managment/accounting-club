@@ -1,5 +1,5 @@
 "use client";
-import { NAV_LINKS } from "../../utils/helper";
+import { navLinks } from "../../utils/helper";
 import { Link } from "react-router-dom";
 import PageLogo from '../../assets/images/png/logo.png'
 import Icons from "./Icons";
@@ -38,7 +38,7 @@ const Navbar = () => {
                     />
                 </Link>
                 <nav className="hidden xl:flex gap-6 items-center">
-                    {NAV_LINKS.map((obj, index) => (
+                    {navLinks.map((obj, index) => (
                         <div key={index} className="relative group">
                             <Link
                                 to={obj.url}
@@ -91,7 +91,7 @@ const Navbar = () => {
                 className={`xl:hidden bg-primary px-4 py-20 absolute top-14 md:top-[90px] w-full flex flex-col gap-3 min-h-screen z-20 transition-all duration-300 ${menuOpen ? "right-0" : "-right-full "
                     }`}
             >
-                {NAV_LINKS.map((obj, index) => (
+                {navLinks.map((obj, index) => (
                     <div key={index} className="relative">
                         <Link
                         to={obj.url}

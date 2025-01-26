@@ -7,26 +7,26 @@ import ProfilePriya from '../assets/images/png/priya-profile.png'
 import StopSymbol from '../assets/images/png/stop-symbol.png'
 import Icons from "../components/common/Icons";
 
-export const NAV_LINKS = [
+export const navLinks = [
     {
         title: "Home",
         url: "/",
     },
     {
         title: "Features",
-        url: "/features",
+        url: "#features",
     },
     {
         title: "Course info",
-        url: "/course-info",
+        url: "#course-info",
     },
     {
         title: "Admission",
-        url: "/admission",
+        url: "#admission",
     },
     {
         title: "More",
-        url: "/more",
+        url: "#more",
         subLinks: [
             {
                 title: "Product 1",
