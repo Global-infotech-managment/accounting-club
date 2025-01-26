@@ -29,7 +29,7 @@ const Hero = () => {
                         <SwiperSlide key={index}>
                             <div className="grid lg:grid-cols-2 gap-8 lg:gap-6 items-center relative">
                                 <div className="relative z-10">
-                                    <h1 className="leading-[132%] font-bold text-3xl md:text-4xl lg:text-5xl xl:text-[56px]">{slide.title}</h1>
+                                    <h1 className="!leading-[132%] font-bold text-3xl md:text-4xl lg:text-5xl xl:text-[56px]">{slide.title}</h1>
                                     <p className="text-light-black max-sm:text-sm mt-3 md:mt-4 lg:max-w-[535px]">
                                         {slide.description}</p>
                                     <div className="flex flex-wrap sm:items-center gap-4 sm:gap-5 mt-5 sm:mt-6 md:mt-8 lg:mt-10">
@@ -37,7 +37,7 @@ const Hero = () => {
                                         <Button className='max-sm:px-3 max-sm:py-2 max-sm:text-center' transparentBtn="Request Callback" />
                                     </div>
                                 </div>
-                                <img className="lg:max-w-[582px] w-full" src={slide.image} alt={slide.title} />
+                                <img className="lg:max-w-[582px] xl:h-[455px] w-full" src={slide.image} alt={slide.title} />
                             </div>
                         </SwiperSlide>
                     ))}

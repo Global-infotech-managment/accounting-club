@@ -13,7 +13,7 @@ const AboutUs = () => {
                 <div className='w-full'>
                     <img className='lg:max-w-[492px] w-full' src={AboutUsImg} alt="about us" />
                 </div>
-                <div className='lg:max-w-[530px] w-full relative z-20'>
+                <div className='lg:max-w-[523px] w-full relative z-20'>
                     <Heading middleText="About" lastText="Us" />
                     <Paragraph className="mt-2 sm:mt-3" text="Accountants Club is one of the leading accounting training institutes in India, with extensive experience and expertise in successfully training thousands of students. Established in 1999, we have been consistently delivering quality education to aspiring accounting professionals." />
                     <Paragraph className="mt-[10px]" text="Our courses in Accounting, Tally, Taxation, GST, Income Tax, TDS, and Payrolls are based on a unique methodology developed through over 20 years of..." />
