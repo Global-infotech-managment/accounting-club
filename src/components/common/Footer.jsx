@@ -5,6 +5,7 @@ import { menuData } from '../../utils/helper'
 import Icons from './Icons'
 
 const Footer = () => {
+    const currentYear = new Date().getFullYear();
     return (
         <div className='bg-secondary pt-[185px] sm:pt-[217px] absolute w-full left-1/2 -translate-x-1/2 top-[57%] -z-[1]'>
             <div className='container lg:max-w-[1184px] px-3 pb-14'>
@@ -44,7 +45,7 @@ const Footer = () => {
                 </div>
             </div>
             <div className='bg-footer-gradient h-px'></div>
-            <p className='py-4 leading-140 text-white text-sm text-center px-3'>Copyright Accountants Club 2025 | Privacy Policy | Terms & Conditions</p>
+            <p className='py-4 leading-140 text-white text-sm text-center px-3'>Copyright Accountants Club {currentYear} | Privacy Policy | Terms & Conditions</p>
         </div>
     )
 }
