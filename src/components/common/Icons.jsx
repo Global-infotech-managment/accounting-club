@@ -70,6 +70,7 @@ const Icons = ({ iconName }) => {
     ),
     btnArrow: (
       <svg
+        className="h-auto max-w-3 lg:max-w-none"
         width="16"
         height="12"
         viewBox="0 0 16 12"
