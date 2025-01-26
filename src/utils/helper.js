@@ -153,3 +153,29 @@ export const menuData = {
     },
   ],
 }
+export const choosUsContent = [
+  {
+    btnText: 'Free Classes',
+    icon: <Icons iconName="freeCourses" />,
+    title: 'Free Classes',
+    para: 'Our Level 1 Course is 100% free. You can start the course without any payment if feel comfortable you can upgrade the course for the next level.',
+  },
+  {
+    btnText: 'Online Classes',
+    icon: <Icons iconName="onlineClasses" />,
+    title: 'Online Classes',
+    para: 'All our classes are conducted online with live interaction and support from our expert instructors. you can upgrade the course for the next level.',
+  },
+  {
+    btnText: 'Flexibility',
+    icon: <Icons iconName="freeCourses" />,
+    title: 'Flexibility',
+    para: 'Learn at your own pace with flexible scheduling and access to recorded sessions. you can upgrade the course for the next level.',
+  },
+  {
+    btnText: 'Practice Project',
+    icon: <Icons iconName="onlineClasses" />,
+    title: 'Practice Project',
+    para: 'Get hands-on experience with real-world projects and practical assignments. you can upgrade the course for the next level.',
+  },
+]
