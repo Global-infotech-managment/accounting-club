@@ -8,7 +8,6 @@ import StudentSay from './components/StudentSay'
 import JourneyStart from './components/JourneyStart'
 import Footer from './components/common/Footer'
 import ChooseUs from './components/ChooseUs'
-
 function App() {
   return (
     <div className="mx-auto max-w-[1920px]">
