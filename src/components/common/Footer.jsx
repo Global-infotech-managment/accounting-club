@@ -7,7 +7,7 @@ import Icons from './Icons'
 const Footer = () => {
   const currentYear = new Date().getFullYear()
   return (
-    <div className="absolute left-1/2 top-[60%] -z-[1] w-full -translate-x-1/2 bg-secondary pt-[185px] sm:pt-[209px] lg:top-[67%]">
+    <div className="absolute left-1/2 top-[60%] -z-[1] w-full -translate-x-1/2 bg-secondary pt-[210px] sm:pt-[209px] lg:top-[67%]">
       <div className="container px-3 pb-6 md:pb-10 lg:max-w-[1184px] lg:pb-14">
         <div className="flex items-start justify-between gap-6 max-lg:flex-wrap">
           <div className="w-full lg:max-w-[350px]">
@@ -18,7 +18,7 @@ const Footer = () => {
                 alt="footer logo"
               />
             </Link>
-            <p className="mt-2 text-sm !leading-150 text-white">
+            <p className="!leading-150 mt-2 text-sm text-white">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
               eiusmod tempor incididunt ut labore et dolor
             </p>
@@ -32,7 +32,7 @@ const Footer = () => {
             {Object.entries(menuData).map(([category, items], index, array) => (
               <div key={category}>
                 <h2
-                  className={`${index === 3 ? 'max-sm:hidden' : 'inline-block'} text-base font-medium !leading-150 text-white sm:text-lg`}
+                  className={`${index === 3 ? 'max-sm:hidden' : 'inline-block'} !leading-150 text-base font-medium text-white sm:text-lg`}
                 >
                   {category}
                 </h2>
@@ -43,11 +43,11 @@ const Footer = () => {
                       : 'flex flex-col'
                   } mt-3 gap-2 sm:mt-5`}
                 >
-                  {items.map((item) => (
+                  {items.map((item, i) => (
                     <a
-                      key={item.name}
+                      key={i}
                       href={item.link}
-                      className="flex w-fit items-center gap-2 text-sm font-normal !leading-150 text-white duration-300 hover:text-opacity-70"
+                      className="!leading-150 flex w-fit items-center gap-2 text-sm font-normal text-white duration-300 hover:text-opacity-70"
                     >
                       {item.icon && <span>{item.icon}</span>}
                       {item.name}
@@ -60,7 +60,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="h-px bg-footer-gradient"></div>
-      <p className="px-3 py-3 text-center text-sm leading-140 text-white max-sm:text-xs md:py-[18px]">
+      <p className="leading-140 px-3 py-3 text-center text-sm text-white max-sm:text-xs md:py-[18px]">
         Copyright Accountants Club {currentYear} | Privacy Policy | Terms &
         Conditions
       </p>
