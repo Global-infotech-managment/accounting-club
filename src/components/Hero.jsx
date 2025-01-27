@@ -21,8 +21,11 @@ const Hero = () => {
   return (
     <div className="relative">
       <div className="container relative mt-12 w-full px-3 sm:mt-16 md:mt-24 lg:mt-[129px] lg:max-w-[1184px]">
-        <img className="pointer-events-none absolute -top-10 right-5 z-0 max-lg:hidden xl:-right-[60px]"
-          src={HeroEllipse} alt="hero ellipse" />
+        <img
+          className="pointer-events-none absolute -top-10 right-5 z-0 max-lg:hidden xl:-right-[60px]"
+          src={HeroEllipse}
+          alt="hero ellipse"
+        />
         <div className="xl:-mr-12">
           <Swiper
             effect="fade"
@@ -45,7 +48,8 @@ const Hero = () => {
                       {slide.description}
                     </p>
                     <div className="mt-5 flex flex-wrap gap-4 sm:mt-6 sm:items-center sm:gap-5 md:mt-8 lg:mt-10">
-                      <Button className="max-sm:px-3 max-sm:py-2 max-sm:text-center"
+                      <Button
+                        className="max-sm:px-3 max-sm:py-2 max-sm:text-center"
                         bgBtn="Know More"
                       />
                       <Button
@@ -55,7 +59,10 @@ const Hero = () => {
                     </div>
                   </div>
                   <div>
-                    <img className="w-full lg:max-w-[582px] xl:h-[455px]" src={slide.image} alt={slide.title}
+                    <img
+                      className="shadow-hero-image w-full rounded-[24px] lg:max-w-[582px] xl:h-[455px] border border-primary"
+                      src={slide.image}
+                      alt={slide.title}
                     />
                   </div>
                 </div>

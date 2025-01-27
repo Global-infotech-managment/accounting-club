@@ -18,7 +18,7 @@ const OnlineCourse = () => {
 
   return (
     <div className="relative" id="course-info">
-      <div className="container relative z-20 py-16 px-3 md:py-24 lg:py-[120px] lg:max-w-[1184px]">
+      <div className="container relative z-20 px-3 py-16 md:py-24 lg:max-w-[1184px] lg:py-[120px]">
         <Heading
           className="lg:text-center"
           middleText="Online"
@@ -76,7 +76,7 @@ const OnlineCourse = () => {
         </div>
       </div>
       <img
-        className="pointer-events-none absolute top-0 right-0 z-0 max-sm:-top-20 max-sm:w-[150px]"
+        className="pointer-events-none absolute right-0 top-0 z-0 max-sm:-top-20 max-sm:w-[150px]"
         src={OnlineBook}
         alt="online book"
       />

@@ -18,13 +18,13 @@ module.exports = {
       },
     },
     colors: {
-      primary: "#253466",
-      secondary: "#E5413F",
-      white: "#ffffff",
-      black: "#000000",
-      "light-white": "#D3D6E0",
-      "light-thin": "#F8F8F8",
-      "light-black": "#333333",
+      primary: '#253466',
+      secondary: '#E5413F',
+      white: '#ffffff',
+      black: '#000000',
+      'light-white': '#D3D6E0',
+      'light-thin': '#F8F8F8',
+      'light-black': '#333333',
     },
     borderRadius: {
       0.5: '2px',
@@ -55,13 +55,15 @@ module.exports = {
       170: '170%',
     },
     boxShadow: {
-      "nav": "0px 0px 23.6px 0px #0000001A",
-      "hero": "8px 8px 6px 0px #253466",
+      nav: '0px 0px 23.6px 0px #0000001A',
+      hero: '8px 8px 6px 0px #253466',
+      'hero-image': '3px 3px 7px -2px #253466',
     },
     backgroundImage: {
-      "company-rank": "url('/src/assets/images/png/company-rank.png')",
-      "journey": "url('/src/assets/images/png/journey-bg.png')",
-      "footer-gradient": "linear-gradient(90deg, rgba(255, 255, 255, 0.1) 5.5%, #FFFFFF 52.75%, rgba(255, 255, 255, 0.1) 95%)"
+      'company-rank': "url('/src/assets/images/png/company-rank.png')",
+      journey: "url('/src/assets/images/png/journey-bg.png')",
+      'footer-gradient':
+        'linear-gradient(90deg, rgba(255, 255, 255, 0.1) 5.5%, #FFFFFF 52.75%, rgba(255, 255, 255, 0.1) 95%)',
     },
     extend: {
       colors: {
