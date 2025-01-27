@@ -9,10 +9,10 @@ import AboutUsEllipseBottom from '../assets/images/png/about-us-ellipse-bottom.p
 const AboutUs = () => {
   return (
     <div
-      className="container relative z-20 mt-16 w-full px-3 md:mt-24 lg:mt-[140px] lg:max-w-[1184px]"
+      className="container relative z-20 pt-16 w-full px-3 md:pt-24 lg:pt-[140px] lg:max-w-[1184px]"
       id="about-us"
     >
-      <div className="relative flex items-center justify-between gap-10 rounded-6 bg-light-thin p-4 max-lg:flex-col-reverse sm:p-6 md:p-10 lg:gap-6">
+      <div className="relative flex items-center justify-between gap-10 rounded-6 bg-light-thin p-4 max-lg:flex-col-reverse sm:p-6 lg:p-10 lg:gap-6">
         <div className="w-full">
           <img
             className="w-full lg:max-w-[492px]"

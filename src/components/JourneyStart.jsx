@@ -6,14 +6,13 @@ import FooterEllipse from '../assets/images/png/footer-ellipse.png'
 
 const JourneyStart = () => {
   return (
-    <div className="relative w-full" id="admission">
+    <div className="relative w-full pt-16 md:pt-24 lg:pt-[120px]" id="admission">
       <div className="container relative z-20 px-3 lg:max-w-[1184px]">
-        <div className="my-16 bg-journey bg-center bg-no-repeat p-6 max-sm:rounded-4 sm:bg-[length:100%_100%] sm:p-8 md:my-24 lg:my-[120px] lg:p-16">
+        <div className="bg-journey bg-center bg-no-repeat p-6 max-sm:rounded-4 sm:bg-[length:100%_100%] sm:p-8  lg:p-16">
           <div className="mx-auto w-full max-w-[746px]">
             <Heading
               className="text-center !text-white"
-              middleText="Start Your Journey"
-            />
+              middleText="Start Your Journey"/>
             <Paragraph
               className="mt-2 text-center !text-white md:mt-4"
               text="Accountants Club transformed my career with practical training. The expert guidance and unique techniques made learning accounting effortless and enjoyable!"

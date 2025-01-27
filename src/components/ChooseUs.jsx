@@ -7,6 +7,11 @@ import ChooseUsCard from './ChooseUsCard'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/pagination'
+import StudentEllipse from "../assets/images/png/second-hero-ellipse.png"
+import ChooseEllipse from '../assets/images/png/footer-ellipse.png'
+import LeftBottomImg from '../assets/images/png/choose-left-bottom.png'
+import RightTopImg from '../assets/images/png/choose-right-top.png'
+
 
 const ChooseUs = () => {
   const [activeBtn, setActiveBtn] = useState('Free Classes')
@@ -37,8 +42,8 @@ const ChooseUs = () => {
   }
 
   return (
-    <section className="px-3 xl:px-0">
-      <div className="container rounded-6 bg-primary px-3 py-16 sm:px-4 lg:max-w-[1184px] lg:px-5 xl:px-8">
+    <section className="px-3 xl:px-0 relative">
+      <div className="container rounded-6 bg-primary px-3 py-8 sm:py-10 md:py-12 lg:py-16 sm:px-4 lg:max-w-[1184px] lg:px-5 xl:px-8 relative z-20">
         <Heading
           className="mb-3 text-center !text-white xl:mb-4"
           middleText="Why Choose Us?"
@@ -52,11 +57,10 @@ const ChooseUs = () => {
             <button
               key={i}
               onClick={() => handleButtonClick(obj.btnText, i)}
-              className={`rounded-1 border px-4 py-3 text-sm font-medium !leading-[133%] duration-300 hover:!bg-white hover:!text-primary max-sm:w-full md:h-[52px] md:px-6 md:py-[14px] md:text-base xl:text-lg ${
-                activeBtn === obj.btnText
-                  ? 'border-[transparent] bg-white text-primary'
-                  : '!border-white !bg-primary text-white'
-              } `}
+              className={`rounded-1 border px-4 py-3 text-sm font-medium !leading-[133%] duration-300 hover:!bg-white hover:!text-primary max-sm:w-full md:h-[52px] md:px-6 md:py-[14px] md:text-base xl:text-lg ${activeBtn === obj.btnText
+                ? 'border-[transparent] bg-white text-primary'
+                : '!border-white !bg-primary text-white'
+                } `}
             >
               {obj.btnText}
             </button>
@@ -97,19 +101,21 @@ const ChooseUs = () => {
             <Icons iconName={'btnArrow'} />
           </span>
         </div>
-
         <div className="mt-6 flex justify-center gap-2 xl:mt-10">
           {choosUsContent.map((_, index) => (
             <button
               key={index}
               onClick={() => handleDotClick(index)}
-              className={`h-2 w-2 rounded-full transition-colors ${
-                activeIndex === index ? 'bg-white' : 'bg-white/40'
-              }`}
+              className={`h-2 w-2 rounded-full transition-colors ${activeIndex === index ? 'bg-white' : 'bg-white/40'
+                }`}
             />
           ))}
         </div>
+        <img className="absolute bottom-0 pointer-events-none left-0 max-xl:w-24" src={LeftBottomImg} alt="student ellipse" />
+        <img className="absolute top-0 pointer-events-none right-0 max-xl:w-24" src={RightTopImg} alt="right top ellipse" />
       </div>
+      <img className="absolute top-0 pointer-events-none left-0 max-xl:hidden" src={StudentEllipse} alt="left bottom ellipse" />
+      <img className="pointer-events-none absolute right-0 bottom-0 z-0 max-xl:hidden" src={ChooseEllipse} alt="footer ellipse" />
     </section>
   )
 }

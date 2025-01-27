@@ -7,12 +7,12 @@ import Icons from './Icons'
 const Footer = () => {
     const currentYear = new Date().getFullYear();
     return (
-        <div className='bg-secondary pt-[185px] sm:pt-[209px] absolute w-full left-1/2 -translate-x-1/2 top-[57%] -z-[1]'>
+        <div className='bg-secondary pt-[185px] sm:pt-[209px] absolute w-full left-1/2 -translate-x-1/2 top-[60%] lg:top-[67%] -z-[1]'>
             <div className='container lg:max-w-[1184px] px-3 pb-6 md:pb-10 lg:pb-14'>
                 <div className='flex items-start justify-between gap-6 max-lg:flex-wrap'>
                     <div className='lg:max-w-[350px] w-full'>
                         <Link to="/">
-                            <img className='max-w-[247px] w-full' src={FooterLogo} alt="footer logo" />
+                            <img className='max-w-[200px] sm:max-w-[247px] w-full' src={FooterLogo} alt="footer logo" />
                         </Link>
                         <p className='text-sm !leading-150 text-white mt-2'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolor</p>
                         <div className='flex gap-3 items-center mt-3 sm:hidden'>

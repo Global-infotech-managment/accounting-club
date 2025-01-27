@@ -6,12 +6,12 @@ const Icons = ({ iconName }) => {
         height="7"
         viewBox="0 0 10 7"
         fill="none"
+        className="stroke-black group-hover:stroke-primary duration-300 group-hover:rotate-180"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
           opacity="0.8"
           d="M0.833659 1.33333L5.00033 5.5L9.16699 1.33333"
-          stroke="black"
           stroke-width="1.5"
           stroke-linecap="round"
           stroke-linejoin="round"

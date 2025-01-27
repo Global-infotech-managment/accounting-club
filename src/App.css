@@ -9,12 +9,18 @@ html {
 .custom-pagination {
   @apply flex gap-[10px] justify-center mt-5
 }
+
 .custom-pagination .dot {
   transition: background-color 0.3s ease;
   @apply !size-[10px] bg-[#CBCBCB] rounded-full cursor-pointer
 }
+
 .custom-pagination .dot-active {
   @apply bg-secondary
+}
+
+.custom-pagination .dot-active:hover {
+  @apply bg-opacity-75 scale-110 duration-300
 }
 
 .wrapper {
