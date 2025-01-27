@@ -6,7 +6,25 @@ const Icons = ({ iconName }) => {
         height="7"
         viewBox="0 0 10 7"
         fill="none"
-        className="stroke-black group-hover:stroke-primary duration-300 group-hover:rotate-180"
+        className="stroke-white group-hover:stroke-white duration-300 group-hover:rotate-180"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          opacity="0.8"
+          d="M0.833659 1.33333L5.00033 5.5L9.16699 1.33333"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+    dropdownBlue: (
+      <svg
+        width="10"
+        height="7"
+        viewBox="0 0 10 7"
+        fill="none"
+        className="stroke-primary group-hover:stroke-primary duration-300 group-hover:rotate-180"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path

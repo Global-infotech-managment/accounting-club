@@ -32,6 +32,10 @@ const Hero = () => {
             className="hero-slider relative z-40"
             modules={[EffectFade]}
             spaceBetween={50}
+            autoplay={{
+              delay: 3000, // Set autoplay delay (in milliseconds)
+              disableOnInteraction: true, // Continue autoplay after user interaction
+            }}
             slidesPerView={1}
             fadeEffect={{ crossFade: true }}
             onSlideChange={({ activeIndex }) => setActiveIndex(activeIndex)}
@@ -60,7 +64,7 @@ const Hero = () => {
                   </div>
                   <div>
                     <img
-                      className="shadow-hero-image w-full rounded-[24px] lg:max-w-[582px] xl:h-[455px] border border-primary"
+                      className="shadow-hero-image w-full rounded-[24px] border border-primary lg:max-w-[582px] xl:h-[455px]"
                       src={slide.image}
                       alt={slide.title}
                     />

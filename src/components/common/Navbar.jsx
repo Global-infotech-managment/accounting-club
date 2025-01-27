@@ -64,14 +64,13 @@ const Navbar = () => {
                 <Link
                   to={obj.url}
                   className={`relative flex items-center gap-2 text-base font-normal leading-150 transition-all duration-300 hover:text-primary ${
-                    isActive
-                      ? 'text-primary before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-primary'
-                      : ''
+                    isActive &&
+                    'text-primary before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-primary'
                   }`}
                 >
                   {obj.title}{' '}
                   {obj.subLinks && (
-                    <Icons iconName="dropdown" className="size-4" />
+                    <Icons iconName="dropdownBlue" className="size-4" />
                   )}
                 </Link>
                 {obj.subLinks && (
@@ -116,23 +115,42 @@ const Navbar = () => {
       <div
         className={`absolute top-14 z-20 flex min-h-screen w-full flex-col gap-6 bg-primary px-4 py-20 transition-all duration-300 md:top-[90px] xl:hidden ${menuOpen ? 'right-0' : '-right-full'}`}
       >
-        {navLinks.map((obj, index) => (
-          <div key={index} className="relative">
-            <Link
-              to={obj.url}
-              className="flex items-center gap-2 text-lg font-normal leading-150 text-white"
-              onClick={() => handleMobileLinkClick(obj.url)}
+        {navLinks.map((obj, index) => {
+          const isActive = location.hash === obj.url
+          return (
+            <div
+              key={index}
+              className="group relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
             >
-              {obj.title}
+              <div
+                to={obj.url}
+                className={`relative flex items-center gap-2 text-base font-normal leading-150 text-white transition-all duration-300 hover:text-white ${
+                  isActive &&
+                  'text-white before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-primary'
+                }`}
+              >
+                {obj.title}{' '}
+                {obj.subLinks && (
+                  <Icons iconName="dropdown" className="size-4" />
+                )}
+              </div>
               {obj.subLinks && (
-                <Icons
-                  iconName="dropdownWhite"
-                  className="size-4 stroke-white"
-                />
+                <div className="absolute -left-6 top-8 w-fit rounded-4 bg-white opacity-0 shadow-nav duration-300 group-hover:opacity-100">
+                  {obj.subLinks.map((subLink, subIndex) => (
+                    <Link
+                      onClick={() => handleMobileLinkClick(obj.url)}
+                      key={subIndex}
+                      to={subLink.url}
+                      className="text-slate hover:bg-gray-100 block text-nowrap px-4 py-2 duration-300 hover:text-white"
+                    >
+                      {subLink.title}
+                    </Link>
+                  ))}
+                </div>
               )}
-            </Link>
-          </div>
-        ))}
+            </div>
+          )
+        })}
         <div className="flex items-center gap-3 max-sm:flex-col md:hidden">
           <Button
             className="!border bg-white text-center text-primary hover:!border-white hover:!bg-[transparent] hover:!text-white max-sm:w-full"
