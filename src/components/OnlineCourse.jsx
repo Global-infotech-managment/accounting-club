@@ -7,7 +7,7 @@ import Icons from './common/Icons'
 import { Link } from 'react-router-dom'
 import { onlineCourse } from '../utils/helper'
 import OnlineBook from '../assets/images/png/online-book.png'
-
+import { EffectFade, Autoplay } from 'swiper/modules'
 const OnlineCourse = () => {
   const swiperRef = useRef(null)
   const [activeIndex, setActiveIndex] = useState(0)
@@ -36,6 +36,13 @@ const OnlineCourse = () => {
             320: { slidesPerView: 1, spaceBetween: 10 },
           }}
           ref={swiperRef}
+          modules={[EffectFade, Autoplay]}
+          autoplay={{
+            delay: 3000,
+            disableOnInteraction: false,
+          }}
+          slidesPerView={1}
+          fadeEffect={{ crossFade: true }}
         >
           {onlineCourse.map((obj, index) => (
             <SwiperSlide key={index}>

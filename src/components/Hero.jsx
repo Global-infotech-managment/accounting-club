@@ -4,7 +4,7 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/effect-fade'
 import Button from './common/Button'
-import { EffectFade } from 'swiper/modules'
+import { EffectFade, Autoplay } from 'swiper/modules'
 import HeroEllipse from '../assets/images/png/hero-img-ellipse.png'
 import HeroEllipseSecond from '../assets/images/png/second-hero-ellipse.png'
 import BookImage from '../assets/images/png/book.png'
@@ -30,11 +30,11 @@ const Hero = () => {
           <Swiper
             effect="fade"
             className="hero-slider relative z-40"
-            modules={[EffectFade]}
+            modules={[EffectFade, Autoplay]}
             spaceBetween={50}
             autoplay={{
-              delay: 3000, // Set autoplay delay (in milliseconds)
-              disableOnInteraction: true, // Continue autoplay after user interaction
+              delay: 3000,
+              disableOnInteraction: false,
             }}
             slidesPerView={1}
             fadeEffect={{ crossFade: true }}
