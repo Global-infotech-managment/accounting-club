@@ -7,6 +7,7 @@ import ChooseEllipse from '../assets/images/png/footer-ellipse.png'
 import LeftBottomImg from '../assets/images/png/choose-left-bottom.png'
 import RightTopImg from '../assets/images/png/choose-right-top.png'
 import ChooseUsCard from './ChooseUsCard' // Import ChooseUsCard Component
+import Icons from './common/Icons'
 
 const ChooseUs = () => {
   const [activeBtn, setActiveBtn] = useState('Free Classes')
@@ -62,15 +63,15 @@ const ChooseUs = () => {
         {/* Tab Content */}
         <div className="mx-auto my-8 h-[0.5px] bg-white md:max-w-[85%] xl:my-10 xl:max-w-[964px]"></div>
 
-        <div className="relative flex items-center justify-center">
+        <div className="relative flex items-center justify-between">
           {/* Previous Button */}
+
           <button
             onClick={handlePrevSlide}
-            className="shadow-lg hover:bg-gray-200 absolute bottom-[-10%] left-0 z-10 rounded-full bg-white px-4 py-2 text-primary md:bottom-[unset]"
+            className="rounded-1 group hidden h-7 min-w-7 cursor-pointer items-center justify-center border border-white duration-300 hover:bg-white sm:flex lg:h-10 lg:min-w-10"
           >
-            Prev
+            <Icons iconName={'btnArrow'} />
           </button>
-
           <div className="w-full max-w-[600px] overflow-hidden pb-10 md:pb-0">
             <div
               className="flex transition-transform duration-500"
@@ -88,13 +89,13 @@ const ChooseUs = () => {
               ))}
             </div>
           </div>
-
           {/* Next Button */}
+
           <button
             onClick={handleNextSlide}
-            className="shadow-lg hover:bg-gray-200 absolute bottom-[-10%] right-0 z-10 rounded-full bg-white px-4 py-2 text-primary md:bottom-[unset]"
+            className="rounded-1 group hidden h-7 min-w-7 rotate-180 cursor-pointer items-center justify-center border border-white duration-300 hover:bg-white sm:flex lg:h-10 lg:min-w-10"
           >
-            Next
+            <Icons iconName={'btnArrow'} />
           </button>
         </div>
 
