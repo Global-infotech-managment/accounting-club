@@ -2,9 +2,9 @@ import React from 'react'
 import Hero from '../Hero'
 import CompanyRank from '../CompanyRank'
 import AboutUs from '../AboutUs'
-import OnlineCourse from '../OnlineCourse'
 import ChooseUs from '../ChooseUs'
 import StudentSay from '../StudentSay'
+import OnlineCoursesSell from '../OnlineCoursesSell'
 
 const Home = () => {
   return (
@@ -14,7 +14,7 @@ const Home = () => {
         <CompanyRank />
       </div>
       <AboutUs />
-      <OnlineCourse />
+      <OnlineCoursesSell />
       <ChooseUs />
       <StudentSay />
     </>
