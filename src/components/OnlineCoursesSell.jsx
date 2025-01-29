@@ -1,10 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Heading from './common/Heading'
 import Paragraph from './common/Paragraph'
 import OnlineCourse from './common/OnlineCourse'
 import { onlineCoursesData } from '../utils/helper'
 import Button from './common/Button'
+
 const OnlineCoursesSell = () => {
+  // State to manage the number of courses to display
+  const [coursesToDisplay, setCoursesToDisplay] = useState(3)
+
+  // Function to handle "Show More" and "Show Less"
+  const toggleCourses = () => {
+    if (coursesToDisplay === onlineCoursesData.length) {
+      // If all courses are shown, collapse back to 3
+      setCoursesToDisplay(3)
+    } else {
+      // Otherwise, show 3 more courses
+      setCoursesToDisplay(coursesToDisplay + 3)
+    }
+  }
+
   return (
     <div className="container max-w-[1184px] py-12 sm:py-14 lg:mb-10 lg:py-[84px]">
       <Heading
@@ -21,9 +36,10 @@ const OnlineCoursesSell = () => {
         text="Be an Accounting and taxation expert in few days even if you don't have any Accounting background. Choose a program as per your requirement"
       />
       <div className="grid grid-cols-1 gap-4 pt-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-5">
-        {onlineCoursesData.map((courses, index) => {
+        {onlineCoursesData.slice(0, coursesToDisplay).map((courses, index) => {
           return (
             <OnlineCourse
+              key={index}
               description={courses.description}
               heading={courses.heading}
               image={courses.image}
@@ -37,7 +53,12 @@ const OnlineCoursesSell = () => {
         <div className="mt-12 flex justify-center">
           <Button
             className="!text-md w-full max-w-[202px] !rounded-md"
-            transparentBtn="View All Courses"
+            transparentBtn={
+              coursesToDisplay === onlineCoursesData.length
+                ? 'Show Less'
+                : 'Show More'
+            }
+            onClick={toggleCourses}
           />
         </div>
       </div>

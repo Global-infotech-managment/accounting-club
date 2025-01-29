@@ -331,4 +331,52 @@ export const onlineCoursesData = [
     enrollPath: '#',
     detailPath: '#',
   },
+  {
+    heading: 'Online Courses',
+    description:
+      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
+    image: onlineCourseImage1,
+    enrollPath: '#',
+    detailPath: '#',
+  },
+  {
+    heading: 'Online Courses',
+    description:
+      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
+    image: onlineCourseImage1,
+    enrollPath: '#',
+    detailPath: '#',
+  },
+  {
+    heading: 'Online Courses',
+    description:
+      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
+    image: onlineCourseImage1,
+    enrollPath: '#',
+    detailPath: '#',
+  },
+  {
+    heading: 'Online Courses',
+    description:
+      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
+    image: onlineCourseImage1,
+    enrollPath: '#',
+    detailPath: '#',
+  },
+  {
+    heading: 'Online Courses',
+    description:
+      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
+    image: onlineCourseImage1,
+    enrollPath: '#',
+    detailPath: '#',
+  },
+  {
+    heading: 'Online Courses',
+    description:
+      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
+    image: onlineCourseImage1,
+    enrollPath: '#',
+    detailPath: '#',
+  },
 ]
