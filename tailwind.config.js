@@ -30,7 +30,9 @@ module.exports = {
       nav: '0px 0px 23.6px 0px #0000001A',
       hero: '8px 8px 6px 0px #253466',
       'hero-image': '3px 3px 7px -2px #253466',
+      register: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
     },
+
     backgroundImage: {
       'company-rank': "url('/src/assets/images/png/company-rank.png')",
       journey: "url('/src/assets/images/png/journey-bg.png')",
