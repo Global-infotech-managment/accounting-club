@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import FooterLogo from '../../assets/images/png/footer-logo.png'
 import { menuData } from '../../utils/helper'
 import Icons from './Icons'
+import { HOME_ROUTE } from '../../utils/constant'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
@@ -14,7 +15,7 @@ const Footer = () => {
       <div className="container px-3 pb-6 md:pb-10 lg:max-w-[1184px] lg:pb-14">
         <div className="flex items-start justify-between gap-6 max-lg:flex-wrap">
           <div className="w-full lg:max-w-[350px]">
-            <Link to="/">
+            <Link to={HOME_ROUTE}>
               <img
                 className="w-full max-w-[200px] sm:max-w-[247px]"
                 src={FooterLogo}

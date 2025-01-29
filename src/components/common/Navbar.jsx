@@ -5,7 +5,7 @@ import PageLogo from '../../assets/images/png/logo.png'
 import Icons from './Icons'
 import { useEffect, useState } from 'react'
 import Button from './Button'
-import { STUDENT_LOGIN_ROUTE, STUDENT_SIGNUP_ROUTE } from '../../utils/constant'
+import { HOME_ROUTE, STUDENT_LOGIN_ROUTE, STUDENT_SIGNUP_ROUTE } from '../../utils/constant'
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -44,7 +44,7 @@ const Navbar = () => {
   return (
     <header className="relative z-10 py-3 shadow-nav md:py-5">
       <div className="container flex items-center justify-between gap-6 px-3 lg:max-w-[1184px]">
-        <Link to="/">
+        <Link to={HOME_ROUTE}>
           <img
             src={PageLogo}
             width={260}

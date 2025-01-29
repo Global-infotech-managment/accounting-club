@@ -1,5 +1,5 @@
 export const HOME_ROUTE = '/'
-export const SERVICES_ROUTE = '/'
+export const SERVICES_ROUTE = '/services'
 export const COURSES_ROUTE = '/courses'
 export const STUDENT_SIGNUP_ROUTE = '/studentSignUp'
 export const STUDENT_LOGIN_ROUTE = '/studentLogin'
