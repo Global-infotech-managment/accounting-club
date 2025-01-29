@@ -5,7 +5,11 @@ import PageLogo from '../../assets/images/png/logo.png'
 import Icons from './Icons'
 import { useEffect, useState } from 'react'
 import Button from './Button'
-import { HOME_ROUTE, STUDENT_LOGIN_ROUTE, STUDENT_SIGNUP_ROUTE } from '../../utils/constant'
+import {
+  HOME_ROUTE,
+  STUDENT_LOGIN_ROUTE,
+  STUDENT_SIGNUP_ROUTE,
+} from '../../utils/constant'
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -75,7 +79,7 @@ const Navbar = () => {
                   )}
                 </Link>
                 {obj.subLinks && (
-                  <div className="rounded-4 absolute -left-6 pointer-events-none group-hover:pointer-events-auto top-8 w-fit bg-white opacity-0 shadow-nav duration-300 group-hover:opacity-100">
+                  <div className="rounded-4 pointer-events-none absolute -left-6 top-8 w-fit bg-white opacity-0 shadow-nav duration-300 group-hover:pointer-events-auto group-hover:opacity-100">
                     {obj.subLinks.map((subLink, subIndex) => (
                       <Link
                         key={subIndex}
