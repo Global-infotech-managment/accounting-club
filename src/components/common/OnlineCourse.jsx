@@ -10,7 +10,7 @@ const OnlineCourse = ({
   detailPath,
 }) => {
   return (
-    <div className="rounded-[20px] border border-primary p-4">
+    <div className="rounded-[20px] border border-black border-opacity-5 transition-all duration-300 hover:border-primary p-4">
       <img
         className="min-h-[200px] w-full rounded-[20px] object-cover"
         src={image}

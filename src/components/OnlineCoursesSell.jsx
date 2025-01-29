@@ -3,9 +3,10 @@ import Heading from './common/Heading'
 import Paragraph from './common/Paragraph'
 import OnlineCourse from './common/OnlineCourse'
 import { onlineCoursesData } from '../utils/helper'
+import Button from './common/Button'
 const OnlineCoursesSell = () => {
   return (
-    <div className="container py-12 sm:py-14 lg:mb-10 lg:py-[84px]">
+    <div className="container max-w-[1184px] py-12 sm:py-14 lg:mb-10 lg:py-[84px]">
       <Heading
         className="mb-3 text-center xl:mb-4"
         middleText={
@@ -19,7 +20,7 @@ const OnlineCoursesSell = () => {
         className="mx-auto mb-6 max-w-[590px] text-center text-black"
         text="Be an Accounting and taxation expert in few days even if you don't have any Accounting background. Choose a program as per your requirement"
       />
-      <div className="grid grid-cols-1 pt-10 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 pt-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-5">
         {onlineCoursesData.map((courses, index) => {
           return (
             <OnlineCourse
@@ -31,6 +32,14 @@ const OnlineCoursesSell = () => {
             />
           )
         })}
+      </div>
+      <div>
+        <div className="mt-12 flex justify-center">
+          <Button
+            className="!text-md w-full max-w-[202px] !rounded-md"
+            transparentBtn="View All Courses"
+          />
+        </div>
       </div>
     </div>
   )
