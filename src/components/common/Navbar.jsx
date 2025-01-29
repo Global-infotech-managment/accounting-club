@@ -46,7 +46,7 @@ const Navbar = () => {
   }
 
   return (
-    <header className="relative z-10 py-3 shadow-nav md:py-5 overflow-x-clip">
+    <header className="relative z-10 overflow-x-clip py-3 shadow-nav md:py-5">
       <div className="container flex items-center justify-between gap-6 px-3 lg:max-w-[1184px]">
         <Link to={HOME_ROUTE}>
           <img
@@ -127,31 +127,47 @@ const Navbar = () => {
               key={index}
               className="group relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
             >
-              <div
-                to={obj.url}
-                className={`leading-150 relative flex items-center gap-2 text-base font-normal text-white transition-all duration-300 hover:text-white ${
-                  isActive &&
-                  'text-white before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-primary'
-                }`}
-              >
-                {obj.title}{' '}
-                {obj.subLinks && (
-                  <Icons iconName="dropdown" className="size-4" />
-                )}
-              </div>
-              {obj.subLinks && (
-                <div className="rounded-4 pointer-events-none absolute -left-6 top-8 w-fit bg-white opacity-0 shadow-nav duration-300 group-hover:pointer-events-auto group-hover:opacity-100">
-                  {obj.subLinks.map((subLink, subIndex) => (
-                    <Link
-                      onClick={() => handleMobileLinkClick(obj.url)}
-                      key={subIndex}
-                      to={subLink.url}
-                      className="text-slate hover:bg-gray-100 block text-nowrap px-4 py-2 duration-300 hover:text-white"
-                    >
-                      {subLink.title}
-                    </Link>
-                  ))}
-                </div>
+              {!obj.subLinks ? (
+                <>
+                  <Link
+                    to={obj.url}
+                    onClick={toggleMenu}
+                    className={`leading-150 relative flex items-center gap-2 text-base font-normal text-white transition-all duration-300 ${
+                      isActive &&
+                      'text-primary before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-primary'
+                    }`}
+                  >
+                    {obj.title}
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <div
+                    className={`leading-150 relative flex items-center gap-2 text-base font-normal text-white transition-all duration-300 ${
+                      isActive &&
+                      'text-primary before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-primary'
+                    }`}
+                  >
+                    {obj.title}{' '}
+                    {obj.subLinks && (
+                      <Icons iconName="dropdownWhite" className="size-4" />
+                    )}
+                  </div>
+                  {obj.subLinks && (
+                    <div className="rounded-4 z-10 pointer-events-none absolute -left-6 top-8 w-fit bg-white opacity-0 shadow-nav duration-300 group-hover:pointer-events-auto group-hover:opacity-100">
+                      {obj.subLinks.map((subLink, subIndex) => (
+                        <Link
+                          onClick={toggleMenu}
+                          key={subIndex}
+                          to={subLink.url}
+                          className="text-slate hover:bg-gray-100 block text-nowrap px-4 py-2 duration-300 hover:text-primary"
+                        >
+                          {subLink.title}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </>
               )}
             </div>
           )
