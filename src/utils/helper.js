@@ -7,23 +7,57 @@ import ProfileImg from '../assets/images/png/profile-photo.png'
 import ProfilePriya from '../assets/images/png/priya-profile.png'
 import StopSymbol from '../assets/images/png/stop-symbol.png'
 import Icons from '../components/common/Icons'
+import {
+  COURSES_ROUTE,
+  HOME_ROUTE,
+  POST_RESUME_ROUTE,
+  SEARCH_ACCOUNTING_JOBS_ROUTE,
+  SEARCH_WORK_FROM_HOME_JOBS_ROUTE,
+  SERVICES_ROUTE,
+  VERIFY_CERTIFICATE_ROUTE,
+  CHARTERED_ACCOUNTANT_ROUTE,
+  EMPLOYER_LOGIN_ROUTE,
+  EMPLOYER_REGISTER_ROUTE,
+} from './constant'
 
 export const navLinks = [
   {
     title: 'Home',
-    url: '#home',
+    url: HOME_ROUTE,
   },
   {
-    title: 'Features',
-    url: '#features',
+    title: 'Courses',
+    url: COURSES_ROUTE,
   },
   {
-    title: 'Course info',
-    url: '#course-info',
+    title: 'Jobs',
+    subLinks: [
+      {
+        title: 'Post Your Resume',
+        url: POST_RESUME_ROUTE,
+      },
+      {
+        title: 'Search Accounting Jobs',
+        url: SEARCH_ACCOUNTING_JOBS_ROUTE,
+      },
+      {
+        title: 'Search Work From Home Jobs',
+        url: SEARCH_WORK_FROM_HOME_JOBS_ROUTE,
+      },
+    ],
   },
   {
-    title: 'Admission',
-    url: '#admission',
+    title: 'Services',
+    subLinks: [
+      {
+        title: 'Verify Certificate',
+        url: VERIFY_CERTIFICATE_ROUTE,
+      },
+      {
+        title: 'Chartered Accountant',
+        url: CHARTERED_ACCOUNTANT_ROUTE,
+      },
+    ],
   },
   {
     title: 'Employers',
@@ -31,11 +65,11 @@ export const navLinks = [
     subLinks: [
       {
         title: 'Employers Login',
-        url: '/product-one',
+        url: EMPLOYER_LOGIN_ROUTE,
       },
       {
         title: 'Employers Register',
-        url: '/product-two',
+        url: EMPLOYER_REGISTER_ROUTE,
       },
     ],
   },
@@ -248,4 +282,3 @@ export const chooseUsContent = [
     },
   ],
 ]
-

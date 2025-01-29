@@ -5,6 +5,7 @@ import PageLogo from '../../assets/images/png/logo.png'
 import Icons from './Icons'
 import { useEffect, useState } from 'react'
 import Button from './Button'
+import { STUDENT_LOGIN_ROUTE, STUDENT_SIGNUP_ROUTE } from '../../utils/constant'
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -91,14 +92,14 @@ const Navbar = () => {
           })}
         </nav>
         <div className="flex items-center gap-5 max-xl:hidden">
-          <Button path={'/studentSignUp'} transparentBtn="Sign up" />
-          <Button bgBtn="Student’s Login" />
+          <Button path={STUDENT_SIGNUP_ROUTE} transparentBtn="Sign up" />
+          <Button path={STUDENT_LOGIN_ROUTE} bgBtn="Student’s Login" />
         </div>
         {/* Mobile Menu Toggle */}
         <div className="flex items-center gap-4 xl:hidden">
           <div className="flex items-center gap-5 max-md:hidden">
-            <Button path={'/'} transparentBtn="Sign up" />
-            <Button bgBtn="Student’s Login" />
+            <Button path={STUDENT_SIGNUP_ROUTE} transparentBtn="Sign up" />
+            <Button path={STUDENT_LOGIN_ROUTE} bgBtn="Student’s Login" />
           </div>
           <button
             onClick={toggleMenu}
@@ -154,11 +155,12 @@ const Navbar = () => {
         <div className="flex items-center gap-3 max-sm:flex-col md:hidden">
           <Button
             className="!border bg-white text-center text-primary hover:!border-white hover:!bg-[transparent] hover:!text-white max-sm:w-full"
-            path={'/'}
+            path={STUDENT_SIGNUP_ROUTE}
             transparentBtn="Sign up"
           />
           <Button
             className="border border-white text-center text-primary hover:bg-white hover:!text-primary max-sm:w-full"
+            path={STUDENT_LOGIN_ROUTE}
             bgBtn="Student’s Login"
           />
         </div>
