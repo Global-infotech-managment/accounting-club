@@ -63,16 +63,16 @@ const ChooseUs = () => {
         {/* Tab Content */}
         <div className="mx-auto my-8 h-[0.5px] bg-white md:max-w-[85%] xl:my-10 xl:max-w-[964px]"></div>
 
-        <div className="relative flex items-center justify-between">
+        <div className="relative flex items-center justify-between pb-10 md:pb-0">
           {/* Previous Button */}
 
           <button
             onClick={handlePrevSlide}
-            className="rounded-1 group hidden h-7 min-w-7 cursor-pointer items-center justify-center border border-white duration-300 hover:bg-white sm:flex lg:h-10 lg:min-w-10"
+            className="rounded-1 group flex h-7 min-w-7 cursor-pointer items-center justify-center border border-white duration-300 hover:bg-white lg:h-10 lg:min-w-10"
           >
             <Icons iconName={'btnArrow'} />
           </button>
-          <div className="w-full max-w-[600px] overflow-hidden pb-10 md:pb-0">
+          <div className="w-full max-w-[600px] overflow-hidden">
             <div
               className="flex transition-transform duration-500"
               style={{
@@ -93,7 +93,7 @@ const ChooseUs = () => {
 
           <button
             onClick={handleNextSlide}
-            className="rounded-1 group hidden h-7 min-w-7 rotate-180 cursor-pointer items-center justify-center border border-white duration-300 hover:bg-white sm:flex lg:h-10 lg:min-w-10"
+            className="rounded-1 group flex h-7 min-w-7 rotate-180 cursor-pointer items-center justify-center border border-white duration-300 hover:bg-white lg:h-10 lg:min-w-10"
           >
             <Icons iconName={'btnArrow'} />
           </button>

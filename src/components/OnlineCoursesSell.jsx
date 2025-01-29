@@ -35,7 +35,7 @@ const OnlineCoursesSell = () => {
         className="mx-auto mb-6 max-w-[590px] text-center text-black"
         text="Be an Accounting and taxation expert in few days even if you don't have any Accounting background. Choose a program as per your requirement"
       />
-      <div className="grid grid-cols-1 gap-4 pt-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-5">
+      <div className="grid grid-cols-1 gap-4 pt-10 md:grid-cols-2 xl:grid-cols-3 lg:gap-5">
         {onlineCoursesData.slice(0, coursesToDisplay).map((courses, index) => {
           return (
             <OnlineCourse
