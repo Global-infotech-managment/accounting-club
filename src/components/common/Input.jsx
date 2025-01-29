@@ -20,7 +20,7 @@ const Input = ({
         </label>
         <input
           type={type}
-          className={`rounded-[4px] border border-[#4E4E4E1A] bg-[#FBFBFB80] p-2 focus-visible:outline-[1px] focus-visible:outline-orange-red ${inputClassName}`}
+          className={`rounded-[4px] border border-[#4E4E4E1A] bg-[#FBFBFB80] p-2 text-xs focus-visible:outline-[1px] focus-visible:outline-orange-red ${inputClassName}`}
           placeholder={placeholder}
           value={value}
           onChange={onChange}

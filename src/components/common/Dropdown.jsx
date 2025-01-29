@@ -27,7 +27,7 @@ export const Dropdown = ({
         value={selected}
         onChange={handleChange}
         disabled={disabled}
-        className="rounded-[4px] border border-[#4E4E4E1A] bg-[#FBFBFB80] p-2 focus-visible:outline-[1px] focus-visible:outline-orange-red"
+        className="rounded-[4px] border text-xs border-[#4E4E4E1A] bg-[#FBFBFB80] p-2 focus-visible:outline-[1px] focus-visible:outline-orange-red"
       >
         <option value="" disabled>
           {label}
