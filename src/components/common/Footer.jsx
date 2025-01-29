@@ -6,8 +6,11 @@ import Icons from './Icons'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
+  const locationPath = window.location.pathname
   return (
-    <div className="absolute left-1/2 top-[60%] -z-[1] w-full -translate-x-1/2 bg-secondary pt-[210px] sm:pt-[209px] lg:top-[67%]">
+    <div
+      className={`absolute left-1/2 top-[60%] -z-[1] w-full -translate-x-1/2 bg-secondary lg:top-[67%] ${locationPath === '/' ? 'pt-[210px] sm:pt-[209px]' : 'mt-[100px] pt-[100px]'}`}
+    >
       <div className="container px-3 pb-6 md:pb-10 lg:max-w-[1184px] lg:pb-14">
         <div className="flex items-start justify-between gap-6 max-lg:flex-wrap">
           <div className="w-full lg:max-w-[350px]">

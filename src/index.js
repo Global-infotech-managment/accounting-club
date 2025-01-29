@@ -4,12 +4,21 @@ import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { BrowserRouter } from 'react-router-dom'
+import Navbar from './components/common/Navbar'
+import Footer from './components/common/Footer'
+import JourneyStart from './components/JourneyStart'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
+// const locationPath = window.location.pathname
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+      <Navbar />
       <App />
+      <div className="relative">
+        <JourneyStart />
+        <Footer />
+      </div>
     </BrowserRouter>
   </React.StrictMode>
 )

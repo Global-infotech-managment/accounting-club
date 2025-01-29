@@ -63,7 +63,7 @@ const Navbar = () => {
               >
                 <Link
                   to={obj.url}
-                  className={`relative flex items-center gap-2 text-base font-normal leading-150 transition-all duration-300 hover:text-primary ${
+                  className={`leading-150 relative flex items-center gap-2 text-base font-normal transition-all duration-300 hover:text-primary ${
                     isActive &&
                     'text-primary before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-primary'
                   }`}
@@ -74,7 +74,7 @@ const Navbar = () => {
                   )}
                 </Link>
                 {obj.subLinks && (
-                  <div className="absolute -left-6 top-8 w-fit rounded-4 bg-white opacity-0 shadow-nav duration-300 group-hover:opacity-100">
+                  <div className="rounded-4 absolute -left-6 top-8 w-fit bg-white opacity-0 shadow-nav duration-300 group-hover:opacity-100">
                     {obj.subLinks.map((subLink, subIndex) => (
                       <Link
                         key={subIndex}
@@ -91,7 +91,7 @@ const Navbar = () => {
           })}
         </nav>
         <div className="flex items-center gap-5 max-xl:hidden">
-          <Button path={'/'} transparentBtn="Sign up" />
+          <Button path={'/studentSignUp'} transparentBtn="Sign up" />
           <Button bgBtn="Student’s Login" />
         </div>
         {/* Mobile Menu Toggle */}
@@ -102,7 +102,7 @@ const Navbar = () => {
           </div>
           <button
             onClick={toggleMenu}
-            className="relative z-40 rounded-1 bg-primary p-[2px] md:p-[10px]"
+            className="rounded-1 relative z-40 bg-primary p-[2px] md:p-[10px]"
           >
             <Icons
               iconName={menuOpen ? 'close' : 'hamburger'}
@@ -124,7 +124,7 @@ const Navbar = () => {
             >
               <div
                 to={obj.url}
-                className={`relative flex items-center gap-2 text-base font-normal leading-150 text-white transition-all duration-300 hover:text-white ${
+                className={`leading-150 relative flex items-center gap-2 text-base font-normal text-white transition-all duration-300 hover:text-white ${
                   isActive &&
                   'text-white before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-primary'
                 }`}
@@ -135,7 +135,7 @@ const Navbar = () => {
                 )}
               </div>
               {obj.subLinks && (
-                <div className="absolute -left-6 top-8 w-fit rounded-4 bg-white opacity-0 shadow-nav duration-300 group-hover:opacity-100">
+                <div className="rounded-4 absolute -left-6 top-8 w-fit bg-white opacity-0 shadow-nav duration-300 group-hover:opacity-100">
                   {obj.subLinks.map((subLink, subIndex) => (
                     <Link
                       onClick={() => handleMobileLinkClick(obj.url)}
