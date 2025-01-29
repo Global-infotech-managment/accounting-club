@@ -6,6 +6,7 @@ import LevelThreeImg from '../assets/images/png/level-three.png'
 import ProfileImg from '../assets/images/png/profile-photo.png'
 import ProfilePriya from '../assets/images/png/priya-profile.png'
 import StopSymbol from '../assets/images/png/stop-symbol.png'
+import onlineCourseImage1 from '../assets/images/png/online-course-1.png'
 import Icons from '../components/common/Icons'
 import {
   COURSES_ROUTE,
@@ -280,4 +281,54 @@ export const chooseUsContent = [
       para: 'Get hands-on experience with real-world projects and practical assignments. You can upgrade the course to the next level.',
     },
   ],
+]
+export const onlineCoursesData = [
+  {
+    heading: 'Online Courses',
+    description:
+      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
+    image: onlineCourseImage1,
+    enrollPath: '#',
+    detailPath: '#',
+  },
+  {
+    heading: 'Online Courses',
+    description:
+      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
+    image: onlineCourseImage1,
+    enrollPath: '#',
+    detailPath: '#',
+  },
+  {
+    heading: 'Online Courses',
+    description:
+      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
+    image: onlineCourseImage1,
+    enrollPath: '#',
+    detailPath: '#',
+  },
+  {
+    heading: 'Online Courses',
+    description:
+      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
+    image: onlineCourseImage1,
+    enrollPath: '#',
+    detailPath: '#',
+  },
+  {
+    heading: 'Online Courses',
+    description:
+      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
+    image: onlineCourseImage1,
+    enrollPath: '#',
+    detailPath: '#',
+  },
+  {
+    heading: 'Online Courses',
+    description:
+      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
+    image: onlineCourseImage1,
+    enrollPath: '#',
+    detailPath: '#',
+  },
 ]
