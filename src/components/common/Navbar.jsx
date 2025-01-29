@@ -177,11 +177,13 @@ const Navbar = () => {
             className="!border bg-white text-center text-primary hover:!border-white hover:!bg-[transparent] hover:!text-white max-sm:w-full"
             path={STUDENT_SIGNUP_ROUTE}
             transparentBtn="Sign up"
+            onClick={toggleMenu}
           />
           <Button
             className="border border-white text-center text-primary hover:bg-white hover:!text-primary max-sm:w-full"
             path={STUDENT_LOGIN_ROUTE}
             bgBtn="Student’s Login"
+            onClick={toggleMenu}
           />
         </div>
       </div>
