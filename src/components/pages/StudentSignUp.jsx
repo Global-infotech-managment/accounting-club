@@ -40,7 +40,7 @@ const StudentSignUp = () => {
             text="Register today to access your free CA course and start learning anytime, anywhere with expert guidance!"
           />
           <div className="flex flex-wrap">
-            <div className="w-full sm:w-6/12 px-2 py-3">
+            <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
                 placeholder="Name*"
                 type="text"
@@ -48,7 +48,7 @@ const StudentSignUp = () => {
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
-            <div className="w-full sm:w-6/12 px-2 py-3">
+            <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
                 placeholder="Age*"
                 type="number"
@@ -56,30 +56,57 @@ const StudentSignUp = () => {
                 onChange={(e) => setAge(e.target.value)}
               />
             </div>
-            <div className="w-full sm:w-6/12 px-2 py-3">
-              <Input
-                placeholder="Qualification*"
-                type="text"
+            <div className="w-full px-2 py-3 sm:w-6/12">
+              <Dropdown
+                label="Qualification*"
+                options={[
+                  { label: '--select', value: '--select' },
+                  { label: '10+2 Commerce', value: '10+2 Commerce' },
+                  { label: '10+2 Others', value: '10+2 Others' },
+                  { label: 'B.Com', value: 'B.Com' },
+                  { label: 'BSc', value: 'BSc' },
+                  { label: 'B.A', value: 'B.A' },
+                  { label: 'B.Tech', value: 'B.Tech' },
+                  { label: 'M.Com', value: 'M.Com' },
+                  { label: 'MBA', value: 'MBA' },
+                  { label: 'MSc', value: 'MSc' },
+                  { label: 'M.A', value: 'M.A' },
+                  { label: 'M.Tech', value: 'M.Tech' },
+                  { label: 'CA Inter', value: 'CA Inter' },
+                  { label: 'CA', value: 'CA' },
+                  { label: 'ICWA', value: 'ICWA' },
+                  { label: 'CS', value: 'CS' },
+                  { label: 'LLb', value: 'LLb' },
+                  { label: 'Others', value: 'Others' },
+                ]}
                 value={qualification}
-                onChange={(e) => setQualification(e.target.value)}
+                onChange={setQualification}
               />
             </div>
-            <div className="w-full sm:w-6/12 px-2 py-3">
+            <div className="w-full px-2 py-3 sm:w-6/12">
               <Dropdown
                 label="Experience if any*"
                 options={[
                   { label: 'Fresher', value: 'fresher' },
                   { label: '1 year', value: '1' },
-                  { label: '2 year', value: '2' },
-                  { label: '3 year', value: '3' },
-                  { label: '4 year', value: '4' },
-                  { label: '5 year+', value: '5' },
+                  { label: '2 years', value: '2' },
+                  { label: '3 years', value: '3' },
+                  { label: '4 years', value: '4' },
+                  { label: '5 years', value: '5' },
+                  { label: '6 years', value: '6' },
+                  { label: '7 years', value: '7' },
+                  { label: '8 years', value: '8' },
+                  { label: '9 years', value: '9' },
+                  { label: '10 years', value: '10' },
+                  { label: '10+ years', value: '10+' },
+                  { label: '15+ years', value: '15+' },
+                  { label: '20+ years', value: '20+' },
                 ]}
                 onChange={setExperience}
                 value={experience}
               />
             </div>
-            <div className="w-full sm:w-6/12 px-2 py-3">
+            <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
                 placeholder="Email Id*"
                 type="email"
@@ -87,7 +114,7 @@ const StudentSignUp = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <div className="w-full sm:w-6/12 px-2 py-3">
+            <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
                 placeholder="Mobile Number*"
                 type="tel"
@@ -95,7 +122,7 @@ const StudentSignUp = () => {
                 onChange={(e) => setMobile(e.target.value)}
               />
             </div>
-            <div className="w-full sm:w-6/12 px-2 py-3">
+            <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
                 placeholder="Postal Address* [For study Material] Line 1"
                 type="text"
@@ -103,7 +130,7 @@ const StudentSignUp = () => {
                 onChange={(e) => setAddressLine1(e.target.value)}
               />
             </div>
-            <div className="w-full sm:w-6/12 px-2 py-3">
+            <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
                 placeholder="Line 2"
                 type="text"
@@ -111,7 +138,7 @@ const StudentSignUp = () => {
                 onChange={(e) => setAddressLine2(e.target.value)}
               />
             </div>
-            <div className="w-full sm:w-6/12 px-2 py-3">
+            <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
                 placeholder="City*"
                 type="text"
@@ -119,7 +146,7 @@ const StudentSignUp = () => {
                 onChange={(e) => setCity(e.target.value)}
               />
             </div>
-            <div className="w-full sm:w-6/12 px-2 py-3">
+            <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
                 placeholder="State*"
                 type="text"
@@ -127,7 +154,7 @@ const StudentSignUp = () => {
                 onChange={(e) => setState(e.target.value)}
               />
             </div>
-            <div className="w-full sm:w-6/12 px-2 py-3">
+            <div className="w-full px-2 py-3 sm:w-6/12">
               <Dropdown
                 label="Country*"
                 options={[
@@ -145,7 +172,7 @@ const StudentSignUp = () => {
                 value={country}
               />
             </div>
-            <div className="w-full sm:w-6/12 px-2 py-3">
+            <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
                 placeholder="Pin Code*"
                 type="text"
@@ -153,7 +180,7 @@ const StudentSignUp = () => {
                 onChange={(e) => setPinCode(e.target.value)}
               />
             </div>
-            <div className="w-full sm:w-6/12 px-2 py-3">
+            <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
                 placeholder="Password*"
                 type="password"
@@ -161,7 +188,7 @@ const StudentSignUp = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <div className="w-full sm:w-6/12 px-2 py-3">
+            <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
                 placeholder="Retype Password*"
                 type="password"
