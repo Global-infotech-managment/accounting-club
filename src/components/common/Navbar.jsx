@@ -46,7 +46,7 @@ const Navbar = () => {
   }
 
   return (
-    <header className="relative z-10 py-3 shadow-nav md:py-5">
+    <header className="relative z-10 py-3 shadow-nav md:py-5 overflow-hidden">
       <div className="container flex items-center justify-between gap-6 px-3 lg:max-w-[1184px]">
         <Link to={HOME_ROUTE}>
           <img
