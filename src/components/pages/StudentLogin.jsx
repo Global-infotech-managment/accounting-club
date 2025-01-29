@@ -7,15 +7,60 @@ import { FORGOT_PASSWORD_ROUTE } from '../../utils/constant'
 import Button from '../common/Button'
 
 const StudentLogin = () => {
-  const [inputValue, setInputValue] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [errors, setErrors] = useState({})
 
-  const nameValue = (e) => {
-    setInputValue(e.target.value)
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(email)
+  }
+
+  const handleEmailChange = (e) => {
+    const value = e.target.value
+    setEmail(value)
+
+    if (errors.email) {
+      if (value && validateEmail(value)) {
+        setErrors((prev) => ({ ...prev, email: '' }))
+      }
+    }
+  }
+
+  const handlePasswordChange = (e) => {
+    const value = e.target.value
+    setPassword(value)
+
+    if (errors.password && value) {
+      setErrors((prev) => ({ ...prev, password: '' }))
+    }
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    let newErrors = {}
+
+    if (!email) {
+      newErrors.email = 'Email is required'
+    } else if (!validateEmail(email)) {
+      newErrors.email = 'Enter a valid email'
+    }
+
+    if (!password) {
+      newErrors.password = 'Password is required'
+    }
+
+    setErrors(newErrors)
+
+    if (Object.keys(newErrors).length === 0) {
+      setEmail('')
+      setPassword('')
+    }
   }
 
   return (
     <div className="container px-3 lg:max-w-[1184px]">
-      <div className="mx-auto mt-16 max-w-[806px] rounded-3xl p-12 shadow-register">
+      <div className="mx-auto mt-16 max-w-[806px] rounded-3xl xl:p-12 p-5 shadow-register">
         <Heading
           className="mb-3 text-center xl:mb-4"
           middleText={
@@ -30,20 +75,33 @@ const StudentLogin = () => {
           className="mx-auto mb-6 max-w-[590px] text-center text-black"
           text="Sign in now to access your account and continue your experience."
         />
-        <div className="flex w-full flex-col gap-5">
-          <Input
-            placeholder={'Email Id'}
-            type={'email'}
-            value={inputValue}
-            onChange={nameValue}
-          />
-          <Input
-            placeholder={'Password'}
-            type={'password'}
-            value={inputValue}
-            onChange={nameValue}
-          />
-          <div className="mb-5 flex items-center justify-between">
+        <form onSubmit={handleSubmit} className="flex w-full flex-col gap-5">
+          <div className="relative">
+            <Input
+              placeholder="Email Id"
+              type="email"
+              value={email}
+              onChange={handleEmailChange}
+            />
+            {errors.email && (
+              <p className="absolute text-sm text-orange-red">{errors.email}</p>
+            )}
+          </div>
+
+          <div className="relative">
+            <Input
+              placeholder="Password"
+              type="password"
+              value={password}
+              onChange={handlePasswordChange}
+            />
+            {errors.password && (
+              <p className="absolute text-sm text-orange-red">
+                {errors.password}
+              </p>
+            )}
+          </div>
+          <div className="mb-2 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <input type="checkbox" id="remember" />
               <label htmlFor="remember" className="text-sm text-black">
@@ -54,8 +112,9 @@ const StudentLogin = () => {
               Forgot Password?
             </Link>
           </div>
-          <Button bgBtn="Get Started" />
-        </div>
+
+          <Button className={'rounded-xl'} type="submit" bgBtn="Get Started" />
+        </form>
       </div>
     </div>
   )
