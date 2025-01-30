@@ -292,7 +292,7 @@ export const onlineCoursesData = [
     detailPath: '#',
   },
   {
-    heading: 'Online Courses',
+    heading: 'offline Courses',
     description:
       'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
     image: onlineCourseImage1,

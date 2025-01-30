@@ -13,7 +13,7 @@ const locationPath = window.location.pathname
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Navbar />
+      {!locationPath.includes('dashboard') && <Navbar />}
       <App />
       <div
         className={`relative ${locationPath.includes('dashboard') && 'hidden'}`}
