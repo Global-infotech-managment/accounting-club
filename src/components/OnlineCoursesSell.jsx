@@ -19,14 +19,16 @@ const OnlineCoursesSell = () => {
       setCoursesToDisplay(coursesToDisplay + 3)
     }
   }
-
+  const locationPath = window.location.pathname
   return (
     <div className="container max-w-[1184px] py-12 sm:py-14 lg:mb-10 lg:py-[84px]">
       <Heading
         className="mb-3 text-center xl:mb-4"
         middleText={
           <>
-            <span className="text-black">Online</span>{' '}
+            <span className="text-black">
+              {locationPath.includes('course-detail') ? 'Popular' : 'Online'}
+            </span>{' '}
             <span className="text-red-500"> Courses</span>
           </>
         }
@@ -35,7 +37,7 @@ const OnlineCoursesSell = () => {
         className="mx-auto mb-6 max-w-[590px] text-center text-black"
         text="Be an Accounting and taxation expert in few days even if you don't have any Accounting background. Choose a program as per your requirement"
       />
-      <div className="grid grid-cols-1 gap-4 pt-10 md:grid-cols-2 xl:grid-cols-3 lg:gap-5">
+      <div className="grid grid-cols-1 gap-4 pt-10 md:grid-cols-2 lg:gap-5 xl:grid-cols-3">
         {onlineCoursesData.slice(0, coursesToDisplay).map((courses, index) => {
           return (
             <OnlineCourse
