@@ -8,6 +8,7 @@ import {
   EMPLOYER_LOGIN_ROUTE,
   TERM_AND_CONDITION_ROUTE,
 } from '../../../utils/constant'
+import { CountryList } from '../../../utils/helper'
 
 const EmployerSignUp = () => {
   const [name, setName] = useState('')
@@ -102,17 +103,7 @@ const EmployerSignUp = () => {
             <div className="w-full px-2 py-3 sm:w-6/12">
               <Dropdown
                 label="Country"
-                options={[
-                  { label: 'America', value: 'America' },
-                  { label: 'Afghanistan', value: 'Afghanistan' },
-                  { label: 'Albania', value: 'Albania' },
-                  { label: 'Andorra', value: 'Andorra' },
-                  {
-                    label: 'Antigua and Barbuda',
-                    value: 'Antigua and Barbuda',
-                  },
-                  { label: 'Argentina', value: 'Argentina' },
-                ]}
+                options={CountryList}
                 onChange={setCountry}
                 value={country}
               />
@@ -152,11 +143,10 @@ const EmployerSignUp = () => {
                 By creating an account, you agree to the{' '}
                 <a
                   href={TERM_AND_CONDITION_ROUTE}
-                  className="text-blue-500 underline"
+                  className="text-orange-red underline"
                 >
-                  Terms & Conditions
+                  Terms & Conditions.
                 </a>
-                .
               </label>
             </div>
           </div>
