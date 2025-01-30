@@ -517,3 +517,13 @@ export const CountryList = [
   { label: 'Zambia', value: 'Zambia' },
   { label: 'Zimbabwe', value: 'Zimbabwe' },
 ]
+
+export const studentSidebarItems = [
+  { icon: 'dashboard', text: 'Dashboard', path: '' },
+  { icon: 'myCourse', text: 'My Course', path: '' },
+  { icon: 'myCertificate', text: 'My Certificate', path: '' },
+  { icon: 'placement', text: 'Job Placement', path: '' },
+  { icon: 'jobWork', text: 'Job Work', path: '' },
+  { icon: 'support', text: 'Support', path: '' },
+  { icon: 'news', text: 'News & Blog', path: '' },
+]
