@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import Home from './components/pages/Home'
 import NotFound from './components/pages/NotFound'
 import {
+  COURSES_DETAIL_ROUTE,
   COURSES_ROUTE,
   EMPLOYER_LOGIN_ROUTE,
   EMPLOYER_REGISTER_ROUTE,
@@ -17,6 +18,7 @@ import StudentLogin from './components/pages/student/StudentLogin'
 import EmployerLogin from './components/pages/employer/EmployerLogin'
 import EmployerSignUp from './components/pages/employer/EmployerSignUp'
 import ForgetPassword from './components/pages/ForgetPassword'
+import CoursesInfo from './components/CoursesInfo'
 function App() {
   return (
     <div className="mx-auto max-w-[1920px]">
@@ -28,6 +30,7 @@ function App() {
         <Route path={EMPLOYER_LOGIN_ROUTE} element={<EmployerLogin />} />
         <Route path={EMPLOYER_REGISTER_ROUTE} element={<EmployerSignUp />} />
         <Route path={FORGOT_PASSWORD_ROUTE} element={<ForgetPassword />} />
+        <Route path={COURSES_DETAIL_ROUTE} element={<CoursesInfo />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </div>
