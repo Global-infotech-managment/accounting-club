@@ -6,7 +6,17 @@ import Icons from '../common/Icons'
 import Button from '../common/Button'
 import StudentEllipse from '../../assets/images/png/second-hero-ellipse.png'
 import bookImage from '../../assets/images/png/online-book.png'
+import { useParams } from 'react-router-dom'
+import { onlineCoursesData } from '../../utils/helper'
 const CourseDetail = () => {
+  const { slug } = useParams()
+  const course = onlineCoursesData.find(
+    (course) => course.heading.replaceAll(' ', '-').toLowerCase() === slug
+  )
+
+  if (!course) {
+    return <div className="text-red-500 text-center">Course not found</div>
+  }
   return (
     <div className="position-relative">
       <img
@@ -31,41 +41,38 @@ const CourseDetail = () => {
               className="mb-3 pt-6 xl:mb-4"
               middleText={
                 <>
-                  <span className="text-red-500"> Goods & Services</span>
-                  <span className="ps-1 text-black">Tax (GST) Course</span>
+                  <span className="text-red-500 capitalize">
+                    {course.heading}
+                  </span>
                 </>
               }
             />
-            <Paragraph
-              className="text-black"
-              text="The Goods & Services Tax (GST) Course offers a structured learning experience, covering essential GST concepts, legal framework, and practical applications. Whether you're a business owner, accountant, or student, this course simplifies complex taxation rules, helping you understand GST registration, invoicing, input tax credit, and return filing. With real-world examples and hands-on exercises, you’ll gain the confidence to manage GST compliance efficiently."
-            />
-            <Paragraph
-              className="pt-4 text-black"
-              text="From understanding GST applicability to mastering tax calculations and filing accurate returns, this course ensures a step-by-step approach to learning. Explore key topics like GST rates, e-way bills, reverse charge mechanisms, and common filing errors. By the end of the course, you'll be equipped with the knowledge and skills needed to navigate the GST system seamlessly and stay compliant with tax regulations."
-            />
+            <Paragraph className="text-black" text={course.description} />
           </div>
           <div className="mt-10 w-full lg:w-4/12">
             <div className="flex items-end justify-between">
               <div className="flex items-end">
-                <Heading className="!text-black" middleText="50.02" />
+                <Heading className="!text-black" middleText={course.price} />
                 <span className="ps-1 font-semibold">USD</span>
               </div>
-              <Paragraph className="text-orange-red" text="40% Off" />
+              <Paragraph
+                className="text-orange-red"
+                text={`${course.discount}% Off`}
+              />
             </div>
             <div className="mt-2 flex rounded-[10px] border border-black border-opacity-20 px-5">
               <div className="flex w-6/12 items-center gap-2.5 border-r border-black border-opacity-20">
                 <Icons iconName="bookImage" className="size-4" />
                 <div className="py-2.5">
                   <Paragraph className="opacity-80" text="Lessons" />
-                  <Paragraph className="" text="15" />
+                  <Paragraph className="" text={course.lessons} />
                 </div>
               </div>
               <div className="ms-5 flex w-6/12 items-center gap-2.5">
-                <Icons iconName="difficulity" className="size-4" />
+                <Icons iconName="difficulty" className="size-4" />
                 <div className="py-2.5">
-                  <Paragraph className="opacity-80" text="Difficulity" />
-                  <Paragraph className="" text="Moderate" />
+                  <Paragraph className="opacity-80" text="Difficulty" />
+                  <Paragraph className="capitalize" text={course.difficulty} />
                 </div>
               </div>
             </div>
@@ -76,7 +83,7 @@ const CourseDetail = () => {
                 text={
                   <>
                     <span className="pe-1 !opacity-80">Students:</span>
-                    <span className="font-medium">4,000</span>
+                    <span className="font-medium">{course.students}</span>
                   </>
                 }
               />
@@ -88,7 +95,7 @@ const CourseDetail = () => {
                 text={
                   <>
                     <span className="pe-1 !opacity-80">Language:</span>
-                    <span className="font-medium">English</span>
+                    <span className="font-medium">{course.language}</span>
                   </>
                 }
               />
@@ -100,9 +107,7 @@ const CourseDetail = () => {
                 text={
                   <>
                     <span className="pe-1 !opacity-80">Subtitles:</span>
-                    <span className="font-medium">
-                      English, Hindi, French, Italian, Russian, Polish, Dutch
-                    </span>
+                    <span className="font-medium">{course.subtitle}</span>
                   </>
                 }
               />
@@ -114,7 +119,7 @@ const CourseDetail = () => {
                 text={
                   <>
                     <span className="pe-1 !opacity-80">Duration:</span>
-                    <span className="font-medium"> 15h 32min</span>
+                    <span className="font-medium">{course.duration}</span>
                   </>
                 }
               />
@@ -128,7 +133,9 @@ const CourseDetail = () => {
                     <span className="pe-1 !opacity-80">
                       Additional Resources:
                     </span>
-                    <span className="font-medium">12 Files</span>
+                    <span className="font-medium">
+                      {course.fileNumber} Files
+                    </span>
                   </>
                 }
               />
@@ -140,10 +147,7 @@ const CourseDetail = () => {
                 text={
                   <>
                     <span className="pe-1 !opacity-80">Certificate:</span>
-                    <span className="font-medium">
-                      {' '}
-                      Upon completion of the courses
-                    </span>
+                    <span className="font-medium"> {course.certificate}</span>
                   </>
                 }
               />

@@ -223,7 +223,7 @@ const Icons = ({ iconName }) => {
         />
       </svg>
     ),
-    difficulity: (
+    difficulty: (
       <svg
         width="36"
         height="36"

@@ -286,98 +286,53 @@ export const onlineCoursesData = [
   {
     heading: 'Online Courses',
     description:
-      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
+      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.Learn from the best in the industry with our online courses. You can upgrade the course to the next level.Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
     image: onlineCourseImage1,
+    price: '1004',
+    discount: '50',
+    language: 'English',
+    duration: ' 15h 32min',
+    fileNumber: '12',
+    subtitle: 'English, Hindi, French, Italian, Russian, Polish, Dutch',
+    lessons: '50',
+    difficulty: 'Moderate',
+    certificate: 'Upon completion of the courses',
+    students: '4,000',
     enrollPath: '#',
-    detailPath: '/course/online-course',
   },
   {
-    heading: 'offline Courses',
+    heading: 'Onxczvline Courses',
     description:
-      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
+      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.Learn from the best in the industry with our online courses. You can upgrade the course to the next level.Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
     image: onlineCourseImage1,
+    price: '1040',
+    discount: '501',
+    language: 'English',
+    duration: ' 15h 32min',
+    fileNumber: '12',
+    subtitle: 'English, Hindi, French, Italian, Russian, Polish, Dutch',
+    lessons: '50',
+    difficulty: 'Moderate',
+    certificate: 'Upon completion of the courses',
+    students: '4,000',
     enrollPath: '#',
-    detailPath: '/course/course-detail',
   },
   {
-    heading: 'Online Courses',
+    heading: 'Onsdfvbline Courses',
     description:
-      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
+      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.Learn from the best in the industry with our online courses. You can upgrade the course to the next level.Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
     image: onlineCourseImage1,
+    price: '1004',
+    discount: '50',
+    language: 'English',
+    duration: ' 15h 32min',
+    fileNumber: '12',
+    subtitle: 'English, Hindi, French, Italian, Russian, Polish, Dutch',
+    lessons: '50',
+    difficulty: 'Moderate',
+    certificate: 'Upon completion of the courses',
+    students: '4,000',
     enrollPath: '#',
-    detailPath: '#',
-  },
-  {
-    heading: 'Online Courses',
-    description:
-      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
-    image: onlineCourseImage1,
-    enrollPath: '#',
-    detailPath: '#',
-  },
-  {
-    heading: 'Online Courses',
-    description:
-      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
-    image: onlineCourseImage1,
-    enrollPath: '#',
-    detailPath: '#',
-  },
-  {
-    heading: 'Online Courses',
-    description:
-      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
-    image: onlineCourseImage1,
-    enrollPath: '#',
-    detailPath: '#',
-  },
-  {
-    heading: 'Online Courses',
-    description:
-      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
-    image: onlineCourseImage1,
-    enrollPath: '#',
-    detailPath: '#',
-  },
-  {
-    heading: 'Online Courses',
-    description:
-      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
-    image: onlineCourseImage1,
-    enrollPath: '#',
-    detailPath: '#',
-  },
-  {
-    heading: 'Online Courses',
-    description:
-      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
-    image: onlineCourseImage1,
-    enrollPath: '#',
-    detailPath: '#',
-  },
-  {
-    heading: 'Online Courses',
-    description:
-      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
-    image: onlineCourseImage1,
-    enrollPath: '#',
-    detailPath: '#',
-  },
-  {
-    heading: 'Online Courses',
-    description:
-      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
-    image: onlineCourseImage1,
-    enrollPath: '#',
-    detailPath: '#',
-  },
-  {
-    heading: 'Online Courses',
-    description:
-      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
-    image: onlineCourseImage1,
-    enrollPath: '#',
-    detailPath: '#',
   },
 ]
 // all country

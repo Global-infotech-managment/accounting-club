@@ -46,7 +46,7 @@ const OnlineCoursesSell = () => {
               heading={courses.heading}
               image={courses.image}
               enrollPath={courses.enrollPath}
-              detailPath={courses.detailPath}
+              detailPath={`/courses/${courses.heading.replaceAll(' ', '-').toLowerCase()}`}
             />
           )
         })}
