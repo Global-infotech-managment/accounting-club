@@ -2,6 +2,7 @@ import React from 'react'
 import courseImage from '../../assets/images/png/course-details-hero.png'
 import Heading from '../common/Heading'
 import Paragraph from '../common/Paragraph'
+import Icons from '../common/Icons'
 const CourseDetail = () => {
   return (
     <div className="container max-w-[1184px] pt-20">
@@ -32,13 +33,26 @@ const CourseDetail = () => {
         </div>
         <div className="w-4/12 ps-12">
           <div className="flex items-end justify-between">
-            <div className='flex items-end'>
-                <Heading className="!text-black" middleText="50.02" />
-                <span className='font-semibold ps-1'>USD</span>
+            <div className="flex items-end">
+              <Heading className="!text-black" middleText="50.02" />
+              <span className="ps-1 font-semibold">USD</span>
             </div>
-            <Paragraph className="!text-red-500" text="40% Off" />
-            <div className='border border-black border-opacity-20 rounded-[10px]'>
-
+          </div>
+          <Paragraph className="!text-red-500" text="40% Off" />
+          <div className="flex rounded-[10px] border border-black border-opacity-20 px-5">
+            <div className="flex w-6/12 gap-2.5 border-r border-black border-opacity-20">
+              <Icons iconName="bookImage" className="size-4" />
+              <div>
+                <Paragraph className="!text-red-500" text="Lessons" />
+                <Paragraph className="!text-red-500" text="15" />
+              </div>
+            </div>
+            <div className="flex w-6/12 gap-2.5">
+              <Icons iconName="difficulity" className="size-4" />
+              <div>
+                <Paragraph className="!text-red-500" text="Difficulity" />
+                <Paragraph className="!text-red-500" text="Moderate" />
+              </div>
             </div>
           </div>
         </div>
