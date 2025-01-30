@@ -21,9 +21,10 @@ const OnlineCourse = ({
         middleText={heading}
       />
       <Paragraph
-        className="mx-auto mb-3 max-w-[590px] !text-base font-normal text-black"
+        className="mx-auto mb-3 line-clamp-3 max-w-[590px] !text-base font-normal text-black"
         text={description}
       />
+
       <div className="flex gap-3">
         <Button
           path={enrollPath}
