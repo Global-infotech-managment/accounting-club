@@ -44,7 +44,7 @@ const Navbar = () => {
       }
     }
   }
-
+  const locationPath = window.location.pathname
   return (
     <header className="relative z-10 overflow-x-clip py-3 shadow-nav md:py-5">
       <div className="container flex items-center justify-between gap-6 px-3 lg:max-w-[1184px]">
@@ -60,7 +60,8 @@ const Navbar = () => {
         </Link>
         <nav className="hidden items-center gap-6 xl:flex">
           {navLinks.map((obj, index) => {
-            const isActive = location.hash === obj.url
+            const isActive =
+              location.hash === obj.url || locationPath === obj.url
             return (
               <div
                 key={index}
