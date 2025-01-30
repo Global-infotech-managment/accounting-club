@@ -1,5 +1,5 @@
 import './App.css'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import Home from './components/pages/Home'
 import NotFound from './components/pages/NotFound'
 import {
@@ -21,7 +21,13 @@ import EmployerSignUp from './components/pages/employer/EmployerSignUp'
 import ForgetPassword from './components/pages/ForgetPassword'
 import CoursesInfo from './components/CoursesInfo'
 import Dashboard from './components/pages/student/dashboard/Dashboard'
+import { useEffect } from 'react'
 function App() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+
   return (
     <div className="mx-auto max-w-[1920px]">
       <Routes>
