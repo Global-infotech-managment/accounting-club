@@ -72,6 +72,14 @@ const OtpPopup = ({ onClose }) => {
         bgBtn="Submit"
         onClick={handleSubmit}
       />
+      <div className='px-3 flex items-center justify-center mt-5'>
+        <label htmlFor="terms" className="mx-auto text-center">
+          Already have an account?
+          <a href="#" className="mx-auto ps-1 text-orange-red">
+            Request again
+          </a>
+        </label>
+      </div>
     </div>
   )
 }
