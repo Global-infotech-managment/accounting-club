@@ -4,7 +4,10 @@ import { Dropdown } from '../../common/Dropdown'
 import Heading from '../../common/Heading'
 import Paragraph from '../../common/Paragraph'
 import Button from '../../common/Button'
-import { EMPLOYER_LOGIN_ROUTE } from '../../../utils/constant'
+import {
+  EMPLOYER_LOGIN_ROUTE,
+  TERM_AND_CONDITION_ROUTE,
+} from '../../../utils/constant'
 
 const EmployerSignUp = () => {
   const [name, setName] = useState('')
@@ -41,7 +44,7 @@ const EmployerSignUp = () => {
           <div className="flex flex-wrap">
             <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
-                placeholder="Company Name*"
+                placeholder="Company Name"
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -50,7 +53,7 @@ const EmployerSignUp = () => {
 
             <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
-                placeholder="Email Id*"
+                placeholder="Email Id"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -58,7 +61,7 @@ const EmployerSignUp = () => {
             </div>
             <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
-                placeholder="Mobile Number*"
+                placeholder="Mobile Number"
                 type="tel"
                 value={mobile}
                 onChange={(e) => setMobile(e.target.value)}
@@ -82,7 +85,7 @@ const EmployerSignUp = () => {
             </div>
             <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
-                placeholder="City*"
+                placeholder="City"
                 type="text"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
@@ -90,7 +93,7 @@ const EmployerSignUp = () => {
             </div>
             <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
-                placeholder="State*"
+                placeholder="State"
                 type="text"
                 value={state}
                 onChange={(e) => setState(e.target.value)}
@@ -98,7 +101,7 @@ const EmployerSignUp = () => {
             </div>
             <div className="w-full px-2 py-3 sm:w-6/12">
               <Dropdown
-                label="Country*"
+                label="Country"
                 options={[
                   { label: 'America', value: 'America' },
                   { label: 'Afghanistan', value: 'Afghanistan' },
@@ -116,15 +119,15 @@ const EmployerSignUp = () => {
             </div>
             <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
-                placeholder="Pin Code*"
-                type="text"
+                placeholder="Pin Code"
+                type="number"
                 value={pinCode}
                 onChange={(e) => setPinCode(e.target.value)}
               />
             </div>
             <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
-                placeholder="Password*"
+                placeholder="Password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -132,7 +135,7 @@ const EmployerSignUp = () => {
             </div>
             <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
-                placeholder="Retype Password*"
+                placeholder="Retype Password"
                 type="password"
                 value={retypePassword}
                 onChange={(e) => setRetypePassword(e.target.value)}
@@ -147,7 +150,10 @@ const EmployerSignUp = () => {
               />
               <label htmlFor="terms" className="ml-2">
                 By creating an account, you agree to the{' '}
-                <a href="#" className="text-blue-500 underline">
+                <a
+                  href={TERM_AND_CONDITION_ROUTE}
+                  className="text-blue-500 underline"
+                >
                   Terms & Conditions
                 </a>
                 .

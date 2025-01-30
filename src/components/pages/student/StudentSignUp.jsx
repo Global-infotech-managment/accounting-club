@@ -4,6 +4,10 @@ import { Dropdown } from '../../common/Dropdown'
 import Heading from '../../common/Heading'
 import Paragraph from '../../common/Paragraph'
 import Button from '../../common/Button'
+import {
+  STUDENT_LOGIN_ROUTE,
+  TERM_AND_CONDITION_ROUTE,
+} from '../../../utils/constant'
 
 const StudentSignUp = () => {
   const [name, setName] = useState('')
@@ -24,7 +28,7 @@ const StudentSignUp = () => {
 
   return (
     <div className="container px-3 lg:max-w-[1184px]">
-      <div className="shadow-register mt-16 rounded-3xl p-12">
+      <div className="mt-16 rounded-3xl p-12 shadow-register">
         <div>
           <Heading
             className="mb-3 text-center xl:mb-4"
@@ -42,7 +46,7 @@ const StudentSignUp = () => {
           <div className="flex flex-wrap">
             <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
-                placeholder="Name*"
+                placeholder="Name"
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -50,7 +54,7 @@ const StudentSignUp = () => {
             </div>
             <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
-                placeholder="Age*"
+                placeholder="Age"
                 type="number"
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
@@ -58,7 +62,7 @@ const StudentSignUp = () => {
             </div>
             <div className="w-full px-2 py-3 sm:w-6/12">
               <Dropdown
-                label="Qualification*"
+                label="Qualification"
                 options={[
                   { label: '--select', value: '--select' },
                   { label: '10+2 Commerce', value: '10+2 Commerce' },
@@ -85,7 +89,7 @@ const StudentSignUp = () => {
             </div>
             <div className="w-full px-2 py-3 sm:w-6/12">
               <Dropdown
-                label="Experience if any*"
+                label="Experience if any"
                 options={[
                   { label: 'Fresher', value: 'fresher' },
                   { label: '1 year', value: '1' },
@@ -108,7 +112,7 @@ const StudentSignUp = () => {
             </div>
             <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
-                placeholder="Email Id*"
+                placeholder="Email Id"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -116,8 +120,8 @@ const StudentSignUp = () => {
             </div>
             <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
-                placeholder="Mobile Number*"
-                type="tel"
+                placeholder="Mobile Number"
+                type="number"
                 value={mobile}
                 onChange={(e) => setMobile(e.target.value)}
               />
@@ -140,7 +144,7 @@ const StudentSignUp = () => {
             </div>
             <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
-                placeholder="City*"
+                placeholder="City"
                 type="text"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
@@ -148,7 +152,7 @@ const StudentSignUp = () => {
             </div>
             <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
-                placeholder="State*"
+                placeholder="State"
                 type="text"
                 value={state}
                 onChange={(e) => setState(e.target.value)}
@@ -156,7 +160,7 @@ const StudentSignUp = () => {
             </div>
             <div className="w-full px-2 py-3 sm:w-6/12">
               <Dropdown
-                label="Country*"
+                label="Country"
                 options={[
                   { label: 'America', value: 'America' },
                   { label: 'Afghanistan', value: 'Afghanistan' },
@@ -174,8 +178,8 @@ const StudentSignUp = () => {
             </div>
             <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
-                placeholder="Pin Code*"
-                type="text"
+                placeholder="Pin Code"
+                type="number"
                 value={pinCode}
                 onChange={(e) => setPinCode(e.target.value)}
               />
@@ -190,7 +194,7 @@ const StudentSignUp = () => {
             </div>
             <div className="w-full px-2 py-3 sm:w-6/12">
               <Input
-                placeholder="Retype Password*"
+                placeholder="Retype Password"
                 type="password"
                 value={retypePassword}
                 onChange={(e) => setRetypePassword(e.target.value)}
@@ -205,7 +209,10 @@ const StudentSignUp = () => {
               />
               <label htmlFor="terms" className="ml-2">
                 By creating an account, you agree to the{' '}
-                <a href="#" className="text-blue-500 underline">
+                <a
+                  href={TERM_AND_CONDITION_ROUTE}
+                  className="text-blue-500 underline"
+                >
                   Terms & Conditions
                 </a>
                 .
@@ -220,7 +227,10 @@ const StudentSignUp = () => {
           <div className="col-span-2 flex items-center justify-center pt-7">
             <label htmlFor="terms" className="ml-2">
               Already have an account?
-              <a href="#" className="text-blue-500 ps-1 font-semibold">
+              <a
+                href={STUDENT_LOGIN_ROUTE}
+                className="text-blue-500 ps-1 font-semibold"
+              >
                 Sign In
               </a>
             </label>
