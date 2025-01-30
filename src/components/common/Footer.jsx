@@ -63,8 +63,8 @@ const Footer = () => {
       </div>
       <div className="h-px bg-footer-gradient"></div>
       <p className="leading-140 px-3 py-3 text-center text-sm text-white max-sm:text-xs md:py-[18px]">
-        Copyright Accountants Club {currentYear} | Privacy Policy | Terms &
-        Conditions
+        Copyright Global Infotech Pvt.Ltd © {currentYear} | Privacy Policy |
+        Terms & Conditions
       </p>
     </div>
   )
