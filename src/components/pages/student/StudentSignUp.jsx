@@ -222,7 +222,7 @@ const StudentSignUp = () => {
 
           <Button
             className="mt-4 w-full md:mt-6 lg:mt-10"
-            transparentBtn="Read more"
+            transparentBtn="Sign Up"
           />
           <div className="col-span-2 flex items-center justify-center pt-7">
             <label htmlFor="terms" className="ml-2">
