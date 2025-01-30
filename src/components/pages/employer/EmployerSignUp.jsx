@@ -27,7 +27,7 @@ const EmployerSignUp = () => {
 
   return (
     <div className="container px-3 lg:max-w-[1184px]">
-      <div className="mt-16 rounded-3xl p-12 shadow-register">
+      <div className="mt-16 rounded-3xl p-5 shadow-register xl:p-12">
         <div>
           <Heading
             className="mb-3 text-center xl:mb-4"
@@ -43,7 +43,7 @@ const EmployerSignUp = () => {
             text="Register today to create your company profile and start posting jobs instantly. Connect with top talent anytime, anywhere with ease!"
           />
           <div className="flex flex-wrap">
-            <div className="w-full px-2 py-3 sm:w-6/12">
+            <div className="w-full sm:px-2 px-0 py-3 sm:w-6/12">
               <Input
                 placeholder="Company Name"
                 type="text"
@@ -52,7 +52,7 @@ const EmployerSignUp = () => {
               />
             </div>
 
-            <div className="w-full px-2 py-3 sm:w-6/12">
+            <div className="w-full sm:px-2 px-0 py-3 sm:w-6/12">
               <Input
                 placeholder="Email Id"
                 type="email"
@@ -60,7 +60,7 @@ const EmployerSignUp = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <div className="w-full px-2 py-3 sm:w-6/12">
+            <div className="w-full sm:px-2 px-0 py-3 sm:w-6/12">
               <Input
                 placeholder="Mobile Number"
                 type="tel"
@@ -68,7 +68,7 @@ const EmployerSignUp = () => {
                 onChange={(e) => setMobile(e.target.value)}
               />
             </div>
-            <div className="w-full px-2 py-3 sm:w-6/12">
+            <div className="w-full sm:px-2 px-0 py-3 sm:w-6/12">
               <Input
                 placeholder="Postal Address* [For study Material] Line 1"
                 type="text"
@@ -76,7 +76,7 @@ const EmployerSignUp = () => {
                 onChange={(e) => setAddressLine1(e.target.value)}
               />
             </div>
-            <div className="w-full px-2 py-3 sm:w-6/12">
+            <div className="w-full sm:px-2 px-0 py-3 sm:w-6/12">
               <Input
                 placeholder="Line 2"
                 type="text"
@@ -84,7 +84,7 @@ const EmployerSignUp = () => {
                 onChange={(e) => setAddressLine2(e.target.value)}
               />
             </div>
-            <div className="w-full px-2 py-3 sm:w-6/12">
+            <div className="w-full sm:px-2 px-0 py-3 sm:w-6/12">
               <Input
                 placeholder="City"
                 type="text"
@@ -92,7 +92,7 @@ const EmployerSignUp = () => {
                 onChange={(e) => setCity(e.target.value)}
               />
             </div>
-            <div className="w-full px-2 py-3 sm:w-6/12">
+            <div className="w-full sm:px-2 px-0 py-3 sm:w-6/12">
               <Input
                 placeholder="State"
                 type="text"
@@ -100,7 +100,7 @@ const EmployerSignUp = () => {
                 onChange={(e) => setState(e.target.value)}
               />
             </div>
-            <div className="w-full px-2 py-3 sm:w-6/12">
+            <div className="w-full sm:px-2 px-0 py-3 sm:w-6/12">
               <Dropdown
                 label="Country"
                 options={CountryList}
@@ -108,7 +108,7 @@ const EmployerSignUp = () => {
                 value={country}
               />
             </div>
-            <div className="w-full px-2 py-3 sm:w-6/12">
+            <div className="w-full sm:px-2 px-0 py-3 sm:w-6/12">
               <Input
                 placeholder="Pin Code"
                 type="number"
@@ -116,7 +116,7 @@ const EmployerSignUp = () => {
                 onChange={(e) => setPinCode(e.target.value)}
               />
             </div>
-            <div className="w-full px-2 py-3 sm:w-6/12">
+            <div className="w-full sm:px-2 px-0 py-3 sm:w-6/12">
               <Input
                 placeholder="Password"
                 type="password"
@@ -124,7 +124,7 @@ const EmployerSignUp = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <div className="w-full px-2 py-3 sm:w-6/12">
+            <div className="w-full sm:px-2 px-0 py-3 sm:w-6/12">
               <Input
                 placeholder="Retype Password"
                 type="password"
