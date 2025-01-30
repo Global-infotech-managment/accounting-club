@@ -79,7 +79,7 @@ const Navbar = () => {
                   )}
                 </Link>
                 {obj.subLinks && (
-                  <div className="rounded-4 pointer-events-none absolute -left-6 top-8 w-fit bg-white opacity-0 shadow-nav duration-300 group-hover:pointer-events-auto group-hover:opacity-100">
+                  <div className="rounded-4 pointer-events-none absolute -left-6 top-6 w-fit bg-white opacity-0 shadow-nav duration-300 group-hover:pointer-events-auto group-hover:opacity-100">
                     {obj.subLinks.map((subLink, subIndex) => (
                       <Link
                         key={subIndex}

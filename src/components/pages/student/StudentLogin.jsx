@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import Input from '../common/Input'
-import Heading from '../common/Heading'
-import Paragraph from '../common/Paragraph'
+import Input from '../../common/Input'
+import Heading from '../../common/Heading'
+import Paragraph from '../../common/Paragraph'
 import { Link } from 'react-router-dom'
-import { FORGOT_PASSWORD_ROUTE } from '../../utils/constant'
-import Button from '../common/Button'
+import { FORGOT_PASSWORD_ROUTE } from '../../../utils/constant'
+import Button from '../../common/Button'
 
 const StudentLogin = () => {
   const [email, setEmail] = useState('')
