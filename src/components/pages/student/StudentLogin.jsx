@@ -2,15 +2,18 @@ import React, { useState } from 'react'
 import Input from '../../common/Input'
 import Heading from '../../common/Heading'
 import Paragraph from '../../common/Paragraph'
-import { Link } from 'react-router-dom'
-import { FORGOT_PASSWORD_ROUTE } from '../../../utils/constant'
+import { Link, useNavigate } from 'react-router-dom'
+import {
+  FORGOT_PASSWORD_ROUTE,
+  STUDENT_DASHBOARD_ROUTE,
+} from '../../../utils/constant'
 import Button from '../../common/Button'
 
 const StudentLogin = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState({})
-
+  const navigate = useNavigate()
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     return emailRegex.test(email)
@@ -55,12 +58,13 @@ const StudentLogin = () => {
     if (Object.keys(newErrors).length === 0) {
       setEmail('')
       setPassword('')
+      navigate(STUDENT_DASHBOARD_ROUTE)
     }
   }
 
   return (
     <div className="container px-3 lg:max-w-[1184px]">
-      <div className="mx-auto mt-16 max-w-[806px] rounded-3xl xl:p-12 p-5 shadow-register">
+      <div className="mx-auto mt-16 max-w-[806px] rounded-3xl p-5 shadow-register xl:p-12">
         <Heading
           className="mb-3 text-center xl:mb-4"
           middleText={
