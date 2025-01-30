@@ -9,6 +9,7 @@ import {
   EMPLOYER_REGISTER_ROUTE,
   FORGOT_PASSWORD_ROUTE,
   HOME_ROUTE,
+  STUDENT_DASHBOARD_ROUTE,
   STUDENT_LOGIN_ROUTE,
   STUDENT_SIGNUP_ROUTE,
 } from './utils/constant'
@@ -19,6 +20,7 @@ import EmployerLogin from './components/pages/employer/EmployerLogin'
 import EmployerSignUp from './components/pages/employer/EmployerSignUp'
 import ForgetPassword from './components/pages/ForgetPassword'
 import CoursesInfo from './components/CoursesInfo'
+import Dashboard from './components/pages/student/dashboard/Dashboard'
 function App() {
   return (
     <div className="mx-auto max-w-[1920px]">
@@ -31,6 +33,7 @@ function App() {
         <Route path={EMPLOYER_REGISTER_ROUTE} element={<EmployerSignUp />} />
         <Route path={FORGOT_PASSWORD_ROUTE} element={<ForgetPassword />} />
         <Route path={COURSES_DETAIL_ROUTE} element={<CoursesInfo />} />
+        <Route path={STUDENT_DASHBOARD_ROUTE} element={<Dashboard />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </div>

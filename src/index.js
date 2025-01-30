@@ -9,13 +9,15 @@ import Footer from './components/common/Footer'
 import JourneyStart from './components/JourneyStart'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
-// const locationPath = window.location.pathname
+const locationPath = window.location.pathname
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Navbar />
       <App />
-      <div className="relative">
+      <div
+        className={`relative ${locationPath.includes('dashboard') && 'hidden'}`}
+      >
         <JourneyStart />
         <Footer />
       </div>
