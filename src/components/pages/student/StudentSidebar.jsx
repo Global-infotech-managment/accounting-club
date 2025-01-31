@@ -7,7 +7,7 @@ import { studentSidebarItems } from '../../../utils/helper'
 const StudentSidebar = () => {
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
-  const activeSidebar = queryParams.get('activeSidebar') || 'dashboard' // Default to 'dashboard'
+  const activeSidebar = queryParams.get('activeSidebar') || 'dashboard'
 
   return (
     <div className="h-full border-r border-black border-opacity-5 px-4 py-4 md:py-8 lg:px-10">

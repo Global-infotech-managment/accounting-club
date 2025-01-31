@@ -26,7 +26,7 @@ const DashboardNav = () => {
             />
           </Link>
           <div className="flex gap-3 sm:gap-5">
-            <button className="flex w-[36px] items-center justify-center bg-black bg-opacity-5 sm:h-12 sm:w-12">
+            <button className="flex w-[36px] items-center justify-center rounded-md bg-black bg-opacity-5 sm:h-12 sm:w-12">
               <Icons iconName="notification" className="size-4" />
             </button>
             <button>
