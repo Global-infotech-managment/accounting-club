@@ -10,14 +10,16 @@ const StudentSidebar = () => {
   const activeSidebar = queryParams.get('activeSidebar') || 'dashboard' // Default to 'dashboard'
 
   return (
-    <div className="h-full border-r border-black border-opacity-5 lg:px-10 px-4 md:py-8 py-4">
+    <div className="h-full border-r border-black border-opacity-5 px-4 py-4 md:py-8 lg:px-10">
       {studentSidebarItems.map((item, index) => {
-        const isActive = activeSidebar === item.text
+        const isActive =
+          activeSidebar ===
+          item.text.replaceAll('&', '-').replaceAll(' ', '%').toLowerCase()
         return (
           <Link
             key={index}
-            to={`/student-dashboard?activeSidebar=${item.text}`} // Ensure text is used
-            className={`group mt-4 flex items-center gap-3 rounded-xl sm:px-6 p-2 sm:py-4 transition-all duration-300 hover:bg-primary ${
+            to={`/student-dashboard?activeSidebar=${item.text.replaceAll('&', '-').replaceAll(' ', '%').toLocaleLowerCase()}`}
+            className={`group mt-4 flex items-center gap-3 rounded-xl p-2 transition-all duration-300 hover:bg-primary sm:px-6 sm:py-4 ${
               isActive ? 'active_sidebar_link bg-primary text-white' : ''
             }`}
           >
@@ -28,7 +30,7 @@ const StudentSidebar = () => {
               }`}
             />
             <Paragraph
-              className={`text-nowrap !text-lg lg:block hidden transition-all duration-300 ${
+              className={`hidden text-nowrap !text-lg transition-all duration-300 lg:block ${
                 isActive ? 'text-white' : 'text-primary group-hover:text-white'
               }`}
               text={item.text}

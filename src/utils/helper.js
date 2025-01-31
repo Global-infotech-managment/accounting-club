@@ -480,5 +480,5 @@ export const studentSidebarItems = [
   { icon: 'placement', text: 'Job Placement', path: '' },
   { icon: 'jobWork', text: 'Job Work', path: '' },
   { icon: 'support', text: 'Support', path: '' },
-  { icon: 'news', text: 'News Blog', path: '' },
+  { icon: 'news', text: 'News & Blog', path: '' },
 ]
