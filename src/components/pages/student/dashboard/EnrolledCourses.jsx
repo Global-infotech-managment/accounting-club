@@ -11,7 +11,8 @@ const EnrolledCourses = () => {
             image={course.image}
             heading={course.heading}
             description={course.description}
-            width={20}
+            completedCourses={1}
+            totalCourses={5}
           />
         </div>
       ))}
