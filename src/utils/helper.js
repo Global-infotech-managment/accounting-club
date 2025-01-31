@@ -474,11 +474,11 @@ export const CountryList = [
 ]
 
 export const studentSidebarItems = [
-  { icon: 'dashboard', text: 'Dashboard', path: '' },
-  { icon: 'myCourse', text: 'My Course', path: '' },
-  { icon: 'myCertificate', text: 'My Certificate', path: '' },
-  { icon: 'placement', text: 'Job Placement', path: '' },
-  { icon: 'jobWork', text: 'Job Work', path: '' },
-  { icon: 'support', text: 'Support', path: '' },
-  { icon: 'news', text: 'News & Blog', path: '' },
+  { icon: 'dashboard', text: 'Dashboard' },
+  { icon: 'myCourse', text: 'My Course' },
+  { icon: 'myCertificate', text: 'My Certificate' },
+  { icon: 'placement', text: 'Job Placement' },
+  { icon: 'jobWork', text: 'Job Work' },
+  { icon: 'support', text: 'Support' },
+  { icon: 'news', text: 'News & Blog' },
 ]
