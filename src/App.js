@@ -7,6 +7,7 @@ import {
   COURSES_ROUTE,
   EMPLOYER_LOGIN_ROUTE,
   EMPLOYER_REGISTER_ROUTE,
+  ENROLLED_COURSES_DETAIL_ROUTE,
   FORGOT_PASSWORD_ROUTE,
   HOME_ROUTE,
   STUDENT_DASHBOARD_ROUTE,
@@ -22,6 +23,7 @@ import ForgetPassword from './components/pages/ForgetPassword'
 import CoursesInfo from './components/CoursesInfo'
 import Dashboard from './components/pages/student/dashboard/Dashboard'
 import { useEffect } from 'react'
+import EnrolledCourseDetail from './components/pages/student/dashboard/EnrolledCourseDetail'
 function App() {
   const { pathname } = useLocation()
   useEffect(() => {
@@ -40,6 +42,10 @@ function App() {
         <Route path={FORGOT_PASSWORD_ROUTE} element={<ForgetPassword />} />
         <Route path={COURSES_DETAIL_ROUTE} element={<CoursesInfo />} />
         <Route path={STUDENT_DASHBOARD_ROUTE} element={<Dashboard />} />
+        <Route
+          path={`${STUDENT_DASHBOARD_ROUTE}/:slug`}
+          element={<EnrolledCourseDetail />}
+        />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </div>

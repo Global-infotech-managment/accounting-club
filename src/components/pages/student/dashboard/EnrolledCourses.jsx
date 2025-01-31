@@ -23,7 +23,8 @@ const EnrolledCourses = () => {
               heading={course.heading}
               description={course.description}
               totalCourses={5}
-              completedCourses={2}
+              completedCourses={4}
+              path={course.heading}
             />
           </div>
         ))}
