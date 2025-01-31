@@ -19,6 +19,8 @@ import {
   EMPLOYER_LOGIN_ROUTE,
   EMPLOYER_REGISTER_ROUTE,
 } from './constant'
+import DashboardUi from '../components/pages/student/dashboard/DashboardUi'
+import MyCoursesUi from '../components/pages/student/dashboard/MyCoursesUi'
 
 export const navLinks = [
   {
@@ -474,8 +476,8 @@ export const CountryList = [
 ]
 
 export const studentSidebarItems = [
-  { icon: 'dashboard', text: 'Dashboard' },
-  { icon: 'myCourse', text: 'My Course' },
+  { icon: 'dashboard', text: 'Dashboard', component: <DashboardUi /> },
+  { icon: 'myCourse', text: 'My Course', component: <MyCoursesUi /> },
   { icon: 'myCertificate', text: 'My Certificate' },
   { icon: 'placement', text: 'Job Placement' },
   { icon: 'jobWork', text: 'Job Work' },
