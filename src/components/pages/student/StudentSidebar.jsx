@@ -18,7 +18,7 @@ const StudentSidebar = () => {
         return (
           <Link
             key={index}
-            to={`/student-dashboard?activeSidebar=${item.text.replaceAll('&', '-').replaceAll(' ', '%').toLocaleLowerCase()}`}
+            to={`/student-dashboard?activeSidebar=${item.text.replaceAll('&', '-').replaceAll(' ', '%').toLowerCase()}`}
             className={`group mt-4 flex items-center gap-3 rounded-xl p-2 transition-all duration-300 hover:bg-primary sm:px-6 sm:py-4 ${
               isActive ? 'active_sidebar_link bg-primary text-white' : ''
             }`}
