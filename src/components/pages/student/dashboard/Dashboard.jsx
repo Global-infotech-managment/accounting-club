@@ -16,7 +16,7 @@ const Dashboard = () => {
 
         {/* Main Content */}
         <div className="flex-grow overflow-auto">
-          <div className="min-h-full px-10 py-8">
+          <div className="min-h-full p-2 sm:p-4 md:p-6 lg:px-10 lg:py-8">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque
             nobis nulla sed repudiandae, debitis corrupti, amet quis quas sunt
             sequi cupiditate consequatur, magni reiciendis veniam ab nostrum
