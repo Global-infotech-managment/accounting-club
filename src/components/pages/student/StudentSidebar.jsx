@@ -25,7 +25,7 @@ const StudentSidebar = () => {
           >
             <Icons
               iconName={item.icon}
-              className={`size-4 transition-all duration-300 ${
+              className={`size-4 min-h-5 min-w-5 transition-all duration-300 ${
                 isActive ? 'text-white' : 'text-primary'
               }`}
             />

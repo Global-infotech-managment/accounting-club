@@ -2,8 +2,6 @@ import React from 'react'
 import EnrolledCoursesCard from './EnrolledCoursesCard'
 import { enrollCourses } from '../../../../utils/helper'
 
-
-
 const EnrolledCourses = () => {
   return (
     <div className="flex flex-wrap">
@@ -13,6 +11,7 @@ const EnrolledCourses = () => {
             image={course.image}
             heading={course.heading}
             description={course.description}
+            width={20}
           />
         </div>
       ))}
