@@ -1,7 +1,12 @@
 import React from 'react'
+import EnrolledCourses from './EnrolledCourses'
 
 const MyCoursesUi = () => {
-  return <div>MyCoursesUi</div>
+  return (
+    <div>
+      <EnrolledCourses />
+    </div>
+  )
 }
 
 export default MyCoursesUi

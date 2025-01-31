@@ -8,6 +8,7 @@ import ProfilePriya from '../assets/images/png/priya-profile.png'
 import StopSymbol from '../assets/images/png/stop-symbol.png'
 import onlineCourseImage1 from '../assets/images/png/online-course-1.png'
 import Icons from '../components/common/Icons'
+import courseImage from '../assets/images/png/course-details-hero.png'
 import {
   COURSES_ROUTE,
   HOME_ROUTE,
@@ -484,3 +485,28 @@ export const studentSidebarItems = [
   { icon: 'support', text: 'Support' },
   { icon: 'news', text: 'News & Blog' },
 ]
+
+export const enrollCourses = [
+  {
+    id: 1,
+    image: courseImage,
+    heading: 'Goods & Service Tax',
+    description:
+      'Learn GST fundamentals, registration, compliance, and return filing with step-by-step guidance.',
+  },
+  {
+    id: 2,
+    image: courseImage,
+    heading: 'Income Tax Basics',
+    description:
+      'Understand the basics of income tax, including tax slabs, deductions, and filing procedures.',
+  },
+  {
+    id: 3,
+    image: courseImage,
+    heading: 'Corporate Finance',
+    description:
+      'Gain insights into corporate finance, including financial statements, valuation, and investment decisions.',
+  },
+]
+
