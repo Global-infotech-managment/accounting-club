@@ -1,6 +1,7 @@
 import React from 'react'
 import Heading from '../../../common/Heading'
 import Paragraph from '../../../common/Paragraph'
+import { Link } from 'react-router-dom'
 
 const EnrolledCoursesCard = ({
   image,
@@ -8,11 +9,15 @@ const EnrolledCoursesCard = ({
   description,
   completedCourses,
   totalCourses,
+  path,
 }) => {
   const completionPercentage = (completedCourses / totalCourses) * 100
 
   return (
-    <div className="rounded-[20px] border border-black border-opacity-5 p-4 transition-all duration-300 hover:border-primary">
+    <Link
+      to={path}
+      className="rounded-[20px] block border border-black border-opacity-5 p-4 transition-all duration-300 hover:border-primary"
+    >
       <img
         className="min-h-[200px] w-full rounded-[20px] object-cover"
         src={image}
@@ -38,7 +43,7 @@ const EnrolledCoursesCard = ({
           text={`${completionPercentage}% Complete`}
         />
       </div>
-    </div>
+    </Link>
   )
 }
 
