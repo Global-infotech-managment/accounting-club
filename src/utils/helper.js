@@ -510,3 +510,46 @@ export const enrollCourses = [
   },
 ]
 
+export const accordionData = [
+  {
+    title: 'Chapter -1 Basics of Accounting',
+    lessons: [
+      { name: 'Lesson -1: Introduction of Business', completed: true },
+      { name: 'Lesson -2: Role of Works Structure', completed: true },
+      { name: 'Lesson -3: Shortcut Keys in Tally', completed: false },
+      { name: 'Lesson -4: Role of Works Structure', completed: false },
+      { name: 'Lesson -5: Role of Works Structure', completed: false },
+    ],
+  },
+  {
+    title: 'Chapter -2 Manual Accounting',
+    lessons: [
+      { name: 'Lesson -1: Introduction of Business', completed: true },
+      { name: 'Lesson -2: Role of Works Structure', completed: true },
+      { name: 'Lesson -3: Shortcut Keys in Tally', completed: false },
+      { name: 'Lesson -4: Role of Works Structure', completed: false },
+      { name: 'Lesson -5: Role of Works Structure', completed: false },
+    ],
+  },
+  {
+    title: 'Chapter -3 Computer Accounting',
+    lessons: [
+      { name: 'Lesson -1: Introduction of Business', completed: true },
+      { name: 'Lesson -2: Role of Works Structure', completed: true },
+      { name: 'Lesson -3: Shortcut Keys in Tally', completed: false },
+      { name: 'Lesson -4: Role of Works Structure', completed: false },
+      { name: 'Lesson -5: Role of Works Structure', completed: false },
+    ],
+  },
+  {
+    title: 'Chapter -4 Inventory Accounting',
+    lessons: [
+      { name: 'Lesson -1: Introduction of Business', completed: true },
+      { name: 'Lesson -2: Role of Works Structure', completed: true },
+      { name: 'Lesson -3: Shortcut Keys in Tally', completed: false },
+      { name: 'Lesson -4: Role of Works Structure', completed: false },
+      { name: 'Lesson -5: Role of Works Structure', completed: false },
+    ],
+  },
+]
+
