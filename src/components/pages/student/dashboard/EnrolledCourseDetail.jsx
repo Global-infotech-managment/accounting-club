@@ -17,7 +17,7 @@ const EnrolledCourseDetail = () => {
       <DashboardNav />
       <div className="flex flex-grow overflow-hidden">
         {/* Sidebar */}
-        <div className="h-full lg:w-3/12 lg:max-w-[400px]">
+        <div className="h-full p-[28px] lg:w-3/12 lg:max-w-[400px]">
           <StudentCourseDetailSidebar />
         </div>
 
