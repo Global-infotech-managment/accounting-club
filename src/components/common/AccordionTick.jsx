@@ -1,18 +1,24 @@
 import React, { useState } from 'react'
-import { ChevronDown, ChevronUp, CheckCircle } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { accordionData } from '../../utils/helper'
+import upArrow from '../../assets/images/svg/upArrow.svg'
+import downArrow from '../../assets/images/svg/downArrow.svg'
+import StatusIcon from '../../assets/images/svg/statusIcon.svg'
 
 const Accordion = ({ title, lessons, isOpen, onToggle }) => {
   return (
-    <div className="border-gray-300 mx-auto w-full max-w-md rounded-lg border">
+    <div className="border-gray-300 mx-auto w-full max-w-2xl rounded-lg border">
       {/* Chapter Header */}
       <button
-        className="bg-gray-100 flex w-full items-center justify-between p-3 text-xs font-medium"
-        onClick={onToggle} 
+        className="bg-gray-100 flex w-full cursor-pointer items-center justify-between p-3 text-sm font-medium"
+        onClick={onToggle}
       >
-        <span>{title}</span>
-        {isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+        <span className="flex-grow text-start">{title}</span>
+        <img
+          src={isOpen ? upArrow : downArrow} // Use the imported variables here
+          alt="toggle icon"
+          className="h-4 w-4"
+        />
       </button>
 
       {/* Lessons List */}
@@ -27,14 +33,15 @@ const Accordion = ({ title, lessons, isOpen, onToggle }) => {
           {lessons.map((lesson, index) => (
             <li
               key={index}
-              className={`flex items-center gap-2 p-3 text-xs ${
-                lesson.completed
-                  ? 'text-green-600 font-semibold'
-                  : 'text-gray-700'
-              }`}
+              className={`flex items-center gap-2 p-3 text-sm ${lesson.completed ? 'text-green-600 font-semibold' : 'text-gray-700'}`}
             >
+              {/* Use the custom status icon */}
               {lesson.completed && (
-                <CheckCircle size={14} className="text-green-500" />
+                <img
+                  src={StatusIcon}
+                  alt="Completed"
+                  className="mr-2 h-3.5 w-3.5"
+                />
               )}
               {lesson.name}
             </li>
@@ -45,22 +52,18 @@ const Accordion = ({ title, lessons, isOpen, onToggle }) => {
   )
 }
 
-
-
 const AccordionExample = () => {
-  const [openIndex, setOpenIndex] = useState(null) // Track which accordion is open
+  const [openIndex, setOpenIndex] = useState(null)
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-2">
       {accordionData.map((chapter, index) => (
         <Accordion
           key={index}
           title={chapter.title}
           lessons={chapter.lessons}
-          isOpen={openIndex === index} // Open only if it matches the active index
-          onToggle={
-            () => setOpenIndex(openIndex === index ? null : index) // Toggle logic
-          }
+          isOpen={openIndex === index}
+          onToggle={() => setOpenIndex(openIndex === index ? null : index)}
         />
       ))}
     </div>
