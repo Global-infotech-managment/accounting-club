@@ -39,7 +39,7 @@ const StudentTestAgree = () => {
               }
             />
             <div className="mb-[18px] mt-[6px] flex items-start gap-[10px]">
-              <input type="checkbox" className="mt-[10px]" />
+              <input type="checkbox" className="mt-[4px]" />
               <Paragraph
                 text={
                   "I have read all the instructions carefully and have understood them. I agree not to cheat or use unfair means in this examination. I understand that using unfair means of any sort for my own or someone else's advantage will lead to my immediate disqualification. The decision of administrator will be final in these matters and cannot be appealed."
