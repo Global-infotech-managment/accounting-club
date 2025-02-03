@@ -21,49 +21,51 @@ const StudentCourseDetailVideo = () => {
           allowFullScreen
         ></iframe>
       </div>
-      <div className="flex items-center justify-between">
-        <Paragraph
-          className={'text-sm'}
-          text={
-            <>
-              <span className="font-semibold">Description of class :</span>
-              This lesson is updated in Feb. 2024
-            </>
-          }
-        />
-        <div className="h-[21px] w-[1px] bg-black opacity-60"></div>
-        <Paragraph
-          className={'text-sm'}
-          text={
-            <>
-              <span className="font-semibold">Discussions</span>
-              (0)
-            </>
-          }
-        />
-        <div className="h-[21px] w-[1px] bg-black opacity-60"></div>
-        <Paragraph
-          className={'text-sm'}
-          text={
-            <>
-              <span className="font-semibold">Test Score = </span>
-              4/5 (80%)
-            </>
-          }
-        />
-        <div className="h-[21px] w-[1px] bg-black opacity-60"></div>
-        <div className="flex items-center justify-between">
-          <div className="h-[6px] w-full min-w-[100px] overflow-hidden rounded-[20px] bg-[#00000008]">
-            <div
-              className="h-full rounded-[20px] bg-primary transition-all duration-300"
-              style={{ width: `${completionPercentage}%` }}
-            ></div>
-          </div>
+      <div className="overflow-auto">
+        <div className="flex min-w-[970px] items-center justify-between">
           <Paragraph
-            className="ms-[10px] text-nowrap"
-            text={`${completionPercentage}% Complete`}
+            className={'text-sm'}
+            text={
+              <>
+                <span className="font-semibold">Description of class :</span>
+                This lesson is updated in Feb. 2024
+              </>
+            }
           />
-        </div>{' '}
+          <div className="h-[21px] w-[1px] bg-black opacity-60"></div>
+          <Paragraph
+            className={'text-sm'}
+            text={
+              <>
+                <span className="font-semibold">Discussions</span>
+                (0)
+              </>
+            }
+          />
+          <div className="h-[21px] w-[1px] bg-black opacity-60"></div>
+          <Paragraph
+            className={'text-sm'}
+            text={
+              <>
+                <span className="font-semibold">Test Score = </span>
+                4/5 (80%)
+              </>
+            }
+          />
+          <div className="h-[21px] w-[1px] bg-black opacity-60"></div>
+          <div className="flex items-center justify-between">
+            <div className="h-[6px] w-full min-w-[100px] overflow-hidden rounded-[20px] bg-[#00000008]">
+              <div
+                className="h-full rounded-[20px] bg-primary transition-all duration-300"
+                style={{ width: `${completionPercentage}%` }}
+              ></div>
+            </div>
+            <Paragraph
+              className="ms-[10px] text-nowrap"
+              text={`${completionPercentage}% Complete`}
+            />
+          </div>{' '}
+        </div>
       </div>
       <Button
         className={

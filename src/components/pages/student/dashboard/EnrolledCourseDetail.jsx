@@ -16,11 +16,11 @@ const EnrolledCourseDetail = () => {
   activeSidebar = activeSidebar.replace(/~/g, '-')
 
   return (
-    <div className="flex h-screen flex-col">
+    <div className="flex xl:h-screen flex-col">
       <DashboardNav />
-      <div className="flex min-h-screen flex-grow overflow-auto">
+      <div className="flex xl:min-h-screen flex-grow flex-col xl:flex-row xl:overflow-auto">
         {/* Sidebar */}
-        <div className="h-full min-h-screen p-[28px] lg:w-3/12 lg:max-w-[400px]">
+        <div className="h-full xl:min-h-screen max-w-[600px] p-[28px] xl:w-3/12 xl:max-w-[400px]">
           <StudentCourseDetailSidebar />
         </div>
 
@@ -28,12 +28,12 @@ const EnrolledCourseDetail = () => {
         <div className="flex-grow overflow-auto">
           <div className="min-h-full p-2 sm:p-4 md:p-6 lg:px-10 lg:py-8">
             <div className="rounded-3xl bg-[#F7F7F7] px-4 py-5">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center md:flex-row flex-col justify-between">
                 <Heading
-                  className={'!text-xl font-semibold'}
+                  className={'lg:!text-xl !text-lg font-semibold'}
                   firstText={'Lesson -3 : Shortcut Keys in Tally Prime'}
                 />
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 md:mt-0 mt-3">
                   {classTest ? (
                     <>
                       <Button
