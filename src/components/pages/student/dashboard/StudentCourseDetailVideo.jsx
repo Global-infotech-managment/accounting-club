@@ -11,84 +11,66 @@ const StudentCourseDetailVideo = () => {
   const completionPercentage = (completedCourses / totalCourses) * 100
   return (
     <>
-      <div className="rounded-3xl bg-[#F7F7F7] px-4 py-5">
-        <div className="flex items-center justify-between">
-          <Heading
-            className={'!text-xl font-semibold'}
-            firstText={'Lesson -3 : Shortcut Keys in Tally Prime'}
-          />
-          <div className="flex items-center gap-4">
-            <Button
-              className={'rounded-[10px] !py-2 px-5 !text-sm'}
-              transparentBtn={'Class Test'}
-            />
-            <Button
-              className={'rounded-[10px] !py-2 px-5 !text-sm'}
-              bgBtn={'Study Material'}
-            />
-          </div>
-        </div>
-        <div className="my-4 w-full overflow-hidden rounded-xl border border-primary">
-          <iframe
-            className="h-full min-h-[551px] w-full"
-            src="https://www.youtube.com/embed/nxL5tPgqft4?si=IpCMIvzZwoJDz-SI&rel=0"
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-        </div>
-        <div className="flex items-center justify-between">
-          <Paragraph
-            className={'text-sm'}
-            text={
-              <>
-                <span className="font-semibold">Description of class :</span>
-                This lesson is updated in Feb. 2024
-              </>
-            }
-          />
-          <div className="h-[21px] w-[1px] bg-black opacity-60"></div>
-          <Paragraph
-            className={'text-sm'}
-            text={
-              <>
-                <span className="font-semibold">Discussions</span>
-                (0)
-              </>
-            }
-          />
-          <div className="h-[21px] w-[1px] bg-black opacity-60"></div>
-          <Paragraph
-            className={'text-sm'}
-            text={
-              <>
-                <span className="font-semibold">Test Score = </span>
-                4/5 (80%)
-              </>
-            }
-          />
-          <div className="h-[21px] w-[1px] bg-black opacity-60"></div>
-          <div className="flex items-center justify-between">
-            <div className="h-[6px] w-full min-w-[100px] overflow-hidden rounded-[20px] bg-[#00000008]">
-              <div
-                className="h-full rounded-[20px] bg-primary transition-all duration-300"
-                style={{ width: `${completionPercentage}%` }}
-              ></div>
-            </div>
-            <Paragraph
-              className="ms-[10px] text-nowrap"
-              text={`${completionPercentage}% Complete`}
-            />
-          </div>{' '}
-        </div>
-        <Button
-          className={
-            'mt-4 max-h-10 rounded-[10px] !py-2 px-5 !text-sm !leading-normal'
-          }
-          bgBtn={'Create New Post'}
-        />
+      <div className="my-4 w-full overflow-hidden rounded-xl border border-primary">
+        <iframe
+          className="h-full min-h-[551px] w-full"
+          src="https://www.youtube.com/embed/nxL5tPgqft4?si=IpCMIvzZwoJDz-SI&rel=0"
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
       </div>
+      <div className="flex items-center justify-between">
+        <Paragraph
+          className={'text-sm'}
+          text={
+            <>
+              <span className="font-semibold">Description of class :</span>
+              This lesson is updated in Feb. 2024
+            </>
+          }
+        />
+        <div className="h-[21px] w-[1px] bg-black opacity-60"></div>
+        <Paragraph
+          className={'text-sm'}
+          text={
+            <>
+              <span className="font-semibold">Discussions</span>
+              (0)
+            </>
+          }
+        />
+        <div className="h-[21px] w-[1px] bg-black opacity-60"></div>
+        <Paragraph
+          className={'text-sm'}
+          text={
+            <>
+              <span className="font-semibold">Test Score = </span>
+              4/5 (80%)
+            </>
+          }
+        />
+        <div className="h-[21px] w-[1px] bg-black opacity-60"></div>
+        <div className="flex items-center justify-between">
+          <div className="h-[6px] w-full min-w-[100px] overflow-hidden rounded-[20px] bg-[#00000008]">
+            <div
+              className="h-full rounded-[20px] bg-primary transition-all duration-300"
+              style={{ width: `${completionPercentage}%` }}
+            ></div>
+          </div>
+          <Paragraph
+            className="ms-[10px] text-nowrap"
+            text={`${completionPercentage}% Complete`}
+          />
+        </div>{' '}
+      </div>
+      <Button
+        className={
+          'mt-4 max-h-10 rounded-[10px] !py-2 px-5 !text-sm !leading-normal'
+        }
+        bgBtn={'Create New Post'}
+      />
     </>
   )
 }

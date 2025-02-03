@@ -22,7 +22,7 @@ const Dashboard = () => {
   return (
     <div className="flex h-screen flex-col">
       <DashboardNav />
-      <div className="flex flex-grow overflow-hidden">
+      <div className="flex flex-grow overflow-auto">
         {/* Sidebar */}
         <div className="h-full lg:w-3/12 lg:max-w-[400px]">
           <StudentSidebar />
