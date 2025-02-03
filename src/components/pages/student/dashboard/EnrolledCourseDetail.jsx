@@ -15,9 +15,9 @@ const EnrolledCourseDetail = () => {
   return (
     <div className="flex h-screen flex-col">
       <DashboardNav />
-      <div className="flex flex-grow overflow-hidden">
+      <div className="flex min-h-screen flex-grow overflow-auto">
         {/* Sidebar */}
-        <div className="h-full p-[28px] lg:w-3/12 lg:max-w-[400px]">
+        <div className="h-full min-h-screen p-[28px] lg:w-3/12 lg:max-w-[400px]">
           <StudentCourseDetailSidebar />
         </div>
 
