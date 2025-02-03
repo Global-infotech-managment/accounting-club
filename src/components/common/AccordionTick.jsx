@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { accordionData } from '../../utils/helper'
-
-// Import the custom SVG image
+import upArrow from '../../assets/images/svg/upArrow.svg'
+import downArrow from '../../assets/images/svg/downArrow.svg'
 import StatusIcon from '../../assets/images/svg/statusIcon.svg'
 
 const Accordion = ({ title, lessons, isOpen, onToggle }) => {
@@ -10,16 +10,12 @@ const Accordion = ({ title, lessons, isOpen, onToggle }) => {
     <div className="border-gray-300 mx-auto w-full max-w-2xl rounded-lg border">
       {/* Chapter Header */}
       <button
-        className="bg-gray-100 flex w-full cursor-pointer items-center justify-between p-3 text-sm font-medium"
+        className="bg-gray-100 flex w-full cursor-pointer items-center justify-between  p-3 text-sm font-medium"
         onClick={onToggle}
       >
         <span className="flex-grow">{title}</span>
         <img
-          src={
-            isOpen
-              ? '/path/to/chevron-up-icon.svg'
-              : '/path/to/chevron-down-icon.svg'
-          } // Replace with your own chevron icons
+          src={isOpen ? upArrow : downArrow} // Use the imported variables here
           alt="toggle icon"
           className="h-4 w-4"
         />
@@ -37,7 +33,7 @@ const Accordion = ({ title, lessons, isOpen, onToggle }) => {
           {lessons.map((lesson, index) => (
             <li
               key={index}
-              className={`flex items-center gap-2 p-3 text-sm ${lesson.completed ? 'text-green-600 font-semibold' : 'text-gray-700'}`}
+              className={`flex items-center gap-2 p-3 text-sm  ${lesson.completed ? 'text-green-600 font-semibold' : 'text-gray-700'}`}
             >
               {/* Use the custom status icon */}
               {lesson.completed && (
@@ -57,7 +53,7 @@ const Accordion = ({ title, lessons, isOpen, onToggle }) => {
 }
 
 const AccordionExample = () => {
-  const [openIndex, setOpenIndex] = useState(null) // Track which accordion is open
+  const [openIndex, setOpenIndex] = useState(null)
 
   return (
     <div>
@@ -66,8 +62,8 @@ const AccordionExample = () => {
           key={index}
           title={chapter.title}
           lessons={chapter.lessons}
-          isOpen={openIndex === index} // Open only if it matches the active index
-          onToggle={() => setOpenIndex(openIndex === index ? null : index)} // Toggle logic
+          isOpen={openIndex === index}
+          onToggle={() => setOpenIndex(openIndex === index ? null : index)} 
         />
       ))}
     </div>
