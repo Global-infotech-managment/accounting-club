@@ -51,19 +51,22 @@ const OnlineCoursesSell = () => {
           )
         })}
       </div>
-      <div>
-        <div className="mt-12 flex justify-center">
-          <Button
-            className="!text-md w-full max-w-[202px] !rounded-md"
-            transparentBtn={
-              coursesToDisplay === onlineCoursesData.length
-                ? 'Show Less'
-                : 'Show More'
-            }
-            onClick={toggleCourses}
-          />
-        </div>
-      </div>
+      {onlineCoursesData.length > 3 && (
+        <>
+          {' '}
+          <div className="mt-12 flex justify-center">
+            <Button
+              className="!text-md w-full max-w-[202px] !rounded-md"
+              transparentBtn={
+                coursesToDisplay === onlineCoursesData.length
+                  ? 'Show Less'
+                  : 'Show More'
+              }
+              onClick={toggleCourses}
+            />
+          </div>
+        </>
+      )}
     </div>
   )
 }
