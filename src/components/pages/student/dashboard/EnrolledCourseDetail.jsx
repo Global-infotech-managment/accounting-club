@@ -14,13 +14,14 @@ const EnrolledCourseDetail = () => {
   const [classTest, setClassTest] = useState(false)
   // Normalize sidebar key
   activeSidebar = activeSidebar.replace(/~/g, '-')
+  const [showTotalScore, setShowTotalScore] = useState(false)
 
   return (
-    <div className="flex xl:h-screen flex-col">
+    <div className="flex flex-col xl:h-screen">
       <DashboardNav />
-      <div className="flex xl:min-h-screen flex-grow flex-col xl:flex-row xl:overflow-auto">
+      <div className="flex flex-grow flex-col xl:min-h-screen xl:flex-row xl:overflow-auto">
         {/* Sidebar */}
-        <div className="h-full xl:min-h-screen max-w-[600px] p-[28px] xl:w-3/12 xl:max-w-[400px]">
+        <div className="h-full max-w-[600px] p-[28px] xl:min-h-screen xl:w-3/12 xl:max-w-[400px]">
           <StudentCourseDetailSidebar />
         </div>
 
@@ -28,39 +29,48 @@ const EnrolledCourseDetail = () => {
         <div className="flex-grow overflow-auto">
           <div className="min-h-full p-2 sm:p-4 md:p-6 lg:px-10 lg:py-8">
             <div className="rounded-3xl bg-[#F7F7F7] px-4 py-5">
-              <div className="flex items-center md:flex-row flex-col justify-between">
+              <div className="flex flex-col justify-between md:flex-row md:items-center">
                 <Heading
-                  className={'lg:!text-xl !text-lg font-semibold'}
-                  firstText={'Lesson -3 : Shortcut Keys in Tally Prime'}
+                  className={'!text-lg font-semibold lg:!text-xl'}
+                  firstText={
+                    showTotalScore
+                      ? 'My Test Score'
+                      : 'Lesson -3 : Shortcut Keys in Tally Primes'
+                  }
                 />
-                <div className="flex items-center gap-4 md:mt-0 mt-3">
-                  {classTest ? (
-                    <>
-                      <Button
-                        className={'rounded-[10px] !py-2 px-5 !text-sm'}
-                        transparentBtn={'Go To Lesson'}
-                        onClick={() => setClassTest(false)}
-                      />
-                    </>
-                  ) : (
-                    <>
-                      <Button
-                        className={'rounded-[10px] !py-2 px-5 !text-sm'}
-                        transparentBtn={'Class Test'}
-                        onClick={() => setClassTest(true)}
-                      />
+                {showTotalScore === false && (
+                  <div className="mt-3 flex items-center gap-4 md:mt-0">
+                    {classTest ? (
+                      <>
+                        <Button
+                          className={'rounded-[10px] !py-2 px-5 !text-sm'}
+                          transparentBtn={'Go To Lesson'}
+                          onClick={() => setClassTest(false)}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <Button
+                          className={'rounded-[10px] !py-2 px-5 !text-sm'}
+                          transparentBtn={'Class Test'}
+                          onClick={() => setClassTest(true)}
+                        />
 
-                      <Button
-                        className={'rounded-[10px] !py-2 px-5 !text-sm'}
-                        bgBtn={'Study Material'}
-                      />
-                    </>
-                  )}
-                </div>
+                        <Button
+                          className={'rounded-[10px] !py-2 px-5 !text-sm'}
+                          bgBtn={'Study Material'}
+                        />
+                      </>
+                    )}
+                  </div>
+                )}
               </div>
               {classTest ? (
                 <>
-                  <StudentTestAgree />
+                  <StudentTestAgree
+                    setShowTotalScore={setShowTotalScore}
+                    showTotalScore={showTotalScore}
+                  />
                 </>
               ) : (
                 <>

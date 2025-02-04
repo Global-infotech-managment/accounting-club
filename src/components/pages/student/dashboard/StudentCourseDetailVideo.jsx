@@ -13,7 +13,7 @@ const StudentCourseDetailVideo = () => {
     <>
       <div className="my-4 w-full overflow-hidden rounded-xl border border-primary">
         <iframe
-          className="h-full min-h-[551px] w-full"
+          className="h-full md:min-h-[551px] w-full"
           src="https://www.youtube.com/embed/nxL5tPgqft4?si=IpCMIvzZwoJDz-SI&rel=0"
           title="YouTube video player"
           frameBorder="0"
