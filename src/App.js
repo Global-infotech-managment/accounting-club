@@ -10,6 +10,7 @@ import {
   ENROLLED_COURSES_DETAIL_ROUTE,
   FORGOT_PASSWORD_ROUTE,
   HOME_ROUTE,
+  POST_RESUME_ROUTE,
   STUDENT_DASHBOARD_ROUTE,
   STUDENT_LOGIN_ROUTE,
   STUDENT_SIGNUP_ROUTE,
@@ -24,6 +25,7 @@ import CoursesInfo from './components/CoursesInfo'
 import Dashboard from './components/pages/student/dashboard/Dashboard'
 import { useEffect } from 'react'
 import EnrolledCourseDetail from './components/pages/student/dashboard/EnrolledCourseDetail'
+import PostResume from './components/pages/student/PostResume'
 function App() {
   const { pathname } = useLocation()
   useEffect(() => {
@@ -42,6 +44,7 @@ function App() {
         <Route path={FORGOT_PASSWORD_ROUTE} element={<ForgetPassword />} />
         <Route path={COURSES_DETAIL_ROUTE} element={<CoursesInfo />} />
         <Route path={STUDENT_DASHBOARD_ROUTE} element={<Dashboard />} />
+        <Route path={POST_RESUME_ROUTE} element={<PostResume />} />
         <Route
           path={`${STUDENT_DASHBOARD_ROUTE}/:slug`}
           element={<EnrolledCourseDetail />}
