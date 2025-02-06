@@ -1,18 +1,18 @@
 import { ChevronDown } from 'lucide-react'
 import React, { useState } from 'react'
 import JobCard from './JobCard'
-import { jobListArray } from '../utils/helper'
 
-const JobsContentCard = () => {
+const JobsContentCard = ({ filteredJobs = [] }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [selected, setSelected] = useState('Date')
 
   const options = ['Date', 'Name', 'Relevance']
+
   return (
     <div className="w-full">
       <div className="flex items-center justify-between">
         <p className="text-sm font-normal">
-          1 - 20 of (1854) Work from Home Job
+          1 - 20 of {filteredJobs.length} Work from Home Jobs
         </p>
         <div className="relative inline-block">
           <button
@@ -41,22 +41,9 @@ const JobsContentCard = () => {
           )}
         </div>
       </div>
-      {jobListArray.map((obj, index) => {
-        return (
-          <JobCard
-            positionName={obj.positionName}
-            companyName={obj.companyName}
-            status={obj.status}
-            companyLogo={obj.companyLogo}
-            workType={obj.workType}
-            salary={obj.salary}
-            workExperience={obj.workExperience}
-            postDate={obj.postDate}
-            index={index}
-          />
-        )
-      })}
-      <JobCard />
+      {filteredJobs.map((obj, index) => (
+        <JobCard key={index} {...obj} />
+      ))}
     </div>
   )
 }

@@ -621,7 +621,7 @@ export const jobListArray = [
     companyName: 'Accountants Club',
     status: 'Actively Hiring',
     companyLogo: CompanyLogo,
-    workType: 'Work from office',
+    workType: 'Work from Office',
     salary: '18,00,000 - 10,00,000',
     workExperience: '2 year(s)',
     postDate: '2 days ago',

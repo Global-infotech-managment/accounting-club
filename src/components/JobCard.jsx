@@ -1,4 +1,4 @@
-import Icons from "./common/Icons"
+import Icons from './common/Icons'
 
 const JobCard = ({
   positionName,
@@ -11,10 +11,7 @@ const JobCard = ({
   postDate,
   index,
 }) => {
-  // Prevent rendering blank cards
-  if (!positionName || !companyName) {
-    return null
-  }
+  if (!positionName || !companyName) return null
 
   const initials = positionName
     ? positionName
@@ -37,7 +34,7 @@ const JobCard = ({
             </div>
           </div>
         </div>
-        <div className="h-[56px] w-[56px] rounded-[7px] bg-[#FAFAFA] p-2">
+        <div className="bg-gray-200 h-[56px] w-[56px] rounded-[7px] p-2">
           {companyLogo ? (
             <img src={companyLogo} alt="logo" />
           ) : (
@@ -49,7 +46,9 @@ const JobCard = ({
       <div className="mb-5 flex items-center gap-5">
         <div className="flex items-center gap-2">
           <Icons iconName="workFromHome" />
-          <p className="text-sm text-black">{workType || 'Not Specified'}</p>
+          <p className="text-sm capitalize text-black">
+            {workType || 'Not Specified'}
+          </p>
         </div>
         <div className="flex items-center gap-2">
           <Icons iconName="experience" />
@@ -64,15 +63,8 @@ const JobCard = ({
           </p>
         </div>
       </div>
-      <div className="flex items-center justify-start">
-        <div className="flex items-center justify-center gap-[6px] rounded-[40px] bg-[#0000000A] px-3 py-[7px]">
-          <Icons iconName="refresh" />
-          <p className="text-[10px] font-normal text-[#000000B2]">
-            {postDate || 'N/A'}
-          </p>
-        </div>
-      </div>
     </div>
   )
 }
+
 export default JobCard
