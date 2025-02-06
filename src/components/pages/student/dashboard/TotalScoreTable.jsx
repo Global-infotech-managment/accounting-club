@@ -38,9 +38,9 @@ const TotalScoreTable = () => {
               'Score',
               '%',
               'My Review',
-            ].map((header) => (
+            ].map((header, index) => (
               <th
-                key={header}
+                key={index}
                 className="text-nowrap border border-[#FFFFFF33] bg-[#253466] px-4 py-2 text-center text-sm font-semibold text-white"
               >
                 {header}
@@ -54,7 +54,10 @@ const TotalScoreTable = () => {
               key={index}
               className="hover:bg-gray-50 text-nowrap border-t bg-[#F7F7F7] text-center"
             >
-              <td className="border border-[#D7D7D7] px-4 py-2">{item.srNo}</td>
+              <td className="border border-[#D7D7D7] px-4 py-2">
+                {index < 9 && '0'}
+                {index + 1}
+              </td>
               <td className="border border-[#D7D7D7] px-4 py-2">{item.date}</td>
               <td className="border border-[#D7D7D7] px-4 py-2">
                 {item.lesson}
@@ -99,7 +102,7 @@ const TotalScoreTable = () => {
         <div className="relative mt-4 flex items-center justify-center gap-4">
           <Button
             disabled={currentPage === 1}
-            transparentBtn={'Previous Page'}
+            transparentBtn={'Prev Page'}
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           />
           <Button

@@ -26,7 +26,8 @@ html {
 .wrapper {
   padding-bottom: 60px !important;
 }
-input[type='checkbox'] {
+input[type='checkbox'],
+input[type='radio'] {
   accent-color: #253466;
 }
 input[type='number'] {

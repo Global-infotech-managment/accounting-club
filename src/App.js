@@ -10,6 +10,7 @@ import {
   ENROLLED_COURSES_DETAIL_ROUTE,
   FORGOT_PASSWORD_ROUTE,
   HOME_ROUTE,
+  PAYMENT_METHOD_ROUTE,
   POST_RESUME_ROUTE,
   SEARCH_ACCOUNTING_JOBS_ROUTE,
   STUDENT_DASHBOARD_ROUTE,
@@ -28,6 +29,7 @@ import { useEffect } from 'react'
 import EnrolledCourseDetail from './components/pages/student/dashboard/EnrolledCourseDetail'
 import PostResume from './components/pages/student/PostResume'
 import SearchAccountingJob from './components/pages/student/SearchAccountingJob'
+import PaymentMethod from './components/common/PaymentMethod'
 function App() {
   const { pathname } = useLocation()
   useEffect(() => {
@@ -47,6 +49,7 @@ function App() {
         <Route path={COURSES_DETAIL_ROUTE} element={<CoursesInfo />} />
         <Route path={STUDENT_DASHBOARD_ROUTE} element={<Dashboard />} />
         <Route path={POST_RESUME_ROUTE} element={<PostResume />} />
+        <Route path={PAYMENT_METHOD_ROUTE} element={<PaymentMethod />} />
         <Route
           path={SEARCH_ACCOUNTING_JOBS_ROUTE}
           element={<SearchAccountingJob />}
