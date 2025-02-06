@@ -13,6 +13,7 @@ import {
   PAYMENT_METHOD_ROUTE,
   POST_RESUME_ROUTE,
   SEARCH_ACCOUNTING_JOBS_ROUTE,
+  SEARCH_WORK_FROM_HOME_JOBS_ROUTE,
   STUDENT_DASHBOARD_ROUTE,
   STUDENT_LOGIN_ROUTE,
   STUDENT_SIGNUP_ROUTE,
@@ -30,6 +31,7 @@ import EnrolledCourseDetail from './components/pages/student/dashboard/EnrolledC
 import PostResume from './components/pages/student/PostResume'
 import SearchAccountingJob from './components/pages/student/SearchAccountingJob'
 import PaymentMethod from './components/common/PaymentMethod'
+import JobList from './components/JobList'
 function App() {
   const { pathname } = useLocation()
   useEffect(() => {
@@ -50,6 +52,7 @@ function App() {
         <Route path={STUDENT_DASHBOARD_ROUTE} element={<Dashboard />} />
         <Route path={POST_RESUME_ROUTE} element={<PostResume />} />
         <Route path={PAYMENT_METHOD_ROUTE} element={<PaymentMethod />} />
+        <Route path={SEARCH_WORK_FROM_HOME_JOBS_ROUTE} element={<JobList />} />
         <Route
           path={SEARCH_ACCOUNTING_JOBS_ROUTE}
           element={<SearchAccountingJob />}
