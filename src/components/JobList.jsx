@@ -97,6 +97,7 @@
 import React, { useState } from 'react'
 import Input from './common/Input'
 import { ChevronDown } from 'lucide-react'
+import JobsContentCard from './JobsContentCard'
 
 const JobList = () => {
   const [openDropdown, setOpenDropdown] = useState(null)
@@ -111,7 +112,13 @@ const JobList = () => {
   const toggleDropdown = (dropdown) => {
     setOpenDropdown((prev) => (prev === dropdown ? null : dropdown))
   }
+  const handleViewAll = () => {
+    setOpenDropdown('all') // Expands all dropdowns
+  }
 
+  const handleClearAll = () => {
+    setSelectedModes([]) // Clears selected filters
+  }
   const handleCheckboxChange = (mode) => {
     setSelectedModes((prev) =>
       prev.includes(mode)
@@ -123,7 +130,9 @@ const JobList = () => {
   const renderDropdown = (name, items) => (
     <div
       className={`shadow-lg z-10 mt-2 w-full overflow-hidden rounded-lg bg-white transition-all duration-300 ease-in-out ${
-        openDropdown === name ? 'h-[138px]' : 'h-0 overflow-hidden'
+        openDropdown === name || openDropdown === 'all'
+          ? 'h-[138px]'
+          : 'h-0 overflow-hidden'
       }`}
     >
       {items.map((item) => (
@@ -193,11 +202,15 @@ const JobList = () => {
         {renderDropdown('salary', workModes)}
         <div className="h-[1px] w-full bg-[#0000001A]"></div>
         <div className="mt-3 flex items-center justify-between">
-          <button className="border-0">View all</button>
-          <button className="border-0">Clear all</button>
+          <button onClick={handleViewAll} className="border-0">
+            View all
+          </button>
+          <button onClick={handleClearAll} className="border-0">
+            Clear all
+          </button>
         </div>
       </div>
-      
+      <JobsContentCard />
     </div>
   )
 }

@@ -9,6 +9,7 @@ import StopSymbol from '../assets/images/png/stop-symbol.png'
 import onlineCourseImage1 from '../assets/images/png/online-course-1.png'
 import Icons from '../components/common/Icons'
 import courseImage from '../assets/images/png/course-details-hero.png'
+import CompanyLogo from '../assets/images/png/logo-main.png'
 import {
   COURSES_ROUTE,
   HOME_ROUTE,
@@ -612,5 +613,47 @@ export const testData = [
     correct: 5,
     score: '20/20',
     percentage: 100,
+  },
+]
+export const jobListArray = [
+  {
+    positionName: 'Chartered Accountant',
+    companyName: 'Accountants Club',
+    status: 'Actively Hiring',
+    companyLogo: CompanyLogo,
+    workType: 'Work from office',
+    salary: '18,00,000 - 10,00,000',
+    workExperience: '2 year(s)',
+    postDate: '2 days ago',
+  },
+  {
+    positionName: 'Senior Accountant',
+    companyName: 'Accountants Club',
+    status: 'Actively Hiring',
+    companyLogo: CompanyLogo,
+    workType: 'Work from Home',
+    salary: '18,00,000 - 10,00,000',
+    workExperience: '2 year(s)',
+    postDate: '5 days ago',
+  },
+  {
+    positionName: 'Chartered Accountant',
+    companyName: 'Accountants Club',
+    status: 'Actively Hiring',
+    companyLogo: CompanyLogo,
+    workType: 'Part Time',
+    salary: '18,00,000 - 10,00,000',
+    workExperience: '2 year(s)',
+    postDate: '3 days ago',
+  },
+  {
+    positionName: 'Senior Accountant',
+    companyName: 'Accountants Club',
+    status: 'Actively Hiring',
+    companyLogo: CompanyLogo,
+    workType: 'Work from Home',
+    salary: '18,00,000 - 10,00,000',
+    workExperience: '2 year(s)',
+    postDate: '5 days ago',
   },
 ]
