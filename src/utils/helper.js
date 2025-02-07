@@ -10,6 +10,11 @@ import onlineCourseImage1 from '../assets/images/png/online-course-1.png'
 import Icons from '../components/common/Icons'
 import courseImage from '../assets/images/png/course-details-hero.png'
 import CompanyLogo from '../assets/images/png/logo-main.png'
+import businessAccounting from '../assets/images/jpg/bussiness-accounting.jpg'
+import accountExpert from '../assets/images/jpg/account-expert.jpg'
+import taxExpert from '../assets/images/jpg/text-exprt.jpg'
+import allInOneExpert from '../assets/images/jpg/all-in-one-expert.jpg'
+import managerialAccounting from '../assets/images/webp/managerial-accounting.webp'
 import {
   COURSES_ROUTE,
   HOME_ROUTE,
@@ -20,6 +25,15 @@ import {
   CHARTERED_ACCOUNTANT_ROUTE,
   EMPLOYER_LOGIN_ROUTE,
   EMPLOYER_REGISTER_ROUTE,
+  PAYMENT_METHOD_ROUTE,
+  ABOUT_ROUTE,
+  STUDENT_SIGNUP_ROUTE,
+  CONTACT_ROUTE,
+  FORGOT_PASSWORD_ROUTE,
+  TERM_AND_CONDITION_ROUTE,
+  TWITTER_PATH,
+  FACEBOOK_PATH,
+  INSTAGRAM_PATH,
 } from './constant'
 import DashboardUi from '../components/pages/student/dashboard/DashboardUi'
 import MyCoursesUi from '../components/pages/student/dashboard/MyCoursesUi'
@@ -178,29 +192,29 @@ export const studentData = [
 
 export const menuData = {
   'Quick Links': [
-    { name: 'Home', link: '#home' },
-    { name: 'About Us', link: '#about-us' },
-    { name: 'Features', link: '#features' },
-    { name: 'Course Info', link: '#course-info' },
+    { name: 'Home', link: HOME_ROUTE },
+    { name: 'About Us', link: ABOUT_ROUTE },
+    { name: 'Features', link: ABOUT_ROUTE },
+    { name: 'Course Info', link: COURSES_ROUTE },
   ],
   'Others Links': [
-    { name: "New Student's Registration", link: '/sign-up' },
-    { name: 'Buy a Course', link: '/' },
-    { name: 'Play Classes', link: '/' },
-    { name: "New Student's Registration", link: '/sign-up' },
+    { name: "New Student's Registration", link: STUDENT_SIGNUP_ROUTE },
+    { name: 'Buy a Course', link: COURSES_ROUTE },
+    { name: 'Play Classes', link: COURSES_ROUTE },
+    { name: "New Student's Registration", link: STUDENT_SIGNUP_ROUTE },
   ],
   Help: [
-    { name: 'Contact Us', link: '/contact-us' },
-    { name: 'Forget password', link: '/' },
-    { name: 'FAQs', link: '/faq' },
-    { name: 'Terms of Use', link: '/terms' },
+    { name: 'Contact Us', link: CONTACT_ROUTE },
+    { name: 'Forget password', link: FORGOT_PASSWORD_ROUTE },
+    { name: 'FAQs', link: ABOUT_ROUTE },
+    { name: 'Terms of Use', link: TERM_AND_CONDITION_ROUTE },
   ],
   'Follow us on': [
-    { name: <Icons iconName="twitter" />, link: 'https://x.com/?lang=en&mx=2' },
-    { name: <Icons iconName="facebook" />, link: 'https://www.facebook.com' },
+    { name: <Icons iconName="twitter" />, link: TWITTER_PATH },
+    { name: <Icons iconName="facebook" />, link: FACEBOOK_PATH },
     {
       name: <Icons iconName="instagram" />,
-      link: 'https://www.instagram.com/',
+      link: INSTAGRAM_PATH,
     },
   ],
 }
@@ -288,10 +302,10 @@ export const chooseUsContent = [
 ]
 export const onlineCoursesData = [
   {
-    heading: 'Online Courses',
+    heading: 'Business Accounting',
     description:
-      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.Learn from the best in the industry with our online courses. You can upgrade the course to the next level.Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
-    image: onlineCourseImage1,
+      'This Course is the first step towards learning of Professional Accounting. Start Converting your bookish knowledge into practical. This course contains very useful information regarding the practical accounting work of Trading, Manufacturing and Service Industry. The course is very useful to all fresher B.Com, M.com, MBA, CA, ICWA, CS and all others who wish to work as a professional accountant in any type of Industry. The course is also very useful for those who has 3-4 year of experience in accounting field. Start learning accounts works with this course now.',
+    image: businessAccounting,
     price: '1004',
     discount: '50',
     language: 'English',
@@ -302,14 +316,14 @@ export const onlineCoursesData = [
     difficulty: 'Moderate',
     certificate: 'Upon completion of the courses',
     students: '4,000',
-    enrollPath: '#',
+    enrollPath: PAYMENT_METHOD_ROUTE,
   },
   {
-    heading: 'Onxczvline Courses',
+    heading: 'Accounts Expert',
     description:
-      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.Learn from the best in the industry with our online courses. You can upgrade the course to the next level.Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
-    image: onlineCourseImage1,
-    price: '1040',
+      'Our Accounts Expert course is based on 100% practical work. Learn Manual and Computerized Accounts from basic to finalization of Balance Sheet in few days. The course is very useful for Professional Accountants who wish to work at very good position in any type of Industry.Along with online video classes, Study Material and Practice Projects also provided to enrolled students. Our Practice which are based on actual business transactions. Through our online training any one can learn professional accounting very easily even you dont have any accounting background.',
+    image: accountExpert,
+    price: '6,200.00',
     discount: '501',
     language: 'English',
     duration: ' 15h 32min',
@@ -319,14 +333,14 @@ export const onlineCoursesData = [
     difficulty: 'Moderate',
     certificate: 'Upon completion of the courses',
     students: '4,000',
-    enrollPath: '#',
+    enrollPath: PAYMENT_METHOD_ROUTE,
   },
   {
-    heading: 'Onsdfvbline Courses',
+    heading: 'Tax Expert',
     description:
-      'Learn from the best in the industry with our online courses. You can upgrade the course to the next level.Learn from the best in the industry with our online courses. You can upgrade the course to the next level.Learn from the best in the industry with our online courses. You can upgrade the course to the next level.',
-    image: onlineCourseImage1,
-    price: '1004',
+      'Learn complete Indian Taxation from Basics to filing of online Returns. Our Taxation Expert course provides complete knowledge of Direct and Indirect Tax including GST. The course is based on 100% practical work through project work. This course is very usefull if students have some experience in Business Accounting; otherwise it is recomended to complete our Course-1 and 2 before starting this course. Practice Projects provided to enrolled students, which is based on actual business transactions. Indian taxation explained in a very easy way, anyone can understand in very short duration with perfection.',
+    image: taxExpert,
+    price: '6,800.00',
     discount: '50',
     language: 'English',
     duration: ' 15h 32min',
@@ -336,7 +350,58 @@ export const onlineCoursesData = [
     difficulty: 'Moderate',
     certificate: 'Upon completion of the courses',
     students: '4,000',
-    enrollPath: '#',
+    enrollPath: PAYMENT_METHOD_ROUTE,
+  },
+  {
+    heading: 'Accounts and Tax Expert (All in One)',
+    description:
+      'Our Accounts and Tax Expert course is the combination of Course-1, Course-2 and Course-3. This course includes all contents of our Business Accounting, Accounts Expert and Tax Expert Course. This course is a stunning course for Fresher B.Com, M.Com, MBA, CA, ICWA, CS, Business Men and also who wish to work as good accounts professional. Our Accounting and Taxation Course provide complete practical knowledge from basic to finalization of Balance Sheet and filing of online returns. After successfully completion of the course every candidate can works as a five to seven year experience person.',
+    image: allInOneExpert,
+    price: '10,800.00',
+    discount: '50',
+    language: 'English',
+    duration: ' 15h 32min',
+    fileNumber: '12',
+    subtitle: 'English, Hindi, French, Italian, Russian, Polish, Dutch',
+    lessons: '50',
+    difficulty: 'Moderate',
+    certificate: 'Upon completion of the courses',
+    students: '4,000',
+    enrollPath: PAYMENT_METHOD_ROUTE,
+  },
+  {
+    heading: 'Financial Accounting Fundamentals',
+    description:
+      'Learn the core principles of financial accounting, including journal entries, financial statements, and reporting. This course is ideal for beginners looking to understand how businesses track financial performance. Understanding the basics of accounting is a crucial skill for almost all finance professionals as it gives us insight into profitability, operations, growth, and the underlying drivers of the business. The Accounting Fundamentals course covers the importance of the financial statements and various financial statement terms. We will record transactions and prepare an multi-year income statement, balance sheet, and cashflow statement.',
+    image: onlineCourseImage1,
+    price: '15,200',
+    discount: '501',
+    language: 'English',
+    duration: '2h 28min',
+    fileNumber: '12',
+    subtitle: 'English, Hindi, French, Italian, Russian, Polish, Dutch',
+    lessons: '50',
+    difficulty: 'Moderate',
+    certificate: 'Upon completion of the courses',
+    students: '4,000',
+    enrollPath: PAYMENT_METHOD_ROUTE,
+  },
+  {
+    heading: 'Managerial Accounting for Decision-Making',
+    description:
+      'Managerial accountants need to analyze various events and business operations to translate data into useful information that can be leveraged by the company’s management in its decision-making process. Managerial accountants aim to provide detailed information regarding the company’s operations by analyzing areas like product lines, cost accounting, operating activities, and facilities. Financial accounting and managerial accounting are not the same. Whereas managerial accountants focus on internal decision-making, financial accountants prepare the company’s financial statements and financial reports according to Generally Accepted Accounting Principles (GAAP) for external stakeholders, such as investors and lenders. Since managerial accounting is used internally, GAAP does not apply.',
+    image: managerialAccounting,
+    price: '1,004',
+    discount: '50',
+    language: 'English',
+    duration: ' 15h 32min',
+    fileNumber: '12',
+    subtitle: 'English, Hindi, French, Italian, Russian, Polish, Dutch',
+    lessons: '50',
+    difficulty: 'Moderate',
+    certificate: 'Upon completion of the courses',
+    students: '4,000',
+    enrollPath: PAYMENT_METHOD_ROUTE,
   },
 ]
 // all country

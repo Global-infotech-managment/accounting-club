@@ -5,6 +5,7 @@ import Button from './common/Button'
 import RedArrow from '../assets/images/png/red-arrow.png'
 import { studentData } from '../utils/helper'
 import StudentEllipse from '../assets/images/png/second-hero-ellipse.png'
+import { ABOUT_ROUTE } from '../utils/constant'
 
 const StudentSay = () => {
   return (
@@ -28,7 +29,13 @@ const StudentSay = () => {
             className="mt-2 sm:mt-3 md:mt-4"
             text="Accountants Club transformed my career with practical training. The expert guidance and unique techniques made learning accounting effortless and enjoyable!"
           />
-          <Button className="mt-4 sm:mt-6 md:mt-8 lg:mt-10" bgBtn="View More" />
+          <div className=' flex items-center'>
+            <Button
+              className="mt-4 sm:mt-6 md:mt-8 lg:mt-10"
+              path={ABOUT_ROUTE}
+              bgBtn="View More"
+            />
+          </div>
         </div>
         <div className="w-full lg:max-w-[481px]">
           {studentData.map((obj, index) => (
@@ -36,12 +43,12 @@ const StudentSay = () => {
               key={index}
               className={`${index === 1 ? 'mt-4 sm:mt-6' : ''} rounded-5 border border-black border-opacity-5 bg-white p-4 sm:px-6 sm:py-[22px]`}
             >
-              <h2 className="flex items-center gap-2 text-xl font-semibold leading-150">
+              <h2 className="leading-150 flex items-center gap-2 text-xl font-semibold">
                 {obj.title}
               </h2>
               <Paragraph className="mt-2" text={obj.text} />
               <div className="flex items-center justify-between">
-                <div className="mt-2 flex items-center gap-2 text-sm font-normal !leading-150 text-light-black">
+                <div className="!leading-150 mt-2 flex items-center gap-2 text-sm font-normal text-light-black">
                   <img
                     width={32}
                     height={32}

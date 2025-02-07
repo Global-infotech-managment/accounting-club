@@ -5,6 +5,7 @@ import Paragraph from './common/Paragraph'
 import Button from './common/Button'
 import AboutUsEllipse from '../assets/images/png/about-inside-ellipse.png'
 import AboutUsEllipseBottom from '../assets/images/png/about-us-ellipse-bottom.png'
+import { ABOUT_ROUTE } from '../utils/constant'
 
 const AboutUs = () => {
   return (
@@ -30,10 +31,13 @@ const AboutUs = () => {
             className="mt-[10px]"
             text="Our courses in Accounting, Tally, Taxation, GST, Income Tax, TDS, and Payrolls are based on a unique methodology developed through over 20 years of..."
           />
-          <Button
-            className="mt-4 md:mt-6 lg:mt-10"
-            transparentBtn="Read more"
-          />
+          <div className="flex items-center">
+            <Button
+              className="mt-4 md:mt-6 lg:mt-10"
+              transparentBtn="Read more"
+              path={ABOUT_ROUTE}
+            />
+          </div>
         </div>
         <img
           className="pointer-events-none absolute bottom-0 right-0 z-0"

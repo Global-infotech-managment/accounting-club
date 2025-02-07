@@ -9,6 +9,7 @@ import HeroEllipse from '../assets/images/png/hero-img-ellipse.png'
 import HeroEllipseSecond from '../assets/images/png/second-hero-ellipse.png'
 import BookImage from '../assets/images/png/book.png'
 import { slides } from '../utils/helper'
+import { ABOUT_ROUTE, TELEPHONE_NUMBER } from '../utils/constant'
 
 const Hero = () => {
   const [activeIndex, setActiveIndex] = useState(0)
@@ -57,10 +58,12 @@ const Hero = () => {
                           <Button
                             className="max-sm:px-3 max-sm:py-2 max-sm:text-center"
                             bgBtn="Know More"
+                            path={ABOUT_ROUTE}
                           />
                           <Button
                             className="max-sm:px-3 max-sm:py-2 max-sm:text-center"
                             transparentBtn="Request Callback"
+                            path={TELEPHONE_NUMBER}
                           />
                         </>
                       ) : (

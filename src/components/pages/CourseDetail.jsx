@@ -52,8 +52,8 @@ const CourseDetail = () => {
           <div className="mt-10 w-full lg:w-4/12">
             <div className="flex items-end justify-between">
               <div className="flex items-end">
+                <Heading className="pe-2 !text-black" middleText={'₹'} />
                 <Heading className="!text-black" middleText={course.price} />
-                <span className="ps-1 font-semibold">USD</span>
               </div>
               <Paragraph
                 className="text-orange-red"
