@@ -1,4 +1,7 @@
-import HeroSlider from '../assets/images/png/hero-slider.png'
+import HeroSlider from '../assets/images/jpg/hero-1.jpg'
+import HeroSlider3 from '../assets/images/jpg/hero-3.jpg'
+import HeroSlider4 from '../assets/images/jpg/hero-4.jpg'
+import HeroSlider5 from '../assets/images/jpg/hero-5.jpg'
 import HeroSlider2 from '../assets/images/jpg/hero-image-2.jpg'
 import LevelOneImg from '../assets/images/png/level-one.png'
 import LevelTwoImg from '../assets/images/png/level-two.png'
@@ -110,19 +113,19 @@ export const slides = [
     title: 'Unlock Your Potential with Us',
     description:
       'Reach your career milestones with Accountants Club! High-quality classes, experienced mentors, interactive resources, and flexible learning options to empower you. Start your path to excellence today with us.',
-    image: HeroSlider,
+    image: HeroSlider3,
   },
   {
     title: 'Step into Success with Confidence',
     description:
       'Excel in your CA journey with Accountants Club! Dynamic learning, hands-on experience, curated resources, and adaptable schedules designed to suit your needs. Join today and rise to success with fully confident',
-    image: HeroSlider,
+    image: HeroSlider4,
   },
   {
     title: 'Empower Your Career with Us',
     description:
       'Take the leap with Accountants Club! Expert coaching, practical insights, detailed materials, and flexible plans to guide you every step of the way. Enroll now and fulfill your aspirations into Success with us',
-    image: HeroSlider,
+    image: HeroSlider5,
   },
 ]
 

@@ -8,6 +8,7 @@ import StudentEllipse from '../../assets/images/png/second-hero-ellipse.png'
 import bookImage from '../../assets/images/png/online-book.png'
 import { useParams } from 'react-router-dom'
 import { onlineCoursesData } from '../../utils/helper'
+import { PAYMENT_METHOD_ROUTE } from '../../utils/constant'
 const CourseDetail = () => {
   const { slug } = useParams()
   const course = onlineCoursesData.find(
@@ -156,6 +157,7 @@ const CourseDetail = () => {
               <Button
                 className="w-full !rounded-xl max-sm:px-3 max-sm:py-2 max-sm:text-center"
                 bgBtn="Enroll Now"
+                path={PAYMENT_METHOD_ROUTE}
               />
             </div>
           </div>
