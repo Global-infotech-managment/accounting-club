@@ -3,11 +3,11 @@ import { Route, Routes, useLocation } from 'react-router-dom'
 import Home from './components/pages/Home'
 import NotFound from './components/pages/NotFound'
 import {
+  ABOUT_ROUTE,
   COURSES_DETAIL_ROUTE,
   COURSES_ROUTE,
   EMPLOYER_LOGIN_ROUTE,
   EMPLOYER_REGISTER_ROUTE,
-  ENROLLED_COURSES_DETAIL_ROUTE,
   FORGOT_PASSWORD_ROUTE,
   HOME_ROUTE,
   JOBS_DETAIL_ROUTE,
@@ -34,6 +34,7 @@ import SearchAccountingJob from './components/pages/student/SearchAccountingJob'
 import PaymentMethod from './components/common/PaymentMethod'
 import JobList from './components/JobList'
 import JobDetail from './components/pages/JobDetail'
+import AboutUs from './components/pages/AboutUs'
 function App() {
   const { pathname } = useLocation()
   useEffect(() => {
@@ -44,6 +45,7 @@ function App() {
     <div className="mx-auto max-w-[1920px]">
       <Routes>
         <Route path={HOME_ROUTE} element={<Home />} />
+        <Route path={ABOUT_ROUTE} element={<AboutUs />} />
         <Route path={COURSES_ROUTE} element={<CoursesPage />} />
         <Route path={STUDENT_SIGNUP_ROUTE} element={<StudentSignUp />} />
         <Route path={STUDENT_LOGIN_ROUTE} element={<StudentLogin />} />

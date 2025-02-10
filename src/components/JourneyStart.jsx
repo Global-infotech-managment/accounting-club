@@ -8,7 +8,7 @@ import { STUDENT_LOGIN_ROUTE, STUDENT_SIGNUP_ROUTE } from '../utils/constant'
 const JourneyStart = () => {
   return (
     <div
-      className="relative z-0 w-full pt-4 translate-y-[24%] md:pt-8 lg:pt-[20px]"
+      className="relative z-0 w-full translate-y-[37%] pt-4 md:pt-8 lg:pt-[20px]"
       id="admission"
     >
       <div className="container relative z-20 px-3 lg:max-w-[1184px]">

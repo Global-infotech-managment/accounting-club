@@ -24,7 +24,7 @@ const JobCard = ({
   return (
     <Link
       to={`/jobs/${positionName.replaceAll(' ', '-').toLowerCase()}-${index}`}
-      className="mt-5 rounded-3xl p-5 shadow-job-card"
+      className="mt-5 block rounded-3xl p-5 shadow-job-card"
       key={index}
     >
       <div className="mb-4 flex items-center justify-between">
