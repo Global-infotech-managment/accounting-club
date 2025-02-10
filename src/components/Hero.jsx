@@ -70,6 +70,7 @@ const Hero = () => {
                         <Button
                           className="max-sm:px-3 max-sm:py-2 max-sm:text-center"
                           bgBtn="Start Learning Now"
+                          path={ABOUT_ROUTE}
                         />
                       )}
                     </div>

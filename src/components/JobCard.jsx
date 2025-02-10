@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import Icons from './common/Icons'
 
 const JobCard = ({
@@ -21,7 +22,11 @@ const JobCard = ({
     : ''
 
   return (
-    <div className="shadow-job-card mt-5 rounded-3xl p-5" key={index}>
+    <Link
+      to={`/jobs/${positionName.replaceAll(' ', '-').toLowerCase()}-${index}`}
+      className="mt-5 rounded-3xl p-5 shadow-job-card"
+      key={index}
+    >
       <div className="mb-4 flex items-center justify-between">
         <div>
           <p className="mb-[6px] text-lg font-semibold text-black">
@@ -63,7 +68,7 @@ const JobCard = ({
           </p>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
 

@@ -129,7 +129,7 @@ const CourseDetail = () => {
               <Icons iconName="resources" className="size-4" />
               <Paragraph
                 className="!text-lg"
-                text={
+                text={ 
                   <>
                     <span className="pe-1 !opacity-80">
                       Additional Resources:

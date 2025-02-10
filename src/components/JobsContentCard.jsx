@@ -42,7 +42,7 @@ const JobsContentCard = ({ filteredJobs = [] }) => {
         </div>
       </div>
       {filteredJobs.map((obj, index) => (
-        <JobCard key={index} {...obj} />
+        <JobCard key={index} index={index} {...obj} />
       ))}
     </div>
   )

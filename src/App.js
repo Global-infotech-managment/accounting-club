@@ -10,6 +10,7 @@ import {
   ENROLLED_COURSES_DETAIL_ROUTE,
   FORGOT_PASSWORD_ROUTE,
   HOME_ROUTE,
+  JOBS_DETAIL_ROUTE,
   PAYMENT_METHOD_ROUTE,
   POST_RESUME_ROUTE,
   SEARCH_ACCOUNTING_JOBS_ROUTE,
@@ -32,6 +33,7 @@ import PostResume from './components/pages/student/PostResume'
 import SearchAccountingJob from './components/pages/student/SearchAccountingJob'
 import PaymentMethod from './components/common/PaymentMethod'
 import JobList from './components/JobList'
+import JobDetail from './components/pages/JobDetail'
 function App() {
   const { pathname } = useLocation()
   useEffect(() => {
@@ -49,6 +51,7 @@ function App() {
         <Route path={EMPLOYER_REGISTER_ROUTE} element={<EmployerSignUp />} />
         <Route path={FORGOT_PASSWORD_ROUTE} element={<ForgetPassword />} />
         <Route path={COURSES_DETAIL_ROUTE} element={<CoursesInfo />} />
+        <Route path={JOBS_DETAIL_ROUTE} element={<JobDetail />} />
         <Route path={STUDENT_DASHBOARD_ROUTE} element={<Dashboard />} />
         <Route path={POST_RESUME_ROUTE} element={<PostResume />} />
         <Route path={PAYMENT_METHOD_ROUTE} element={<PaymentMethod />} />
