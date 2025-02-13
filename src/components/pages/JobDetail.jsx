@@ -4,6 +4,7 @@ import { jobListArray } from '../../utils/helper'
 import Heading from '../common/Heading'
 import Icons from '../common/Icons'
 import Button from '../common/Button'
+import { POST_RESUME_ROUTE } from '../../utils/constant'
 
 const JobDetail = () => {
   const { slug } = useParams()
@@ -139,7 +140,11 @@ const JobDetail = () => {
             finance, this is your chance!
           </p>
           <div className="mt-5 h-[1px] w-full bg-black opacity-10"></div>
-          <Button bgBtn={'Apply Now'} className={'mt-5'} />
+          <Button
+            bgBtn={'Apply Now'}
+            path={POST_RESUME_ROUTE}
+            className={'mt-5'}
+          />
         </div>
       </div>
     </>

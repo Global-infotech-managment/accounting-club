@@ -5,7 +5,7 @@ import Button from './common/Button'
 import RedArrow from '../assets/images/png/red-arrow.png'
 import { studentData } from '../utils/helper'
 import StudentEllipse from '../assets/images/png/second-hero-ellipse.png'
-import { ABOUT_ROUTE } from '../utils/constant'
+import { ABOUT_ROUTE, CONTACT_ROUTE } from '../utils/constant'
 
 const StudentSay = () => {
   return (
@@ -29,10 +29,10 @@ const StudentSay = () => {
             className="mt-2 sm:mt-3 md:mt-4"
             text="Accountants Club transformed my career with practical training. The expert guidance and unique techniques made learning accounting effortless and enjoyable!"
           />
-          <div className=' flex items-center'>
+          <div className="flex items-center">
             <Button
               className="mt-4 sm:mt-6 md:mt-8 lg:mt-10"
-              path={ABOUT_ROUTE}
+              path={CONTACT_ROUTE}
               bgBtn="View More"
             />
           </div>

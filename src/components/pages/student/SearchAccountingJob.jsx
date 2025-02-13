@@ -4,10 +4,15 @@ import { Dropdown } from '../../common/Dropdown'
 import Heading from '../../common/Heading'
 import Paragraph from '../../common/Paragraph'
 import Button from '../../common/Button'
-import { TERM_AND_CONDITION_ROUTE } from '../../../utils/constant'
+import {
+  SEARCH_WORK_FROM_HOME_JOBS_ROUTE,
+  TERM_AND_CONDITION_ROUTE,
+} from '../../../utils/constant'
 import { CountryList } from '../../../utils/helper'
 import Book from '../../../assets/images/png/book.png'
+import { useNavigate } from 'react-router-dom'
 const SearchAccountingJob = () => {
+  const navigate = useNavigate()
   const [qualification, setQualification] = useState('')
   const [experience, setExperience] = useState('')
 
@@ -28,13 +33,13 @@ const SearchAccountingJob = () => {
       !state ||
       !country
     ) {
-      return alert('Please fill all the fields including the resume upload')
+      return alert('Please fill all the fields ')
     }
 
     if (!termsAccepted) {
       return alert('Please accept the terms and conditions')
     }
-
+    navigate(SEARCH_WORK_FROM_HOME_JOBS_ROUTE)
     setSalary('')
 
     setCity('')
@@ -115,27 +120,17 @@ const SearchAccountingJob = () => {
                 <Dropdown
                   label="Salary Range"
                   options={[
-                    { label: '--select', value: '--select' },
-                    { label: '10+2 Commerce', value: '10+2 Commerce' },
-                    { label: '10+2 Others', value: '10+2 Others' },
-                    { label: 'B.Com', value: 'B.Com' },
-                    { label: 'BSc', value: 'BSc' },
-                    { label: 'B.A', value: 'B.A' },
-                    { label: 'B.Tech', value: 'B.Tech' },
-                    { label: 'M.Com', value: 'M.Com' },
-                    { label: 'MBA', value: 'MBA' },
-                    { label: 'MSc', value: 'MSc' },
-                    { label: 'M.A', value: 'M.A' },
-                    { label: 'M.Tech', value: 'M.Tech' },
-                    { label: 'CA Inter', value: 'CA Inter' },
-                    { label: 'CA', value: 'CA' },
-                    { label: 'ICWA', value: 'ICWA' },
-                    { label: 'CS', value: 'CS' },
-                    { label: 'LLb', value: 'LLb' },
-                    { label: 'Others', value: 'Others' },
+                    { label: '--select--', value: '--select' },
+                    { label: 'Below ₹2 LPA', value: 'Below ₹2 LPA' },
+                    { label: '₹2 LPA - ₹5 LPA', value: '₹2 LPA - ₹5 LPA' },
+                    { label: '₹5 LPA - ₹10 LPA', value: '₹5 LPA - ₹10 LPA' },
+                    { label: '₹10 LPA - ₹20 LPA', value: '₹10 LPA - ₹20 LPA' },
+                    { label: '₹20 LPA - ₹50 LPA', value: '₹20 LPA - ₹50 LPA' },
+                    { label: '₹50 LPA - ₹1 Cr', value: '₹50 LPA - ₹1 Cr' },
+                    { label: 'Above ₹1 Cr', value: 'Above ₹1 Cr' },
                   ]}
                   value={salary}
-                  onChange={setQualification} // Incorrect handler
+                  onChange={setSalary} // Corrected handler
                 />
               </div>
               <div className="w-full px-0 py-3 sm:w-6/12 sm:px-2">

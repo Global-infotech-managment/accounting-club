@@ -4,6 +4,7 @@ import Home from './components/pages/Home'
 import NotFound from './components/pages/NotFound'
 import {
   ABOUT_ROUTE,
+  CONTACT_ROUTE,
   COURSES_DETAIL_ROUTE,
   COURSES_ROUTE,
   EMPLOYER_LOGIN_ROUTE,
@@ -35,6 +36,7 @@ import PaymentMethod from './components/common/PaymentMethod'
 import JobList from './components/JobList'
 import JobDetail from './components/pages/JobDetail'
 import AboutUs from './components/pages/AboutUs'
+import ContactUs from './components/pages/ContactUs'
 function App() {
   const { pathname } = useLocation()
   useEffect(() => {
@@ -46,6 +48,7 @@ function App() {
       <Routes>
         <Route path={HOME_ROUTE} element={<Home />} />
         <Route path={ABOUT_ROUTE} element={<AboutUs />} />
+        <Route path={CONTACT_ROUTE} element={<ContactUs />} />
         <Route path={COURSES_ROUTE} element={<CoursesPage />} />
         <Route path={STUDENT_SIGNUP_ROUTE} element={<StudentSignUp />} />
         <Route path={STUDENT_LOGIN_ROUTE} element={<StudentLogin />} />
