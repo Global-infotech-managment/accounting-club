@@ -70,7 +70,7 @@ const EmployerSignUp = () => {
             </div>
             <div className="w-full sm:px-2 px-0 py-3 sm:w-6/12">
               <Input
-                placeholder="Postal Address* [For study Material] Line 1"
+                placeholder="Postal Address"
                 type="text"
                 value={addressLine1}
                 onChange={(e) => setAddressLine1(e.target.value)}
