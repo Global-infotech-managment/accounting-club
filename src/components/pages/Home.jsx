@@ -5,12 +5,15 @@ import AboutUs from '../AboutUs'
 import ChooseUs from '../ChooseUs'
 import StudentSay from '../StudentSay'
 import OnlineCoursesSell from '../OnlineCoursesSell'
+import HeroNew from '../common/HeroNew'
 
 const Home = () => {
+  const path = window.location.pathname
   return (
     <>
       <div className="overflow-hidden">
-        <Hero />
+        {path === '/' ? <HeroNew /> : <Hero />}
+
         <CompanyRank />
       </div>
       <AboutUs />

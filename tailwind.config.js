@@ -17,6 +17,9 @@ module.exports = {
         xl: '1280px',
       },
     },
+    fontSize: {
+      'custom-5xl': '56px',
+    },
     colors: {
       primary: '#253466',
       secondary: '#E5413F',
@@ -37,6 +40,7 @@ module.exports = {
     backgroundImage: {
       'company-rank': "url('/src/assets/images/png/company-rank.png')",
       journey: "url('/src/assets/images/png/journey-bg.png')",
+      hero: "url('/src/assets/images/webp/hero-bg.webp')",
       'footer-gradient':
         'linear-gradient(90deg, rgba(255, 255, 255, 0.1) 5.5%, #FFFFFF 52.75%, rgba(255, 255, 255, 0.1) 95%)',
     },
