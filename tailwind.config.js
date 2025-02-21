@@ -5,12 +5,12 @@ module.exports = {
     container: {
       center: true,
       padding: {
-        default: '12px',
+        DEFAULT: '12px',
         sm: '16px',
         lg: '20px',
       },
       maxWidth: {
-        default: '100%',
+        DEFAULT: '100%',
         sm: '640px',
         md: '768px',
         lg: '1024px',
@@ -31,13 +31,12 @@ module.exports = {
     },
     boxShadow: {
       nav: '0px 0px 23.6px 0px #0000001A',
-      "trusted": '0px 0px 7.5px 0px #00000026;',
+      trusted: '0px 0px 7.5px 0px #00000026',
       hero: '8px 8px 6px 0px #253466',
       'hero-image': '3px 3px 7px -2px #253466',
       'job-card': '0px 0px 12px 0px #0000000D',
       register: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
     },
-
     backgroundImage: {
       'company-rank': "url('/src/assets/images/png/company-rank.png')",
       journey: "url('/src/assets/images/png/journey-bg.png')",
@@ -53,7 +52,45 @@ module.exports = {
       fontSize: {
         '3xl': '28px',
         '4xl': '32px',
-        // '5xl': '36px',
+        '5xl': '36px',
+      },
+      keyframes: {
+        hoverShadowBefore: {
+          '0%': { width: '100%', height: '1px', top: '0', left: '0' },
+          '33%': { width: '1px', height: '100%', top: '0', left: '0' },
+          '66%': {
+            width: '1px',
+            height: '1px',
+            top: 'calc(100% - 1px)',
+            left: '0',
+          },
+          '100%': {
+            width: '100%',
+            height: '1px',
+            top: 'calc(100% - 1px)',
+            left: '0',
+          },
+        },
+        hoverShadowAfter: {
+          '0%': { width: '100%', height: '1px', bottom: '0', right: '0' },
+          '33%': { width: '1px', height: '100%', bottom: '0', right: '0' },
+          '66%': {
+            width: '1px',
+            height: '1px',
+            bottom: 'calc(100% - 1px)',
+            right: '0',
+          },
+          '100%': {
+            width: '100%',
+            height: '1px',
+            bottom: 'calc(100% - 1px)',
+            right: '0',
+          },
+        },
+      },
+      animation: {
+        hoverShadowBefore: 'hoverShadowBefore 1s forwards',
+        hoverShadowAfter: 'hoverShadowAfter 1s forwards',
       },
     },
   },
