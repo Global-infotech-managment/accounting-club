@@ -31,6 +31,7 @@ module.exports = {
     },
     boxShadow: {
       nav: '0px 0px 23.6px 0px #0000001A',
+      "trusted": '0px 0px 7.5px 0px #00000026;',
       hero: '8px 8px 6px 0px #253466',
       'hero-image': '3px 3px 7px -2px #253466',
       'job-card': '0px 0px 12px 0px #0000000D',
