@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay } from 'swiper/modules'
+import { Autoplay, FreeMode } from 'swiper/modules'
 import 'swiper/css'
 import aartiInstitute from '../../assets/images/png/aarti-institute.png'
 import shipWay from '../../assets/images/png/shipway.png'
@@ -23,16 +23,19 @@ const TrustedBy = () => {
 
       {/* Swiper Infinite Scrolling */}
       <Swiper
-        modules={[Autoplay]}
+        modules={[Autoplay, FreeMode]}
         spaceBetween={20}
         slidesPerView={5}
         loop={true}
-        speed={3000} // Continuous speed
+        speed={5000}
         autoplay={{
           delay: 0,
           disableOnInteraction: false,
+          stopOnLastSlide: false,
         }}
-        allowTouchMove={false} // Disable user interaction stopping
+        allowTouchMove={false} 
+        freeMode={true} 
+        freeModeMomentum={false} 
       >
         {[...brands, ...brands].map((src, index) => (
           <SwiperSlide key={index} className="py-3">
