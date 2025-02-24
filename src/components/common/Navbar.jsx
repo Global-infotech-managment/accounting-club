@@ -46,9 +46,9 @@ const Navbar = () => {
   }
   const locationPath = window.location.pathname
   return (
-    <header className="relative z-10 overflow-x-clip py-3 shadow-nav md:py-5">
+    <header className="relative z-10 overflow-x-clip py-3 md:py-5">
       <div className="container flex items-center justify-between gap-6 px-3 lg:max-w-[1184px]">
-        <Link to={HOME_ROUTE}>
+        <Link to={HOME_ROUTE} className="relative z-10">
           <img
             src={PageLogo}
             width={260}
@@ -80,16 +80,35 @@ const Navbar = () => {
                   )}
                 </Link>
                 {obj.subLinks && (
-                  <div className="rounded-4 pointer-events-none absolute -left-6 top-6 w-fit bg-white opacity-0 shadow-nav duration-300 group-hover:pointer-events-auto group-hover:opacity-100">
-                    {obj.subLinks.map((subLink, subIndex) => (
-                      <Link
-                        key={subIndex}
-                        to={subLink.url}
-                        className="text-slate hover:bg-gray-100 block text-nowrap px-4 py-2 duration-300 hover:text-primary"
-                      >
-                        {subLink.title}
-                      </Link>
-                    ))}
+                  <div className="rounded-4 pointer-events-none absolute -left-[44.05vw] top-[25px] w-screen bg-white opacity-0 duration-300 group-hover:pointer-events-auto group-hover:opacity-100 pt-7">
+                    <div className="h-[1px] w-full border-t border-[#25346633]"></div>
+                    <div className="container px-3 lg:max-w-[1184px]">
+                      <p className="border-b border-[#25346633] pb-[22px] pt-4 text-[16px] font-normal text-black">
+                        {obj.title}
+                      </p>
+                      <div className="flex w-full flex-wrap py-6">
+                        {obj.subLinks.map((subLink, subIndex) => (
+                          <Link
+                            key={subIndex}
+                            to={subLink.url}
+                            className="text-slate hover:bg-gray-100 flex w-4/12 items-start gap-3 text-nowrap px-4 py-2 duration-300 hover:text-primary"
+                          >
+                            <Icons
+                              className="mr-2 min-h-[23px] min-w-[23px]"
+                              iconName={subLink.icon}
+                            />
+                            <p className="flex flex-col">
+                              <span className="font-medium">
+                                {subLink.title}
+                              </span>
+                              <span className="mt-[2px] text-wrap">
+                                {subLink.description}
+                              </span>
+                            </p>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>

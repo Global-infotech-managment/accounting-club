@@ -56,14 +56,23 @@ export const navLinks = [
       {
         title: 'Post Your Resume',
         url: POST_RESUME_ROUTE,
+        icon: 'postResume',
+        description:
+          'Post your resume and unlock exciting career opportunities with top employers today!',
       },
       {
         title: 'Search Accounting Jobs',
         url: SEARCH_ACCOUNTING_JOBS_ROUTE,
+        icon: 'searchAccountingJobs',
+        description:
+          'Find flexible work-from-home opportunities and grow your career.',
       },
       {
         title: 'Search Work From Home Jobs',
         url: SEARCH_WORK_FROM_HOME_JOBS_ROUTE,
+        icon: 'workFromHomeJobs',
+        description:
+          'Search for top accounting jobs and advance your career today.',
       },
     ],
   },
