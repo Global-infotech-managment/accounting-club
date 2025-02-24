@@ -80,7 +80,9 @@ const Navbar = () => {
                   )}
                 </Link>
                 {obj.subLinks && (
-                  <div className="rounded-4 pointer-events-none absolute -left-[44.05vw] top-[25px] w-screen bg-white opacity-0 duration-300 group-hover:pointer-events-auto group-hover:opacity-100 pt-7">
+                  <div
+                    className={`rounded-4 pointer-events-none absolute top-[25px] w-screen bg-white pt-7 opacity-0 duration-300 group-hover:pointer-events-auto group-hover:opacity-100 ${obj.title.toLocaleLowerCase() === 'jobs' && '-left-[44.4vw]'} ${obj.title.toLocaleLowerCase() === 'services' && '-left-[49.6vw]'} ${obj.title.toLocaleLowerCase() === 'employers' && '-left-[57.1vw]'}`}
+                  >
                     <div className="h-[1px] w-full border-t border-[#25346633]"></div>
                     <div className="container px-3 lg:max-w-[1184px]">
                       <p className="border-b border-[#25346633] pb-[22px] pt-4 text-[16px] font-normal text-black">
