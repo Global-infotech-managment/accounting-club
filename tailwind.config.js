@@ -28,11 +28,13 @@ module.exports = {
       'light-white': '#D3D6E0',
       'light-thin': '#F8F8F8',
       'light-black': '#333333',
+      'dark-black': '#1E1E1E',
       'light-blue': '#2289FF',
     },
     boxShadow: {
       nav: '0px 0px 23.6px 0px #0000001A',
       trusted: '0px 0px 7.5px 0px #00000026',
+      'facility-box': '0px 4px 4px 0px #0000000D',
       hero: '8px 8px 6px 0px #253466',
       'hero-image': '3px 3px 7px -2px #253466',
       'job-card': '0px 0px 12px 0px #0000000D',
@@ -41,6 +43,8 @@ module.exports = {
     },
     backgroundImage: {
       'company-rank': "url('/src/assets/images/png/company-rank.png')",
+      'facility-box': "url('/src/assets/images/svg/facilityBox.svg')",
+      'best-facility': "url('/src/assets/images/webp/best-facility.webp')",
       journey: "url('/src/assets/images/png/journey-bg.png')",
       hero: "url('/src/assets/images/webp/hero-bg.webp')",
       'footer-gradient':

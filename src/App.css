@@ -47,3 +47,6 @@ input::-webkit-inner-spin-button {
 .blur_17{
   backdrop-filter: blur(17.299999237060547px)
 }
+.bg-size-100{
+  background-size: 100% 100%;
+}

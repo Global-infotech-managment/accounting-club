@@ -18,6 +18,12 @@ import accountExpert from '../assets/images/jpg/account-expert.jpg'
 import taxExpert from '../assets/images/jpg/text-exprt.jpg'
 import allInOneExpert from '../assets/images/jpg/all-in-one-expert.jpg'
 import managerialAccounting from '../assets/images/webp/managerial-accounting.webp'
+import easyPurchase from '../assets/images/svg/easyPurchase.svg'
+import expertLead from '../assets/images/svg/expertLead.svg'
+import onlineConsultant from '../assets/images/svg/onlineConsulatant.svg'
+import flexLearning from '../assets/images/svg/flexTime.svg'
+import certification from '../assets/images/svg/certification.svg'
+import support from '../assets/images/svg/support.svg'
 import {
   COURSES_ROUTE,
   HOME_ROUTE,
@@ -806,5 +812,28 @@ export const jobListArray = [
     salary: '18,00,000 - 10,00,000',
     workExperience: '2 year(s)',
     postDate: '5 days ago',
+  },
+]
+export const bestFacilities = [
+  { img: easyPurchase, title: 'Easy Purchase' },
+  {
+    img: expertLead,
+    title: 'Expert-Led Courses',
+  },
+  {
+    img: onlineConsultant,
+    title: 'Online Consultation',
+  },
+  {
+    img: flexLearning,
+    title: 'Flexible Learning',
+  },
+  {
+    img: certification,
+    title: 'Certification',
+  },
+  {
+    img: support,
+    title: '24/7 Support',
   },
 ]

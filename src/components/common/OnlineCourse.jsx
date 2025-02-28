@@ -11,9 +11,9 @@ const OnlineCourse = ({
   detailPath,
 }) => {
   return (
-    <div className="bg-[linear-gradient(180deg,_rgba(255,_255,_255,_0.6)_0%,_rgba(247,_250,_255,_0.6)_100%)] rounded-[20px] border border-[#EDEFF2] p-4 transition-all duration-300 hover:bg-courses-card hover:shadow-course-card">
+    <div className="rounded-[20px] border border-[#EDEFF2] bg-[linear-gradient(180deg,_rgba(255,_255,_255,_0.6)_0%,_rgba(247,_250,_255,_0.6)_100%)] p-4 transition-all duration-300 hover:bg-courses-card hover:shadow-course-card">
       <img
-        className="min-h-[200px] w-full rounded-[8px] object-cover"
+        className="max-h-[216px] min-h-[200px] w-full rounded-[8px] object-cover"
         src={image}
         alt="course image"
       />
