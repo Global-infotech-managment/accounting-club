@@ -46,7 +46,7 @@ const Navbar = () => {
   }
   const locationPath = window.location.pathname
   return (
-    <header className="relative z-10 overflow-x-clip py-3 md:py-5">
+    <header className="relative bg-white z-10 overflow-x-clip py-3 md:py-5">
       <div className="container flex items-center justify-between gap-6 px-3 lg:max-w-[1184px]">
         <Link to={HOME_ROUTE} className="relative z-10">
           <img

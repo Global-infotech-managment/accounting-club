@@ -26,10 +26,10 @@ const OnlineCoursesSell = () => {
         className="mb-3 text-center xl:mb-4"
         middleText={
           <>
-            <span className="text-black">
-              {locationPath.includes('courses') ? 'Popular' : 'Online'}
-            </span>{' '}
-            <span className="text-red-500"> Courses</span>
+            <span className="text-black">Online</span>{' '}
+            <span className="bg-gradient-to-r !text-transparent from-[#253466] via-[#200A5B] to-[#E5413F] bg-clip-text">
+              Courses
+            </span>
           </>
         }
       />

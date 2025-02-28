@@ -12,7 +12,7 @@ const Home = () => {
   return (
     <>
       <div className="overflow-hidden">
-        {path === '/' ? <HeroNew /> : <Hero />}
+        <Hero />
       </div>
       <TrustedBy />
       <AboutUs />
