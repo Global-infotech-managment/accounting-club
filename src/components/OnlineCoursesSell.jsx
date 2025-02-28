@@ -27,17 +27,15 @@ const OnlineCoursesSell = () => {
         middleText={
           <>
             <span className="text-black">Online</span>{' '}
-            <span className="bg-gradient-to-r !text-transparent from-[#253466] via-[#200A5B] to-[#E5413F] bg-clip-text">
-              Courses
-            </span>
+            <span className="text-gradient">Courses</span>
           </>
         }
       />
       <Paragraph
-        className="mx-auto mb-6 max-w-[590px] text-center text-black"
+        className="mx-auto mb-8 max-w-[590px] text-center text-black"
         text="Be an Accounting and taxation expert in few days even if you don't have any Accounting background. Choose a program as per your requirement"
       />
-      <div className="grid grid-cols-1 gap-4 pt-10 md:grid-cols-2 lg:gap-5 xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-5 xl:grid-cols-3">
         {onlineCoursesData.slice(0, coursesToDisplay).map((courses, index) => {
           return (
             <OnlineCourse

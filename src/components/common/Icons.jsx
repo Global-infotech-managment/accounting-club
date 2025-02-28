@@ -37,6 +37,7 @@ const Icons = ({ iconName, className }) => {
         />
       </svg>
     ),
+  
     searchAccountingJobs: (
       <svg
         width="24"

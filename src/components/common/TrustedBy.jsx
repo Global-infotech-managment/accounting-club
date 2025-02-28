@@ -25,7 +25,6 @@ const TrustedBy = () => {
       <Swiper
         modules={[Autoplay, FreeMode]}
         spaceBetween={20}
-        slidesPerView={5}
         loop={true}
         speed={5000}
         autoplay={{
@@ -33,9 +32,16 @@ const TrustedBy = () => {
           disableOnInteraction: false,
           stopOnLastSlide: false,
         }}
-        allowTouchMove={false} 
-        freeMode={true} 
-        freeModeMomentum={false} 
+        allowTouchMove={false}
+        freeMode={true}
+        freeModeMomentum={false}
+        breakpoints={{
+          320: { slidesPerView: 2 }, // Small screens
+          480: { slidesPerView: 3 }, // Medium screens
+          768: { slidesPerView: 4 }, // Tablets
+          1024: { slidesPerView: 5 }, // Desktops
+          1280: { slidesPerView: 6 }, // Large desktops
+        }}
       >
         {[...brands, ...brands].map((src, index) => (
           <SwiperSlide key={index} className="py-3">

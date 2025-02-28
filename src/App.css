@@ -41,3 +41,6 @@ input::-webkit-inner-spin-button {
 .active_sidebar_link svg path {
   fill: white !important;
 }
+.text-gradient {
+  @apply bg-[linear-gradient(94.11deg,#253466_-59.85%,#200A5B_-14.49%,#E5413F_121.27%)] bg-clip-text font-bold text-[transparent];
+}

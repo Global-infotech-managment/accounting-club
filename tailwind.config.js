@@ -28,6 +28,7 @@ module.exports = {
       'light-white': '#D3D6E0',
       'light-thin': '#F8F8F8',
       'light-black': '#333333',
+      'light-blue': '#2289FF',
     },
     boxShadow: {
       nav: '0px 0px 23.6px 0px #0000001A',
@@ -35,6 +36,7 @@ module.exports = {
       hero: '8px 8px 6px 0px #253466',
       'hero-image': '3px 3px 7px -2px #253466',
       'job-card': '0px 0px 12px 0px #0000000D',
+      'course-card': '0px 0px 22.7px 0px #00000029;',
       register: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
     },
     backgroundImage: {
@@ -43,6 +45,8 @@ module.exports = {
       hero: "url('/src/assets/images/webp/hero-bg.webp')",
       'footer-gradient':
         'linear-gradient(90deg, rgba(255, 255, 255, 0.1) 5.5%, #FFFFFF 52.75%, rgba(255, 255, 255, 0.1) 95%)',
+
+      'courses-card': 'linear-gradient(180deg, #F3FAFD 0%, #F7FAFF 100%)',
     },
     extend: {
       colors: {
