@@ -11,7 +11,7 @@ const OnlineCourse = ({
   detailPath,
 }) => {
   return (
-    <div className="hover:bg-courses-card hover:shadow-course-card rounded-[20px] border border-[transparent] border-opacity-10 p-4 transition-all duration-300 hover:border-[]">
+    <div className="bg-[linear-gradient(180deg,_rgba(255,_255,_255,_0.6)_0%,_rgba(247,_250,_255,_0.6)_100%)] rounded-[20px] border border-[#EDEFF2] p-4 transition-all duration-300 hover:bg-courses-card hover:shadow-course-card">
       <img
         className="min-h-[200px] w-full rounded-[8px] object-cover"
         src={image}
@@ -29,7 +29,7 @@ const OnlineCourse = ({
       <div className="flex gap-3">
         <a
           href={detailPath}
-          className="text-light-blue flex items-center transition-all ease-in-out duration-150 hover:gap-2 justify-center gap-[6px] text-[16px]"
+          className="flex items-center justify-center gap-[6px] text-[16px] text-light-blue transition-all duration-150 ease-in-out hover:gap-2"
         >
           Learn more <img src={learnMoreArrow} alt="learnMoreArrow" />
         </a>

@@ -7,13 +7,13 @@ import Button from './common/Button'
 
 const OnlineCoursesSell = () => {
   // State to manage the number of courses to display
-  const [coursesToDisplay, setCoursesToDisplay] = useState(3)
+  const [coursesToDisplay, setCoursesToDisplay] = useState(6)
 
   // Function to handle "Show More" and "Show Less"
   const toggleCourses = () => {
     if (coursesToDisplay === onlineCoursesData.length) {
       // If all courses are shown, collapse back to 3
-      setCoursesToDisplay(3)
+      setCoursesToDisplay(6)
     } else {
       // Otherwise, show 3 more courses
       setCoursesToDisplay(coursesToDisplay + 3)
@@ -49,7 +49,7 @@ const OnlineCoursesSell = () => {
           )
         })}
       </div>
-      {onlineCoursesData.length > 3 && (
+      {onlineCoursesData.length > 6 && (
         <>
           {' '}
           <div className="mt-12 flex justify-center">
