@@ -37,6 +37,44 @@ const Icons = ({ iconName, className }) => {
         />
       </svg>
     ),
+    plus: (
+      <svg
+        width="17"
+        height="17"
+        viewBox="0 0 17 17"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M7.65039 17V0H9.35039V17H7.65039Z"
+          fill="black"
+        />
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M0 7.65002L17 7.65002L17 9.35002L-7.43094e-08 9.35002L0 7.65002Z"
+          fill="black"
+        />
+      </svg>
+    ),
+    minus: (
+      <svg
+        width="17"
+        height="3"
+        viewBox="0 0 17 3"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M0 0.650024L17 0.650024L17 2.35002L-7.43094e-08 2.35002L0 0.650024Z"
+          fill="black"
+        />
+      </svg>
+    ),
     searchAccountingJobs: (
       <svg
         width="24"
