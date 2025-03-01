@@ -21,6 +21,7 @@ const FAQ = () => {
         <div className="w-7/12">
           <Accordion items={accordionContent} />
         </div>
+        <div className="w-5/12"></div>
       </div>
     </div>
   )

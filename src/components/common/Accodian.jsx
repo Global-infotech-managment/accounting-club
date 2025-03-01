@@ -14,7 +14,7 @@ export const Accordion = ({ items }) => {
       {items.map((item, index) => (
         <div
           key={index}
-          className={`rounded-xl border border-black border-opacity-5 backdrop-blur-[17px] ${openIndex === index ? 'bg-[linear-gradient(180deg,_rgba(255,_255,_255,_0.6)_0%,_rgba(247,_250,_255,_0.6)_100%)]' : 'bg-courses-card'}`}
+          className={`rounded-xl border border-black border-opacity-5 backdrop-blur-[17px] ${openIndex === index ? 'bg-[linear-gradient(180deg,_rgba(255,_255,_255,_0.6)_0%,_rgba(247,_250,_255,_0.6)_100%)] shadow-trusted' : 'bg-courses-card'}`}
         >
           <button
             onClick={() => toggleAccordion(index)}
