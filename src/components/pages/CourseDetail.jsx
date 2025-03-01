@@ -19,7 +19,7 @@ const CourseDetail = () => {
     return <div className="text-red-500 text-center">Course not found</div>
   }
   return (
-    <div className="position-relative">
+    <div className="position-relative mb-[100px]">
       <img
         className="pointer-events-none absolute bottom-72 left-0 max-xl:hidden"
         src={StudentEllipse}
