@@ -3,16 +3,17 @@ import Heading from './common/Heading'
 import Paragraph from './common/Paragraph'
 import Button from './common/Button'
 import FooterEllipse from '../assets/images/png/footer-ellipse.png'
-import { STUDENT_LOGIN_ROUTE, STUDENT_SIGNUP_ROUTE } from '../utils/constant'
-
+import { STUDENT_SIGNUP_ROUTE } from '../utils/constant'
+import star from '../assets/images/svg/star.svg'
 const JourneyStart = () => {
   return (
     <div
-      className="relative z-0 w-full translate-y-[37%] pt-4 md:pt-8 lg:pt-[20px]"
+      className="relative z-0 my-[50px] sm:my-16 lg:my-[110px]"
       id="admission"
     >
-      <div className="container relative z-20 px-3 lg:max-w-[1184px]">
-        <div className="max-sm:rounded-4 bg-journey bg-center bg-no-repeat p-6 sm:bg-[length:100%_100%] sm:p-8 lg:p-16">
+      <div className="container px-3 lg:max-w-[1184px]">
+        <div className="max-sm:rounded-4 relative rounded-xl bg-secondary p-6 sm:bg-[length:100%_100%] sm:p-8 lg:p-16">
+          <img src={star} alt="star" className="w-full absolute bottom-0 start-0 pointer-events-none" />
           <div className="mx-auto w-full max-w-[746px]">
             <Heading
               className="text-center !text-white"
@@ -24,12 +25,7 @@ const JourneyStart = () => {
             />
             <div className="mt-3 flex items-center justify-center gap-2 max-sm:flex-wrap sm:mt-4 sm:gap-3 md:mt-6 md:gap-5 lg:mt-10">
               <Button
-                path={STUDENT_LOGIN_ROUTE}
-                className="!bg-white !text-primary hover:!border-white hover:!bg-[transparent] hover:!text-white max-sm:w-full"
-                bgBtn="Get Started"
-              />
-              <Button
-                className="!border-white !bg-primary bg-[transparent] text-white hover:!bg-white hover:!text-primary max-sm:w-full"
+                className="!border-[transparent] max-sm:w-full"
                 path={STUDENT_SIGNUP_ROUTE}
                 transparentBtn="Register For Free"
               />
