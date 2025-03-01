@@ -18,7 +18,7 @@ export const Accordion = ({ items }) => {
         >
           <button
             onClick={() => toggleAccordion(index)}
-            className={`flex w-full items-center justify-between p-4 text-left text-[18px] font-medium text-black transition-all duration-300 ease-in-out ${openIndex === index && '!pb-[10px]'}`}
+            className={`flex w-full items-center justify-between p-4 text-left text-[16px] font-medium text-black transition-all duration-300 ease-in-out md:text-[18px] ${openIndex === index && '!pb-[10px]'}`}
           >
             {item.title}
             <span
@@ -37,7 +37,9 @@ export const Accordion = ({ items }) => {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <div className="text-gray-700 p-4 !pt-0">{item.content}</div>
+            <div className="p-4 !pt-0 text-[14px] text-black md:text-[16px]">
+              {item.content}
+            </div>
           </motion.div>
         </div>
       ))}

@@ -59,6 +59,34 @@ const Icons = ({ iconName, className }) => {
         />
       </svg>
     ),
+    message: (
+      <svg
+        width="67"
+        height="63"
+        viewBox="0 0 67 63"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M13.2977 52.0866L0 63V2C0 0.895431 0.895429 0 2 0H65C66.1046 0 67 0.895429 67 2V50.0866C67 51.1912 66.1046 52.0866 65 52.0866H13.2977Z"
+          fill="url(#paint0_linear_1054_8277)"
+        />
+        <defs>
+          <linearGradient
+            id="paint0_linear_1054_8277"
+            x1="-5.76344"
+            y1="7.93944e-06"
+            x2="314.142"
+            y2="22.1353"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stop-color="#253466" />
+            <stop offset="0.184592" stop-color="#413660" />
+            <stop offset="1" stop-color="#E5413F" />
+          </linearGradient>
+        </defs>
+      </svg>
+    ),
     minus: (
       <svg
         width="17"
