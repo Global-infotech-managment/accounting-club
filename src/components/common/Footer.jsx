@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import FooterLogo from '../../assets/images/png/footer-logo.png'
 import { menuData } from '../../utils/helper'
 import Icons from './Icons'
-import { HOME_ROUTE } from '../../utils/constant'
+import { HOME_ROUTE, TERM_AND_CONDITION_ROUTE } from '../../utils/constant'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
@@ -62,8 +62,20 @@ const Footer = () => {
       </div>
       <div className="h-px bg-footer-gradient"></div>
       <p className="leading-140 text-sm max-sm:text-xs px-3 py-3 text-center text-white md:py-[18px]">
-        Copyright Accountants Club © {currentYear} | Privacy Policy | Terms &
-        Conditions
+        Copyright Accountants Club © {currentYear} |{' '}
+        <a
+          href={TERM_AND_CONDITION_ROUTE}
+          className="transition-all duration-300 ease-in-out hover:text-secondary"
+        >
+          Privacy Policy
+        </a>{' '}
+        |{' '}
+        <a
+          href={TERM_AND_CONDITION_ROUTE}
+          className="transition-all duration-300 ease-in-out hover:text-secondary"
+        >
+          Terms & Conditions
+        </a>
       </p>
     </div>
   )
