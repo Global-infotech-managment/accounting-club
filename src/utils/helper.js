@@ -837,3 +837,32 @@ export const bestFacilities = [
     title: '24/7 Support',
   },
 ]
+export const accordionContent = [
+  {
+    title: 'What is your refund policy?',
+    content: 'We offer a full refund within 30 days of purchase.',
+  },
+  {
+    title: 'How do I contact support?',
+    content: 'You can reach us via email at support@example.com.',
+  },
+  {
+    title: 'Do you offer customization?',
+    content: 'Yes, we offer tailored solutions for businesses.',
+  },
+  {
+    title: 'What are the benefits of joining the Accountant Club?',
+    content:
+      'Joining the Accountant Club provides expert training, mentorship, networking opportunities, certification, practical skills, and career growth in accounting.',
+  },
+  {
+    title: 'Do you offer certification upon course completion?',
+    content:
+      'Joining the Accountant Club provides expert training, mentorship, networking opportunities, certification, practical skills, and career growth in accounting.',
+  },
+  {
+    title: 'How can I access expert guidance and mentorship?',
+    content:
+      'Joining the Accountant Club provides expert training, mentorship, networking opportunities, certification, practical skills, and career growth in accounting.',
+  },
+]
