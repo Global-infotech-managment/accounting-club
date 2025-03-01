@@ -212,18 +212,15 @@ export const menuData = {
   'Quick Links': [
     { name: 'Home', link: HOME_ROUTE },
     { name: 'About Us', link: ABOUT_ROUTE },
-    { name: 'Features', link: ABOUT_ROUTE },
-    { name: 'Course Info', link: COURSES_ROUTE },
+    { name: 'jobs', link: SEARCH_WORK_FROM_HOME_JOBS_ROUTE },
+    { name: 'Course', link: COURSES_ROUTE },
   ],
   'Others Links': [
     { name: "New Student's Registration", link: STUDENT_SIGNUP_ROUTE },
     { name: 'Buy a Course', link: COURSES_ROUTE },
-    { name: 'Play Classes', link: COURSES_ROUTE },
-    { name: "New Student's Registration", link: STUDENT_SIGNUP_ROUTE },
   ],
   Help: [
     { name: 'Contact Us', link: CONTACT_ROUTE },
-    { name: 'Forget password', link: FORGOT_PASSWORD_ROUTE },
     { name: 'FAQs', link: ABOUT_ROUTE },
     { name: 'Terms of Use', link: TERM_AND_CONDITION_ROUTE },
   ],

@@ -13,8 +13,8 @@ const JourneyStart = () => {
     >
       <div className="container px-3 lg:max-w-[1184px]">
         <div className="max-sm:rounded-4 relative rounded-xl bg-secondary p-6 sm:bg-[length:100%_100%] sm:p-8 lg:p-16">
-          <img src={star} alt="star" className="w-full absolute bottom-0 start-0 pointer-events-none" />
-          <div className="mx-auto w-full max-w-[746px]">
+          <img src={star} alt="star" className="w-full absolute bottom-0 start-0 pointer-events-none -z-0 opacity-70" />
+          <div className="mx-auto w-full max-w-[746px] relative z-10">
             <Heading
               className="text-center !text-white"
               middleText="Start Your Journey"

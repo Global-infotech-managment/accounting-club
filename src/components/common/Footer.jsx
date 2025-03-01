@@ -7,9 +7,8 @@ import { HOME_ROUTE } from '../../utils/constant'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
-  const locationPath = window.location.pathname
   return (
-    <div className={`bg-secondary pt-[130px] lg:pt-[170px]`}>
+    <div className={`bg-primary pt-[64px]`}>
       <div className="container px-3 pb-6 md:pb-10 lg:max-w-[1184px] lg:pb-14">
         <div className="flex items-start justify-between gap-6 max-lg:flex-wrap">
           <div className="w-full lg:max-w-[350px]">
@@ -20,7 +19,7 @@ const Footer = () => {
                 alt="footer logo"
               />
             </Link>
-            <p className="!leading-150 mt-2 text-sm text-white">
+            <p className="!leading-150 mt-2 text-[14px] text-white">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
               eiusmod tempor incididunt ut labore et dolor
             </p>
@@ -30,11 +29,11 @@ const Footer = () => {
               <Icons iconName="instagram" />
             </div>
           </div>
-          <div className="flex w-full justify-between gap-8 max-md:flex-wrap xl:max-w-[732px] xl:gap-[73px]">
+          <div className="flex w-full justify-between gap-8 max-md:flex-wrap xl:max-w-[732px] xl:gap-10">
             {Object.entries(menuData).map(([category, items], index, array) => (
               <div key={category}>
                 <h2
-                  className={`${index === 3 ? 'max-sm:hidden' : 'inline-block'} !leading-150 text-base font-medium text-white sm:text-lg`}
+                  className={`${index === 3 ? 'max-sm:hidden' : 'inline-block'} !leading-150 text-base sm:text-lg font-medium text-white`}
                 >
                   {category}
                 </h2>
@@ -49,7 +48,7 @@ const Footer = () => {
                     <a
                       key={i}
                       href={item.link}
-                      className="!leading-150 flex w-fit items-center gap-2 text-sm font-normal text-white duration-300 hover:text-opacity-70"
+                      className="!leading-150 text-sm flex w-fit items-center gap-2 font-normal text-white duration-300 hover:text-opacity-70"
                     >
                       {item.icon && <span>{item.icon}</span>}
                       {item.name}
@@ -62,9 +61,9 @@ const Footer = () => {
         </div>
       </div>
       <div className="h-px bg-footer-gradient"></div>
-      <p className="leading-140 px-3 py-3 text-center text-sm text-white max-sm:text-xs md:py-[18px]">
-        Copyright Global Infotech Pvt.Ltd © {currentYear} | Privacy Policy |
-        Terms & Conditions
+      <p className="leading-140 text-sm max-sm:text-xs px-3 py-3 text-center text-white md:py-[18px]">
+        Copyright Accountants Club © {currentYear} | Privacy Policy | Terms &
+        Conditions
       </p>
     </div>
   )
