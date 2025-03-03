@@ -566,6 +566,12 @@ export const studentSidebarItems = [
   { icon: 'support', text: 'Support' },
   { icon: 'news', text: 'News & Blog' },
 ]
+export const adminSidebarOptions = [
+  { icon: 'dashboard', text: 'Dashboard' },
+  { icon: 'allStudents', text: 'All Students' },
+  { icon: 'allEmployers', text: 'All Employers ' },
+  { icon: 'allCourses', text: 'All Courses' },
+]
 
 export const enrollCourses = [
   {

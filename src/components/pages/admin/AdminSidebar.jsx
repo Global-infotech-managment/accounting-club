@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import Paragraph from '../../common/Paragraph'
 import Icons from '../../common/Icons'
 
-const StudentSidebar = ({sidebarOptions}) => {
+const AdminSidebar = ({ sidebarOptions }) => {
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
   const activeSidebar = queryParams.get('activeSidebar') || 'dashboard'
@@ -17,7 +17,7 @@ const StudentSidebar = ({sidebarOptions}) => {
         return (
           <Link
             key={index}
-            to={`/student-dashboard?activeSidebar=${item.text.replaceAll('&', '-').replaceAll(' ', '~').toLowerCase()}`}
+            to={`/admin-dashboard?activeSidebar=${item.text.replaceAll('&', '-').replaceAll(' ', '~').toLowerCase()}`}
             className={`group mt-4 flex items-center gap-3 rounded-xl p-2 transition-all duration-300 hover:bg-primary sm:px-6 sm:py-4 ${
               isActive ? 'active_sidebar_link bg-primary text-white' : ''
             }`}
@@ -41,4 +41,4 @@ const StudentSidebar = ({sidebarOptions}) => {
   )
 }
 
-export default StudentSidebar
+export default AdminSidebar

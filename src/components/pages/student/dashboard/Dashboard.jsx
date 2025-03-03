@@ -10,6 +10,7 @@ import JobWork from './JobWork'
 import Support from './Support'
 import NewsAndBlogs from './NewsAndBlogs'
 import EnrolledCourseDetail from './EnrolledCourseDetail'
+import { studentSidebarItems } from '../../../../utils/helper'
 
 const Dashboard = () => {
   const location = useLocation()
@@ -25,7 +26,7 @@ const Dashboard = () => {
       <div className="flex flex-grow overflow-auto">
         {/* Sidebar */}
         <div className="h-full lg:w-3/12 lg:max-w-[400px]">
-          <StudentSidebar />
+          <StudentSidebar sidebarOptions={studentSidebarItems} />
         </div>
 
         {/* Main Content */}
