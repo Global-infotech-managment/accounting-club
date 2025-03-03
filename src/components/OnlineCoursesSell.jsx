@@ -4,7 +4,7 @@ import Paragraph from './common/Paragraph'
 import OnlineCourse from './common/OnlineCourse'
 import { onlineCoursesData } from '../utils/helper'
 import Button from './common/Button'
-
+import leftLinear from '../assets/images/png/courses-left-ellips.png'
 const OnlineCoursesSell = () => {
   // State to manage the number of courses to display
   const [coursesToDisplay, setCoursesToDisplay] = useState(6)
@@ -19,52 +19,56 @@ const OnlineCoursesSell = () => {
       setCoursesToDisplay(coursesToDisplay + 3)
     }
   }
-  const locationPath = window.location.pathname
   return (
-    <div className="container max-w-[1184px] py-12 sm:py-14 lg:mb-10 lg:py-[84px]">
-      <Heading
-        className="mb-3 text-center xl:mb-4"
-        middleText={
+    <div className="relative">
+      <img src={leftLinear} alt="leftLinear" className="max-h-[370px] max-w-[150px] w-full absolute end-0 top-0 -z-10 pointer-events-none" />
+      <div className="container max-w-[1184px] py-12 sm:py-14 lg:mb-10 lg:py-[84px]">
+        <Heading
+          className="mb-2 text-center xl:mb-4"
+          middleText={
+            <>
+              <span className="text-black">Online</span>{' '}
+              <span className="text-gradient">Courses</span>
+            </>
+          }
+        />
+        <Paragraph
+          className="mx-auto mb-8 max-w-[590px] text-center text-black"
+          text="Be an Accounting and taxation expert in few days even if you don't have any Accounting background. Choose a program as per your requirement"
+        />
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-5 xl:grid-cols-3">
+          {onlineCoursesData
+            .slice(0, coursesToDisplay)
+            .map((courses, index) => {
+              return (
+                <OnlineCourse
+                  key={index}
+                  description={courses.description}
+                  heading={courses.heading}
+                  image={courses.image}
+                  enrollPath={courses.enrollPath}
+                  detailPath={`/courses/${courses.heading.replaceAll(' ', '-').toLowerCase()}`}
+                />
+              )
+            })}
+        </div>
+        {onlineCoursesData.length > 6 && (
           <>
-            <span className="text-black">Online</span>{' '}
-            <span className="text-gradient">Courses</span>
+            {' '}
+            <div className="mt-12 flex justify-center">
+              <Button
+                className="!text-md w-full max-w-[202px] !rounded-md"
+                transparentBtn={
+                  coursesToDisplay === onlineCoursesData.length
+                    ? 'Show Less'
+                    : 'Show More'
+                }
+                onClick={toggleCourses}
+              />
+            </div>
           </>
-        }
-      />
-      <Paragraph
-        className="mx-auto mb-8 max-w-[590px] text-center text-black"
-        text="Be an Accounting and taxation expert in few days even if you don't have any Accounting background. Choose a program as per your requirement"
-      />
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-5 xl:grid-cols-3">
-        {onlineCoursesData.slice(0, coursesToDisplay).map((courses, index) => {
-          return (
-            <OnlineCourse
-              key={index}
-              description={courses.description}
-              heading={courses.heading}
-              image={courses.image}
-              enrollPath={courses.enrollPath}
-              detailPath={`/courses/${courses.heading.replaceAll(' ', '-').toLowerCase()}`}
-            />
-          )
-        })}
+        )}
       </div>
-      {onlineCoursesData.length > 6 && (
-        <>
-          {' '}
-          <div className="mt-12 flex justify-center">
-            <Button
-              className="!text-md w-full max-w-[202px] !rounded-md"
-              transparentBtn={
-                coursesToDisplay === onlineCoursesData.length
-                  ? 'Show Less'
-                  : 'Show More'
-              }
-              onClick={toggleCourses}
-            />
-          </div>
-        </>
-      )}
     </div>
   )
 }

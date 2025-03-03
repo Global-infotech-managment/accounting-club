@@ -21,7 +21,7 @@ const Hero = () => {
   const locationPath = window.location.pathname
   return (
     <div className="relative">
-      <div className="container relative mt-12 w-full px-3 sm:mt-16 md:mt-24 lg:mt-[129px] lg:max-w-[1184px]">
+      <div className="container relative mt-8 w-full px-3 sm:mt-16 md:mt-24 lg:mt-[129px] lg:max-w-[1184px]">
         <img
           className="pointer-events-none absolute -top-10 right-5 z-0 max-lg:hidden xl:-right-[60px]"
           src={HeroEllipse}
@@ -49,7 +49,7 @@ const Hero = () => {
                     <h1 className="text-3xl font-bold !leading-[132%] md:text-4xl lg:text-5xl xl:text-[56px]">
                       {slide.title}
                     </h1>
-                    <p className="mt-3 text-light-black max-sm:text-sm md:mt-4 lg:max-w-[535px]">
+                    <p className="max-sm:text-sm mt-3 text-light-black md:mt-4 lg:max-w-[535px]">
                       {slide.description}
                     </p>
                     <div className="mt-5 flex flex-wrap gap-4 sm:mt-6 sm:items-center sm:gap-5 md:mt-8 lg:mt-10">
@@ -77,7 +77,7 @@ const Hero = () => {
                   </div>
                   <div>
                     <img
-                      className="w-full rounded-[24px] border border-primary shadow-hero-image lg:max-w-[582px] xl:h-[455px]"
+                      className="h-[255px] w-full rounded-[24px] border border-primary shadow-hero-image lg:max-w-[582px] xl:h-[455px]"
                       src={slide.image}
                       alt={slide.title}
                     />

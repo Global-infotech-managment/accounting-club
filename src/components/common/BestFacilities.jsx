@@ -9,7 +9,7 @@ const BestFacilities = () => {
       <div className="container w-full px-3 lg:max-w-[1184px]">
         <div className="flex flex-col flex-wrap items-center lg:flex-row">
           <div className="mb-10 flex w-full flex-col items-start justify-normal lg:mb-0 lg:w-5/12">
-            <p className="mb-4 text-[30px] font-bold leading-tight text-black sm:text-[35px] md:text-[40px] lg:text-[48px]">
+            <p className="mb-4 text-[28px] font-bold leading-tight text-black sm:text-[35px] md:text-[40px] lg:text-[48px]">
               Our Best <span className="text-gradient">Facilities</span> Provide
               You.
             </p>
