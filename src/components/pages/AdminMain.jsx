@@ -1,13 +1,6 @@
 import React from 'react'
 import { Routes, Route, useLocation, useParams } from 'react-router-dom'
 import DashboardNav from '../common/DashboardNav'
-import DashboardUi from './student/dashboard/DashboardUi'
-import MyCoursesUi from './student/dashboard/MyCoursesUi'
-import MyCertificateUi from './student/dashboard/MyCertificateUi'
-import JobPlacement from './student/dashboard/JobPlacement'
-import JobWork from './student/dashboard/JobWork'
-import Support from './student/dashboard/Support'
-import NewsAndBlogs from './student/dashboard/NewsAndBlogs'
 import EnrolledCourseDetail from './student/dashboard/EnrolledCourseDetail'
 import { adminSidebarOptions } from '../../utils/helper'
 import AdminSidebar from './admin/AdminSidebar'
@@ -15,6 +8,7 @@ import AdminDashboardUi from './admin/AdminDashboardUi'
 import AllStudent from './admin/AllStudent'
 import AllEmployers from './admin/AllEmployers'
 import AllCourses from './admin/AllCourses'
+import AdminCoursesAdd from './admin/AdminCoursesAdd'
 
 const AdminMain = () => {
   const location = useLocation()
@@ -42,6 +36,7 @@ const AdminMain = () => {
                 element={
                   <>
                     {activeSidebar === 'dashboard' && <AdminDashboardUi />}
+                    {activeSidebar === 'add-courses' && <AdminCoursesAdd />}
                     {activeSidebar === 'all-students' && <AllStudent />}
                     {activeSidebar === 'all-employers-' && <AllEmployers />}
                     {activeSidebar === 'all-courses' && <AllCourses />}

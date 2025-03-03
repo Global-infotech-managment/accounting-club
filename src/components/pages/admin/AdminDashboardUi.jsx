@@ -1,5 +1,6 @@
 import React from 'react'
 import Heading from '../../common/Heading'
+import { Link } from 'react-router-dom'
 
 const AdminDashboardUi = () => {
   const steps = [
@@ -33,9 +34,10 @@ const AdminDashboardUi = () => {
       </p>
       <div className="flex w-full max-w-[816px] flex-wrap gap-y-[16px]">
         {steps.map((step, index) => (
-          <div
+          <Link
+            to={`/admin-dashboard?activeSidebar=add-courses`}
             key={index}
-            className={`sm:ps-[12px] ${index === 2 ? 'w-full' : 'sm:w-6/12 w-full'}`}
+            className={`sm:ps-[12px] ${index === 2 ? 'w-full' : 'w-full sm:w-6/12'}`}
           >
             <div className="flex w-full items-center rounded-xl border border-black border-opacity-10 p-3">
               <div className="flex h-[48px] w-[48px] min-w-[48px] items-center justify-center rounded-[7px] bg-black bg-opacity-10 text-[20px] text-black lg:text-[22px]">
@@ -50,7 +52,7 @@ const AdminDashboardUi = () => {
                 </p>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

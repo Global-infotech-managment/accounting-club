@@ -21,6 +21,7 @@ export const ENROLLED_COURSES_DETAIL_ROUTE = '/student-dashboard/:slug'
 export const STUDENT_DASHBOARD_ROUTE = '/student-dashboard'
 export const PAYMENT_METHOD_ROUTE = '/payment-method'
 export const TELEPHONE_NUMBER = 'tel:9855055700'
+export const ADD_COURSES_ROUTE = '/add-courses'
 export const EMAIL_ROUTE = 'mailto:aabhimalgroup@gmail.com'
 export const ADDRESS_ROUTE =
   'https://www.google.com/maps/place/Global+Infotech+Research/@30.3446143,76.4436056,17z/data=!4m14!1m7!3m6!1s0x39102941c4754d03:0x241763ed5e07da85!2sGlobal+Infotech+Research!8m2!3d30.3446143!4d76.4461859!16s%2Fg%2F11ltlcs2zc!3m5!1s0x39102941c4754d03:0x241763ed5e07da85!8m2!3d30.3446143!4d76.4461859!16s%2Fg%2F11ltlcs2zc?entry=ttu&g_ep=EgoyMDI1MDIwNS4xIKXMDSoASAFQAw%3D%3D'
