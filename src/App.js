@@ -4,6 +4,8 @@ import Home from './components/pages/Home'
 import NotFound from './components/pages/NotFound'
 import {
   ABOUT_ROUTE,
+  ADMIN_DASHBOARD_ROUTE,
+  ADMIN_LOGIN_ROUTE,
   CONTACT_ROUTE,
   COURSES_DETAIL_ROUTE,
   COURSES_ROUTE,
@@ -37,6 +39,8 @@ import JobList from './components/JobList'
 import JobDetail from './components/pages/JobDetail'
 import AboutUs from './components/pages/AboutUs'
 import ContactUs from './components/pages/ContactUs'
+import AdminMain from './components/pages/AdminMain'
+import AdminLogin from './components/AdminLogin'
 function App() {
   const { pathname } = useLocation()
   useEffect(() => {
@@ -61,6 +65,8 @@ function App() {
         <Route path={POST_RESUME_ROUTE} element={<PostResume />} />
         <Route path={PAYMENT_METHOD_ROUTE} element={<PaymentMethod />} />
         <Route path={SEARCH_WORK_FROM_HOME_JOBS_ROUTE} element={<JobList />} />
+        <Route path={ADMIN_LOGIN_ROUTE} element={<AdminLogin />} />
+        <Route path={ADMIN_DASHBOARD_ROUTE} element={<AdminMain />} />
         <Route
           path={SEARCH_ACCOUNTING_JOBS_ROUTE}
           element={<SearchAccountingJob />}
