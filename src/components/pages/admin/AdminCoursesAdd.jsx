@@ -45,7 +45,7 @@ const AdminCoursesAdd = () => {
 
         {/* Drag & Drop File Upload */}
         <div
-          className={`bg-blue-100 flex h-[150px] w-full flex-col items-center justify-center rounded-lg border-2 border-dashed ${
+          className={`flex h-[100px] w-full flex-col items-center justify-center rounded-lg border-2 border-dashed px-3 md:h-[150px] ${
             dragActive ? 'border-orange-red' : 'border-primary'
           }`}
           onDragOver={handleDragOver}
@@ -56,7 +56,7 @@ const AdminCoursesAdd = () => {
             Drag & Drop files or{' '}
             <label
               htmlFor="fileInput"
-              className="text-orange-red cursor-pointer font-semibold"
+              className="cursor-pointer font-semibold text-orange-red"
             >
               Select files
             </label>{' '}
@@ -85,7 +85,7 @@ const AdminCoursesAdd = () => {
           defaultValue="Active"
         />
 
-        <Button className="mt-10" bgBtn="Next" />
+        <Button className="md:mt-10 mt-5" bgBtn="Next" />
       </form>
     </div>
   )
