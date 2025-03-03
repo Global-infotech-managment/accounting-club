@@ -13,7 +13,7 @@ const StudentCourseDetailSidebar = () => {
   const { slug } = useParams()
   const completionPercentage = (completedCourses / totalCourses) * 100
   return (
-    <div className=' flex xl:flex-col md:flex-row flex-col xl:gap-0 md:gap-10 gap-3'>
+    <div className=' flex xl:flex-col md:flex-row flex-col xl:gap-0 md:gap-10 pb-5 gap-3'>
       <div className="mb-[17px] rounded-3xl bg-[#F7F7F7] px-4 py-5">
         <div className="flex items-center justify-between">
           <Link

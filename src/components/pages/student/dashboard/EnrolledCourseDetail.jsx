@@ -26,7 +26,7 @@ const EnrolledCourseDetail = () => {
         </div>
 
         {/* Main Content */}
-        <div className="flex-grow overflow-auto">
+        <div className="mb-20 overflow-auto">
           <div className="min-h-full p-2 sm:p-4 md:p-6 lg:py-8">
             <div className="rounded-3xl bg-[#F7F7F7] px-4 py-5">
               <div className="flex flex-col justify-between md:flex-row md:items-center">
