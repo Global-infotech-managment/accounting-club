@@ -39,10 +39,12 @@ const StudentTestAgree = ({ showTotalScore, setShowTotalScore }) => {
           <div className="bg-[#00000008] py-3">
             <Heading
               firstText="Class Test"
-              className="mx-auto text-center !text-lg"
+              className="!text-lg mx-auto text-center"
             />
           </div>
-          <div className={`flex min-h-[517px] flex-col justify-between p-4`}>
+          <div
+            className={`flex min-h-[400px] flex-col justify-between p-4 md:min-h-[517px]`}
+          >
             <div
               className={`flex items-center justify-between ${showQuestion === true && 'border-b border-[#0000001A] pb-4'}`}
             >
@@ -116,14 +118,14 @@ const StudentTestAgree = ({ showTotalScore, setShowTotalScore }) => {
                     }
                   />{' '}
                   {error && (
-                    <p className="absolute bottom-[-25px] mb-2 text-sm text-orange-red">
+                    <p className="text-sm absolute bottom-[-25px] mb-2 text-orange-red">
                       {error}
                     </p>
                   )}
                 </div>
 
                 <Button
-                  className={'rounded-[10px] !py-2 px-5 !text-sm'}
+                  className={'!text-sm rounded-[10px] !py-2 px-5'}
                   bgBtn={'I am ready to begin'}
                   onClick={handleButtonClick}
                 />
@@ -133,19 +135,19 @@ const StudentTestAgree = ({ showTotalScore, setShowTotalScore }) => {
             )}
             {showQuestion === true && (
               <div className="overflow-auto">
-                <div className="flex min-w-[600px] items-center justify-start gap-4">
-                  <Button
+                <div className="mt-5 flex flex-wrap items-center justify-start gap-4 md:mt-0 md:min-w-[600px] md:flex-nowrap">
+                  {/* <Button
                     transparentBtn={'Mark for Review & Next'}
-                    className={'rounded-[10px]'}
-                  />
+                    className={'rounded-[10px] text-[12px] md:text-[16px]'}
+                  /> */}
                   <Button
                     transparentBtn={'Clear Response'}
-                    className={'rounded-[10px]'}
+                    className={'rounded-[10px] text-[12px] md:text-[16px]'}
                   />
                   <Button
                     onClick={() => setShowTotalScore(true)}
                     bgBtn={'Save & Next'}
-                    className={'rounded-[10px]'}
+                    className={'rounded-[10px] text-[12px] md:text-[16px]'}
                   />
                 </div>
               </div>

@@ -16,7 +16,7 @@ const EnrolledCoursesCard = ({
   return (
     <Link
       to={path}
-      className="rounded-[20px] block border border-black border-opacity-5 p-4 transition-all duration-300 hover:border-primary"
+      className="rounded-[20px] block border border-black border-opacity-5 md:p-4 p-2 transition-all duration-300 hover:border-primary"
     >
       <img
         className="min-h-[200px] w-full rounded-[20px] object-cover"
@@ -24,11 +24,11 @@ const EnrolledCoursesCard = ({
         alt="course image"
       />
       <Heading
-        className="py-2.5 !text-xl !font-semibold !text-black xl:mb-0"
+        className="py-2.5 !text-[18px] !font-semibold !text-black xl:mb-0"
         middleText={heading}
       />
       <Paragraph
-        className="mx-auto mb-3 line-clamp-2 max-w-[590px] !text-base font-normal text-black"
+        className="mx-auto mb-3 line-clamp-2 max-w-[590px] font-normal text-black"
         text={description}
       />
       <div className="flex items-center justify-between">

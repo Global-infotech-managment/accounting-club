@@ -13,7 +13,7 @@ const StudentCourseDetailSidebar = () => {
   const { slug } = useParams()
   const completionPercentage = (completedCourses / totalCourses) * 100
   return (
-    <>
+    <div className=' flex xl:flex-col md:flex-row flex-col xl:gap-0 md:gap-10 gap-3'>
       <div className="mb-[17px] rounded-3xl bg-[#F7F7F7] px-4 py-5">
         <div className="flex items-center justify-between">
           <Link
@@ -33,11 +33,11 @@ const StudentCourseDetailSidebar = () => {
         </div>
         <Heading
           firstText={'Accounts Expert'}
-          className={'mb-[3px] mt-[10px] !text-base'}
+          className={'!text-base mb-[3px] mt-[10px]'}
         />
         <Paragraph
           text={'Business Accounting with Tally Prime'}
-          className={'mb-[10px] !text-xs'}
+          className={'!text-xs mb-[10px]'}
         />
         <div className="mb-[21px] flex items-center justify-between">
           <div className="h-[6px] w-full min-w-[100px] overflow-hidden rounded-[20px] bg-[#00000008]">
@@ -57,14 +57,16 @@ const StudentCourseDetailSidebar = () => {
         />
         <Button bgBtn={'Live classes'} className={'w-full rounded-[10px]'} />
       </div>
-      <Heading
-        firstText={'Content Playlist'}
-        className={'!text-base font-semibold'}
-      />
-      <div className="rounded-3xl bg-[#F7F7F7] px-4 py-5">
-        <AccordionTick />
+      <div>
+        <Heading
+          firstText={'Content Playlist'}
+          className={'mb-[10px] !text-[16px] font-semibold'}
+        />
+        <div className="rounded-3xl bg-[#F7F7F7] px-4 py-5">
+          <AccordionTick />
+        </div>
       </div>
-    </>
+    </div>
   )
 }
 

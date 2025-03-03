@@ -21,17 +21,17 @@ const EnrolledCourseDetail = () => {
       <DashboardNav />
       <div className="flex flex-grow flex-col xl:min-h-screen xl:flex-row xl:overflow-auto">
         {/* Sidebar */}
-        <div className="h-full max-w-[600px] p-[28px] xl:min-h-screen xl:w-4/12 xl:max-w-[400px]">
+        <div className="h-full p-2 sm:p-4 md:p-[28px] xl:min-h-screen xl:w-4/12 xl:max-w-[400px]">
           <StudentCourseDetailSidebar />
         </div>
 
         {/* Main Content */}
         <div className="flex-grow overflow-auto">
-          <div className="min-h-full p-2 sm:p-4 md:p-6 lg:px-10 lg:py-8">
+          <div className="min-h-full p-2 sm:p-4 md:p-6 lg:py-8">
             <div className="rounded-3xl bg-[#F7F7F7] px-4 py-5">
               <div className="flex flex-col justify-between md:flex-row md:items-center">
                 <Heading
-                  className={'!text-lg font-semibold lg:!text-xl'}
+                  className={'!text-[18px] font-semibold lg:!text-[20px]'}
                   firstText={
                     showTotalScore
                       ? 'My Test Score'
@@ -43,7 +43,7 @@ const EnrolledCourseDetail = () => {
                     {classTest ? (
                       <>
                         <Button
-                          className={'rounded-[10px] !py-2 px-5 !text-sm'}
+                          className={'rounded-[10px] !py-2 px-5 !text-[14px]'}
                           transparentBtn={'Go To Lesson'}
                           onClick={() => setClassTest(false)}
                         />
@@ -51,13 +51,13 @@ const EnrolledCourseDetail = () => {
                     ) : (
                       <>
                         <Button
-                          className={'rounded-[10px] !py-2 px-5 !text-sm'}
+                          className={'rounded-[10px] !py-2 px-5 !text-[14px]'}
                           transparentBtn={'Class Test'}
                           onClick={() => setClassTest(true)}
                         />
 
                         <Button
-                          className={'rounded-[10px] !py-2 px-5 !text-sm'}
+                          className={'!text-sm rounded-[10px] !py-2 px-5'}
                           bgBtn={'Study Material'}
                         />
                       </>

@@ -24,7 +24,7 @@ const TotalScoreTable = () => {
   const percentage = ((grandTotal.score / grandTotal.maxScore) * 100).toFixed(2)
 
   return (
-    <div className="overflow-x-auto p-4">
+    <div className="overflow-x-auto md:p-4">
       <table className="border-gray-200 shadow-md min-w-full overflow-hidden rounded-xl border bg-white">
         <thead className="bg-gray-100">
           <tr>

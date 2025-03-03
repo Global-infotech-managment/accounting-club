@@ -9,7 +9,7 @@ const IncomeTaxQuestion = ({ questions }) => {
 
   return (
     <div className="flex flex-col items-start justify-start">
-      <h2 className="mb-4 text-lg font-semibold">{questions[0].question}</h2>
+      <h2 className="mb-4 md:mt-0 mt-4 text-lg font-semibold">{questions[0].question}</h2>
       <div className="space-y-2">
         {questions[0].options.map((option, index) => (
           <label

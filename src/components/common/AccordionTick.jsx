@@ -7,10 +7,10 @@ import StatusIcon from '../../assets/images/svg/statusIcon.svg'
 
 const Accordion = ({ title, lessons, isOpen, onToggle }) => {
   return (
-    <div className="border-gray-300 mx-auto w-full max-w-2xl rounded-lg border">
+    <div className="border-gray-300 mx-auto w-full max-w-2xl rounded-lg border overflow-hidden">
       {/* Chapter Header */}
       <button
-        className="bg-gray-100 flex w-full cursor-pointer items-center justify-between p-3 text-sm font-medium"
+        className="bg-gray-100 flex w-full cursor-pointer items-center justify-between p-3 text-[14px] font-medium"
         onClick={onToggle}
       >
         <span className="flex-grow text-start">{title}</span>
@@ -33,7 +33,7 @@ const Accordion = ({ title, lessons, isOpen, onToggle }) => {
           {lessons.map((lesson, index) => (
             <li
               key={index}
-              className={`flex items-center gap-2 p-3 text-sm ${lesson.completed ? 'text-green-600 font-semibold' : 'text-gray-700'}`}
+              className={`flex items-center gap-2 p-3 text-[12px] ${lesson.completed ? 'text-green-600 font-semibold' : 'text-gray-700'}`}
             >
               {/* Use the custom status icon */}
               {lesson.completed && (

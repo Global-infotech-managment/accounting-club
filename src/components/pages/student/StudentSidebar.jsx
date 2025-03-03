@@ -10,7 +10,7 @@ const StudentSidebar = () => {
   const activeSidebar = queryParams.get('activeSidebar') || 'dashboard'
 
   return (
-    <div className="h-full border-r border-black border-opacity-5 px-4 py-4 md:py-8 lg:px-10">
+    <div className="h-full border-r border-black border-opacity-5 sm:p-4 p-2 md:p-8 lg:p-10">
       {studentSidebarItems.map((item, index) => {
         const isActive =
           activeSidebar ===
