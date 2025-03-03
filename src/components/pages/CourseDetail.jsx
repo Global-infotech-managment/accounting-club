@@ -19,7 +19,7 @@ const CourseDetail = () => {
     return <div className="text-red-500 text-center">Course not found</div>
   }
   return (
-    <div className="position-relative mb-[100px]">
+    <div className="position-relative lg:mb-[100px] md:mb-16 mb-10">
       <img
         className="pointer-events-none absolute bottom-72 left-0 max-xl:hidden"
         src={StudentEllipse}
@@ -30,7 +30,7 @@ const CourseDetail = () => {
         src={bookImage}
         alt="student ellipse"
       />
-      <div className="container max-w-[1184px] pt-20">
+      <div className="container max-w-[1184px] xl:pt-20 lg:pt-14 sm:pt-10 pt-5">
         <div className="flex flex-wrap px-4 sm:px-0">
           <div className="lg:w-8/12 lg:pe-12">
             <img
@@ -39,7 +39,7 @@ const CourseDetail = () => {
               alt="course image"
             />
             <Heading
-              className="mb-3 pt-6 xl:mb-4"
+              className="mb-3 md:pt-6 pt-4 xl:mb-4"
               middleText={
                 <>
                   <span className="text-red-500 capitalize">
@@ -50,7 +50,7 @@ const CourseDetail = () => {
             />
             <Paragraph className="text-black" text={course.description} />
           </div>
-          <div className="mt-10 w-full lg:w-4/12">
+          <div className="md:mt-10 mt-6 w-full lg:w-4/12">
             <div className="flex items-end justify-between">
               <div className="flex items-end">
                 <Heading className="pe-2 !text-black" middleText={'₹'} />
@@ -101,7 +101,7 @@ const CourseDetail = () => {
                 }
               />
             </div>
-            <div className="mt-3 flex items-center gap-2.5">
+            {/* <div className="mt-3 flex items-center gap-2.5">
               <Icons iconName="subtitle" className="size-4 w-2/12" />
               <Paragraph
                 className="w-10/12 !text-lg"
@@ -112,8 +112,8 @@ const CourseDetail = () => {
                   </>
                 }
               />
-            </div>
-            <div className="mt-3 flex items-center gap-2.5">
+            </div> */}
+            {/* <div className="mt-3 flex items-center gap-2.5">
               <Icons iconName="duration" className="size-4" />
               <Paragraph
                 className="!text-lg"
@@ -124,7 +124,7 @@ const CourseDetail = () => {
                   </>
                 }
               />
-            </div>
+            </div> */}
             <div className="mt-3 flex items-center gap-2.5">
               <Icons iconName="resources" className="size-4" />
               <Paragraph

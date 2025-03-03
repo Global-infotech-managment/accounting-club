@@ -4,6 +4,8 @@ import Paragraph from './Paragraph'
 import Button from './Button'
 import RadioGroup from './RadioGroup'
 import Input from './Input'
+import { useNavigate } from 'react-router-dom'
+import { STUDENT_SIGNUP_ROUTE } from '../../utils/constant'
 
 const PaymentMethod = () => {
   const [paymentMethod, setPaymentMethod] = useState('credit')
@@ -11,7 +13,7 @@ const PaymentMethod = () => {
   const [cardNumber, setCardNumber] = useState('')
   const [expiry, setExpiry] = useState('')
   const [cvv, setCvv] = useState('')
-
+  const navigate = useNavigate()
   const handleSubmit = (e) => {
     e.preventDefault()
     if (
@@ -26,11 +28,12 @@ const PaymentMethod = () => {
     setCardNumber('')
     setExpiry('')
     setCvv('')
+    navigate(STUDENT_SIGNUP_ROUTE)
   }
 
   return (
     <div className="container px-3 lg:max-w-[1184px]">
-      <div className="mt-16 rounded-3xl p-5 shadow-register xl:p-12">
+      <div className="mt-5 rounded-3xl p-5 shadow-register md:mt-10 lg:mt-16 xl:p-12">
         <Heading
           className="mb-3 text-center xl:mb-4"
           middleText={

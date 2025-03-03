@@ -9,8 +9,10 @@ import {
   TERM_AND_CONDITION_ROUTE,
 } from '../../../utils/constant'
 import { CountryList } from '../../../utils/helper'
+import { useNavigate } from 'react-router-dom'
 
 const StudentSignUp = () => {
+  const navigate = useNavigate()
   const [name, setName] = useState('')
   const [age, setAge] = useState('')
   const [qualification, setQualification] = useState('')
@@ -56,6 +58,7 @@ const StudentSignUp = () => {
     }
 
     // Handle form submission
+    navigate(STUDENT_LOGIN_ROUTE)
     setAddressLine1('')
     setAddressLine2('')
     setAge('')
