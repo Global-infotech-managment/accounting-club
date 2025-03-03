@@ -2,11 +2,16 @@ import React, { useState } from 'react'
 import Input from '../../common/Input'
 import Button from '../../common/Button'
 import { Dropdown } from '../../common/Dropdown'
+import { useNavigate } from 'react-router-dom'
 
 const AdminCoursesAdd = () => {
+  const [courseName, setCourseName] = useState('')
+  const [description, setDescription] = useState('')
+  const [price, setPrice] = useState('')
+  const [validity, setValidity] = useState('')
   const [selectedFile, setSelectedFile] = useState(null)
   const [dragActive, setDragActive] = useState(false)
-
+  const navigate = useNavigate()
   const handleFileChange = (event) => {
     if (event.target.files && event.target.files.length > 0) {
       setSelectedFile(event.target.files[0])
@@ -29,19 +34,48 @@ const AdminCoursesAdd = () => {
       setSelectedFile(event.dataTransfer.files[0])
     }
   }
-
+  const formSubmit = (e) => {
+    e.preventDefault()
+    if (!courseName || !description || !price || !validity || !selectedFile) {
+      alert('Please fill all the fields')
+      return
+    }
+    setCourseName('')
+    setDescription('')
+    setPrice('')
+    setValidity('')
+    setSelectedFile(null)
+    navigate('/admin-dashboard?activeSidebar=add-section')
+  }
   return (
     <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
       <p className="mb-4 text-[16px] font-semibold text-black lg:text-[18px]">
         Add Course
       </p>
       <hr className="mb-4 w-full bg-black opacity-10" />
-
       <form className="flex flex-col gap-4">
-        <Input placeholder="Course Name" />
-        <Input placeholder="Description" />
-        <Input placeholder="Price" />
-        <Input placeholder="Validity" />
+        <Input
+          placeholder="Course Name"
+          value={courseName}
+          onChange={(e) => setCourseName(e.target.value)}
+        />
+        <Input
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <Input
+          type={'number'}
+          placeholder="Price"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+        />
+        <Input
+          type={'number'}
+          placeholder="Validity"
+          value={validity}
+          onChange={(e) => setValidity(e.target.value)}
+        />
 
         {/* Drag & Drop File Upload */}
         <div
@@ -85,7 +119,7 @@ const AdminCoursesAdd = () => {
           defaultValue="Active"
         />
 
-        <Button className="md:mt-10 mt-5" bgBtn="Next" />
+        <Button onClick={formSubmit} className="mt-5 md:mt-10" bgBtn="Next" />
       </form>
     </div>
   )
