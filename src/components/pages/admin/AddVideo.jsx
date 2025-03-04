@@ -3,76 +3,67 @@ import Input from '../../common/Input'
 import Button from '../../common/Button'
 import { Dropdown } from '../../common/Dropdown'
 import { useNavigate } from 'react-router-dom'
+import Icons from '../../common/Icons'
 
 const AddVideo = () => {
   const [selectCourse, setSelectCourse] = useState('')
   const [selectChapter, setSelectChapter] = useState('')
   const [lessonNumber, setLessonNumber] = useState('')
-  const [description, setDescription] = useState('')
   const [isMandatory, setIsMandatory] = useState('Yes')
-  const [videoCode, setVideoCode] = useState('')
-  const [videoRelease, setVideoRelease] = useState('')
-  const [uploadDate, setUploadDate] = useState('')
   const [videoDescription, setVideoDescription] = useState('')
   const [videoEmbedCode, setVideoEmbedCode] = useState('')
-  const [classTest, setClassTest] = useState('')
-  const [studyMaterial, setStudyMaterial] = useState('')
+  const [studyMaterial, setStudyMaterial] = useState(null) // File state
   const [status, setStatus] = useState('Active')
 
   const navigate = useNavigate()
 
+  const handleFileChange = (e) => {
+    if (e.target.files.length > 0) {
+      setStudyMaterial(e.target.files[0]) // Store file object
+    }
+  }
   const formSubmit = (e) => {
     e.preventDefault()
-
     // Validate all fields
     if (
       !selectCourse ||
       !selectChapter ||
       !lessonNumber ||
-      !description ||
-      !videoCode ||
-      !videoRelease ||
-      !uploadDate ||
       !videoDescription ||
-      !videoEmbedCode ||
-      !classTest ||
-      !studyMaterial
+      !videoEmbedCode
     ) {
+      console.log('Form Submitted:', {
+        selectCourse,
+        selectChapter,
+        lessonNumber,
+        isMandatory,
+        videoDescription,
+        videoEmbedCode,
+        studyMaterial, // Store file name
+        status,
+      })
       alert('Please fill all the fields')
       return
     }
-
     console.log('Form Submitted:', {
       selectCourse,
       selectChapter,
       lessonNumber,
-      description,
       isMandatory,
-      videoCode,
-      videoRelease,
-      uploadDate,
       videoDescription,
       videoEmbedCode,
-      classTest,
-      studyMaterial,
+      studyMaterial, // Store file name
       status,
     })
-
     // Reset form
     setSelectCourse('')
     setSelectChapter('')
     setLessonNumber('')
-    setDescription('')
     setIsMandatory('Yes')
-    setVideoCode('')
-    setVideoRelease('')
-    setUploadDate('')
     setVideoDescription('')
     setVideoEmbedCode('')
-    setClassTest('')
-    setStudyMaterial('')
+    setStudyMaterial(null) // Reset file state
     setStatus('Active')
-
     navigate('/admin-dashboard?activeSidebar=create-test')
   }
 
@@ -82,7 +73,6 @@ const AddVideo = () => {
         Add Video + Test + Study Material
       </p>
       <hr className="mb-4 w-full bg-black opacity-10" />
-
       <form className="flex flex-wrap gap-y-4" onSubmit={formSubmit}>
         <div className="w-full md:w-6/12 md:pe-[10px]">
           <Input
@@ -96,7 +86,6 @@ const AddVideo = () => {
           <Input
             placeholder="Select Chapter"
             value={selectChapter}
-            type={'number'}
             onChange={(e) => setSelectChapter(e.target.value)}
           />
         </div>
@@ -104,21 +93,13 @@ const AddVideo = () => {
         <div className="w-full md:w-6/12 md:pe-[10px]">
           <Input
             placeholder="Lesson Number"
-            type={'number'}
+            type="number"
             value={lessonNumber}
             onChange={(e) => setLessonNumber(e.target.value)}
           />
         </div>
 
         <div className="w-full md:w-6/12 md:ps-[10px]">
-          <Input
-            placeholder="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
-
-        <div className="w-full md:w-6/12 md:pe-[10px]">
           <Dropdown
             label="Is mandatory to move next"
             options={[
@@ -127,32 +108,6 @@ const AddVideo = () => {
             ]}
             value={isMandatory}
             onChange={(value) => setIsMandatory(value)}
-          />
-        </div>
-
-        <div className="w-full md:w-6/12 md:ps-[10px]">
-          <Input
-            placeholder="Video Code"
-            type="number"
-            value={videoCode}
-            onChange={(e) => setVideoCode(e.target.value)}
-          />
-        </div>
-
-        <div className="w-full md:w-6/12 md:pe-[10px]">
-          <Input
-            placeholder="Video Release"
-            value={videoRelease}
-            onChange={(e) => setVideoRelease(e.target.value)}
-          />
-        </div>
-
-        <div className="w-full md:w-6/12 md:ps-[10px]">
-          <Input
-            placeholder="Upload Date"
-            type="date"
-            value={uploadDate}
-            onChange={(e) => setUploadDate(e.target.value)}
           />
         </div>
 
@@ -172,23 +127,30 @@ const AddVideo = () => {
           />
         </div>
 
-        <div className="w-6/12 pe-[10px]">
-          <Input
-            placeholder="Class Test"
-            value={classTest}
-            onChange={(e) => setClassTest(e.target.value)}
-          />
+        <div className="w-full md:w-6/12 md:pe-[10px]">
+          <label className="text-sm mb-[2px] text-black">
+            Study Material <span className="text-orange-red">*</span>
+          </label>
+          <div className="relative mt-1">
+            <input
+              type="file"
+              id="fileUpload"
+              className="hidden"
+              onChange={handleFileChange}
+            />
+            <label
+              htmlFor="fileUpload"
+              className="text-xs flex w-full cursor-pointer items-center justify-between rounded-lg border border-[#4E4E4E1A] bg-[#FBFBFB80] p-2 px-4 py-2 text-black focus:ring-2 focus-visible:outline-[1px] focus-visible:outline-orange-red"
+            >
+              <span className="text-black opacity-50">
+                {studyMaterial ? studyMaterial.name : 'Upload from file'}
+              </span>
+              <Icons iconName="upload" />
+            </label>
+          </div>
         </div>
 
         <div className="w-full md:w-6/12 md:ps-[10px]">
-          <Input
-            placeholder="Study Material"
-            value={studyMaterial}
-            onChange={(e) => setStudyMaterial(e.target.value)}
-          />
-        </div>
-
-        <div className="w-full">
           <Dropdown
             label="Status"
             options={[

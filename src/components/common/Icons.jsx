@@ -59,6 +59,23 @@ const Icons = ({ iconName, className }) => {
         />
       </svg>
     ),
+    upload: (
+      <svg
+        width="16"
+        height="15"
+        viewBox="0 0 16 15"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M1.3335 10.4997V12.1663C1.3335 12.6084 1.50909 13.0323 1.82165 13.3449C2.13421 13.6574 2.55814 13.833 3.00016 13.833H13.0002C13.4422 13.833 13.8661 13.6574 14.1787 13.3449C14.4912 13.0323 14.6668 12.6084 14.6668 12.1663V10.4997M3.8335 5.49967L8.00016 1.33301M8.00016 1.33301L12.1668 5.49967M8.00016 1.33301V11.333"
+          stroke="black"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    ),
     allStudents: (
       <svg
         width="20"

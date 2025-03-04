@@ -126,7 +126,7 @@ export default function AddTest() {
           Previous
         </button>
         <button
-          className="bg-blue-500 rounded px-4 py-2 text-white"
+          className="bg-blue-500 rounded px-4 py-2 text-black"
           disabled={!isCurrentQuestionValid()}
           onClick={navigateNext}
         >
@@ -135,7 +135,7 @@ export default function AddTest() {
       </div>
       <div className="mt-4 text-center">
         <button
-          className="bg-green-500 rounded px-6 py-2 text-white"
+          className="bg-green-500 rounded px-6 py-2 text-black"
           disabled={
             !questions.every(
               (q) =>
