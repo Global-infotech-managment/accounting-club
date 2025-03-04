@@ -5,18 +5,24 @@ import { Link } from 'react-router-dom'
 const AdminDashboardUi = () => {
   const steps = [
     {
-      id: '01',
       title: 'Add Course',
+      link: '/admin-dashboard?activeSidebar=add-courses',
       description: 'Customize your course growth.',
     },
     {
-      id: '02',
+      link: '/admin-dashboard?activeSidebar=add-section',
       title: 'Add Section',
       description: 'Customize your course with sections.',
     },
     {
-      id: '03',
+      link: '/admin-dashboard?activeSidebar=add-video',
       title: 'Add Video + Test + Study Material',
+      description:
+        'Customize your learning course with video, test, and study material for growth.',
+    },
+    {
+      link: '/admin-dashboard?activeSidebar=create-test',
+      title: 'Create Test',
       description:
         'Customize your learning course with video, test, and study material for growth.',
     },
@@ -35,9 +41,9 @@ const AdminDashboardUi = () => {
       <div className="flex w-full max-w-[816px] flex-wrap gap-y-[16px]">
         {steps.map((step, index) => (
           <Link
-            to={`/admin-dashboard?activeSidebar=add-courses`}
+            to={step.link}
             key={index}
-            className={`sm:ps-[12px] ${index === 2 ? 'w-full' : 'w-full sm:w-6/12'}`}
+            className={`w-full sm:w-6/12 sm:ps-[12px]`}
           >
             <div className="flex w-full items-center rounded-xl border border-black border-opacity-10 p-3">
               <div className="flex h-[48px] w-[48px] min-w-[48px] items-center justify-center rounded-[7px] bg-black bg-opacity-10 text-[20px] text-black lg:text-[22px]">
