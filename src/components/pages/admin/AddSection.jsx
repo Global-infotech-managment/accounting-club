@@ -22,7 +22,7 @@ const AddSection = () => {
     setSectionName('')
     setDescription('')
     setValidity('')
-    navigate('/admin-dashboard?activeSidebar=add-section')
+    navigate('/admin-dashboard?activeSidebar=add-video')
   }
   return (
     <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">

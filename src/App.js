@@ -4,6 +4,7 @@ import Home from './components/pages/Home'
 import NotFound from './components/pages/NotFound'
 import {
   ABOUT_ROUTE,
+  ADD_VIDEO_ROUTE,
   ADMIN_DASHBOARD_ROUTE,
   ADMIN_LOGIN_ROUTE,
   CONTACT_ROUTE,
