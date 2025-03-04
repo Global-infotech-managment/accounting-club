@@ -84,7 +84,7 @@ const AddVideo = () => {
       <hr className="mb-4 w-full bg-black opacity-10" />
 
       <form className="flex flex-wrap gap-y-4" onSubmit={formSubmit}>
-        <div className="w-6/12 pe-[10px]">
+        <div className="w-full md:w-6/12 md:pe-[10px]">
           <Input
             placeholder="Select Course"
             value={selectCourse}
@@ -92,7 +92,7 @@ const AddVideo = () => {
           />
         </div>
 
-        <div className="w-6/12 ps-[10px]">
+        <div className="w-full md:w-6/12 md:ps-[10px]">
           <Input
             placeholder="Select Chapter"
             value={selectChapter}
@@ -100,7 +100,7 @@ const AddVideo = () => {
           />
         </div>
 
-        <div className="w-6/12 pe-[10px]">
+        <div className="w-full md:w-6/12 md:pe-[10px]">
           <Input
             placeholder="Lesson Number"
             value={lessonNumber}
@@ -108,7 +108,7 @@ const AddVideo = () => {
           />
         </div>
 
-        <div className="w-6/12 ps-[10px]">
+        <div className="w-full md:w-6/12 md:ps-[10px]">
           <Input
             placeholder="Description"
             value={description}
@@ -116,7 +116,7 @@ const AddVideo = () => {
           />
         </div>
 
-        <div className="w-6/12 pe-[10px]">
+        <div className="w-full md:w-6/12 md:pe-[10px]">
           <Dropdown
             label="Is mandatory to move next"
             options={[
@@ -128,7 +128,7 @@ const AddVideo = () => {
           />
         </div>
 
-        <div className="w-6/12 ps-[10px]">
+        <div className="w-full md:w-6/12 md:ps-[10px]">
           <Input
             placeholder="Video Code"
             type="number"
@@ -137,7 +137,7 @@ const AddVideo = () => {
           />
         </div>
 
-        <div className="w-6/12 pe-[10px]">
+        <div className="w-full md:w-6/12 md:pe-[10px]">
           <Input
             placeholder="Video Release"
             value={videoRelease}
@@ -145,7 +145,7 @@ const AddVideo = () => {
           />
         </div>
 
-        <div className="w-6/12 ps-[10px]">
+        <div className="w-full md:w-6/12 md:ps-[10px]">
           <Input
             placeholder="Upload Date"
             type="date"
@@ -154,7 +154,7 @@ const AddVideo = () => {
           />
         </div>
 
-        <div className="w-6/12 pe-[10px]">
+        <div className="w-full md:w-6/12 md:pe-[10px]">
           <Input
             placeholder="Video Description"
             value={videoDescription}
@@ -162,7 +162,7 @@ const AddVideo = () => {
           />
         </div>
 
-        <div className="w-6/12 ps-[10px]">
+        <div className="w-full md:w-6/12 md:ps-[10px]">
           <Input
             placeholder="Video Embed Code"
             value={videoEmbedCode}
@@ -178,7 +178,7 @@ const AddVideo = () => {
           />
         </div>
 
-        <div className="w-6/12 ps-[10px]">
+        <div className="w-full md:ps-[10px] md:w-6/12">
           <Input
             placeholder="Study Material"
             value={studyMaterial}
