@@ -1,4 +1,7 @@
 import { useState } from 'react'
+import Button from '../../common/Button'
+import Icons from '../../common/Icons'
+import Input from '../../common/Input'
 
 export default function AddTest() {
   const [questions, setQuestions] = useState([
@@ -75,80 +78,103 @@ export default function AddTest() {
   }
 
   return (
-    <div className="shadow mx-auto max-w-2xl rounded border p-6">
-      <h2 className="text-xl mb-4 font-semibold">Add Test</h2>
-      <p className="mb-2">
-        Question {currentIndex + 1} of {questions.length}
+    <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
+      <p className="mb-4 text-[16px] font-semibold text-black lg:text-[18px]">
+        Add Test
       </p>
-      <input
-        type="text"
-        className="mb-4 w-full rounded border p-2"
-        placeholder="Enter your question"
-        value={questions[currentIndex].question}
-        onChange={handleQuestionChange}
-      />
+      <hr className="mb-4 w-full bg-black opacity-10" />
+      <p className="mb-2 text-[17px] font-medium text-black">Question</p>
+      <p className="text-[14px] font-normal text-black">
+        Choose appropriate options <span className="font-medium">A</span>,
+        <span className="font-medium">B</span>,
+        <span className="font-medium">C</span> or{' '}
+        <span className="font-medium">D</span>
+      </p>
+      <div className="mb-3 mt-4 flex flex-col justify-between gap-5 sm:flex-row sm:gap-0 md:items-center">
+        <div className="flex w-full items-center gap-2">
+          <button
+            disabled={currentIndex === 0}
+            className={`${currentIndex === 0 && 'opacity-10'}`}
+            onClick={navigatePrevious}
+          >
+            <Icons iconName={'prevArrow'} />
+          </button>
+          <div className="flex w-full items-center justify-center rounded-[10px] border border-[#4e4e4e] border-opacity-10 bg-white px-4 py-2 text-[14px] text-black md:w-auto">
+            Question {currentIndex + 1}/{questions.length}
+          </div>
+          <button
+            disabled={!isCurrentQuestionValid()}
+            className={`rotate-180 ${!isCurrentQuestionValid() && 'opacity-10'} `}
+            onClick={navigateNext}
+          >
+            <Icons iconName={'prevArrow'} />
+          </button>
+        </div>
+        <Button
+          className={`max-h-[37px] whitespace-nowrap !text-[14px] ${!isCurrentQuestionValid() && 'pointer-events-none opacity-70'}`}
+          bgBtn={'Add Question'}
+          disabled={!isCurrentQuestionValid()}
+          onClick={navigateNext}
+        />
+      </div>
+      <hr className="mb-4 w-full bg-black opacity-10" />
+      <div className="mb-3 w-full">
+        <Input
+          placeholder="Enter your question"
+          value={questions[currentIndex].question}
+          onChange={handleQuestionChange}
+        />
+      </div>
       <div className="mb-4">
+        <p className="mb-3 text-[17px] font-medium text-black">Options</p>
         {questions[currentIndex].options.map((option, index) => (
-          <div key={index} className="mb-2 flex items-center">
-            <span className="mr-2 font-semibold">
-              {String.fromCharCode(65 + index)}.
+          <div key={index} className="mb-4 flex items-center">
+            <span className="mr-3 flex h-[40px] w-[40px] items-center justify-center rounded-full border border-[#4e4e4e] border-opacity-10 bg-[#fbfbfb] bg-opacity-50">
+              {String.fromCharCode(65 + index)}
             </span>
-            <input
-              type="text"
-              className="w-full rounded border p-2"
+            <Input
               placeholder="Enter answer option"
               value={option}
               onChange={(e) => handleOptionChange(index, e.target.value)}
+              label={'none'}
             />
           </div>
         ))}
+        <div className=' flex items-end justify-end'>
+          <button className="text-orange-red transition-all ease-in-out duration-300 hover:text-primary">Delete Question</button>
+        </div>
       </div>
       <div className="mb-4">
-        <span className="font-semibold">Correct Answer:</span>
-        {questions[currentIndex].options.map((_, index) => (
-          <button
-            key={index}
-            className={`m-1 rounded border px-3 py-1 ${questions[currentIndex].correctAnswer === String.fromCharCode(65 + index) ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-            onClick={() =>
-              handleCorrectAnswerChange(String.fromCharCode(65 + index))
-            }
-          >
-            {String.fromCharCode(65 + index)}
-          </button>
-        ))}
+        <div className="mb-3 text-[17px] font-medium text-black">
+          Correct Answer
+        </div>
+        <div className="mb-10 flex items-center gap-3">
+          {questions[currentIndex].options.map((_, index) => (
+            <button
+              key={index}
+              className={`flex h-[40px] w-[40px] items-center justify-center rounded-[12px] border border-[#4e4e4e] border-opacity-10 bg-[#fbfbfb] bg-opacity-50 ${questions[currentIndex].correctAnswer === String.fromCharCode(65 + index) ? '!bg-primary text-white' : 'bg-[#fbfbfb]'}`}
+              onClick={() =>
+                handleCorrectAnswerChange(String.fromCharCode(65 + index))
+              }
+            >
+              {String.fromCharCode(65 + index)}
+            </button>
+          ))}
+        </div>
       </div>
-      <div className="flex justify-between">
-        <button
-          className="bg-gray-300 rounded px-4 py-2"
-          disabled={currentIndex === 0}
-          onClick={navigatePrevious}
-        >
-          Previous
-        </button>
-        <button
-          className="bg-blue-500 rounded px-4 py-2 text-black"
-          disabled={!isCurrentQuestionValid()}
-          onClick={navigateNext}
-        >
-          Next
-        </button>
-      </div>
-      <div className="mt-4 text-center">
-        <button
-          className="bg-green-500 rounded px-6 py-2 text-black"
-          disabled={
-            !questions.every(
-              (q) =>
-                q.question.trim() &&
-                q.options.every((opt) => opt.trim()) &&
-                q.correctAnswer
-            )
-          }
-          onClick={handleSubmit}
-        >
-          Submit
-        </button>
-      </div>
+      <Button
+        disabled={
+          !questions.every(
+            (q) =>
+              q.question.trim() &&
+              q.options.every((opt) => opt.trim()) &&
+              q.correctAnswer
+          )
+        }
+        onClick={handleSubmit}
+        bgBtn={'Next'}
+        className={'w-full'}
+      />
     </div>
   )
 }
