@@ -41,7 +41,7 @@ const TotalScoreTable = () => {
             ].map((header, index) => (
               <th
                 key={index}
-                className="text-nowrap border border-[#FFFFFF33] bg-[#253466] px-4 py-2 text-center text-sm font-semibold text-white"
+                className="text-sm text-nowrap border border-[#FFFFFF33] bg-[#253466] px-4 py-2 text-center font-semibold text-white"
               >
                 {header}
               </th>
@@ -99,7 +99,7 @@ const TotalScoreTable = () => {
         </tfoot>
       </table>
       {itemsPerPage !== testData.length && (
-        <div className="relative mt-4 flex items-center justify-center gap-4">
+        <div className="relative mt-4 flex min-w-[500px] items-center justify-center gap-4">
           <Button
             disabled={currentPage === 1}
             transparentBtn={'Prev Page'}

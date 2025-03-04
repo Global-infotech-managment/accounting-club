@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Button from '../../common/Button'
 import { studentList } from '../../../utils/helper'
+import Input from '../../common/Input'
 
 const itemsPerPage = 6
 
@@ -27,12 +28,12 @@ const AllStudent = () => {
 
   return (
     <div className="overflow-x-auto md:p-4">
-      <input
-        type="text"
-        placeholder="Search by name"
+      <Input
         value={searchTerm}
+        placeholder={'Search by name'}
+        label={'none'}
+      mainClassName={"mb-5"}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="mb-4 rounded-md border px-3 py-2"
       />
       <table className="border-gray-200 shadow-md min-w-full overflow-hidden rounded-xl border bg-white">
         <thead className="bg-gray-100">
@@ -74,7 +75,7 @@ const AllStudent = () => {
         </tbody>
       </table>
       {itemsPerPage !== filteredStudentList.length && (
-        <div className="relative mt-4 flex items-center justify-center gap-4">
+        <div className="relative mt-4 flex items-center justify-center gap-4 min-w-[500px]">
           <Button
             disabled={currentPage === 1}
             transparentBtn={'Prev Page'}
