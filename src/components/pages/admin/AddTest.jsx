@@ -76,6 +76,24 @@ export default function AddTest() {
       currentQuestion.correctAnswer
     )
   }
+  const handleDeleteQuestion = () => {
+    if (questions.length === 1) {
+      // Reset if it's the only question
+      setQuestions([
+        { question: '', options: ['', '', '', ''], correctAnswer: '' },
+      ])
+      setCurrentIndex(0)
+      return
+    }
+
+    const updatedQuestions = questions.filter(
+      (_, index) => index !== currentIndex
+    )
+    setQuestions(updatedQuestions)
+
+    // Adjust index to prevent out-of-range issue
+    setCurrentIndex((prevIndex) => Math.max(0, prevIndex - 1))
+  }
 
   return (
     <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
@@ -140,8 +158,13 @@ export default function AddTest() {
             />
           </div>
         ))}
-        <div className=' flex items-end justify-end'>
-          <button className="text-orange-red transition-all ease-in-out duration-300 hover:text-primary">Delete Question</button>
+        <div className="flex items-end justify-end">
+          <button
+            className="text-orange-red transition-all duration-300 ease-in-out hover:text-primary"
+            onClick={handleDeleteQuestion}
+          >
+            Delete Question
+          </button>
         </div>
       </div>
       <div className="mb-4">
