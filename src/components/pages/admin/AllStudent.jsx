@@ -8,9 +8,9 @@ const AllStudent = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [searchTerm, setSearchTerm] = useState('')
 
-  // Sort students by date
+  // Sort students by latest date
   const sortedStudentList = [...studentList].sort(
-    (a, b) => new Date(a.date) - new Date(b.date)
+    (a, b) => new Date(b.date) - new Date(a.date)
   )
 
   // Filter students based on search term
