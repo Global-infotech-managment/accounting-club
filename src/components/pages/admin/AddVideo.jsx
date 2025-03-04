@@ -96,6 +96,7 @@ const AddVideo = () => {
           <Input
             placeholder="Select Chapter"
             value={selectChapter}
+            type={'number'}
             onChange={(e) => setSelectChapter(e.target.value)}
           />
         </div>
@@ -103,6 +104,7 @@ const AddVideo = () => {
         <div className="w-full md:w-6/12 md:pe-[10px]">
           <Input
             placeholder="Lesson Number"
+            type={'number'}
             value={lessonNumber}
             onChange={(e) => setLessonNumber(e.target.value)}
           />
@@ -178,7 +180,7 @@ const AddVideo = () => {
           />
         </div>
 
-        <div className="w-full md:ps-[10px] md:w-6/12">
+        <div className="w-full md:w-6/12 md:ps-[10px]">
           <Input
             placeholder="Study Material"
             value={studyMaterial}
