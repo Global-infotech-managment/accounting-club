@@ -1,15 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import logo from '../../assets/images/png/dashboard-logo.png'
 import profile from '../../assets/images/png/profile-photo.png'
 import Paragraph from './Paragraph'
 import Icons from './Icons'
-import { STUDENT_DASHBOARD_ROUTE } from '../../utils/constant'
+import {
+  ADMIN_DASHBOARD_ROUTE,
+  STUDENT_DASHBOARD_ROUTE,
+} from '../../utils/constant'
 
 const DashboardNav = () => {
   const [isOpen, setIsOpen] = useState(false)
   const popupRef = useRef(null)
-
+  const navigation = useLocation()
+  const path = navigation.pathname
+  console.log(path)
   // Close popup when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -28,7 +33,11 @@ const DashboardNav = () => {
       <div className="container mx-auto max-w-[1920px] p-2 sm:px-10 sm:py-6">
         <nav className="flex justify-between">
           <Link
-            to={STUDENT_DASHBOARD_ROUTE}
+            to={
+              path === ADMIN_DASHBOARD_ROUTE
+                ? ADMIN_DASHBOARD_ROUTE
+                : path === STUDENT_DASHBOARD_ROUTE && STUDENT_DASHBOARD_ROUTE
+            }
             className="flex items-center gap-1"
           >
             <img src={logo} alt="logo" className="max-w-[35px] md:max-w-max" />
@@ -78,7 +87,10 @@ const DashboardNav = () => {
                     Settings
                   </button>
                   <hr className="bg-black opacity-70" />
-                  <Link to="/" className="px-4 py-3 inline-block text-left text-[14px] text-black opacity-70 transition-all duration-300 ease-in-out hover:text-orange-red md:text-[16px]">
+                  <Link
+                    to="/"
+                    className="inline-block px-4 py-3 text-left text-[14px] text-black opacity-70 transition-all duration-300 ease-in-out hover:text-orange-red md:text-[16px]"
+                  >
                     Log Out
                   </Link>
                 </div>

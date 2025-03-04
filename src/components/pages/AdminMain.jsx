@@ -11,7 +11,6 @@ import AllCourses from './admin/AllCourses'
 import AdminCoursesAdd from './admin/AdminCoursesAdd'
 import AddSection from './admin/AddSection'
 import AddVideo from './admin/AddVideo'
-import CreateTest from './admin/CreateTest'
 import AddTest from './admin/AddTest'
 
 const AdminMain = () => {

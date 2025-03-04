@@ -20,12 +20,6 @@ const AdminDashboardUi = () => {
       description:
         'Customize your learning course with video, test, and study material for growth.',
     },
-    {
-      link: '/admin-dashboard?activeSidebar=create-test',
-      title: 'Create Test',
-      description:
-        'Customize your learning course with video, test, and study material for growth.',
-    },
   ]
 
   return (
@@ -43,7 +37,7 @@ const AdminDashboardUi = () => {
           <Link
             to={step.link}
             key={index}
-            className={`w-full sm:w-6/12 sm:ps-[12px]`}
+            className={`sm:w-6/12 sm:ps-[12px] ${index === steps.length - 1 ? 'w-full sm:!w-full' : ''}`}
           >
             <div className="flex w-full items-center rounded-xl border border-black border-opacity-10 p-3">
               <div className="flex h-[48px] w-[48px] min-w-[48px] items-center justify-center rounded-[7px] bg-black bg-opacity-10 text-[20px] text-black lg:text-[22px]">
