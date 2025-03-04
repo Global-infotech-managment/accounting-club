@@ -6,17 +6,38 @@ const itemsPerPage = 6
 
 const AllStudent = () => {
   const [currentPage, setCurrentPage] = useState(1)
+  const [searchTerm, setSearchTerm] = useState('')
 
-  const totalPages = Math.ceil(studentList.length / itemsPerPage)
+  // Sort students by date
+  const sortedStudentList = [...studentList].sort(
+    (a, b) => new Date(a.date) - new Date(b.date)
+  )
+
+  // Filter students based on search term
+  const filteredStudentList = sortedStudentList.filter((student) =>
+    student.name.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
+  const totalPages = Math.ceil(filteredStudentList.length / itemsPerPage)
   const startIndex = (currentPage - 1) * itemsPerPage
-  const currentData = studentList.slice(startIndex, startIndex + itemsPerPage)
+  const currentData = filteredStudentList.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  )
 
   return (
     <div className="overflow-x-auto md:p-4">
+      <input
+        type="text"
+        placeholder="Search by name"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="mb-4 rounded-md border px-3 py-2"
+      />
       <table className="border-gray-200 shadow-md min-w-full overflow-hidden rounded-xl border bg-white">
         <thead className="bg-gray-100">
           <tr>
-            {['Sr. No', 'Date', 'Name', 'Email', 'State', 'PinCode', ,].map(
+            {['Sr. No', 'Date', 'Name', 'Email', 'State', 'PinCode'].map(
               (header, index) => (
                 <th
                   key={index}
@@ -35,8 +56,7 @@ const AllStudent = () => {
               className="hover:bg-gray-50 text-nowrap border-t bg-[#F7F7F7] text-center"
             >
               <td className="border border-[#D7D7D7] px-4 py-2">
-                {index < 9 && '0'}
-                {index + 1}
+                {(startIndex + index + 1).toString().padStart(2, '0')}
               </td>
               <td className="border border-[#D7D7D7] px-4 py-2">{item.date}</td>
               <td className="border border-[#D7D7D7] px-4 py-2">{item.name}</td>
@@ -52,9 +72,8 @@ const AllStudent = () => {
             </tr>
           ))}
         </tbody>
-      
       </table>
-      {itemsPerPage !== studentList.length && (
+      {itemsPerPage !== filteredStudentList.length && (
         <div className="relative mt-4 flex items-center justify-center gap-4">
           <Button
             disabled={currentPage === 1}
@@ -72,11 +91,9 @@ const AllStudent = () => {
           <p className="text-sm text-[#000000CC]">
             Page{' '}
             <span className="mx-2 rounded-[10px] border border-[#00000033] px-5 py-2">
-              {currentPage < 9 && '0'}
-              {currentPage}
+              {currentPage.toString().padStart(2, '0')}
             </span>{' '}
-            of {totalPages < 9 && '0'}
-            {totalPages}
+            of {totalPages.toString().padStart(2, '0')}
           </p>
         </div>
       )}

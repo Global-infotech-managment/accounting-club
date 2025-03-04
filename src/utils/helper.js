@@ -641,13 +641,6 @@ export const accordionData = [
 ]
 export const studentList = [
   {
-    date: '01/01/22',
-    name: '1/1',
-    email: 'Introduction of Business',
-    state: 'Haryana',
-    pincode: 4,
-  },
-  {
     date: '02/01/22',
     name: 'John Doe',
     email: 'john.doe@example.com',
