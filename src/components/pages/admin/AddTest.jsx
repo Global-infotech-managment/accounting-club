@@ -2,8 +2,10 @@ import { useState } from 'react'
 import Button from '../../common/Button'
 import Icons from '../../common/Icons'
 import Input from '../../common/Input'
+import { useNavigate } from 'react-router-dom'
 
 export default function AddTest() {
+  const navigate = useNavigate()
   const [questions, setQuestions] = useState([
     { question: '', options: ['', '', '', ''], correctAnswer: '' },
   ])
@@ -61,6 +63,7 @@ export default function AddTest() {
       )
     ) {
       console.log('Submitted Questions:', questions)
+      navigate('/admin-dashboard?activeSidebar=create-test')
       setQuestions([
         { question: '', options: ['', '', '', ''], correctAnswer: '' },
       ])
