@@ -64,7 +64,7 @@ const AddVideo = () => {
     setVideoEmbedCode('')
     setStudyMaterial(null) // Reset file state
     setStatus('Active')
-    navigate('/admin-dashboard?activeSidebar=create-test')
+    navigate('/admin-dashboard?activeSidebar=add-test')
   }
 
   return (
