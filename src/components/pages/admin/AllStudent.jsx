@@ -14,9 +14,11 @@ const AllStudent = () => {
     (a, b) => new Date(b.date) - new Date(a.date)
   )
 
-  // Filter students based on search term
-  const filteredStudentList = sortedStudentList.filter((student) =>
-    student.name.toLowerCase().includes(searchTerm.toLowerCase())
+  // Filter students based on search term (name or email)
+  const filteredStudentList = sortedStudentList.filter(
+    (student) =>
+      student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      student.email.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
   const totalPages = Math.ceil(filteredStudentList.length / itemsPerPage)
@@ -30,24 +32,30 @@ const AllStudent = () => {
     <div className="overflow-x-auto md:p-4">
       <Input
         value={searchTerm}
-        placeholder={'Search by name'}
+        placeholder={'Search by name or email'}
         label={'none'}
-      mainClassName={"mb-5"}
+        mainClassName={'mb-5'}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       <table className="border-gray-200 shadow-md min-w-full overflow-hidden rounded-xl border bg-white">
         <thead className="bg-gray-100">
           <tr>
-            {['Sr. No', 'Date', 'Name', 'Email', 'State', 'PinCode'].map(
-              (header, index) => (
-                <th
-                  key={index}
-                  className="text-sm text-nowrap border border-[#FFFFFF33] bg-[#253466] px-4 py-2 text-center font-semibold text-white"
-                >
-                  {header}
-                </th>
-              )
-            )}
+            {[
+              'Sr. No',
+              'Date',
+              'Name',
+              'Email',
+              'State',
+              'PinCode',
+              'delete',
+            ].map((header, index) => (
+              <th
+                key={index}
+                className="text-sm text-nowrap border border-[#FFFFFF33] bg-[#253466] px-4 py-2 text-center font-semibold text-white"
+              >
+                {header}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody className="bg-[#F7F7F7]">
@@ -70,12 +78,15 @@ const AllStudent = () => {
               <td className="border border-[#D7D7D7] px-4 py-2">
                 {item.pincode}
               </td>
+              <td className="border border-[#D7D7D7] px-4 py-2">
+                <Button bgBtn={'Delete'} />
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
       {itemsPerPage !== filteredStudentList.length && (
-        <div className="relative mt-4 flex items-center justify-center gap-4 min-w-[500px]">
+        <div className="relative mt-4 flex min-w-[500px] items-center justify-center gap-4">
           <Button
             disabled={currentPage === 1}
             transparentBtn={'Prev Page'}
