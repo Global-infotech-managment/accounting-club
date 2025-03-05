@@ -1,23 +1,32 @@
 import React from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import Paragraph from '../../common/Paragraph'
 import Icons from '../../common/Icons'
 
 const AdminSidebar = ({ sidebarOptions }) => {
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
-  const activeSidebar = queryParams.get('activeSidebar') || 'dashboard'
-  const search = location.search
+  let activeSidebar = queryParams.get('activeSidebar') || 'dashboard'
+
+  // Check if activeSidebar contains specific keywords
+  const specialKeywords = ['add-course', 'add-section', 'add-video']
+  if (specialKeywords.some((keyword) => activeSidebar.includes(keyword))) {
+    activeSidebar = 'dashboard'
+  }
+
   return (
     <div className="h-full border-r border-black border-opacity-5 p-2 sm:p-4 md:p-8 lg:p-10">
       {sidebarOptions.map((item, index) => {
-        const isActive =
-          activeSidebar ===
-          item.text.replaceAll('&', '-').replaceAll(' ', '~').toLowerCase()
+        const itemKey = item.text
+          .replaceAll('&', '-')
+          .replaceAll(' ', '~')
+          .toLowerCase()
+        const isActive = activeSidebar === itemKey
+
         return (
           <Link
             key={index}
-            to={`/admin-dashboard?activeSidebar=${item.text.replaceAll('&', '-').replaceAll(' ', '~').toLowerCase()}`}
+            to={`/admin-dashboard?activeSidebar=${itemKey}`}
             className={`group mt-4 flex items-center gap-3 rounded-xl p-2 transition-all duration-300 hover:bg-primary sm:px-6 sm:py-4 ${
               isActive ? 'active_sidebar_link bg-primary text-white' : ''
             } `}
