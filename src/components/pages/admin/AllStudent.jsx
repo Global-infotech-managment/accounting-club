@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Button from '../../common/Button'
-import { studentList } from '../../../utils/helper'
+import { studentList as initialStudentList } from '../../../utils/helper'
 import Input from '../../common/Input'
 
 const itemsPerPage = 6
@@ -8,9 +8,10 @@ const itemsPerPage = 6
 const AllStudent = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [searchTerm, setSearchTerm] = useState('')
+  const [students, setStudents] = useState(initialStudentList) // Local state for students
 
   // Sort students by latest date
-  const sortedStudentList = [...studentList].sort(
+  const sortedStudentList = [...students].sort(
     (a, b) => new Date(b.date) - new Date(a.date)
   )
 
@@ -27,6 +28,11 @@ const AllStudent = () => {
     startIndex,
     startIndex + itemsPerPage
   )
+
+  // Delete Student Function
+  const handleDelete = (email) => {
+    setStudents(students.filter((student) => student.email !== email))
+  }
 
   return (
     <div className="overflow-x-auto md:p-4">
@@ -47,7 +53,7 @@ const AllStudent = () => {
               'Email',
               'State',
               'PinCode',
-              'delete',
+              'Delete',
             ].map((header, index) => (
               <th
                 key={index}
@@ -79,7 +85,10 @@ const AllStudent = () => {
                 {item.pincode}
               </td>
               <td className="border border-[#D7D7D7] px-4 py-2">
-                <Button bgBtn={'Delete'} />
+                <Button
+                  bgBtn={'Delete'}
+                  onClick={() => handleDelete(item.email)}
+                />
               </td>
             </tr>
           ))}
