@@ -14,7 +14,6 @@ const DashboardNav = () => {
   const popupRef = useRef(null)
   const navigation = useLocation()
   const path = navigation.pathname
-  console.log(path)
   // Close popup when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
