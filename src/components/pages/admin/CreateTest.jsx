@@ -27,14 +27,6 @@ const CreateTest = () => {
       alert('Please fill all the fields')
       return
     }
-    console.log('Form Submitted:', {
-      testCode,
-      exerciseName,
-      topic,
-      timeAllowed,
-      totalQuestions,
-      passingPercentage,
-    })
 
     setTestCode('')
     setExerciseName('')
@@ -103,7 +95,7 @@ const CreateTest = () => {
 
         <Button
           type="submit"
-          className="mt-5 md:mt-10 w-full"
+          className="mt-5 w-full md:mt-10"
           bgBtn="Add New Release"
         />
       </form>

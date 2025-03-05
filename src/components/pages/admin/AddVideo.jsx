@@ -32,29 +32,10 @@ const AddVideo = () => {
       !videoDescription ||
       !videoEmbedCode
     ) {
-      console.log('Form Submitted:', {
-        selectCourse,
-        selectChapter,
-        lessonNumber,
-        isMandatory,
-        videoDescription,
-        videoEmbedCode,
-        studyMaterial, // Store file name
-        status,
-      })
       alert('Please fill all the fields')
       return
     }
-    console.log('Form Submitted:', {
-      selectCourse,
-      selectChapter,
-      lessonNumber,
-      isMandatory,
-      videoDescription,
-      videoEmbedCode,
-      studyMaterial, // Store file name
-      status,
-    })
+
     // Reset form
     setSelectCourse('')
     setSelectChapter('')
