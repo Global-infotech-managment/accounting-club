@@ -21,12 +21,12 @@ const EnrolledCourseDetail = () => {
       <DashboardNav />
       <div className="flex flex-grow flex-col xl:min-h-screen xl:flex-row xl:overflow-auto">
         {/* Sidebar */}
-        <div className="h-full p-2 sm:p-4 md:p-[28px] xl:min-h-screen xl:w-4/12 xl:max-w-[400px]">
+        <div className="h-full p-2 sm:p-4 md:p-[28px] overflow-y-scroll xl:h-screen xl:w-4/12 xl:max-w-[400px]">
           <StudentCourseDetailSidebar />
         </div>
 
         {/* Main Content */}
-        <div className="mb-20 overflow-auto">
+        <div className="mb-20 w-full overflow-auto">
           <div className="min-h-full p-2 sm:p-4 md:p-6 lg:py-8">
             <div className="rounded-3xl bg-[#F7F7F7] px-4 py-5">
               <div className="flex flex-col justify-between md:flex-row md:items-center">
