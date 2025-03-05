@@ -9,7 +9,7 @@ const AdminSidebar = ({ sidebarOptions }) => {
   let activeSidebar = queryParams.get('activeSidebar') || 'dashboard'
 
   // Check if activeSidebar contains specific keywords
-  const specialKeywords = ['add-course', 'add-section', 'add-video']
+  const specialKeywords = ['add-course', 'add-section', 'add-video',"add-test","create-test"]
   if (specialKeywords.some((keyword) => activeSidebar.includes(keyword))) {
     activeSidebar = 'dashboard'
   }
