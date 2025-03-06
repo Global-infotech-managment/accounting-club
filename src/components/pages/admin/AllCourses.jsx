@@ -59,6 +59,7 @@ const AllCourses = () => {
             <div className="mt-4 flex justify-between">
               <Button bgBtn={'Edit'} />
               <Button
+                className="hover:!text-orange-red  !border-orange-red bg-white !text-orange-red transition-all duration-300 hover:bg-orange-red "
                 bgBtn={'Delete'}
                 onClick={() => handleDelete(course.heading)}
               />
