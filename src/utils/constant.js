@@ -24,6 +24,7 @@ export const TELEPHONE_NUMBER = 'tel:9855055700'
 export const ADD_COURSES_ROUTE = '/add-courses'
 export const ADD_SECTION_ROUTE = '/add-section'
 export const ADD_VIDEO_ROUTE = '/add-video'
+export const ADD_TEST_ROUTE = '/add-test'
 export const CREATE_TEST_ROUTE = '/create-test'
 export const EMAIL_ROUTE = 'mailto:aabhimalgroup@gmail.com'
 export const ADDRESS_ROUTE =
