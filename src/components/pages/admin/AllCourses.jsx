@@ -85,7 +85,7 @@ const AllCourses = () => {
             <div className="mt-4 flex gap-5">
               <Button bgBtn={'Edit'} />
               <Button
-                className="hover:!text-orange-red  !border-orange-red bg-white !text-orange-red transition-all duration-300 hover:bg-orange-red "
+                className="!border-orange-red bg-white !text-orange-red transition-all duration-300 hover:bg-orange-red hover:!text-white"
                 bgBtn={'Delete'}
                 onClick={() => handleDelete(course.heading)}
               />
