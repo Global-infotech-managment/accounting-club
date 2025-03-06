@@ -7,6 +7,7 @@ const itemsPerPage = 6
 
 const AllCourses = () => {
   const [currentPage, setCurrentPage] = useState(1)
+  const [status, setStatus] = useState('Enable')
   const [searchTerm, setSearchTerm] = useState('')
   const [courses, setCourses] = useState(onlineCoursesData)
   const [courseStatuses, setCourseStatuses] = useState(
@@ -31,11 +32,11 @@ const AllCourses = () => {
     setCourses(courses.filter((course) => course.heading !== title))
   }
 
-    const handleClick = () => {
-      const newStatus = status === 'Enable' ? 'Disable' : 'Enable'
-      setStatus(newStatus)
-      console.log('Current Status:', newStatus)
-    }
+  const handleClick = () => {
+    const newStatus = status === 'Enable' ? 'Disable' : 'Enable'
+    setStatus(newStatus)
+    console.log('Current Status:', newStatus)
+  }
 
   return (
     <div className="rounded-xl border border-black border-opacity-[0.03] bg-black bg-opacity-[0.03] p-4">
@@ -52,7 +53,7 @@ const AllCourses = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-      <hr className=' w-full bg-black opacity-10 mb-4' />
+      <hr className="mb-4 w-full bg-black opacity-10" />
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {currentData.map((course, index) => (
           <div
