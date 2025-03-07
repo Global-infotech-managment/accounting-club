@@ -8,6 +8,7 @@ const itemsPerPage = 6
 const AllCourses = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [searchTerm, setSearchTerm] = useState('')
+  const [status, setStatus] = useState('Enable')
   const [courses, setCourses] = useState(onlineCoursesData)
   const [courseStatuses, setCourseStatuses] = useState(
     onlineCoursesData.reduce((acc, course) => {
