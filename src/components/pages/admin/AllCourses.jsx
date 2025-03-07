@@ -7,7 +7,6 @@ const itemsPerPage = 6
 
 const AllCourses = () => {
   const [currentPage, setCurrentPage] = useState(1)
-  const [status, setStatus] = useState('Enable')
   const [searchTerm, setSearchTerm] = useState('')
   const [courses, setCourses] = useState(onlineCoursesData)
   const [courseStatuses, setCourseStatuses] = useState(
