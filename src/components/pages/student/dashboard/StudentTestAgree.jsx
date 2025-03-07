@@ -32,7 +32,7 @@ const StudentTestAgree = ({ showTotalScore, setShowTotalScore }) => {
   return (
     <div className="flex flex-wrap">
       <div
-        className={`mt-6 rounded-lg sm:w-6/12 md:w-8/12 ${showQuestion === false && "!w-full"} ${showTotalScore === false && 'border border-[#0000001A]'} ${showTotalScore === true&&"!w-full"}`}
+        className={`mt-6 rounded-lg sm:w-6/12 md:w-8/12 w-full ${showQuestion === false && "!w-full"} ${showTotalScore === false && 'border border-[#0000001A]'} ${showTotalScore === true&&"!w-full"}`}
       >
         {showTotalScore === false ? (
           <>
@@ -162,7 +162,7 @@ const StudentTestAgree = ({ showTotalScore, setShowTotalScore }) => {
         )}
       </div>
       {showQuestion === true  && (
-        <div className={`rounded-lg ps-4 sm:w-6/12 md:w-4/12`}>
+        <div className={`rounded-lg md:ps-4 sm:w-6/12 md:w-4/12`}>
         <div
           className={`mt-6 rounded-lg ${showTotalScore === false && 'border border-[#0000001A]'}`}
         >
