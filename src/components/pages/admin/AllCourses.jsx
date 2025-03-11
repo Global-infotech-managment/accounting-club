@@ -8,7 +8,8 @@ const itemsPerPage = 6
 
 
 const AllCourses = () => {
-  const [status, setStatus] = useState('Enable')
+  // const [status, setStatus] = useState('Enable')
+  const [courseStatuses,setCourseStatuses]= useState("enable")
   const [currentPage, setCurrentPage] = useState(1)
   const [searchTerm, setSearchTerm] = useState('')
   const [courses, setCourses] = useState(onlineCoursesData)
@@ -26,13 +27,19 @@ const AllCourses = () => {
 
   const handleDelete = (title) => {
     setCourses(courses.filter((course) => course.heading !== title))
+    setCourseStatuses((prev) => {
+      const updatedStatuses = { ...prev }
+      delete updatedStatuses[title]
+      return updatedStatuses
+    })
   }
 
-    const handleClick = () => {
-      const newStatus = status === 'Enable' ? 'Disable' : 'Enable'
-      setStatus(newStatus)
-      console.log('Current Status:', newStatus)
-    }
+  const toggleCourseStatus = (title) => {
+    setCourseStatuses((prev) => ({
+      ...prev,
+      [title]: prev[title] === 'Enable' ? 'Disable' : 'Enable',
+    }))
+  }
 
   return (
     <div className="rounded-xl border border-black border-opacity-[0.03] bg-black bg-opacity-[0.03] p-4">
@@ -65,10 +72,14 @@ const AllCourses = () => {
               <div className="flex items-center justify-between pt-2.5">
                 <h3 className="text-lg mt-3 font-semibold">{course.heading}</h3>
                 <button
-                  className="!h-[30px] rounded-2xl bg-[#9F9F9F1A] !py-1.5 px-2.5 text-[12px] text-[#303030]"
-                  onClick={handleClick}
+                  className={`!h-[30px] rounded-2xl px-2.5 transition-all ease-in-out duration-300 text-[12px] ${
+                    courseStatuses[course.heading] === 'Enable'
+                      ? 'bg-primary text-white'
+                      : 'bg-orange-red text-white'
+                  }`}
+                  onClick={() => toggleCourseStatus(course.heading)}
                 >
-                  {status}
+                  {courseStatuses[course.heading]}
                 </button>
               </div>
               <p className="text-sm text-gray-600 font-medium">
