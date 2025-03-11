@@ -28,8 +28,8 @@ const DashboardNav = () => {
   }, [])
 
   return (
-    <div className="relative border-b border-black border-opacity-5">
-      <div className="container mx-auto max-w-[1920px] p-2 sm:px-10 sm:py-6">
+    <div className="relative border-b border-black border-opacity-5 bg-[#fa7f7f0c]">
+      <div className="container mx-auto max-w-[1920px] p-2 sm:px-10 sm:py-4">
         <nav className="flex justify-between">
           <Link
             to={

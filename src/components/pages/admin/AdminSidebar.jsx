@@ -15,7 +15,7 @@ const AdminSidebar = ({ sidebarOptions }) => {
   }
 
   return (
-    <div className="h-full border-r border-black border-opacity-5 p-2 sm:p-4 md:p-8 lg:p-10">
+    <div className="h-full border-r border-black border-opacity-5 p-2 sm:p-4 md:p-8 lg:p-6">
       {sidebarOptions.map((item, index) => {
         const itemKey = item.text
           .replaceAll('&', '-')

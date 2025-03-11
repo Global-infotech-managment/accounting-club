@@ -19,14 +19,19 @@ const RootComponent = () => {
   }, [location.pathname])
 
   return (
-    <>
-      {showNavbar && <Navbar />}
+    <div className='relative overflow-hidden '>
+      {showNavbar &&(
+         <div className='h-[61px] md:h-[93px]'>
+        <div className='fixed w-full top-0 bg-white z-[999]'>{showNavbar && <Navbar />}</div>
+      </div>
+      )}
+     
       <App />
       <div className={`relative ${!showNavbar && 'hidden'}`}>
         <JourneyStart />
         <Footer />
       </div>
-    </>
+    </div>
   )
 }
 

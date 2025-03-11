@@ -4,7 +4,6 @@ import AboutUs from '../AboutUs'
 import ChooseUs from '../ChooseUs'
 import StudentSay from '../StudentSay'
 import OnlineCoursesSell from '../OnlineCoursesSell'
-import HeroNew from '../common/HeroNew'
 import TrustedBy from '../common/TrustedBy'
 
 const Home = () => {

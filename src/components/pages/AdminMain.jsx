@@ -27,13 +27,13 @@ const AdminMain = () => {
       <DashboardNav />
       <div className="flex flex-grow overflow-auto">
         {/* Sidebar */}
-        <div className="h-full lg:w-3/12 lg:max-w-[400px]">
+        <div className="h-full lg:w-3/12 lg:max-w-[250px] bg-[#fa7f7f10]">
           <AdminSidebar sidebarOptions={adminSidebarOptions} />
         </div>
 
         {/* Main Content */}
         <div className="flex-grow overflow-auto">
-          <div className="min-h-full p-2 sm:p-4 md:p-6 lg:px-10 lg:py-8">
+          <div className="min-h-full p-2 sm:p-4 md:p-6 lg:px-6 lg:py-6">
             <Routes>
               <Route
                 path="/"

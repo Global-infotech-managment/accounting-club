@@ -102,7 +102,7 @@ const StudentSignUp = () => {
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
-            <div className="w-full px-0 py-3 sm:w-6/12 sm:px-2">
+            {/* <div className="w-full px-0 py-3 sm:w-6/12 sm:px-2">
               <Input
                 placeholder="Age"
                 type="number"
@@ -159,7 +159,7 @@ const StudentSignUp = () => {
                 onChange={setExperience}
                 value={experience}
               />
-            </div>
+            </div> */}
             <div className="w-full px-0 py-3 sm:w-6/12 sm:px-2">
               <Input
                 placeholder="Email Id"
@@ -176,7 +176,7 @@ const StudentSignUp = () => {
                 onChange={(e) => setMobile(e.target.value)}
               />
             </div>
-            <div className="w-full px-0 py-3 sm:w-6/12 sm:px-2">
+            {/* <div className="w-full px-0 py-3 sm:w-6/12 sm:px-2">
               <Input
                 placeholder="Postal Address* [For study Material] Line 1"
                 type="text"
@@ -223,7 +223,7 @@ const StudentSignUp = () => {
                 value={pinCode}
                 onChange={(e) => setPinCode(e.target.value)}
               />
-            </div>
+            </div> */}
             <div className="w-full px-0 py-3 sm:w-6/12 sm:px-2">
               <Input
                 placeholder="Password*"
@@ -232,15 +232,15 @@ const StudentSignUp = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <div className="w-full px-0 py-3 sm:w-6/12 sm:px-2">
+            {/* <div className="w-full px-0 py-3 sm:w-6/12 sm:px-2">
               <Input
                 placeholder="Retype Password"
                 type="password"
                 value={retypePassword}
                 onChange={(e) => setRetypePassword(e.target.value)}
               />
-            </div>
-            <div className="flex w-full items-center sm:w-6/12">
+            </div> */}
+            <div className="flex w-full items-center sm:w-6/12 sm:ps-2">
               <input
                 type="checkbox"
                 id="terms"
