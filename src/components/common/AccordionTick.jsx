@@ -33,7 +33,7 @@ const Accordion = ({ title, lessons, isOpen, onToggle }) => {
           {lessons.map((lesson, index) => (
             <li
               key={index}
-              className={`flex items-center gap-2 p-3 text-[12px] ${lesson.completed ? 'text-green-600 font-semibold' : 'text-gray-700'}`}
+              className={`flex items-center gap-2 py-2 px-3 text-[12px] ${lesson.completed ? 'text-green-600 font-semibold' : 'text-gray-700'}`}
             >
               {/* Use the custom status icon */}
               {lesson.completed && (

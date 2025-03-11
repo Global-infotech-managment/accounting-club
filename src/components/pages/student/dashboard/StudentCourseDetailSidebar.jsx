@@ -62,7 +62,7 @@ const StudentCourseDetailSidebar = () => {
           firstText={'Content Playlist'}
           className={'mb-[10px] !text-[16px] font-semibold'}
         />
-        <div className="rounded-3xl bg-[#F7F7F7] px-4 py-5">
+        <div className="rounded-3xl bg-[#F7F7F7] pb-4">
           <AccordionTick />
         </div>
       </div>
