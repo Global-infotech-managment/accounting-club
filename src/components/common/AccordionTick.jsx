@@ -15,7 +15,7 @@ const Accordion = ({ title, lessons, isOpen, onToggle }) => {
       >
         <span className="flex-grow text-start">{title}</span>
         <img
-          src={isOpen ? upArrow : downArrow} // Use the imported variables here
+          src={isOpen ? upArrow : downArrow} 
           alt="toggle icon"
           className="h-4 w-4"
         />

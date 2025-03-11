@@ -22,7 +22,7 @@ const StudentCourseDetailVideo = () => {
         ></iframe>
       </div>
       <div className="overflow-auto">
-        <div className="flex min-w-[1070px] items-center justify-between">
+        <div className="flex items-center justify-between">
           <Paragraph
             className={'text-sm'}
             text={

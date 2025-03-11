@@ -46,6 +46,7 @@ const AdminMain = () => {
                     {activeSidebar === 'add-test' && <AddTest />}
                     {activeSidebar === 'create-test' && <CreateTest />}
                     {activeSidebar === 'all-students' && <AllStudent />}
+                    {activeSidebar === 'all-students' && <AllStudent />}
                     {activeSidebar === 'all-employers-' && <AllEmployers />}
                     {activeSidebar === 'all-courses' && <AllCourses />}
                   </>
