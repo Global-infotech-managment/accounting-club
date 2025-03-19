@@ -1,57 +1,49 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import Input from '../../common/Input'
 import Button from '../../common/Button'
 import { Dropdown } from '../../common/Dropdown'
 import { useNavigate } from 'react-router-dom'
+import { AppContext } from '../../../utils/AppContext'
 
 const AddSection = () => {
-  const [formData, setFormData] = useState({
-    selectCourse: '',
-    sectionName: '',
-    description: '',
-    validity: '',
-    isMandatory: 'Yes', // assuming default value for dropdown
-    status: 'Active', // assuming default value for dropdown
-  })
-
+  const { courseData, updateCourseData } = useContext(AppContext)
   const navigate = useNavigate()
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }))
+    updateCourseData({ [name]: value }) // Update courseData directly
   }
 
   const handleDropdownChange = (e) => {
     const { name, value } = e.target
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }))
+    updateCourseData({ [name]: value }) // Update courseData directly
   }
 
   const formSubmit = (e) => {
     e.preventDefault()
+
     if (
-      !formData.selectCourse ||
-      !formData.sectionName ||
-      !formData.description ||
-      !formData.validity
+      !courseData.courseName ||
+      !courseData.sectionName ||
+      !courseData.sectionDescription ||
+      !courseData.validity
     ) {
       alert('Please fill all the fields')
       return
     }
-    console.log(formData, 'add section')
-    setFormData({
-      selectCourse: '',
-      sectionName: '',
-      description: '',
-      validity: '',
-      isMandatory: 'Yes',
-      status: 'Active',
-    })
+
+    console.log(courseData, 'add section')
+
+    // Reset courseData after submission
+    // updateCourseData({
+    //   courseName: '',
+    //   sectionName: '',
+    //   sectionDescription: '',
+    //   validity: '',
+    //   isMandatory: 'Yes',
+    //   status: 'Active',
+    // })
+
     navigate('/admin-dashboard?activeSidebar=add-video')
   }
 
@@ -63,29 +55,29 @@ const AddSection = () => {
       <hr className="mb-4 w-full bg-black opacity-10" />
       <form className="flex flex-col gap-4">
         <Input
-          name="selectCourse"
+          name="courseName"
           placeholder="Select Course"
-          value={formData.selectCourse}
+          value={courseData.courseName}
           onChange={handleInputChange}
         />
         <Input
           name="sectionName"
           placeholder="Section Name"
-          value={formData.sectionName}
+          value={courseData.sectionName}
           onChange={handleInputChange}
         />
         <Input
-          name="description"
+          name="sectionDescription"
           type={'text'}
-          placeholder="Description"
-          value={formData.description}
+          placeholder="Section Description"
+          value={courseData.sectionDescription}
           onChange={handleInputChange}
         />
         <Input
           name="validity"
           type={'number'}
           placeholder="Validity"
-          value={formData.validity}
+          value={courseData.validity}
           onChange={handleInputChange}
         />
 
@@ -96,7 +88,7 @@ const AddSection = () => {
             { value: 'Yes', label: 'Yes' },
             { value: 'No', label: 'No' },
           ]}
-          value={formData.isMandatory}
+          value={courseData.isMandatory}
           onChange={handleDropdownChange}
         />
         <Dropdown
@@ -106,7 +98,7 @@ const AddSection = () => {
             { value: 'Active', label: 'Active' },
             { value: 'Disable', label: 'Disable' },
           ]}
-          value={formData.status}
+          value={courseData.status}
           onChange={handleDropdownChange}
         />
 

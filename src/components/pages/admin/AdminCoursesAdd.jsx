@@ -1,91 +1,70 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import Input from '../../common/Input'
 import Button from '../../common/Button'
 import { Dropdown } from '../../common/Dropdown'
 import { useNavigate } from 'react-router-dom'
+import { AppContext } from '../../../utils/AppContext'
 
 const AdminCoursesAdd = () => {
-  const [formData, setFormData] = useState({
-    courseName: '',
-    description: '',
-    price: '',
-    validity: '',
-    selectedFile: null,
-    dragActive: false,
-    status: 'Active',
-  })
+  const { courseData, updateCourseData } = useContext(AppContext)
+
   const navigate = useNavigate()
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }))
+    updateCourseData({ [name]: value })
   }
 
   const handleFileChange = (event) => {
     if (event.target.files && event.target.files.length > 0) {
-      setFormData((prevData) => ({
-        ...prevData,
-        selectedFile: event.target.files[0],
-      }))
+      updateCourseData({ selectedFile: event.target.files[0] })
     }
   }
 
   const handleDragOver = (event) => {
     event.preventDefault()
-    setFormData((prevData) => ({
-      ...prevData,
-      dragActive: true,
-    }))
+    updateCourseData({ dragActive: true })
   }
 
   const handleDragLeave = () => {
-    setFormData((prevData) => ({
-      ...prevData,
-      dragActive: false,
-    }))
+    updateCourseData({ dragActive: false })
   }
 
   const handleDrop = (event) => {
     event.preventDefault()
-    setFormData((prevData) => ({
-      ...prevData,
+    updateCourseData({
       dragActive: false,
       selectedFile: event.dataTransfer.files[0],
-    }))
+    })
   }
 
   const handleDropdownChange = (selectedOption) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      status: selectedOption.value,
-    }))
+    updateCourseData({ status: selectedOption.value })
   }
 
   const formSubmit = (e) => {
     e.preventDefault()
     if (
-      !formData.courseName ||
-      !formData.description ||
-      !formData.price ||
-      !formData.validity ||
-      !formData.selectedFile
+      !courseData.courseName ||
+      !courseData.description ||
+      !courseData.price ||
+      !courseData.validity ||
+      !courseData.selectedFile
     ) {
       alert('Please fill all the fields')
       return
     }
-    console.log(formData, 'form data')
-    setFormData({
-      courseName: '',
-      description: '',
-      price: '',
-      validity: '',
-      selectedFile: null,
-      dragActive: false,
-      status: 'Active',
-    })
+
+    console.log(courseData, 'course data app')
+    // updateCourseData({
+    //   courseName: '',
+    //   description: '',
+    //   price: '',
+    //   validity: '',
+    //   selectedFile: null,
+    //   dragActive: false,
+    //   status: 'Active',
+    // })
 
     navigate('/admin-dashboard?activeSidebar=add-section')
   }
@@ -100,35 +79,33 @@ const AdminCoursesAdd = () => {
         <Input
           name="courseName"
           placeholder="Course Name"
-          value={formData.courseName}
+          value={courseData.courseName}
           onChange={handleInputChange}
         />
         <Input
           name="description"
           placeholder="Description"
-          value={formData.description}
+          value={courseData.description}
           onChange={handleInputChange}
         />
         <Input
           name="price"
           type="number"
           placeholder="Price"
-          value={formData.price}
+          value={courseData.price}
           onChange={handleInputChange}
         />
         <Input
           name="validity"
           type="number"
           placeholder="Validity"
-          value={formData.validity}
+          value={courseData.validity}
           onChange={handleInputChange}
         />
 
         {/* Drag & Drop File Upload */}
         <div
-          className={`flex h-[100px] w-full flex-col items-center justify-center rounded-lg border-2 border-dashed px-3 md:h-[150px] ${
-            formData.dragActive ? 'border-orange-red' : 'border-primary'
-          }`}
+          className={`flex h-[100px] w-full flex-col items-center justify-center rounded-lg border-2 border-dashed px-3 md:h-[150px] ${courseData.dragActive ? 'border-orange-red' : 'border-primary'}`}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
@@ -151,9 +128,9 @@ const AdminCoursesAdd = () => {
           />
         </div>
 
-        {formData.selectedFile && (
+        {courseData.selectedFile && (
           <p className="text-gray-700 mt-2">
-            Uploaded File: {formData.selectedFile.name}
+            Uploaded File: {courseData.selectedFile.name}
           </p>
         )}
 
@@ -164,7 +141,7 @@ const AdminCoursesAdd = () => {
             { value: 'Disable', label: 'Disable' },
           ]}
           defaultValue="Active"
-          onChange={handleDropdownChange} // Ensure the dropdown updates state
+          onChange={handleDropdownChange}
         />
 
         <Button type="submit" className="mt-5 md:mt-10" bgBtn="Next" />
