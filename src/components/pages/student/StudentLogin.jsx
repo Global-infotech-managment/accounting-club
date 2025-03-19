@@ -10,23 +10,28 @@ import {
 import Button from '../../common/Button'
 
 const StudentLogin = () => {
-  const [email, setEmail] = useState('')
+  const [loginInput, setLoginInput] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState({})
   const navigate = useNavigate()
+
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     return emailRegex.test(email)
   }
 
-  const handleEmailChange = (e) => {
-    const value = e.target.value
-    setEmail(value)
+  const validatePhoneNumber = (phone) => {
+    const phoneRegex = /^[0-9]{10}$/
+    return phoneRegex.test(phone)
+  }
 
-    if (errors.email) {
-      if (value && validateEmail(value)) {
-        setErrors((prev) => ({ ...prev, email: '' }))
-      }
+  const handleLoginInputChange = (e) => {
+    const value = e.target.value
+    setLoginInput(value)
+
+    // Reset errors when the user changes the input
+    if (errors.loginInput) {
+      setErrors((prev) => ({ ...prev, loginInput: '' }))
     }
   }
 
@@ -43,10 +48,10 @@ const StudentLogin = () => {
     e.preventDefault()
     let newErrors = {}
 
-    if (!email) {
-      newErrors.email = 'Email is required'
-    } else if (!validateEmail(email)) {
-      newErrors.email = 'Enter a valid email'
+    if (!loginInput) {
+      newErrors.loginInput = 'Email or Phone Number is required'
+    } else if (!validateEmail(loginInput) && !validatePhoneNumber(loginInput)) {
+      newErrors.loginInput = 'Enter a valid email or phone number'
     }
 
     if (!password) {
@@ -56,7 +61,7 @@ const StudentLogin = () => {
     setErrors(newErrors)
 
     if (Object.keys(newErrors).length === 0) {
-      setEmail('')
+      setLoginInput('')
       setPassword('')
       navigate(STUDENT_DASHBOARD_ROUTE)
     }
@@ -82,13 +87,15 @@ const StudentLogin = () => {
         <form onSubmit={handleSubmit} className="flex w-full flex-col gap-5">
           <div className="relative">
             <Input
-              placeholder="Email Id"
-              type="email"
-              value={email}
-              onChange={handleEmailChange}
+              placeholder="Email or Phone Number"
+              type="text"
+              value={loginInput}
+              onChange={handleLoginInputChange}
             />
-            {errors.email && (
-              <p className="absolute text-sm text-orange-red">{errors.email}</p>
+            {errors.loginInput && (
+              <p className="absolute text-sm text-orange-red">
+                {errors.loginInput}
+              </p>
             )}
           </div>
 
