@@ -87,10 +87,12 @@ export const navLinks = [
     subLinks: [
       {
         title: 'Verify Certificate',
+        icon: 'verifyCertificate',
         url: VERIFY_CERTIFICATE_ROUTE,
       },
       {
         title: 'Chartered Accountant',
+        icon: 'chartedAccountant',
         url: CHARTERED_ACCOUNTANT_ROUTE,
       },
     ],
@@ -606,44 +608,45 @@ export const accordionData = [
   {
     title: 'Chapter -1 Basics of Accounting',
     lessons: [
-      { name: 'Lesson -1: Introduction of Business', completed: true },
-      { name: 'Lesson -2: Role of Works Structure', completed: true },
-      { name: 'Lesson -3: Shortcut Keys in Tally', completed: false },
-      { name: 'Lesson -4: Role of Works Structure', completed: false },
-      { name: 'Lesson -5: Role of Works Structure', completed: false },
+      {
+        name: 'Lesson -1: Introduction of Business',
+        videoUrl: 'https://youtu.be/eA8oK3wn1p4?si=8gcxTV0BgpJYA9Cl',
+        completed: true,
+        description: 'description chapter 1 lesson 1',
+      },
+      {
+        name: 'Lesson -2: Role of Works Structure',
+        videoUrl: 'https://youtu.be/xsdM4FJJ2jo?si=BnkwlN5tXeeRPs1I',
+        completed: true,
+        description: 'description chapter 1 lesson 2',
+      },
+      {
+        name: 'Lesson -3: Shortcut Keys in Tally',
+        videoUrl: 'https://youtu.be/eA8oK3wn1p4?si=vE1K2Uj-u0bxAdPY',
+        completed: false,
+        description: 'description chapter 1 lesson 3',
+      },
     ],
   },
   {
     title: 'Chapter -2 Manual Accounting',
     lessons: [
-      { name: 'Lesson -1: Introduction of Business', completed: true },
-      { name: 'Lesson -2: Role of Works Structure', completed: true },
-      { name: 'Lesson -3: Shortcut Keys in Tally', completed: false },
-      { name: 'Lesson -4: Role of Works Structure', completed: false },
-      { name: 'Lesson -5: Role of Works Structure', completed: false },
-    ],
-  },
-  {
-    title: 'Chapter -3 Computer Accounting',
-    lessons: [
-      { name: 'Lesson -1: Introduction of Business', completed: true },
-      { name: 'Lesson -2: Role of Works Structure', completed: true },
-      { name: 'Lesson -3: Shortcut Keys in Tally', completed: false },
-      { name: 'Lesson -4: Role of Works Structure', completed: false },
-      { name: 'Lesson -5: Role of Works Structure', completed: false },
-    ],
-  },
-  {
-    title: 'Chapter -4 Inventory Accounting',
-    lessons: [
-      { name: 'Lesson -1: Introduction of Business', completed: true },
-      { name: 'Lesson -2: Role of Works Structure', completed: true },
-      { name: 'Lesson -3: Shortcut Keys in Tally', completed: false },
-      { name: 'Lesson -4: Role of Works Structure', completed: false },
-      { name: 'Lesson -5: Role of Works Structure', completed: false },
+      {
+        name: 'Lesson -1: Accounting Basics',
+        videoUrl: 'https://youtu.be/xsdM4FJJ2jo?si=BnkwlN5tXeeRPs1I',
+        completed: true,
+        description: 'description chapter 2 lesson 1',
+      },
+      {
+        name: 'Lesson -2: Advanced Ledger',
+        videoUrl: 'https://youtu.be/eA8oK3wn1p4?si=vE1K2Uj-u0bxAdPY',
+        completed: true,
+        description: 'description chapter 1 lesson 2',
+      },
     ],
   },
 ]
+
 export const studentList = [
   {
     date: '02/01/22',

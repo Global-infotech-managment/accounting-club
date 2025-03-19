@@ -1,25 +1,25 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useParams } from 'react-router-dom'
-import Heading from '../../../common/Heading'
-import Button from '../../../common/Button'
+import { AppContext } from '../../../../utils/AppContext'
+import { accordionData } from '../../../../utils/helper'
 import Paragraph from '../../../common/Paragraph'
+import ReactPlayer from 'react-player'
 
 const StudentCourseDetailVideo = () => {
-  const totalCourses = 5
-  const completedCourses = 3
+  const { activeVideoIndex } = useContext(AppContext)
   const { slug } = useParams()
-  const completionPercentage = (completedCourses / totalCourses) * 100
+
+  const activeChapter = accordionData[activeVideoIndex.chapter]
+  const activeLesson = activeChapter?.lessons[activeVideoIndex.lesson]
+  const videoUrl = activeLesson?.videoUrl || null
+
   return (
     <>
       <div className="my-4 w-full overflow-hidden rounded-xl border border-primary">
-        <iframe
-          className="h-full md:min-h-[551px] min-h-[400px] w-full"
-          src="https://www.youtube.com/embed/nxL5tPgqft4?si=IpCMIvzZwoJDz-SI&rel=0"
-          title="YouTube video player"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
+        <ReactPlayer
+          url={videoUrl}
+          className="h-full min-h-[400px] !w-full md:min-h-[551px]"
+        />
       </div>
       <div className="overflow-auto">
         <div className="flex items-center justify-between">
@@ -28,18 +28,13 @@ const StudentCourseDetailVideo = () => {
             text={
               <>
                 <span className="font-semibold">Description of class :</span>
-                This lesson is updated in Feb. 2024
+                {activeLesson?.description ||
+                  'Description of class not available'}
               </>
             }
           />
         </div>
       </div>
-      {/* <Button
-        className={
-          'mt-4 max-h-10 rounded-[10px] !py-2 px-5 !text-sm !leading-normal'
-        }
-        bgBtn={'Create New Post'}
-      /> */}
     </>
   )
 }
