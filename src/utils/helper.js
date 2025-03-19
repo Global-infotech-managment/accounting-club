@@ -97,7 +97,6 @@ export const navLinks = [
   },
   {
     title: 'Employers',
-    url: '#',
     subLinks: [
       {
         title: 'Employers Login',

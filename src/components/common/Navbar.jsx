@@ -28,6 +28,7 @@ const Navbar = () => {
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen)
+    setOpenIndex(null)
     if (menuOpen) {
       document.body.classList.remove('overflow-hidden')
     } else {
@@ -54,7 +55,7 @@ const Navbar = () => {
   return (
     <header className="z-10 overflow-x-clip border-b-[1px] border-b-[#2534665b] bg-white py-3 shadow-[0_4px_10px_0_rgba(37,52,102,0.5)] md:py-5">
       <div className="container flex items-center justify-between gap-6 px-3 lg:max-w-[1184px]">
-        <Link to={HOME_ROUTE} className="relative z-10">
+        <Link to={HOME_ROUTE} className="relative z-[60]">
           <img
             src={PageLogo}
             width={260}
@@ -75,7 +76,7 @@ const Navbar = () => {
               >
                 <Link
                   to={obj.url}
-                  className={`leading-150 text-base relative flex items-center gap-2 font-normal transition-all duration-300 hover:text-primary ${
+                  className={`leading-150 relative flex items-center gap-2 text-base font-normal transition-all duration-300 hover:text-primary ${
                     isActive &&
                     'text-primary before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-primary'
                   }`}
@@ -87,19 +88,16 @@ const Navbar = () => {
                 </Link>
                 {obj.subLinks && (
                   <div
-                    className={`rounded-4 pointer-events-none absolute top-[25px] w-[102vw] border-b-[1px] border-b-[#2534665b] bg-white pt-7 opacity-0 duration-300 group-hover:pointer-events-auto group-hover:opacity-100 ${obj.title.toLocaleLowerCase() === 'jobs' && '-left-[45.4vw]'} ${obj.title.toLocaleLowerCase() === 'services' && '-left-[49.6vw]'} ${obj.title.toLocaleLowerCase() === 'employers' && '-left-[57.1vw]'}`}
+                    className={`pointer-events-none absolute top-[25px] w-[102vw] border-b-[1px] border-b-[#2534665b] bg-white pt-7 opacity-0 duration-300 group-hover:pointer-events-auto group-hover:opacity-100 ${obj.title.toLocaleLowerCase() === 'jobs' && '-left-[45.4vw]'} ${obj.title.toLocaleLowerCase() === 'services' && '-left-[49.6vw]'} ${obj.title.toLocaleLowerCase() === 'employers' && '-left-[57.1vw]'} group-hover:z-50`}
                   >
                     <div className="h-[1px] w-full border-t border-[#25346633]"></div>
                     <div className="container mx-auto px-3 lg:max-w-[1184px]">
-                      {/* <p className="border-b border-[#25346633] pb-[22px] pt-4 text-[16px] font-normal text-black">
-              {obj.title}
-            </p> */}
                       <div className="flex w-full flex-wrap py-6">
                         {obj.subLinks.map((subLink, subIndex) => (
                           <Link
                             key={subIndex}
                             to={subLink.url}
-                            className="text-slate hover:bg-gray-100 flex w-4/12 items-start gap-3 text-nowrap px-4 py-2 duration-300 hover:text-primary hover:shadow-nav"
+                            className="text-slate hover:bg-gray-100 flex w-4/12 items-start gap-3 text-nowrap !rounded-[10px] px-4 py-2 duration-300 hover:text-primary hover:shadow-nav"
                           >
                             <Icons
                               className="mr-2 min-h-[23px] min-w-[23px]"
@@ -134,7 +132,7 @@ const Navbar = () => {
                 >
                   <Link
                     to={obj.url}
-                    className={`leading-150 text-base relative flex items-center gap-2 font-normal transition-all duration-300 hover:text-primary ${
+                    className={`leading-150 relative flex items-center gap-2 text-base font-normal transition-all duration-300 hover:text-primary ${
                       isActive &&
                       'text-primary before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-primary'
                     }`}
@@ -150,9 +148,17 @@ const Navbar = () => {
           </div>
         </nav>
         <div className="flex items-center gap-5 max-xl:hidden">
-          <Button path={STUDENT_SIGNUP_ROUTE} transparentBtn="Sign up" />
-          <Button path={STUDENT_LOGIN_ROUTE} bgBtn="Student’s Login" />
-          <div className="hidden lg:flex">
+          <Button
+            path={STUDENT_SIGNUP_ROUTE}
+            className={'relative z-50'}
+            transparentBtn="Sign up"
+          />
+          <Button
+            path={STUDENT_LOGIN_ROUTE}
+            className={'relative z-50'}
+            bgBtn="Student’s Login"
+          />
+          <div className="relative z-10 hidden lg:flex">
             {navLinks.slice(4, 5).map((obj, index) => {
               const isActive =
                 location.hash === obj.url || locationPath === obj.url
@@ -163,7 +169,7 @@ const Navbar = () => {
                 >
                   <Link
                     to={obj.url}
-                    className={`leading-150 text-base relative flex items-center gap-2 font-normal transition-all duration-300 hover:text-primary ${
+                    className={`leading-150 relative flex items-center gap-2 text-base font-normal transition-all duration-300 hover:text-primary ${
                       isActive &&
                       'text-primary before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-primary'
                     }`}
@@ -173,6 +179,37 @@ const Navbar = () => {
                       <Icons iconName="dropdownBlue" className="size-4" />
                     )}
                   </Link>
+                  {obj.subLinks && (
+                    <div
+                      className={`rounded-4 pointer-events-none absolute top-[25px] w-[102vw] border-b-[1px] border-b-[#2534665b] bg-white pt-7 opacity-0 duration-300 group-hover:pointer-events-auto group-hover:opacity-100 ${obj.title.toLocaleLowerCase() === 'jobs' && '-left-[45.4vw]'} ${obj.title.toLocaleLowerCase() === 'services' && '-left-[49.6vw]'} ${obj.title.toLocaleLowerCase() === 'employers' && '-left-[83.1vw]'} group-hover:z-50`}
+                    >
+                      <div className="h-[1px] w-full border-t border-[#25346633]"></div>
+                      <div className="container mx-auto px-3 lg:max-w-[1184px]">
+                        <div className="flex w-full flex-wrap py-6">
+                          {obj.subLinks.map((subLink, subIndex) => (
+                            <Link
+                              key={subIndex}
+                              to={subLink.url}
+                              className="text-slate hover:bg-gray-100 flex w-4/12 items-start gap-3 text-nowrap !rounded-[10px] px-4 py-2 duration-300 hover:text-primary hover:shadow-nav"
+                            >
+                              <Icons
+                                className="mr-2 min-h-[23px] min-w-[23px]"
+                                iconName={subLink.icon}
+                              />
+                              <p className="flex flex-col">
+                                <span className="font-medium">
+                                  {subLink.title}
+                                </span>
+                                <span className="mt-[2px] text-wrap">
+                                  {subLink.description}
+                                </span>
+                              </p>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )
             })}
@@ -211,7 +248,7 @@ const Navbar = () => {
                   <Link
                     to={obj.url}
                     onClick={toggleMenu}
-                    className={`leading-150 text-base relative flex items-center gap-2 font-normal text-white transition-all duration-300 ${
+                    className={`leading-150 relative flex items-center gap-2 text-base font-normal text-white transition-all duration-300 ${
                       isActive &&
                       'text-primary before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-primary'
                     }`}
@@ -224,7 +261,7 @@ const Navbar = () => {
                   <div>
                     <button
                       onClick={() => toggleAccordion(index)}
-                      className={`leading-150 text-base relative flex items-center gap-2 font-normal text-white transition-all duration-300 ${
+                      className={`leading-150 relative flex items-center gap-2 text-base font-normal text-white transition-all duration-300 ${
                         isActive &&
                         'text-primary before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-primary'
                       }`}
@@ -247,7 +284,7 @@ const Navbar = () => {
                       }}
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.3, ease: 'easeInOut' }}
-                      className="overflow-hidden flex flex-col items-start gap-2 mt-2"
+                      className="mt-2 flex flex-col items-start gap-2 overflow-hidden"
                     >
                       {obj.subLinks.map((subLink, subIndex) => (
                         <Link
@@ -271,22 +308,14 @@ const Navbar = () => {
             className="!border bg-white text-center text-primary hover:!border-white hover:!bg-[transparent] hover:!text-white max-sm:w-full"
             path={STUDENT_SIGNUP_ROUTE}
             transparentBtn="Sign up"
-            onClick={toggleMenu}
           />
           <Button
-            className="border border-white text-center text-primary hover:bg-white hover:!text-primary max-sm:w-full"
+            className="!border bg-primary text-center text-white hover:!border-white hover:!bg-[transparent] hover:!text-primary max-sm:w-full"
             path={STUDENT_LOGIN_ROUTE}
             bgBtn="Student’s Login"
-            onClick={toggleMenu}
           />
         </div>
       </div>
-      {menuOpen && (
-        <div
-          onClick={toggleMenu}
-          className="fixed left-0 top-0 h-screen w-full"
-        ></div>
-      )}
     </header>
   )
 }
