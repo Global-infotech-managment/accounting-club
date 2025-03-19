@@ -9,6 +9,7 @@ import bookImage from '../../assets/images/png/online-book.png'
 import { useParams } from 'react-router-dom'
 import { onlineCoursesData } from '../../utils/helper'
 import { PAYMENT_METHOD_ROUTE } from '../../utils/constant'
+import ReactPlayer from 'react-player'
 const CourseDetail = () => {
   const { slug } = useParams()
   const course = onlineCoursesData.find(
@@ -33,13 +34,10 @@ const CourseDetail = () => {
       <div className="container max-w-[1184px] pt-5 sm:pt-10 lg:pt-14 xl:pt-20">
         <div className="flex flex-wrap px-4 sm:px-0">
           <div className="lg:w-8/12 lg:pe-12">
-            <video
-              className="max-h-[438px] w-full max-w-[677px] rounded-[24px] object-cover"
-              controls
-              src={course.video}
-              alt="course video"
+            <ReactPlayer
+              url={course.video}
+              className="max-h-[438px] !w-full overflow-hidden rounded-[24px] object-cover lg:max-w-[677px]"
             />
-
             <Heading
               className="mb-3 pt-4 md:pt-6 xl:mb-4"
               middleText={
