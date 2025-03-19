@@ -14,44 +14,45 @@ import { useNavigate } from 'react-router-dom'
 const StudentSignUp = () => {
   const navigate = useNavigate()
   const [name, setName] = useState('')
-  const [age, setAge] = useState('')
-  const [qualification, setQualification] = useState('')
-  const [experience, setExperience] = useState('')
   const [email, setEmail] = useState('')
   const [mobile, setMobile] = useState('')
-  const [addressLine1, setAddressLine1] = useState('')
-  const [addressLine2, setAddressLine2] = useState('')
-  const [city, setCity] = useState('')
-  const [state, setState] = useState('')
-  const [country, setCountry] = useState('')
-  const [pinCode, setPinCode] = useState('')
+  // const [age, setAge] = useState('')
+  // const [qualification, setQualification] = useState('')
+  // const [experience, setExperience] = useState('')
+  // const [addressLine1, setAddressLine1] = useState('')
+  // const [addressLine2, setAddressLine2] = useState('')
+  // const [city, setCity] = useState('')
+  // const [state, setState] = useState('')
+  // const [country, setCountry] = useState('')
+  // const [pinCode, setPinCode] = useState('')
+  // const [retypePassword, setRetypePassword] = useState('')
   const [password, setPassword] = useState('')
-  const [retypePassword, setRetypePassword] = useState('')
   const [termsAccepted, setTermsAccepted] = useState(false)
   const handleSubmit = (e) => {
     e.preventDefault()
     // Handle form submission
     if (
-      !age ||
-      !qualification ||
-      !experience ||
-      !email ||
-      !mobile ||
-      !addressLine1 ||
-      !addressLine2 ||
-      !city ||
-      !state ||
-      !country ||
-      !pinCode ||
+      // !age ||
+      // !qualification ||
+      // !experience ||
+      // !addressLine1 ||
+      // !addressLine2 ||
+      // !city ||
+      // !state ||
+      // !country ||
+      // !pinCode ||
+      // !retypePassword||
       !password ||
-      !retypePassword
+      !mobile ||
+      !email ||
+      !name
     ) {
       return alert('Please fill all the fields')
     }
-    if (password !== retypePassword) {
-      // Handle password mismatch
-      return alert('Passwords do not match')
-    }
+    // if (password !== retypePassword) {
+    //   // Handle password mismatch
+    //   return alert('Passwords do not match')
+    // }
     if (!termsAccepted) {
       // Handle terms not accepted
       return alert('Please accept the terms and conditions')
@@ -59,20 +60,20 @@ const StudentSignUp = () => {
 
     // Handle form submission
     navigate(STUDENT_LOGIN_ROUTE)
-    setAddressLine1('')
-    setAddressLine2('')
-    setAge('')
-    setCity('')
-    setName('')
-    setCountry('')
-    setExperience('')
-    setMobile('')
-    setPinCode('')
-    setQualification('')
-    setState('')
+    // setAddressLine1('')
+    // setAddressLine2('')
+    // setAge('')
+    // setCity('')
+    // setCountry('')
+    // setExperience('')
+    // setPinCode('')
+    // setQualification('')
+    // setState('')
     setTermsAccepted(false)
+    setMobile('')
     setPassword('')
-    setRetypePassword('')
+    // setRetypePassword('')
+    setName('')
     setEmail('')
   }
 
