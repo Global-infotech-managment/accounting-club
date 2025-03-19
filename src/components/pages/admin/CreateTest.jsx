@@ -5,17 +5,36 @@ import { useNavigate } from 'react-router-dom'
 import { ADMIN_DASHBOARD_ROUTE } from '../../../utils/constant'
 
 const CreateTest = () => {
-  const [testCode, setTestCode] = useState('')
-  const [exerciseName, setExerciseName] = useState('')
-  const [topic, setTopic] = useState('')
-  const [timeAllowed, setTimeAllowed] = useState('')
-  const [totalQuestions, setTotalQuestions] = useState('')
-  const [passingPercentage, setPassingPercentage] = useState('')
+  const [formData, setFormData] = useState({
+    testCode: '',
+    exerciseName: '',
+    topic: '',
+    timeAllowed: '',
+    totalQuestions: '',
+    passingPercentage: '',
+  })
 
   const navigate = useNavigate()
 
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }))
+  }
+
   const formSubmit = (e) => {
     e.preventDefault()
+    const {
+      testCode,
+      exerciseName,
+      topic,
+      timeAllowed,
+      totalQuestions,
+      passingPercentage,
+    } = formData
+
     if (
       !testCode ||
       !exerciseName ||
@@ -27,13 +46,15 @@ const CreateTest = () => {
       alert('Please fill all the fields')
       return
     }
-
-    setTestCode('')
-    setExerciseName('')
-    setTopic('')
-    setTimeAllowed('')
-    setTotalQuestions('')
-    setPassingPercentage('')
+    console.log(formData, 'create test')
+    setFormData({
+      testCode: '',
+      exerciseName: '',
+      topic: '',
+      timeAllowed: '',
+      totalQuestions: '',
+      passingPercentage: '',
+    })
 
     navigate(ADMIN_DASHBOARD_ROUTE)
   }
@@ -47,49 +68,55 @@ const CreateTest = () => {
       <form className="flex flex-wrap gap-y-4" onSubmit={formSubmit}>
         <div className="w-full md:w-6/12 md:pe-[10px]">
           <Input
+            name="testCode"
             placeholder="Test Code No"
-            value={testCode}
-            onChange={(e) => setTestCode(e.target.value)}
+            value={formData.testCode}
+            onChange={handleChange}
           />
         </div>
 
         <div className="w-full md:w-6/12 md:ps-[10px]">
           <Input
+            name="exerciseName"
             placeholder="Exercise Name"
-            value={exerciseName}
-            onChange={(e) => setExerciseName(e.target.value)}
+            value={formData.exerciseName}
+            onChange={handleChange}
           />
         </div>
 
         <div className="w-full md:w-6/12 md:pe-[10px]">
           <Input
+            name="topic"
             placeholder="Topic"
-            value={topic}
-            onChange={(e) => setTopic(e.target.value)}
+            value={formData.topic}
+            onChange={handleChange}
           />
         </div>
 
         <div className="w-full md:w-6/12 md:ps-[10px]">
           <Input
+            name="timeAllowed"
             placeholder="Time Allowed"
-            value={timeAllowed}
-            onChange={(e) => setTimeAllowed(e.target.value)}
+            value={formData.timeAllowed}
+            onChange={handleChange}
           />
         </div>
 
         <div className="w-full md:w-6/12 md:pe-[10px]">
           <Input
+            name="totalQuestions"
             placeholder="Total Questions"
-            value={totalQuestions}
-            onChange={(e) => setTotalQuestions(e.target.value)}
+            value={formData.totalQuestions}
+            onChange={handleChange}
           />
         </div>
 
         <div className="w-full md:w-6/12 md:ps-[10px]">
           <Input
+            name="passingPercentage"
             placeholder="Passing Percentage"
-            value={passingPercentage}
-            onChange={(e) => setPassingPercentage(e.target.value)}
+            value={formData.passingPercentage}
+            onChange={handleChange}
           />
         </div>
 

@@ -6,25 +6,54 @@ import { useNavigate } from 'react-router-dom'
 import Icons from '../../common/Icons'
 
 const AddVideo = () => {
-  const [selectCourse, setSelectCourse] = useState('')
-  const [selectChapter, setSelectChapter] = useState('')
-  const [lessonNumber, setLessonNumber] = useState('')
-  const [isMandatory, setIsMandatory] = useState('Yes')
-  const [videoDescription, setVideoDescription] = useState('')
-  const [videoEmbedCode, setVideoEmbedCode] = useState('')
-  const [studyMaterial, setStudyMaterial] = useState(null) // File state
-  const [status, setStatus] = useState('Active')
+  const [formData, setFormData] = useState({
+    selectCourse: '',
+    selectChapter: '',
+    lessonNumber: '',
+    isMandatory: 'Yes',
+    videoDescription: '',
+    videoEmbedCode: '',
+    studyMaterial: null, // File state
+    status: 'Active',
+  })
 
   const navigate = useNavigate()
 
   const handleFileChange = (e) => {
     if (e.target.files.length > 0) {
-      setStudyMaterial(e.target.files[0]) // Store file object
+      setFormData((prevData) => ({
+        ...prevData,
+        studyMaterial: e.target.files[0], // Store file object
+      }))
     }
   }
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }))
+  }
+
+  const handleDropdownChange = (name, value) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }))
+  }
+
   const formSubmit = (e) => {
     e.preventDefault()
+
     // Validate all fields
+    const {
+      selectCourse,
+      selectChapter,
+      lessonNumber,
+      videoDescription,
+      videoEmbedCode,
+    } = formData
     if (
       !selectCourse ||
       !selectChapter ||
@@ -35,16 +64,19 @@ const AddVideo = () => {
       alert('Please fill all the fields')
       return
     }
-
+    console.log(formData, 'add video')
     // Reset form
-    setSelectCourse('')
-    setSelectChapter('')
-    setLessonNumber('')
-    setIsMandatory('Yes')
-    setVideoDescription('')
-    setVideoEmbedCode('')
-    setStudyMaterial(null) // Reset file state
-    setStatus('Active')
+    setFormData({
+      selectCourse: '',
+      selectChapter: '',
+      lessonNumber: '',
+      isMandatory: 'Yes',
+      videoDescription: '',
+      videoEmbedCode: '',
+      studyMaterial: null, // Reset file state
+      status: 'Active',
+    })
+
     navigate('/admin-dashboard?activeSidebar=add-test')
   }
 
@@ -58,16 +90,18 @@ const AddVideo = () => {
         <div className="w-full md:w-6/12 md:pe-[10px]">
           <Input
             placeholder="Select Course"
-            value={selectCourse}
-            onChange={(e) => setSelectCourse(e.target.value)}
+            name="selectCourse"
+            value={formData.selectCourse}
+            onChange={handleChange}
           />
         </div>
 
         <div className="w-full md:w-6/12 md:ps-[10px]">
           <Input
             placeholder="Select Chapter"
-            value={selectChapter}
-            onChange={(e) => setSelectChapter(e.target.value)}
+            name="selectChapter"
+            value={formData.selectChapter}
+            onChange={handleChange}
           />
         </div>
 
@@ -75,8 +109,9 @@ const AddVideo = () => {
           <Input
             placeholder="Lesson Number"
             type="number"
-            value={lessonNumber}
-            onChange={(e) => setLessonNumber(e.target.value)}
+            name="lessonNumber"
+            value={formData.lessonNumber}
+            onChange={handleChange}
           />
         </div>
 
@@ -87,29 +122,31 @@ const AddVideo = () => {
               { value: 'Yes', label: 'Yes' },
               { value: 'No', label: 'No' },
             ]}
-            value={isMandatory}
-            onChange={(value) => setIsMandatory(value)}
+            value={formData.isMandatory}
+            onChange={(value) => handleDropdownChange('isMandatory', value)}
           />
         </div>
 
         <div className="w-full md:w-6/12 md:pe-[10px]">
           <Input
             placeholder="Video Description"
-            value={videoDescription}
-            onChange={(e) => setVideoDescription(e.target.value)}
+            name="videoDescription"
+            value={formData.videoDescription}
+            onChange={handleChange}
           />
         </div>
 
         <div className="w-full md:w-6/12 md:ps-[10px]">
           <Input
             placeholder="Video Embed Code"
-            value={videoEmbedCode}
-            onChange={(e) => setVideoEmbedCode(e.target.value)}
+            name="videoEmbedCode"
+            value={formData.videoEmbedCode}
+            onChange={handleChange}
           />
         </div>
 
         <div className="w-full md:w-6/12 md:pe-[10px]">
-          <label className="text-sm mb-[2px] text-black">
+          <label className="mb-[2px] text-sm text-black">
             Study Material <span className="text-orange-red">*</span>
           </label>
           <div className="relative mt-1">
@@ -124,7 +161,9 @@ const AddVideo = () => {
               className="text-xs flex w-full cursor-pointer items-center justify-between rounded-lg border border-[#4E4E4E1A] bg-[#FBFBFB80] p-2 px-4 py-2 text-black focus:ring-2 focus-visible:outline-[1px] focus-visible:outline-orange-red"
             >
               <span className="text-black opacity-50">
-                {studyMaterial ? studyMaterial.name : 'Upload from file'}
+                {formData.studyMaterial
+                  ? formData.studyMaterial.name
+                  : 'Upload from file'}
               </span>
               <Icons iconName="upload" />
             </label>
@@ -138,8 +177,8 @@ const AddVideo = () => {
               { value: 'Active', label: 'Active' },
               { value: 'Disable', label: 'Disable' },
             ]}
-            value={status}
-            onChange={(value) => setStatus(value)}
+            value={formData.status}
+            onChange={(value) => handleDropdownChange('status', value)}
           />
         </div>
 

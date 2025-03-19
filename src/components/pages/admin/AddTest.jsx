@@ -62,6 +62,7 @@ export default function AddTest() {
           q.correctAnswer
       )
     ) {
+      console.log(questions,"add test")
       navigate('/admin-dashboard?activeSidebar=create-test')
       setQuestions([
         { question: '', options: ['', '', '', ''], correctAnswer: '' },
