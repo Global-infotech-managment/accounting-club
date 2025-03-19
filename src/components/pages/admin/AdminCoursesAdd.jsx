@@ -5,82 +5,129 @@ import { Dropdown } from '../../common/Dropdown'
 import { useNavigate } from 'react-router-dom'
 
 const AdminCoursesAdd = () => {
-  const [courseName, setCourseName] = useState('')
-  const [description, setDescription] = useState('')
-  const [price, setPrice] = useState('')
-  const [validity, setValidity] = useState('')
-  const [selectedFile, setSelectedFile] = useState(null)
-  const [dragActive, setDragActive] = useState(false)
+  const [formData, setFormData] = useState({
+    courseName: '',
+    description: '',
+    price: '',
+    validity: '',
+    selectedFile: null,
+    dragActive: false,
+    status: 'Active',
+  })
   const navigate = useNavigate()
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }))
+  }
+
   const handleFileChange = (event) => {
     if (event.target.files && event.target.files.length > 0) {
-      setSelectedFile(event.target.files[0])
+      setFormData((prevData) => ({
+        ...prevData,
+        selectedFile: event.target.files[0],
+      }))
     }
   }
 
   const handleDragOver = (event) => {
     event.preventDefault()
-    setDragActive(true)
+    setFormData((prevData) => ({
+      ...prevData,
+      dragActive: true,
+    }))
   }
 
   const handleDragLeave = () => {
-    setDragActive(false)
+    setFormData((prevData) => ({
+      ...prevData,
+      dragActive: false,
+    }))
   }
 
   const handleDrop = (event) => {
     event.preventDefault()
-    setDragActive(false)
-    if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
-      setSelectedFile(event.dataTransfer.files[0])
-    }
+    setFormData((prevData) => ({
+      ...prevData,
+      dragActive: false,
+      selectedFile: event.dataTransfer.files[0],
+    }))
   }
+
+  const handleDropdownChange = (selectedOption) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      status: selectedOption.value,
+    }))
+  }
+
   const formSubmit = (e) => {
     e.preventDefault()
-    if (!courseName || !description || !price || !validity || !selectedFile) {
+    if (
+      !formData.courseName ||
+      !formData.description ||
+      !formData.price ||
+      !formData.validity ||
+      !formData.selectedFile
+    ) {
       alert('Please fill all the fields')
       return
     }
-    setCourseName('')
-    setDescription('')
-    setPrice('')
-    setValidity('')
-    setSelectedFile(null)
+    console.log(formData, 'form data')
+    setFormData({
+      courseName: '',
+      description: '',
+      price: '',
+      validity: '',
+      selectedFile: null,
+      dragActive: false,
+      status: 'Active',
+    })
+
     navigate('/admin-dashboard?activeSidebar=add-section')
   }
+
   return (
     <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
       <p className="mb-4 text-[16px] font-semibold text-black lg:text-[18px]">
         Add Course
       </p>
       <hr className="mb-4 w-full bg-black opacity-10" />
-      <form className="flex flex-col gap-4">
+      <form className="flex flex-col gap-4" onSubmit={formSubmit}>
         <Input
+          name="courseName"
           placeholder="Course Name"
-          value={courseName}
-          onChange={(e) => setCourseName(e.target.value)}
+          value={formData.courseName}
+          onChange={handleInputChange}
         />
         <Input
+          name="description"
           placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          value={formData.description}
+          onChange={handleInputChange}
         />
         <Input
-          type={'number'}
+          name="price"
+          type="number"
           placeholder="Price"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
+          value={formData.price}
+          onChange={handleInputChange}
         />
         <Input
-          type={'number'}
+          name="validity"
+          type="number"
           placeholder="Validity"
-          value={validity}
-          onChange={(e) => setValidity(e.target.value)}
+          value={formData.validity}
+          onChange={handleInputChange}
         />
 
         {/* Drag & Drop File Upload */}
         <div
           className={`flex h-[100px] w-full flex-col items-center justify-center rounded-lg border-2 border-dashed px-3 md:h-[150px] ${
-            dragActive ? 'border-orange-red' : 'border-primary'
+            formData.dragActive ? 'border-orange-red' : 'border-primary'
           }`}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
@@ -104,9 +151,9 @@ const AdminCoursesAdd = () => {
           />
         </div>
 
-        {selectedFile && (
+        {formData.selectedFile && (
           <p className="text-gray-700 mt-2">
-            Uploaded File: {selectedFile.name}
+            Uploaded File: {formData.selectedFile.name}
           </p>
         )}
 
@@ -117,9 +164,10 @@ const AdminCoursesAdd = () => {
             { value: 'Disable', label: 'Disable' },
           ]}
           defaultValue="Active"
+          onChange={handleDropdownChange} // Ensure the dropdown updates state
         />
 
-        <Button onClick={formSubmit} className="mt-5 md:mt-10" bgBtn="Next" />
+        <Button type="submit" className="mt-5 md:mt-10" bgBtn="Next" />
       </form>
     </div>
   )
