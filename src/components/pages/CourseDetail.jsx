@@ -19,7 +19,7 @@ const CourseDetail = () => {
     return <div className="text-red-500 text-center">Course not found</div>
   }
   return (
-    <div className="position-relative lg:mb-[100px] md:mb-16 mb-10">
+    <div className="position-relative mb-10 md:mb-16 lg:mb-[100px]">
       <img
         className="pointer-events-none absolute bottom-72 left-0 max-xl:hidden"
         src={StudentEllipse}
@@ -30,16 +30,18 @@ const CourseDetail = () => {
         src={bookImage}
         alt="student ellipse"
       />
-      <div className="container max-w-[1184px] xl:pt-20 lg:pt-14 sm:pt-10 pt-5">
+      <div className="container max-w-[1184px] pt-5 sm:pt-10 lg:pt-14 xl:pt-20">
         <div className="flex flex-wrap px-4 sm:px-0">
           <div className="lg:w-8/12 lg:pe-12">
-            <img
-              className="w-full object-cover"
-              src={courseImage}
-              alt="course image"
+            <video
+              className="max-h-[438px] w-full max-w-[677px] rounded-[24px] object-cover"
+              controls
+              src={course.video}
+              alt="course video"
             />
+
             <Heading
-              className="mb-3 md:pt-6 pt-4 xl:mb-4"
+              className="mb-3 pt-4 md:pt-6 xl:mb-4"
               middleText={
                 <>
                   <span className="text-red-500 capitalize">
@@ -50,7 +52,7 @@ const CourseDetail = () => {
             />
             <Paragraph className="text-black" text={course.description} />
           </div>
-          <div className="md:mt-10 mt-6 w-full lg:w-4/12">
+          <div className="mt-6 w-full md:mt-10 lg:w-4/12">
             <div className="flex items-end justify-between">
               <div className="flex items-end">
                 <Heading className="pe-2 !text-black" middleText={'₹'} />
@@ -129,7 +131,7 @@ const CourseDetail = () => {
               <Icons iconName="resources" className="size-4" />
               <Paragraph
                 className="!text-lg"
-                text={ 
+                text={
                   <>
                     <span className="pe-1 !opacity-80">
                       Additional Resources:

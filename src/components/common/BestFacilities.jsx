@@ -24,13 +24,13 @@ const BestFacilities = () => {
             {bestFacilities.map((items, index) => {
               return (
                 <div key={index} className="w-6/12 px-2 md:w-4/12 md:px-[13px]">
-                  <div className="bg-facility-box shadow-facility-bo bg-size-100 flex min-h-[172px] w-full flex-col items-center justify-center rounded-xl bg-no-repeat">
+                  <div className="shadow-facility-bo bg-size-100 flex min-h-[172px] w-full flex-col items-center justify-center rounded-xl bg-facility-box bg-no-repeat">
                     <img
                       src={items.img}
                       alt="courses"
                       className="mb-6 max-h-[30px] w-full max-w-[30px] md:max-h-[50px] md:max-w-[50px]"
                     />
-                    <p className="text-dark-black text-[14px] font-medium md:text-[16px]">
+                    <p className="text-[14px] font-medium text-dark-black md:text-[16px]">
                       {items.title}
                     </p>
                   </div>

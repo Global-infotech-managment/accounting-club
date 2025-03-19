@@ -331,6 +331,7 @@ export const onlineCoursesData = [
     certificate: 'Upon completion of the courses',
     students: '4,000',
     enrollPath: PAYMENT_METHOD_ROUTE,
+    video: 'https://youtu.be/eA8oK3wn1p4?si=vE1K2Uj-u0bxAdPY',
   },
   {
     heading: 'Accounts Expert',
@@ -348,6 +349,7 @@ export const onlineCoursesData = [
     certificate: 'Upon completion of the courses',
     students: '4,000',
     enrollPath: PAYMENT_METHOD_ROUTE,
+    video: 'https://youtu.be/xsdM4FJJ2jo?si=BnkwlN5tXeeRPs1I',
   },
   {
     heading: 'Tax Expert',
@@ -365,6 +367,7 @@ export const onlineCoursesData = [
     certificate: 'Upon completion of the courses',
     students: '4,000',
     enrollPath: PAYMENT_METHOD_ROUTE,
+    video: 'https://youtu.be/eA8oK3wn1p4?si=8gcxTV0BgpJYA9Cl',
   },
   {
     heading: 'Accounts and Tax Expert (All in One)',
@@ -382,6 +385,7 @@ export const onlineCoursesData = [
     certificate: 'Upon completion of the courses',
     students: '4,000',
     enrollPath: PAYMENT_METHOD_ROUTE,
+    video: 'https://youtu.be/eA8oK3wn1p4?si=8gcxTV0BgpJYA9Cl',
   },
   {
     heading: 'Financial Accounting Fundamentals',
@@ -399,6 +403,7 @@ export const onlineCoursesData = [
     certificate: 'Upon completion of the courses',
     students: '4,000',
     enrollPath: PAYMENT_METHOD_ROUTE,
+    video: 'https://youtu.be/eA8oK3wn1p4?si=8gcxTV0BgpJYA9Cl',
   },
   {
     heading: 'Managerial Accounting for Decision-Making',
@@ -416,6 +421,7 @@ export const onlineCoursesData = [
     certificate: 'Upon completion of the courses',
     students: '4,000',
     enrollPath: PAYMENT_METHOD_ROUTE,
+    video: 'https://youtu.be/eA8oK3wn1p4?si=8gcxTV0BgpJYA9Cl',
   },
 ]
 // all country
