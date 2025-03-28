@@ -1,7 +1,16 @@
 import './App.css'
-import { Route, Routes, useLocation } from 'react-router-dom'
+import {
+  Route,
+  Routes,
+  useLocation,
+  BrowserRouter as Router,
+} from 'react-router-dom'
 import Home from './components/pages/Home'
 import NotFound from './components/pages/NotFound'
+import { Provider } from 'react-redux'
+import { store } from './store/store'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { useEffect } from 'react'
 import {
   ABOUT_ROUTE,
   ADD_VIDEO_ROUTE,
@@ -31,7 +40,6 @@ import EmployerSignUp from './components/pages/employer/EmployerSignUp'
 import ForgetPassword from './components/pages/ForgetPassword'
 import CoursesInfo from './components/CoursesInfo'
 import Dashboard from './components/pages/student/dashboard/Dashboard'
-import { useEffect } from 'react'
 import EnrolledCourseDetail from './components/pages/student/dashboard/EnrolledCourseDetail'
 import PostResume from './components/pages/student/PostResume'
 import SearchAccountingJob from './components/pages/student/SearchAccountingJob'
@@ -42,8 +50,24 @@ import AboutUs from './components/pages/AboutUs'
 import ContactUs from './components/pages/ContactUs'
 import AdminMain from './components/pages/AdminMain'
 import AdminLogin from './components/AdminLogin'
+import useAuth from './hooks/useAuth'
+
+const queryClient = new QueryClient()
+
 function App() {
+  return (
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <AppContent />
+      </QueryClientProvider>
+    </Provider>
+  )
+}
+
+function AppContent() {
   const { pathname } = useLocation()
+  const { isAuthenticated } = useAuth()
+
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [pathname])
@@ -62,12 +86,18 @@ function App() {
         <Route path={FORGOT_PASSWORD_ROUTE} element={<ForgetPassword />} />
         <Route path={COURSES_DETAIL_ROUTE} element={<CoursesInfo />} />
         <Route path={JOBS_DETAIL_ROUTE} element={<JobDetail />} />
-        <Route path={STUDENT_DASHBOARD_ROUTE} element={<Dashboard />} />
+        <Route
+          path={STUDENT_DASHBOARD_ROUTE}
+          element={isAuthenticated ? <Dashboard /> : <StudentLogin />}
+        />
         <Route path={POST_RESUME_ROUTE} element={<PostResume />} />
         <Route path={PAYMENT_METHOD_ROUTE} element={<PaymentMethod />} />
         <Route path={SEARCH_WORK_FROM_HOME_JOBS_ROUTE} element={<JobList />} />
         <Route path={ADMIN_LOGIN_ROUTE} element={<AdminLogin />} />
-        <Route path={ADMIN_DASHBOARD_ROUTE} element={<AdminMain />} />
+        <Route
+          path={ADMIN_DASHBOARD_ROUTE}
+          element={isAuthenticated ? <AdminMain /> : <AdminLogin />}
+        />
         <Route
           path={SEARCH_ACCOUNTING_JOBS_ROUTE}
           element={<SearchAccountingJob />}
