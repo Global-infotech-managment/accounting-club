@@ -11,6 +11,7 @@ import { Provider } from 'react-redux'
 import { store } from './store/store'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useEffect } from 'react'
+import { Toaster } from 'sonner'
 import {
   ABOUT_ROUTE,
   ADD_VIDEO_ROUTE,
@@ -59,9 +60,21 @@ function App() {
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        {/* <Router> */}
         <AppContent />
-        {/* </Router> */}
+        <Toaster
+          position="top-right"
+          richColors
+          closeButton
+          expand={true}
+          visibleToasts={3}
+          toastOptions={{
+            duration: 4000,
+            style: {
+              fontFamily: 'inherit',
+              fontSize: '14px',
+            },
+          }}
+        />
       </QueryClientProvider>
     </Provider>
   )

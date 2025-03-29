@@ -8,3 +8,23 @@ export const loginUser = async (data) => {
     user: null,
   }
 }
+
+export const fetchStudents = async (params) => {
+  const response = await API.get('/auth', {
+    params,
+    paramsSerializer: (params) => {
+      return Object.entries(params)
+        .filter(([_, value]) => value !== undefined)
+        .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+        .join('&')
+    },
+  })
+  return {
+    data: response.data.data.users, 
+    total: response.data.data.total,
+  }
+}
+
+export const deleteStudent = async (id) => {
+  await API.delete(`/auth/${id}`)
+}

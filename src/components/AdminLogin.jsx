@@ -9,6 +9,8 @@ import Input from './common/Input'
 import Button from './common/Button'
 import { loginUser } from '../services/auth/auth.service'
 import { setUser } from '../features/authSlice'
+import { toast } from 'sonner'
+import { showToast } from '../services/toast/toast.service'
 
 const AdminLogin = () => {
   const [email, setEmail] = useState('')
@@ -21,6 +23,7 @@ const AdminLogin = () => {
     mutationFn: loginUser, // Required in v5
     onSuccess: (data) => {
       dispatch(setUser(data))
+      showToast.success('Login Successfully')
       navigate(ADMIN_DASHBOARD_ROUTE)
     },
     onError: (error) => {

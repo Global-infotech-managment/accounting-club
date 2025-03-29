@@ -1,45 +1,79 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useQuery, useMutation } from '@tanstack/react-query'
 import Button from '../../common/Button'
 import Input from '../../common/Input'
-import { onlineCoursesData } from '../../../utils/helper'
+import {
+  fetchCourses,
+  deleteCourse,
+  toggleCourseStatus,
+} from '../../../services/course/course.service'
 
 const itemsPerPage = 6
 
-
-
 const AllCourses = () => {
-  // const [status, setStatus] = useState('Enable')
-  const [courseStatuses,setCourseStatuses]= useState("enable")
   const [currentPage, setCurrentPage] = useState(1)
   const [searchTerm, setSearchTerm] = useState('')
-  const [courses, setCourses] = useState(onlineCoursesData)
 
-  const filteredCourses = courses.filter((course) =>
-    course.heading.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  // Fetch courses
+  const { data, isLoading, isError, refetch } = useQuery({
+    queryKey: ['courses', currentPage, searchTerm],
+    queryFn: () =>
+      fetchCourses({
+        search: searchTerm || undefined,
+        page: currentPage.toString(),
+        limit: itemsPerPage.toString(),
+      }),
+    keepPreviousData: true,
+  })
 
-  const totalPages = Math.ceil(filteredCourses.length / itemsPerPage)
-  const startIndex = (currentPage - 1) * itemsPerPage
-  const currentData = filteredCourses.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  )
+  // Delete course mutation
+  const { mutate: deleteCourseMutation } = useMutation({
+    mutationFn: deleteCourse,
+    onSuccess: () => {
+      toast.success('Course deleted successfully!')
+      refetch()
+    },
+    onError: (error) => {
+      toast.error(error.response?.data?.message || 'Failed to delete course')
+    },
+  })
 
-  const handleDelete = (title) => {
-    setCourses(courses.filter((course) => course.heading !== title))
-    setCourseStatuses((prev) => {
-      const updatedStatuses = { ...prev }
-      delete updatedStatuses[title]
-      return updatedStatuses
-    })
+  // Toggle status mutation
+  const { mutate: toggleStatusMutation } = useMutation({
+    mutationFn: ({ id, status }) => toggleCourseStatus(id, status),
+    onSuccess: (_, variables) => {
+      const action = variables.status === 'Enable' ? 'enabled' : 'disabled'
+      toast.success(`Course ${action} successfully!`)
+      refetch()
+    },
+    onError: (error) => {
+      toast.error(
+        error.response?.data?.message || 'Failed to update course status'
+      )
+    },
+  })
+
+  const handleDelete = (id) => {
+    deleteCourseMutation(id)
   }
 
-  const toggleCourseStatus = (title) => {
-    setCourseStatuses((prev) => ({
-      ...prev,
-      [title]: prev[title] === 'Enable' ? 'Disable' : 'Enable',
-    }))
+  const handleToggleStatus = (id, currentStatus) => {
+    const newStatus = currentStatus === 'Enable' ? 'Disable' : 'Enable'
+    toggleStatusMutation({ id, status: newStatus })
   }
+
+  if (isLoading)
+    return <div className="flex justify-center py-10">Loading...</div>
+  if (isError)
+    return (
+      <div className="text-red-500 flex justify-center py-10">
+        Error loading courses
+      </div>
+    )
+
+  const courses = data?.data || []
+  const totalCount = data?.total || 0
+  const totalPages = Math.ceil(totalCount / itemsPerPage)
 
   return (
     <div className="rounded-xl border border-black border-opacity-[0.03] bg-black bg-opacity-[0.03] p-4">
@@ -53,61 +87,66 @@ const AllCourses = () => {
           label={'none'}
           inputClassName={'w-full'}
           mainClassName={'max-w-[300px]'}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(e) => {
+            setSearchTerm(e.target.value)
+            setCurrentPage(1)
+          }}
         />
       </div>
       <hr className="mb-4 w-full bg-black opacity-10" />
+
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {currentData.map((course, index) => (
+        {courses.map((course) => (
           <div
-            key={index}
+            key={course.id}
             className="shadow-md flex flex-col justify-between rounded-lg bg-white p-4"
           >
             <div>
               <img
-                src={course.image}
+                src={course.file.url}
                 alt={course.heading}
                 className="h-40 w-full rounded-md object-cover"
               />
               <div className="flex items-center justify-between pt-2.5">
                 <h3 className="text-lg mt-3 font-semibold">{course.heading}</h3>
                 <button
-                  className={`!h-[30px] rounded-2xl px-2.5 transition-all ease-in-out duration-300 text-[12px] ${
-                    courseStatuses[course.heading] === 'Enable'
+                  className={`!h-[30px] rounded-2xl px-2.5 text-[12px] transition-all duration-300 ease-in-out ${
+                    course.status === 'Enable'
                       ? 'bg-primary text-white'
                       : 'bg-orange-red text-white'
                   }`}
-                  onClick={() => toggleCourseStatus(course.heading)}
+                  onClick={() => handleToggleStatus(course.id, course.status)}
                 >
-                  {courseStatuses[course.heading]}
+                  {course.status}
                 </button>
               </div>
-              <p className="text-sm text-gray-600 font-medium">
+              <p className="text-gray-600 text-sm font-medium">
                 {course.category}
               </p>
-              <p className="text-sm text-gray-500 mt-2 line-clamp-3">
+              <p className="text-gray-500 mt-2 line-clamp-3 text-sm">
                 {course.description}
               </p>
             </div>
             <div className="mt-4 flex gap-5">
               <Button bgBtn={'Edit'} />
               <Button
-                className="hover:!text-orange-red  !border-orange-red bg-white !text-orange-red transition-all duration-300 hover:bg-orange-red "
+                className="!border-orange-red bg-white !text-orange-red transition-all duration-300 hover:bg-orange-red hover:!text-orange-red"
                 bgBtn={'Delete'}
-                onClick={() => handleDelete(course.heading)}
+                onClick={() => handleDelete(course.id)}
               />
             </div>
           </div>
         ))}
       </div>
-      {totalPages > 1 && (
+
+      {totalCount > itemsPerPage && (
         <div className="mt-4 flex justify-center gap-4">
           <Button
             disabled={currentPage === 1}
             transparentBtn={'Prev Page'}
             onClick={() => setCurrentPage(currentPage - 1)}
           />
-          <p className="text-sm text-gray-600">
+          <p className="text-gray-600 text-sm">
             Page {currentPage} of {totalPages}
           </p>
           <Button
