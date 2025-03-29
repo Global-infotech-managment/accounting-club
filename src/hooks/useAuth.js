@@ -4,6 +4,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from '../features/authSlice'
 import { loginUser } from '../services/auth/auth.service'
 
+export default function useAuth() {
+  const { token, role } = useSelector((state) => state.auth)
+
+  return {
+    isAuthenticated: !!token, // Token hai to true, nahi to false
+    isAdmin: role === 'Admin',
+    userRole: role,
+  }
+}
+
 // export const useLogin = () => {
 //   const dispatch = useDispatch()
 //   return useMutation({
@@ -19,11 +29,3 @@ import { loginUser } from '../services/auth/auth.service'
 //     },
 //   })
 // }
-
-export default function useAuth() {
-  const token = useSelector((state) => state.auth.token)
-
-  return {
-    isAuthenticated: !!token, // Token hai to true, nahi to false
-  }
-}

@@ -1,37 +1,47 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useMutation } from '@tanstack/react-query'
+import { useDispatch } from 'react-redux'
 import { ADMIN_DASHBOARD_ROUTE, FORGOT_PASSWORD_ROUTE } from '../utils/constant'
 import Heading from './common/Heading'
 import Paragraph from './common/Paragraph'
 import Input from './common/Input'
 import Button from './common/Button'
+import { loginUser } from '../services/auth/auth.service'
+import { setUser } from '../features/authSlice'
 
 const AdminLogin = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState({})
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const { mutate, isLoading } = useMutation({
+    mutationFn: loginUser, // Required in v5
+    onSuccess: (data) => {
+      dispatch(setUser(data))
+      navigate(ADMIN_DASHBOARD_ROUTE)
+    },
+    onError: (error) => {
+      setErrors({ api: error.response?.data?.message || 'Login failed' })
+    },
+  })
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     return emailRegex.test(email)
   }
 
   const handleEmailChange = (e) => {
-    const value = e.target.value
-    setEmail(value)
-
+    setEmail(e.target.value)
     if (errors.email) {
-      if (value && validateEmail(value)) {
-        setErrors((prev) => ({ ...prev, email: '' }))
-      }
+      setErrors((prev) => ({ ...prev, email: '' }))
     }
   }
 
   const handlePasswordChange = (e) => {
-    const value = e.target.value
-    setPassword(value)
-
-    if (errors.password && value) {
+    setPassword(e.target.value)
+    if (errors.password) {
       setErrors((prev) => ({ ...prev, password: '' }))
     }
   }
@@ -53,9 +63,7 @@ const AdminLogin = () => {
     setErrors(newErrors)
 
     if (Object.keys(newErrors).length === 0) {
-      setEmail('')
-      setPassword('')
-      navigate(ADMIN_DASHBOARD_ROUTE)
+      mutate({ email, password })
     }
   }
 
@@ -85,7 +93,7 @@ const AdminLogin = () => {
               onChange={handleEmailChange}
             />
             {errors.email && (
-              <p className="text-sm absolute text-orange-red">{errors.email}</p>
+              <p className="absolute text-sm text-orange-red">{errors.email}</p>
             )}
           </div>
 
@@ -97,11 +105,14 @@ const AdminLogin = () => {
               onChange={handlePasswordChange}
             />
             {errors.password && (
-              <p className="text-sm absolute text-orange-red">
+              <p className="absolute text-sm text-orange-red">
                 {errors.password}
               </p>
             )}
           </div>
+          {errors.api && (
+            <p className="text-center text-sm text-orange-red">{errors.api}</p>
+          )}
           <div className="mb-2 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <input type="checkbox" id="remember" />
@@ -114,7 +125,12 @@ const AdminLogin = () => {
             </Link>
           </div>
 
-          <Button className={'rounded-xl'} type="submit" bgBtn="Get Started" />
+          <Button
+            className={'rounded-xl'}
+            type="submit"
+            bgBtn="Get Started"
+            disabled={isLoading}
+          />
         </form>
       </div>
     </div>

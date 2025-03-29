@@ -2,8 +2,8 @@ import './App.css'
 import {
   Route,
   Routes,
-  useLocation,
   BrowserRouter as Router,
+  useLocation,
 } from 'react-router-dom'
 import Home from './components/pages/Home'
 import NotFound from './components/pages/NotFound'
@@ -51,6 +51,7 @@ import ContactUs from './components/pages/ContactUs'
 import AdminMain from './components/pages/AdminMain'
 import AdminLogin from './components/AdminLogin'
 import useAuth from './hooks/useAuth'
+import ProtectedRoute from './components/ProtectedRoute'
 
 const queryClient = new QueryClient()
 
@@ -58,7 +59,9 @@ function App() {
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
+        {/* <Router> */}
         <AppContent />
+        {/* </Router> */}
       </QueryClientProvider>
     </Provider>
   )
@@ -94,9 +97,18 @@ function AppContent() {
         <Route path={PAYMENT_METHOD_ROUTE} element={<PaymentMethod />} />
         <Route path={SEARCH_WORK_FROM_HOME_JOBS_ROUTE} element={<JobList />} />
         <Route path={ADMIN_LOGIN_ROUTE} element={<AdminLogin />} />
-        <Route
+        <Route path={ADMIN_LOGIN_ROUTE} element={<AdminLogin />} />
+        {/* <Route
           path={ADMIN_DASHBOARD_ROUTE}
           element={isAuthenticated ? <AdminMain /> : <AdminLogin />}
+        /> */}
+        <Route
+          path={ADMIN_DASHBOARD_ROUTE}
+          element={
+            <ProtectedRoute requiredRole="Admin">
+              <AdminMain />
+            </ProtectedRoute>
+          }
         />
         <Route
           path={SEARCH_ACCOUNTING_JOBS_ROUTE}
