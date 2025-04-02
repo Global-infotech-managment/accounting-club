@@ -4,16 +4,12 @@ export const AppContext = createContext()
 
 export const AppProvider = ({ children }) => {
   const [courseData, setCourseData] = useState({
-    courseName: '',
-    sectionName: '', // New field
-    sectionDescription: '', // New field
-    validity: '', // New field
-    isMandatory: 'Yes', // New field
-    status: 'Active', // New field
+    name: '',
     description: '',
-    price: '',
-    selectedFile: null,
-    dragActive: false,
+    fileId: null,
+    price: 1,
+    validity: 1,
+    status: true,
   })
 
   const [activeVideoIndex, setActiveVideoIndex] = useState({
