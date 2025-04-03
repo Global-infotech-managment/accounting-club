@@ -15,9 +15,14 @@ const AddSection = () => {
   }
 
   const handleDropdownChange = (e) => {
-    const { name, value } = e.target
-    updateCourseData({ [name]: value }) // Update courseData directly
-  }
+    if (e && e.target) {
+      const { name, value } = e.target;
+      updateCourseData({ [name]: value });
+    } else {
+      console.error("Dropdown did not return an event object:", e);
+    }
+  };
+  
 
   const formSubmit = (e) => {
     e.preventDefault()
@@ -54,11 +59,16 @@ const AddSection = () => {
       </p>
       <hr className="mb-4 w-full bg-black opacity-10" />
       <form className="flex flex-col gap-4">
-        <Input
+         <Dropdown
           name="courseName"
-          placeholder="Select Course"
+          label="courseName"
+          options={[
+            { value: 'frontend', label: 'frontend' },
+            { value: 'backend', label: 'backend' },
+          ]}
           value={courseData.courseName}
-          onChange={handleInputChange}
+          onChange={(e) => handleDropdownChange(e)}
+
         />
         <Input
           name="sectionName"

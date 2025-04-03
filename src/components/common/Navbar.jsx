@@ -181,7 +181,7 @@ const Navbar = () => {
                   </Link>
                   {obj.subLinks && (
                     <div
-                      className={`rounded-4 pointer-events-none absolute top-[25px] w-[102vw] border-b-[1px] border-b-[#2534665b] bg-white pt-7 opacity-0 duration-300 group-hover:pointer-events-auto group-hover:opacity-100 ${obj.title.toLocaleLowerCase() === 'jobs' && '-left-[45.4vw]'} ${obj.title.toLocaleLowerCase() === 'services' && '-left-[49.6vw]'} ${obj.title.toLocaleLowerCase() === 'employers' && '-left-[83.1vw]'} group-hover:z-50`}
+                      className={`rounded-4 pointer-events-none absolute top-[25px] min-w-full left-1/2 -translate-x-1/2 border-b-[1px] border-b-[#2534665b] bg-white pt-7 opacity-0 duration-300 group-hover:pointer-events-auto group-hover:opacity-100 ${obj.title.toLocaleLowerCase() === 'jobs' && '-left-[45.4vw]'} ${obj.title.toLocaleLowerCase() === 'services' && '-left-[49.6vw]'} ${obj.title.toLocaleLowerCase() === 'employers' && '-left-[83.1vw]'} group-hover:z-50`}
                     >
                       <div className="h-[1px] w-full border-t border-[#25346633]"></div>
                       <div className="container mx-auto px-3 lg:max-w-[1184px]">
