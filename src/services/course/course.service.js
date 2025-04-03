@@ -17,6 +17,12 @@ export const fetchCourses = async (params) => {
   }
 }
 
+export const createCourse = async (data) => {
+  const response = await API.post('/course/admin', data)
+  console.log(response, 'create course response')
+  return response.data
+}
+
 export const deleteCourse = async (id) => {
   //   await API.delete(`/course/admin/${id}`)
 }

@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useQuery, useMutation } from '@tanstack/react-query'
 import Button from '../../common/Button'
+// import { toast } from 'sonner'
 import Input from '../../common/Input'
 import {
   fetchCourses,
@@ -105,7 +106,7 @@ const AllCourses = () => {
           >
             <div>
               <img
-                src={course.file.url}
+                src={course?.file?.url}
                 alt={course.heading}
                 className="h-40 w-full rounded-md object-cover"
               />
