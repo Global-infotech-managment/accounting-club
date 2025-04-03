@@ -13,6 +13,7 @@ import AddSection from './admin/AddSection'
 import AddVideo from './admin/AddVideo'
 import AddTest from './admin/AddTest'
 import CreateTest from './admin/CreateTest'
+import UpdateCourse from './admin/UpdateCourse'
 
 const AdminMain = () => {
   const location = useLocation()
@@ -48,6 +49,7 @@ const AdminMain = () => {
                     {activeSidebar === 'all-students' && <AllStudent />}
                     {activeSidebar === 'all-employers-' && <AllEmployers />}
                     {activeSidebar === 'all-courses' && <AllCourses />}
+                    {activeSidebar === 'update-course' && <UpdateCourse />}
                   </>
                 }
               />

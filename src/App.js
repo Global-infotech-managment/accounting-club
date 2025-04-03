@@ -18,6 +18,7 @@ import {
   ADMIN_DASHBOARD_ROUTE,
   ADMIN_LOGIN_ROUTE,
   CONTACT_ROUTE,
+  UPDATE_COURSE,
   COURSES_DETAIL_ROUTE,
   COURSES_ROUTE,
   EMPLOYER_LOGIN_ROUTE,
@@ -53,6 +54,7 @@ import AdminMain from './components/pages/AdminMain'
 import AdminLogin from './components/AdminLogin'
 import useAuth from './hooks/useAuth'
 import ProtectedRoute from './components/ProtectedRoute'
+import UpdateCourse from './components/pages/admin/UpdateCourse'
 
 const queryClient = new QueryClient()
 
@@ -110,7 +112,7 @@ function AppContent() {
         <Route path={PAYMENT_METHOD_ROUTE} element={<PaymentMethod />} />
         <Route path={SEARCH_WORK_FROM_HOME_JOBS_ROUTE} element={<JobList />} />
         <Route path={ADMIN_LOGIN_ROUTE} element={<AdminLogin />} />
-        <Route path={ADMIN_LOGIN_ROUTE} element={<AdminLogin />} />
+        <Route path={UPDATE_COURSE} element={<UpdateCourse />} />
         {/* <Route
           path={ADMIN_DASHBOARD_ROUTE}
           element={isAuthenticated ? <AdminMain /> : <AdminLogin />}

@@ -11,6 +11,7 @@ import {
   toggleCourseStatus,
 } from '../../../services/course/course.service'
 
+
 const itemsPerPage = 6
 
 const AllCourses = () => {
@@ -131,7 +132,7 @@ const AllCourses = () => {
               </p>
             </div>
             <div className="mt-4 flex gap-5">
-              <Button bgBtn={'Edit'} />
+              <a href='/admin-dashboard?activeSidebar=update-course' ><Button bgBtn={'Edit'} /></a>
               <Button
                 className="!border-orange-red bg-white !text-orange-red transition-all duration-300 hover:bg-orange-red hover:!text-orange-red"
                 bgBtn={'Delete'}
