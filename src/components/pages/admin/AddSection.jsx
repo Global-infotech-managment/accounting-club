@@ -4,53 +4,74 @@ import Button from '../../common/Button'
 import { Dropdown } from '../../common/Dropdown'
 import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../../../utils/AppContext'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { fetchAllCourses } from '../../../services/course/course.service'
+import { addSection } from '../../../services/section/section.services'
+import { showToast } from '../../../services/toast/toast.service'
 
 const AddSection = () => {
   const { courseData, updateCourseData } = useContext(AppContext)
   const navigate = useNavigate()
 
+  const {
+    data: courses,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['courses'],
+    queryFn: fetchAllCourses,
+  })
+
+  const createSection = useMutation({
+    mutationFn: addSection,
+    onSuccess: () => {
+      showToast.success('Section created successfully')
+      navigate('/admin-dashboard?activeSidebar=add-video')
+    },
+    onError: (error) => {
+      showToast.error(
+        error.response?.data?.message || 'Failed to create section'
+      )
+    },
+  })
+
   const handleInputChange = (e) => {
     const { name, value } = e.target
-    updateCourseData({ [name]: value }) // Update courseData directly
+    updateCourseData({ [name]: value })
   }
 
   const handleDropdownChange = (e) => {
     if (e && e.target) {
-      const { name, value } = e.target;
-      updateCourseData({ [name]: value });
+      const { name, value } = e.target
+      updateCourseData({ [name]: value })
     } else {
-      console.error("Dropdown did not return an event object:", e);
+      console.error('Dropdown did not return an event object:', e)
     }
-  };
-  
+  }
 
   const formSubmit = (e) => {
     e.preventDefault()
 
-    if (
-      !courseData.courseName ||
-      !courseData.sectionName ||
-      !courseData.sectionDescription ||
-      !courseData.validity
-    ) {
-      alert('Please fill all the fields')
-      return
-    }
+    const moveNext = courseData.isMandatory === 'Yes' ? true : false
 
-    console.log(courseData, 'add section')
+    const statusAsBoolean =
+      courseData.status === 'true' || courseData.status === true
 
-    // Reset courseData after submission
-    // updateCourseData({
-    //   courseName: '',
-    //   sectionName: '',
-    //   sectionDescription: '',
-    //   validity: '',
-    //   isMandatory: 'Yes',
-    //   status: 'Active',
-    // })
-
-    navigate('/admin-dashboard?activeSidebar=add-video')
+    createSection.mutate({
+      courseId: courseData.name, // Assuming 'name' dropdown contains courseId
+      name: courseData.addLesson, // Changed from addLesson to name if needed
+      link: courseData.link,
+      duration: courseData.num, // Changed from num to duration if needed
+      isMandatory: moveNext, // Convert to boolean
+      status: statusAsBoolean,
+    })
   }
+
+  const courseOptions =
+    courses?.map((course) => ({
+      value: course.id,
+      label: course.name,
+    })) || []
 
   return (
     <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
@@ -59,35 +80,33 @@ const AddSection = () => {
       </p>
       <hr className="mb-4 w-full bg-black opacity-10" />
       <form className="flex flex-col gap-4">
-         <Dropdown
-          name="courseName"
-          label="courseName"
-          options={[
-            { value: 'frontend', label: 'frontend' },
-            { value: 'backend', label: 'backend' },
-          ]}
-          value={courseData.courseName}
-          onChange={(e) => handleDropdownChange(e)}
-
+        <Dropdown
+          name="name"
+          label="Select Course"
+          options={courseOptions}
+          value={courseData.name}
+          onChange={handleDropdownChange}
+          isLoading={isLoading}
+          isError={isError}
         />
         <Input
-          name="sectionName"
+          name="addLesson"
           placeholder="Section Name"
-          value={courseData.sectionName}
+          value={courseData.addLesson}
           onChange={handleInputChange}
         />
         <Input
-          name="sectionDescription"
+          name="link"
           type={'text'}
-          placeholder="Section Description"
-          value={courseData.sectionDescription}
+          placeholder="Link"
+          value={courseData.link}
           onChange={handleInputChange}
         />
         <Input
-          name="validity"
+          name="num"
           type={'number'}
-          placeholder="Validity"
-          value={courseData.validity}
+          placeholder="number of lessons"
+          value={courseData.num}
           onChange={handleInputChange}
         />
 
@@ -95,8 +114,8 @@ const AddSection = () => {
           name="isMandatory"
           label="Is mandatory to move next"
           options={[
-            { value: 'Yes', label: 'Yes' },
-            { value: 'No', label: 'No' },
+            { value: 'true', label: 'Yes' },
+            { value: 'false', label: 'No' },
           ]}
           value={courseData.isMandatory}
           onChange={handleDropdownChange}
@@ -105,14 +124,19 @@ const AddSection = () => {
           name="status"
           label="Status"
           options={[
-            { value: 'Active', label: 'Active' },
-            { value: 'Disable', label: 'Disable' },
+            { value: 'true', label: 'Active' },
+            { value: 'false', label: 'Disable' },
           ]}
           value={courseData.status}
           onChange={handleDropdownChange}
         />
 
-        <Button onClick={formSubmit} className="mt-5 md:mt-10" bgBtn="Next" />
+        <Button
+          onClick={formSubmit}
+          className="mt-5 md:mt-10"
+          bgBtn="Next"
+          disabled={createSection.isPending}
+        />
       </form>
     </div>
   )

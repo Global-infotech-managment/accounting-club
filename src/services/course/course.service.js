@@ -17,6 +17,11 @@ export const fetchCourses = async (params) => {
   }
 }
 
+export const fetchAllCourses = async () => {
+  const response = await API.get('/course/admin')
+  return response.data.data.courses
+}
+
 export const createCourse = async (data) => {
   const response = await API.post('/course/admin', data)
   console.log(response, 'create course response')
