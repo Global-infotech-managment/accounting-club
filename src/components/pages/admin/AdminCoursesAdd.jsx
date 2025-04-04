@@ -5,15 +5,15 @@ import Button from '../../common/Button'
 import { Dropdown } from '../../common/Dropdown'
 import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../../../utils/AppContext'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { createCourse } from '../../../services/course/course.service'
 import { showToast } from '../../../services/toast/toast.service'
 import { uploadFile } from '../../../services/uploads/upload.service'
 
 const AdminCoursesAdd = () => {
   const [fileId, setFileId] = useState(null)
+  const [loading, setLoading] = useState(false) // State for loading overlay
 
-  //add course mutation
   const addCourse = useMutation({
     mutationFn: createCourse,
     onSuccess: () => {
@@ -26,56 +26,27 @@ const AdminCoursesAdd = () => {
     },
   })
 
-  // Add file upload mutation
   const uploadFileMutation = useMutation({
     mutationFn: (file) => uploadFile(file, 'courses'),
-    onSuccess: () => {
+    onMutate: () => setLoading(true), // Show loading when upload starts
+    onSuccess: (data) => {
       showToast.success('File uploaded successfully')
+      setFileId(data) // Save file ID
     },
+    onError: () => {
+      showToast.error('Failed to upload file')
+    },
+    onSettled: () => setLoading(false), // Hide loading when upload completes
   })
+
   const { courseData, updateCourseData } = useContext(AppContext)
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
-    updateCourseData({ [name]: value })
-  }
-
   const navigate = useNavigate()
 
   const handleFileChange = async (event) => {
-    console.log(event.target.files, 'file')
     if (event.target.files && event.target.files.length > 0) {
       updateCourseData({ selectedFile: event.target.files[0] })
+      await uploadFileMutation.mutateAsync(event.target.files[0])
     }
-
-    if (event.target.files[0]) {
-      const uploadResponse = await uploadFileMutation.mutateAsync(
-        event.target.files[0]
-      )
-      console.log(uploadResponse, 'upload response')
-      setFileId(uploadResponse) // Adjust based on your API response
-    }
-  }
-
-  const handleDragOver = (event) => {
-    event.preventDefault()
-    updateCourseData({ dragActive: true })
-  }
-
-  const handleDragLeave = () => {
-    updateCourseData({ dragActive: false })
-  }
-
-  const handleDrop = (event) => {
-    event.preventDefault()
-    updateCourseData({
-      dragActive: false,
-      selectedFile: event.dataTransfer.files[0],
-    })
-  }
-
-  const handleDropdownChange = (selectedOption) => {
-    updateCourseData({ status: selectedOption.value })
   }
 
   const formSubmit = async (e) => {
@@ -87,11 +58,10 @@ const AdminCoursesAdd = () => {
       !courseData.validity ||
       !courseData.selectedFile
     ) {
-      showToast.error('Please fill allfields')
+      showToast.error('Please fill all fields')
       return
     }
     try {
-      // Prepare course data
       const coursePayload = {
         name: courseData.name,
         description: courseData.description,
@@ -100,12 +70,9 @@ const AdminCoursesAdd = () => {
         status: courseData.status,
         fileId: fileId,
       }
-      console.log(coursePayload, 'file id')
 
-      // Create course
       await addCourse.mutateAsync(coursePayload)
 
-      // Reset form
       updateCourseData({
         name: '',
         description: '',
@@ -115,97 +82,111 @@ const AdminCoursesAdd = () => {
         dragActive: false,
         status: true,
       })
+
+      navigate('/admin-dashboard?activeSidebar=add-section')
     } catch (error) {
       console.error('Error creating course:', error)
     }
-
-    showToast.success('Course created successfully')
-
-    navigate('/admin-dashboard?activeSidebar=add-section')
   }
 
   return (
-    <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
-      <p className="mb-4 text-[16px] font-semibold text-black lg:text-[18px]">
-        Add Course
-      </p>
-      <hr className="mb-4 w-full bg-black opacity-10" />
-      <form className="flex flex-col gap-4" onSubmit={formSubmit}>
-        <Input
-          name="name"
-          placeholder="Course Name"
-          value={courseData.name}
-          onChange={handleInputChange}
-        />
-        <Input
-          name="description"
-          placeholder="Description"
-          value={courseData.description}
-          onChange={handleInputChange}
-        />
-        <Input
-          name="price"
-          type="number"
-          placeholder="Price"
-          value={courseData.price}
-          onChange={handleInputChange}
-        />
-        <Input
-          name="validity"
-          type="number"
-          placeholder="Validity"
-          value={courseData.validity}
-          onChange={handleInputChange}
-        />
-
-        {/* Drag & Drop File Upload */}
-        <div
-          className={`flex h-[100px] w-full flex-col items-center justify-center rounded-lg border-2 border-dashed px-3 md:h-[150px] ${courseData.dragActive ? 'border-orange-red' : 'border-primary'}`}
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
-          onDrop={handleDrop}
-        >
-          <p className="text-gray-800 text-center">
-            Drag & Drop files or{' '}
-            <label
-              htmlFor="fileInput"
-              className="cursor-pointer font-semibold text-orange-red"
-            >
-              Select files
-            </label>{' '}
-            to upload
-          </p>
-          <input
-            type="file"
-            id="fileInput"
-            className="hidden"
-            onChange={handleFileChange}
-          />
+    <div className="relative">
+      {/* Loading Overlay */}
+      {loading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="border-t-transparent h-16 w-16 animate-spin rounded-full border-4 border-white"></div>
         </div>
+      )}
 
-        {courseData.selectedFile && (
-          <p className="text-gray-700 mt-2">
-            Uploaded File: {courseData.selectedFile.name}
-          </p>
-        )}
+      <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
+        <p className="mb-4 text-[16px] font-semibold text-black lg:text-[18px]">
+          Add Course
+        </p>
+        <hr className="mb-4 w-full bg-black opacity-10" />
+        <form className="flex flex-col gap-4" onSubmit={formSubmit}>
+          <Input
+            name="name"
+            placeholder="Course Name"
+            value={courseData.name}
+            onChange={(e) =>
+              updateCourseData({ [e.target.name]: e.target.value })
+            }
+          />
+          <Input
+            name="description"
+            placeholder="Description"
+            value={courseData.description}
+            onChange={(e) =>
+              updateCourseData({ [e.target.name]: e.target.value })
+            }
+          />
+          <Input
+            name="price"
+            type="number"
+            placeholder="Price"
+            value={courseData.price}
+            onChange={(e) =>
+              updateCourseData({ [e.target.name]: e.target.value })
+            }
+          />
+          <Input
+            name="validity"
+            type="number"
+            placeholder="Validity"
+            value={courseData.validity}
+            onChange={(e) =>
+              updateCourseData({ [e.target.name]: e.target.value })
+            }
+          />
 
-        <Dropdown
-          label="Status"
-          options={[
-            { value: true, label: 'Active' },
-            { value: false, label: 'Disable' },
-          ]}
-          defaultValue="Active"
-          onChange={handleDropdownChange}
-        />
+          {/* Drag & Drop File Upload */}
+          <div
+            className={`flex h-[100px] w-full flex-col items-center justify-center rounded-lg border-2 border-dashed px-3 md:h-[150px] ${courseData.dragActive ? 'border-orange-red' : 'border-primary'}`}
+          >
+            <p className="text-gray-800 text-center">
+              Drag & Drop files or{' '}
+              <label
+                htmlFor="fileInput"
+                className="cursor-pointer font-semibold text-orange-red"
+              >
+                Select files
+              </label>{' '}
+              to upload
+            </p>
+            <input
+              type="file"
+              id="fileInput"
+              className="hidden"
+              onChange={handleFileChange}
+            />
+          </div>
 
-        <Button
-          type="submit"
-          className="mt-5 md:mt-10"
-          bgBtn="Next"
-          disabled={addCourse.isLoading || uploadFileMutation.isLoading}
-        />
-      </form>
+          {courseData.selectedFile && (
+            <p className="text-gray-700 mt-2">
+              Uploaded File: {courseData.selectedFile.name}
+            </p>
+          )}
+
+          <Dropdown
+            label="Status"
+            options={[
+              { value: true, label: 'Active' },
+              { value: false, label: 'Disable' },
+            ]}
+            defaultValue="Active"
+            onChange={(selectedOption) =>
+              updateCourseData({ status: selectedOption.value })
+            }
+          />
+
+          <Button
+            type="submit"
+            className="mt-5 md:mt-10"
+            bgBtn="Next"
+            disabled={addCourse.isLoading || uploadFileMutation.isLoading}
+          />
+        </form>
+      </div>
     </div>
   )
 }

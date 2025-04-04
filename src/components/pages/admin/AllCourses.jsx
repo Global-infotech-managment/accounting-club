@@ -1,31 +1,29 @@
-import React, { useState, useEffect } from 'react'
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState } from 'react'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { useQuery, useMutation } from '@tanstack/react-query'
 import Button from '../../common/Button'
-// import { toast } from 'sonner'
-import Input from '../../common/Input'
+
 import {
   fetchCourses,
   deleteCourse,
   toggleCourseStatus,
 } from '../../../services/course/course.service'
 
-
-const itemsPerPage = 6
+const itemsPerPage = 4
 
 const AllCourses = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [searchTerm, setSearchTerm] = useState('')
 
-  // Fetch courses
+  // Fetch courses with pagination
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ['courses', currentPage, searchTerm],
     queryFn: () =>
       fetchCourses({
         search: searchTerm || undefined,
-        page: currentPage.toString(),
-        limit: itemsPerPage.toString(),
+        page: currentPage,
+        limit: itemsPerPage,
       }),
     keepPreviousData: true,
   })
@@ -85,15 +83,13 @@ const AllCourses = () => {
         <p className="w-full text-[16px] font-semibold text-black md:text-[18px]">
           All Courses
         </p>
-        <Input
+        <input
           value={searchTerm}
-          placeholder={'Search courses'}
-          label={'none'}
-          inputClassName={'w-full'}
-          mainClassName={'max-w-[300px]'}
+          placeholder="Search courses"
+          className="max-w-[300px] rounded border px-2 py-1"
           onChange={(e) => {
             setSearchTerm(e.target.value)
-            setCurrentPage(1)
+            setCurrentPage(1) // Reset page when searching
           }}
         />
       </div>
@@ -116,8 +112,8 @@ const AllCourses = () => {
                 <button
                   className={`!h-[30px] rounded-2xl px-2.5 text-[12px] transition-all duration-300 ease-in-out ${
                     course.status === 'Enable'
-                      ? 'bg-primary text-white'
-                      : 'bg-orange-red text-white'
+                      ? 'bg-green-500 text-white'
+                      : 'bg-red-500 text-white'
                   }`}
                   onClick={() => handleToggleStatus(course.id, course.status)}
                 >
@@ -132,10 +128,12 @@ const AllCourses = () => {
               </p>
             </div>
             <div className="mt-4 flex gap-5">
-              <a href='/admin-dashboard?activeSidebar=update-course' ><Button bgBtn={'Edit'} /></a>
+              <a href="/admin-dashboard?activeSidebar=update-course">
+                <Button bgBtn="Edit" />
+              </a>
               <Button
-                className="!border-orange-red bg-white !text-orange-red transition-all duration-300 hover:bg-orange-red hover:!text-orange-red"
-                bgBtn={'Delete'}
+                className="!border-orange-red bg-white !text-orange-red transition-all duration-300 hover:bg-orange-red hover:text-white"
+                bgBtn="Delete"
                 onClick={() => handleDelete(course.id)}
               />
             </div>
@@ -143,20 +141,38 @@ const AllCourses = () => {
         ))}
       </div>
 
-      {totalCount > itemsPerPage && (
-        <div className="mt-4 flex justify-center gap-4">
+      {/* ✅ Fully Fixed Pagination */}
+      {totalPages <= 1 && (
+        <div className="mt-6 flex items-center justify-center space-x-2">
+          {/* Previous Button */}
           <Button
             disabled={currentPage === 1}
-            transparentBtn={'Prev Page'}
-            onClick={() => setCurrentPage(currentPage - 1)}
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            transparentBtn="Prev"
           />
-          <p className="text-gray-600 text-sm">
-            Page {currentPage} of {totalPages}
-          </p>
+
+          {/* Page Numbers */}
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index + 1}
+              className={`rounded px-3 py-1 ${
+                currentPage === index + 1
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-gray-200 text-black'
+              }`}
+              onClick={() => setCurrentPage(index + 1)}
+            >
+              {index + 1}
+            </button>
+          ))}
+
+          {/* Next Button */}
           <Button
-            disabled={currentPage === totalPages}
-            transparentBtn={'Next Page'}
-            onClick={() => setCurrentPage(currentPage + 1)}
+            disabled={currentPage >= totalPages}
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
+            transparentBtn="Next"
           />
         </div>
       )}
