@@ -4,6 +4,7 @@ export const AppContext = createContext()
 
 export const AppProvider = ({ children }) => {
   const [courseData, setCourseData] = useState({
+    courseId: null,
     name: '',
     description: '',
     fileId: null,
@@ -18,7 +19,14 @@ export const AppProvider = ({ children }) => {
   })
 
   const updateCourseData = (newData) => {
-    setCourseData((prevData) => ({ ...prevData, ...newData }))
+    console.log('Previous courseData:', courseData) // Log before updating
+    console.log('New data received:', newData) // Log what is being updated
+
+    setCourseData((prevData) => {
+      const updatedData = { ...prevData, ...newData }
+      console.log('Updated courseData:', updatedData) // Log after update
+      return updatedData
+    })
   }
 
   return (

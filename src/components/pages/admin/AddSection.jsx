@@ -20,6 +20,11 @@ const AddSection = () => {
   } = useQuery({
     queryKey: ['courses'],
     queryFn: fetchAllCourses,
+    onSuccess: (data) => {
+      if (data?.courses?.length > 0) {
+        updateCourseData({ courseId: data.courses[0].id })
+      }
+    },
   })
 
   const createSection = useMutation({
@@ -40,13 +45,9 @@ const AddSection = () => {
     updateCourseData({ [name]: value })
   }
 
-  const handleDropdownChange = (e) => {
-    if (e && e.target) {
-      const { name, value } = e.target
-      updateCourseData({ [name]: value })
-    } else {
-      console.error('Dropdown did not return an event object:', e)
-    }
+  const handleDropdownChange = (name, value) => {
+    console.log('Dropdown change:', { name, value })
+    updateCourseData({ [name]: value })
   }
 
   const formSubmit = (e) => {
@@ -58,11 +59,11 @@ const AddSection = () => {
       courseData.status === 'true' || courseData.status === true
 
     createSection.mutate({
-      courseId: courseData.name, // Assuming 'name' dropdown contains courseId
-      name: courseData.addLesson, // Changed from addLesson to name if needed
+      courseId: courseData.courseId,
+      name: courseData.addLesson,
       link: courseData.link,
-      duration: courseData.num, // Changed from num to duration if needed
-      isMandatory: moveNext, // Convert to boolean
+      num: +courseData.num,
+      isMandatory: moveNext,
       status: statusAsBoolean,
     })
   }
@@ -81,10 +82,10 @@ const AddSection = () => {
       <hr className="mb-4 w-full bg-black opacity-10" />
       <form className="flex flex-col gap-4">
         <Dropdown
-          name="name"
+          name="courseId"
           label="Select Course"
           options={courseOptions}
-          value={courseData.name}
+          value={courseData.courseId}
           onChange={handleDropdownChange}
           isLoading={isLoading}
           isError={isError}

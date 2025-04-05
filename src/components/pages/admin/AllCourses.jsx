@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+// import 'react-toastify/dist/ReactToastify.css'
 import { useQuery, useMutation } from '@tanstack/react-query'
 import Button from '../../common/Button'
 
