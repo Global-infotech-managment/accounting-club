@@ -1,190 +1,181 @@
 import React, { useState } from 'react'
-import Input from '../../common/Input'
-import Button from '../../common/Button'
+import { fetchAllCourses } from '../../../services/course/course.service'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { Dropdown } from '../../common/Dropdown'
-import { useNavigate } from 'react-router-dom'
-import Icons from '../../common/Icons'
+import { addLessonTest } from '../../../services/lessonTest/lessonTest.services'
+import { showToast } from '../../../services/toast/toast.service'
+import { fetchAllSections } from '../../../services/section/section.services'
 
 const AddVideo = () => {
-  const [formData, setFormData] = useState({
-    selectCourse: '',
-    selectChapter: '',
-    lessonNumber: '',
-    isMandatory: 'Yes',
-    videoDescription: '',
-    videoEmbedCode: '',
-    studyMaterial: null, // File state
-    status: 'Active',
+  const [form, setForm] = useState({
+    lessonId: '',
+    question: '',
+    options: ['', '', '', ''],
+    answer: '',
   })
 
-  const navigate = useNavigate()
+  const {
+    data: lessons,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['lessons'],
+    queryFn: fetchAllSections,
+    onSuccess: (data) => {
+      if (data?.lessons?.length > 0) {
+        setForm((prev) => ({ ...prev, lessonId: data.lessons[0].id }))
+      }
+    },
+  })
 
-  const handleFileChange = (e) => {
-    if (e.target.files.length > 0) {
-      setFormData((prevData) => ({
-        ...prevData,
-        studyMaterial: e.target.files[0], // Store file object
-      }))
-    }
-  }
+  const leesonTest = useMutation({
+    mutationFn: addLessonTest,
+    onSuccess: () => {
+      showToast.success('Lesson test created successfully')
+    },
+    onError: (error) => {
+      if (error.response?.status === 422) {
+        showToast.error('Test already added with this lesson')
+      } else {
+        showToast.error(
+          error.response?.data?.message || 'Failed to create lesson test'
+        )
+      }
+    },
+  })
+
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }))
+    setForm({ ...form, [e.target.name]: e.target.value })
   }
 
   const handleDropdownChange = (name, value) => {
-    setFormData((prevData) => ({
-      ...prevData,
+    setForm((prev) => ({
+      ...prev,
       [name]: value,
     }))
   }
 
-  const formSubmit = (e) => {
-    e.preventDefault()
-
-    // Validate all fields
-    const {
-      selectCourse,
-      selectChapter,
-      lessonNumber,
-      videoDescription,
-      videoEmbedCode,
-    } = formData
-    if (
-      !selectCourse ||
-      !selectChapter ||
-      !lessonNumber ||
-      !videoDescription ||
-      !videoEmbedCode
-    ) {
-      alert('Please fill all the fields')
-      return
-    }
-    console.log(formData, 'add video')
-    // Reset form
-    setFormData({
-      selectCourse: '',
-      selectChapter: '',
-      lessonNumber: '',
-      isMandatory: 'Yes',
-      videoDescription: '',
-      videoEmbedCode: '',
-      studyMaterial: null, // Reset file state
-      status: 'Active',
-    })
-
-    navigate('/admin-dashboard?activeSidebar=add-test')
+  const handleOptionChange = (index, value) => {
+    const updatedOptions = [...form.options]
+    updatedOptions[index] = value
+    setForm({ ...form, options: updatedOptions })
   }
 
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+
+    if (!form.lessonId) {
+      showToast.error('Please select a lesson')
+      setIsSubmitting(false)
+      return
+    }
+    // Validation
+    const filledOptions = form.options.filter((opt) => opt.trim() !== '')
+    if (filledOptions.length < 4) {
+      showToast.error('Please fill all 4 options')
+      setIsSubmitting(false)
+      return
+    }
+
+    if (!form.options.includes(form.answer)) {
+      showToast.error('Answer must match one of the options')
+      setIsSubmitting(false)
+      return
+    }
+
+    leesonTest.mutate({
+      lessonId: form.lessonId,
+      question: form.question,
+      options: form.options,
+      answer: form.answer,
+    })
+
+    // Reset
+    setForm({
+      lessonId: '',
+      question: '',
+      options: ['', '', '', ''],
+      answer: '',
+    })
+    setIsSubmitting(false)
+  }
+
+  const courseOptions = [
+    { value: '', label: 'Please select a lesson' },
+    ...(lessons?.map((lesson) => ({
+      value: lesson.id,
+      label: lesson.name,
+    })) || []),
+  ]
+
   return (
-    <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
-      <p className="mb-4 text-[16px] font-semibold text-black lg:text-[18px]">
-        Add Video + Test + Study Material
-      </p>
-      <hr className="mb-4 w-full bg-black opacity-10" />
-      <form className="flex flex-wrap gap-y-4" onSubmit={formSubmit}>
-        <div className="w-full md:w-6/12 md:pe-[10px]">
-          <Input
-            placeholder="Select Course"
-            name="selectCourse"
-            value={formData.selectCourse}
-            onChange={handleChange}
-          />
-        </div>
+    <form
+      onSubmit={handleSubmit}
+      className="shadow-md mx-auto max-w-xl space-y-4 rounded-lg bg-white p-6"
+    >
+      <h2 className="text-2xl mb-4 font-semibold">Create Lesson Test</h2>
 
-        <div className="w-full md:w-6/12 md:ps-[10px]">
-          <Input
-            placeholder="Select Chapter"
-            name="selectChapter"
-            value={formData.selectChapter}
-            onChange={handleChange}
-          />
-        </div>
+      <Dropdown
+        name="lessonId"
+        label="Select Lesson"
+        options={courseOptions}
+        value={form.lessonId}
+        onChange={handleDropdownChange}
+        isLoading={isLoading}
+        isError={isError}
+      />
 
-        <div className="w-full md:w-6/12 md:pe-[10px]">
-          <Input
-            placeholder="Lesson Number"
-            type="number"
-            name="lessonNumber"
-            value={formData.lessonNumber}
-            onChange={handleChange}
-          />
-        </div>
+      <div>
+        <label className="block font-medium">Question</label>
+        <input
+          type="text"
+          name="question"
+          value={form.question}
+          onChange={handleChange}
+          className="mt-1 w-full rounded border p-2"
+          required
+        />
+      </div>
 
-        <div className="w-full md:w-6/12 md:ps-[10px]">
-          <Dropdown
-            label="Is mandatory to move next"
-            options={[
-              { value: 'Yes', label: 'Yes' },
-              { value: 'No', label: 'No' },
-            ]}
-            value={formData.isMandatory}
-            onChange={(value) => handleDropdownChange('isMandatory', value)}
-          />
-        </div>
-
-        <div className="w-full md:w-6/12 md:pe-[10px]">
-          <Input
-            placeholder="Video Description"
-            name="videoDescription"
-            value={formData.videoDescription}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="w-full md:w-6/12 md:ps-[10px]">
-          <Input
-            placeholder="Video Embed Code"
-            name="videoEmbedCode"
-            value={formData.videoEmbedCode}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="w-full md:w-6/12 md:pe-[10px]">
-          <label className="mb-[2px] text-sm text-black">
-            Study Material <span className="text-orange-red">*</span>
-          </label>
-          <div className="relative mt-1">
+      <div>
+        <label className="mb-2 block font-medium">Options</label>
+        {[0, 1, 2, 3].map((index) => (
+          <div key={index} className="mb-2">
             <input
-              type="file"
-              id="fileUpload"
-              className="hidden"
-              onChange={handleFileChange}
+              type="text"
+              placeholder={`Option ${index + 1}`}
+              value={form.options[index]}
+              onChange={(e) => handleOptionChange(index, e.target.value)}
+              className="w-full rounded border p-2"
+              required
             />
-            <label
-              htmlFor="fileUpload"
-              className="text-xs flex w-full cursor-pointer items-center justify-between rounded-lg border border-[#4E4E4E1A] bg-[#FBFBFB80] p-2 px-4 py-2 text-black focus:ring-2 focus-visible:outline-[1px] focus-visible:outline-orange-red"
-            >
-              <span className="text-black opacity-50">
-                {formData.studyMaterial
-                  ? formData.studyMaterial.name
-                  : 'Upload from file'}
-              </span>
-              <Icons iconName="upload" />
-            </label>
           </div>
-        </div>
+        ))}
+      </div>
 
-        <div className="w-full md:w-6/12 md:ps-[10px]">
-          <Dropdown
-            label="Status"
-            options={[
-              { value: 'Active', label: 'Active' },
-              { value: 'Disable', label: 'Disable' },
-            ]}
-            value={formData.status}
-            onChange={(value) => handleDropdownChange('status', value)}
-          />
-        </div>
+      <div>
+        <label className="block font-medium">Answer</label>
+        <input
+          type="text"
+          name="answer"
+          value={form.answer}
+          onChange={handleChange}
+          className="mt-1 w-full rounded border p-2"
+          required
+        />
+      </div>
 
-        <Button type="submit" className="mt-5 md:mt-10" bgBtn="Next" />
-      </form>
-    </div>
+      <button
+        type="submit"
+        className="hover:bg-green-700 w-full rounded py-2 font-semibold text-dark-black disabled:opacity-50"
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? 'Submitting...' : 'Submit'}
+      </button>
+    </form>
   )
 }
 

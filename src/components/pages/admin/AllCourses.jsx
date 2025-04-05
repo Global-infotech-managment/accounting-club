@@ -8,6 +8,7 @@ import {
   deleteCourse,
   toggleCourseStatus,
 } from '../../../services/course/course.service'
+import { toast } from 'react-toastify'
 
 const itemsPerPage = 4
 

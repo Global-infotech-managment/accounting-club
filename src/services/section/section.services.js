@@ -6,3 +6,9 @@ export const addSection = async (data) => {
   console.log(response, 'create course response')
   return response.data
 }
+
+export const fetchAllSections = async () => {
+  const response = await API.get('/course-lesson/admin')
+  console.log(response, 'fetch all course response')
+  return response.data.data.courseLessons
+}
