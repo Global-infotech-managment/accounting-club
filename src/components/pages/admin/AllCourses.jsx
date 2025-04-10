@@ -128,7 +128,9 @@ const AllCourses = () => {
               </p>
             </div>
             <div className="mt-4 flex gap-5">
-              <a href="/admin-dashboard?activeSidebar=update-course">
+              <a
+                href={`/admin-dashboard?activeSidebar=update-course&id=${course.id}`}
+              >
                 <Button bgBtn="Edit" />
               </a>
               <Button

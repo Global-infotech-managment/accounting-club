@@ -28,6 +28,10 @@ export const createCourse = async (data) => {
   return response.data.data
 }
 
+export const findCourseById = async (id) => {
+  await API.delete(`/course/admin/${id}`)
+}
+
 export const deleteCourse = async (id) => {
   //   await API.delete(`/course/admin/${id}`)
 }
