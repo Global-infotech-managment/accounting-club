@@ -108,11 +108,17 @@ const UpdateCourse = () => {
 
   return (
     <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
-      <p className="mb-4 text-[16px] font-semibold text-black lg:text-[18px]">
-        Update Course
-      </p>
+      <div className='flex justify-between items-center pb-3'>
+        <p className="text-[16px] font-semibold text-black lg:text-[18px]">
+          Edit Course
+        </p>
+        <div className='flex items-center gap-4'>
+        <a href="/admin-dashboard?activeSidebar=update-section"><Button type="submit" className="col-span-2 mt-4 !py-2 px-5 !bg-transparent" bgBtn="Update Section" disabled={addCourse.isLoading || uploadFileMutation.isLoading} /></a>
+        <a href="/admin-dashboard?activeSidebar=update-video"><Button type="submit" className="col-span-2 mt-4 w-[149px] text-nowrap" bgBtn="Update Video" disabled={addCourse.isLoading || uploadFileMutation.isLoading} /></a>
+        </div>
+      </div>
       <hr className="mb-4 w-full bg-black opacity-10" />
-      <form className="flex flex-col gap-3 sm:grid sm:gap-4 sm:grid-cols-2" onSubmit={formSubmit}>
+      <form className="flex flex-col gap-3 sm:gap-4 " onSubmit={formSubmit}>
         <div>
           <span className="text-sm">Course Name* </span>
           <Input name="name" placeholder="Basics of Business Accounting" value={courseData.name} onChange={handleInputChange} />
@@ -121,14 +127,8 @@ const UpdateCourse = () => {
           <span className="text-sm">Description* </span>
           <Input name="description" placeholder="This is basic course for Accountants" value={courseData.description} onChange={handleInputChange} />
         </div>
-        <div>
-          <span className="text-sm">Lesson Number* </span>
-          <Input name="lessonNumber" placeholder="01" value={courseData.lessonNumber} onChange={handleInputChange} />
-        </div>
-        <div>
-          <span className="text-sm">Select Chapter* </span>
-          <Input name="chapter" placeholder="Chapter-1" value={courseData.chapter} onChange={handleInputChange} />
-        </div>
+      
+   
         <div>
           <span className="text-sm">Price* </span>
           <Input name="price" placeholder="4900/-" type="text" value={courseData.price} onChange={handleInputChange} />
@@ -137,18 +137,7 @@ const UpdateCourse = () => {
           <span className="text-sm">Validity* </span>
           <Input name="validity" placeholder="180 Days" type="text" value={courseData.validity} onChange={handleInputChange} />
         </div>
-        <div>
-          <span className="text-sm">Is it mandatory to move for next* </span>
-          <Input name="mandatory" placeholder="Yes/No" value={courseData.mandatory} onChange={handleInputChange} />
-        </div>
-        <div>
-          <span className="text-sm">Video Description* </span>
-          <Input name="videoDescription" placeholder="Type here..." value={courseData.videoDescription} onChange={handleInputChange} />
-        </div>
-        <div className="flex flex-col items-start">
-          <span>Video Embed code* </span>
-          <Input name="videoFile" type="file" onChange={handleFileChange} className="file-input" placeholder="Upload from file" />
-        </div>
+  
         <Dropdown label="Status" options={[{ value: true, label: 'Active' }, { value: false, label: 'Inactive' }]} onChange={handleDropdownChange} />
         <div className="flex flex-col items-start">
           <span>Thumbnail* </span>
