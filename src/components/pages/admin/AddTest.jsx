@@ -154,10 +154,10 @@ export default function AddTest() {
               {String.fromCharCode(65 + index)}
             </span>
             <Input
-              placeholder="Enter answer option"
+              placeholder="Your answer here"
               value={option}
               onChange={(e) => handleOptionChange(index, e.target.value)}
-              label={'none'}
+              label={''}
             />
           </div>
         ))}

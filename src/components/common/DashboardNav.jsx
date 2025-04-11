@@ -62,7 +62,7 @@ const DashboardNav = () => {
                 height={48}
                 width={48}
                 src={profile}
-                className="w-[36px] rounded-xl sm:w-full"
+                className="w-[36px] rounded-xl "
                 alt="profile"
               />
             </button>
@@ -82,9 +82,9 @@ const DashboardNav = () => {
                   <p className="mt-2 font-semibold">Yogesh Sharma</p>
                 </div>
                 <div className="mt-3">
-                  <button className="px-4 py-2 text-left text-[14px] text-black opacity-70 transition-all duration-300 ease-in-out hover:text-orange-red md:text-[16px]">
+                  {/* <button className="px-4 py-2 text-left text-[14px] text-black opacity-70 transition-all duration-300 ease-in-out hover:text-orange-red md:text-[16px]">
                     Settings
-                  </button>
+                  </button> */}
                   <hr className="bg-black opacity-70" />
                   <Link
                     to="/"
