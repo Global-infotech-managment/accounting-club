@@ -54,9 +54,9 @@ const AllStudent = () => {
     <div className="overflow-x-auto md:p-4">
       <Input
         value={searchTerm}
-        placeholder={'Search by name or email'}
-        label={'none'}
-        mainClassName={'mb-5'}
+        placeholder="Search by name or email"
+        label="none"
+        mainClassName="mb-5"
         onChange={(e) => {
           setSearchTerm(e.target.value)
           setCurrentPage(1)
@@ -73,7 +73,9 @@ const AllStudent = () => {
               'Email',
               'State',
               'PinCode',
-              'Delete',
+              'My Review',
+              'Status',
+              // 'Action',
             ].map((header, index) => (
               <th
                 key={index}
@@ -87,7 +89,7 @@ const AllStudent = () => {
         <tbody className="bg-[#F7F7F7]">
           {students.map((item, index) => (
             <tr
-              key={item.id}
+              key={item._id} // Assumes MongoDB-style ID
               className="hover:bg-gray-50 text-nowrap border-t bg-[#F7F7F7] text-center"
             >
               <td className="border border-[#D7D7D7] px-4 py-2">
@@ -99,23 +101,29 @@ const AllStudent = () => {
                 {new Date(item.createdAt).toLocaleDateString()}
               </td>
               <td className="border border-[#D7D7D7] px-4 py-2">
-                {item.profile?.name || 'N/A'}
+                {item?.profile?.name || 'N/A'}
               </td>
               <td className="border border-[#D7D7D7] px-4 py-2 text-left">
-                {item.email}
+                {item?.email || 'N/A'}
               </td>
               <td className="border border-[#D7D7D7] px-4 py-2 capitalize">
-                {item.profile?.state || 'N/A'}
+                {item?.profile?.state || 'N/A'}
               </td>
               <td className="border border-[#D7D7D7] px-4 py-2">
-                {item.profile?.pinCode || 'N/A'}
+                {item?.profile?.pinCode || 'N/A'}
               </td>
               <td className="border border-[#D7D7D7] px-4 py-2">
+                <a href="#">{item?.profile?.view || 'View'}</a>
+              </td>
+              <td className="border border-[#D7D7D7] px-4 py-2">
+                <a href="#">{item?.profile?.Active ? 'Active' : 'Inactive'}</a>
+              </td>
+              {/* <td className="border border-[#D7D7D7] px-4 py-2">
                 <Button
-                  bgBtn={'Delete'}
-                  onClick={() => handleDelete(item.id)}
+                  redBtn="Delete"
+                  onClick={() => handleDelete(item._id)}
                 />
-              </td>
+              </td> */}
             </tr>
           ))}
         </tbody>
@@ -125,12 +133,12 @@ const AllStudent = () => {
         <div className="relative mt-4 flex min-w-[500px] items-center justify-center gap-4">
           <Button
             disabled={currentPage === 1 || isLoading}
-            transparentBtn={'Prev Page'}
+            transparentBtn="Prev Page"
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           />
           <Button
             disabled={currentPage === totalPages || isLoading}
-            transparentBtn={'Next Page'}
+            transparentBtn="Next Page"
             onClick={() =>
               setCurrentPage((prev) => Math.min(prev + 1, totalPages))
             }
