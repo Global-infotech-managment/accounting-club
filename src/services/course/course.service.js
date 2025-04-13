@@ -28,8 +28,20 @@ export const createCourse = async (data) => {
   return response.data.data
 }
 
-export const findCourseById = async (id) => {
+export const updateCourse = async (data) => {
+  const response = await API.patch(`/course/admin`, data)
+  console.log(response, 'update course response')
+  return response.data.data
+}
+
+export const deleteCourseById = async (id) => {
   await API.delete(`/course/admin/${id}`)
+}
+
+export const findCourseById = async (id) => {
+  const response = await API.get(`/course/${id}`)
+  console.log('response data', response.data.data)
+  return response.data.data
 }
 
 export const deleteCourse = async (id) => {
