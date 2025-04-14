@@ -1,30 +1,63 @@
-'use client'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Input from '../../common/Input'
 import Button from '../../common/Button'
 import { Dropdown } from '../../common/Dropdown'
 import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../../../utils/AppContext'
-import { useMutation } from '@tanstack/react-query'
-import { createCourse } from '../../../services/course/course.service'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import {
+  createCourse,
+  findCourseById,
+  updateCourse,
+} from '../../../services/course/course.service'
 import { showToast } from '../../../services/toast/toast.service'
 import { uploadFile } from '../../../services/uploads/upload.service'
+import { useSearchParams } from 'react-router-dom'
+import axios from 'axios'
 
 const UpdateCourse = () => {
   const [fileId, setFileId] = useState(null)
   const { courseData, updateCourseData } = useContext(AppContext)
+  const [dataFetched, setDataFetched] = useState(false)
   const navigate = useNavigate()
 
-  // Mutation to create course
-  const addCourse = useMutation({
-    mutationFn: createCourse,
+  const [searchParams] = useSearchParams()
+  const courseId = searchParams.get('id')
+
+  useEffect(() => {
+    if (courseId && !dataFetched) {
+      setDataFetched(true) // Set the flag to true once data is fetched
+      findCourseById(courseId)
+        .then((response) => {
+          const data = response
+          console.log('Fetched course data:', data)
+
+          updateCourseData({
+            name: data.name,
+            description: data.description,
+            price: data.price,
+            validity: data.validity,
+            status: data.status,
+            fileId: data.fileId,
+            courseId: data.id,
+          })
+        })
+        .catch((error) => {
+          console.error('Error fetching course data:', error)
+          showToast.error('Failed to fetch course data')
+        })
+    }
+  }, [courseId, dataFetched, updateCourseData])
+
+  // Rename mutation variable to avoid conflict
+  const updateCourseMutation = useMutation({
+    mutationFn: updateCourse,
     onSuccess: () => {
-      showToast.success('Course created successfully')
-      navigate('/admin-dashboard?activeSidebar=add-section')
+      showToast.success('Course updated successfully')
     },
     onError: (error) => {
       showToast.error(
-        error.response?.data?.message || 'Failed to create course'
+        error.response?.data?.message || 'Failed to update course'
       )
     },
   })
@@ -64,8 +97,7 @@ const UpdateCourse = () => {
       !courseData.name ||
       !courseData.description ||
       !courseData.price ||
-      !courseData.validity ||
-      !courseData.selectedFile
+      !courseData.validity
     ) {
       showToast.error('Please fill all required fields')
       return
@@ -73,34 +105,27 @@ const UpdateCourse = () => {
 
     try {
       const coursePayload = {
+        courseId: courseId,
         name: courseData.name,
         description: courseData.description,
         price: Number(courseData.price),
         validity: Number(courseData.validity),
         status: courseData.status,
-        fileId: fileId,
-        lessonNumber: courseData.lessonNumber || '',
-        chapter: courseData.chapter || '',
-        mandatory: courseData.mandatory || '',
-        videoDescription: courseData.videoDescription || '',
+        ...(fileId && { fileId: fileId }),
       }
 
-      await addCourse.mutateAsync(coursePayload)
+      await updateCourseMutation.mutateAsync(coursePayload)
 
       // Reset form after successful submission
-      updateCourseData({
-        name: '',
-        description: '',
-        price: '',
-        validity: '',
-        selectedFile: null,
-        lessonNumber: '',
-        chapter: '',
-        mandatory: '',
-        videoDescription: '',
-        dragActive: false,
-        status: true,
-      })
+      // updateCourseData({
+      //   courseId: courseId,
+      //   name: '',
+      //   description: '',
+      //   price: '',
+      //   validity: '',
+      //   selectedFile: null,
+      //   status: true,
+      // })
     } catch (error) {
       console.error('Error creating course:', error)
     }
@@ -108,42 +133,100 @@ const UpdateCourse = () => {
 
   return (
     <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
-      <div className='flex justify-between items-center pb-3'>
+      <div className="flex items-center justify-between pb-3">
         <p className="text-[16px] font-semibold text-black lg:text-[18px]">
           Edit Course
         </p>
-        <div className='flex items-center gap-4'>
-        <a href="/admin-dashboard?activeSidebar=update-section"><Button type="submit" className="col-span-2 mt-4 !py-2 px-5 !bg-transparent" bgBtn="Update Section" disabled={addCourse.isLoading || uploadFileMutation.isLoading} /></a>
-        <a href="/admin-dashboard?activeSidebar=update-video"><Button type="submit" className="col-span-2 mt-4 w-[149px] text-nowrap" bgBtn="Update Video" disabled={addCourse.isLoading || uploadFileMutation.isLoading} /></a>
+        <div className="flex items-center gap-4">
+          <a href="/admin-dashboard?activeSidebar=update-section">
+            <Button
+              type="submit"
+              className="!bg-transparent col-span-2 mt-4 !py-2 px-5"
+              bgBtn="Update Section"
+              disabled={
+                updateCourseMutation.isLoading || uploadFileMutation.isLoading
+              }
+            />
+          </a>
+          <a href="/admin-dashboard?activeSidebar=update-video">
+            <Button
+              type="submit"
+              className="col-span-2 mt-4 w-[149px] text-nowrap"
+              bgBtn="Update Video"
+              disabled={
+                updateCourseMutation.isLoading || uploadFileMutation.isLoading
+              }
+            />
+          </a>
         </div>
       </div>
       <hr className="mb-4 w-full bg-black opacity-10" />
-      <form className="flex flex-col gap-3 sm:gap-4 " onSubmit={formSubmit}>
+      <form className="flex flex-col gap-3 sm:gap-4" onSubmit={formSubmit}>
         <div>
           <span className="text-sm">Course Name* </span>
-          <Input name="name" placeholder="Basics of Business Accounting" value={courseData.name} onChange={handleInputChange} />
+          <Input
+            name="name"
+            placeholder="Basics of Business Accounting"
+            value={courseData.name}
+            onChange={handleInputChange}
+          />
         </div>
         <div>
           <span className="text-sm">Description* </span>
-          <Input name="description" placeholder="This is basic course for Accountants" value={courseData.description} onChange={handleInputChange} />
+          <Input
+            name="description"
+            placeholder="This is basic course for Accountants"
+            value={courseData.description}
+            onChange={handleInputChange}
+          />
         </div>
-      
-   
+
         <div>
           <span className="text-sm">Price* </span>
-          <Input name="price" placeholder="4900/-" type="text" value={courseData.price} onChange={handleInputChange} />
+          <Input
+            name="price"
+            placeholder="4900/-"
+            type="text"
+            value={courseData.price}
+            onChange={handleInputChange}
+          />
         </div>
         <div>
           <span className="text-sm">Validity* </span>
-          <Input name="validity" placeholder="180 Days" type="text" value={courseData.validity} onChange={handleInputChange} />
+          <Input
+            name="validity"
+            placeholder="180 Days"
+            type="text"
+            value={courseData.validity}
+            onChange={handleInputChange}
+          />
         </div>
-  
-        <Dropdown label="Status" options={[{ value: true, label: 'Active' }, { value: false, label: 'Inactive' }]} onChange={handleDropdownChange} />
+
+        <Dropdown
+          label="Status"
+          options={[
+            { value: true, label: 'Active' },
+            { value: false, label: 'Inactive' },
+          ]}
+          onChange={handleDropdownChange}
+        />
         <div className="flex flex-col items-start">
           <span>Thumbnail* </span>
-          <Input type="file" onChange={handleFileChange} className="file-input" placeholder="Upload from file" />
+          <Input
+            type="file"
+            onChange={handleFileChange}
+            className="file-input"
+            placeholder="Upload from file"
+          />
         </div>
-        <Button type="submit" className="col-span-2 w-full mt-4" bgBtn="Next" disabled={addCourse.isLoading || uploadFileMutation.isLoading} />
+        <Button
+          type="submit"
+          className="col-span-2 mt-4 w-full"
+          bgBtn={uploadFileMutation.isLoading ? 'Uploading...' : 'Update'}
+          disabled={
+            updateCourseMutation.isLoading || uploadFileMutation.isLoading
+          }
+        />
       </form>
     </div>
   )
