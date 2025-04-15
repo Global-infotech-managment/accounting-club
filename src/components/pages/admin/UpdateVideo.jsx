@@ -72,19 +72,19 @@ const UpdateVideo = () => {
       <div className="flex justify-between items-center pb-3">
         <p className="text-[16px] font-semibold text-black lg:text-[18px]">Edit Video</p>
         <div className="flex items-center gap-4">
-          <a href="/admin-dashboard?activeSidebar=update-course">
+          <a href="/admin-dashboard?activeSidebar=update-lesson">
               <Button
                 type="submit"
                 className="col-span-2 mt-4 !py-2 px-5 !bg-transparent"
-                bgBtn="Update Course"
+                bgBtn="Update Lesson"
                 disabled={uploadFileMutation.isLoading}
               />
           </a>
-          <a href="/admin-dashboard?activeSidebar=update-video">
+          <a href="/admin-dashboard?activeSidebar=update-test">
               <Button
                 type="submit"
                 className="col-span-2 mt-4 w-[149px] text-nowrap"
-                bgBtn="Update Video"
+                bgBtn="Update Test"
                 disabled={uploadFileMutation.isLoading}
               />
           </a>

@@ -16,6 +16,9 @@ import CreateTest from './admin/CreateTest'
 import UpdateCourse from './admin/UpdateCourse'
 import UpdateSection from './admin/UpdateSection'
 import UpdateVideo from './admin/UpdateVideo'
+import UpdateTest from './admin/UpdateTest'
+import UpdateLesson from './admin/UpdateLesson'
+import StudentOverview from './admin/StudentOverview'
 
 const AdminMain = () => {
   const location = useLocation()
@@ -54,6 +57,9 @@ const AdminMain = () => {
                     {activeSidebar === 'update-course' && <UpdateCourse />}
                     {activeSidebar === 'update-section' && <UpdateSection />}
                     {activeSidebar === 'update-video' && <UpdateVideo />}
+                    {activeSidebar === 'update-test' && <UpdateTest />}
+                    {activeSidebar === 'update-lesson' && <UpdateLesson />}
+                    {activeSidebar === 'student-overview' && <StudentOverview />}
                   </>
                 }
               />

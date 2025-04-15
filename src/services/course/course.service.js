@@ -45,7 +45,7 @@ export const findCourseById = async (id) => {
 }
 
 export const deleteCourse = async (id) => {
-  //   await API.delete(`/course/admin/${id}`)
+    await API.delete(`/course/admin/${id}`)
 }
 
 export const toggleCourseStatus = async (id, status) => {

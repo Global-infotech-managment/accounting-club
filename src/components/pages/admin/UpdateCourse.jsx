@@ -133,7 +133,7 @@ const UpdateCourse = () => {
 
   return (
     <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
-      <div className="flex items-center justify-between pb-3">
+      <div className="flex flex-col sm:flex-row items-center justify-between pb-3">
         <p className="text-[16px] font-semibold text-black lg:text-[18px]">
           Edit Course
         </p>
@@ -141,18 +141,18 @@ const UpdateCourse = () => {
           <a href="/admin-dashboard?activeSidebar=update-section">
             <Button
               type="submit"
-              className="!bg-transparent col-span-2 mt-4 !py-2 px-5"
+              className="!bg-transparent col-span-2 mt-4  !py-2 sm:px-5  !px-3"
               bgBtn="Update Section"
               disabled={
                 updateCourseMutation.isLoading || uploadFileMutation.isLoading
               }
             />
           </a>
-          <a href="/admin-dashboard?activeSidebar=update-video">
+          <a href="/admin-dashboard?activeSidebar=update-lesson">
             <Button
               type="submit"
-              className="col-span-2 mt-4 w-[149px] text-nowrap"
-              bgBtn="Update Video"
+              className="col-span-2 mt-4 !py-2 sm:px-5  !px-3"
+              bgBtn="Update Lesson"
               disabled={
                 updateCourseMutation.isLoading || uploadFileMutation.isLoading
               }
