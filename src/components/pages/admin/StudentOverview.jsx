@@ -97,8 +97,8 @@ const StudentOverview = () => {
             <p className="mt-5 w-full border-t border-[#00000067] pt-3 text-center text-[16px] font-semibold text-black sm:pt-[22px] sm:text-start md:text-[20px]">
               Courses
             </p>
-            <div className='overflow-x-auto'>
-              <table className="border-gray-200 shadow-md mt-2 min-w-[700px] w-full  overflow-hidden rounded-xl border bg-white">
+            <div className="overflow-x-auto">
+              <table className="border-gray-200 shadow-md mt-2 w-full min-w-[700px] overflow-hidden rounded-xl border bg-white">
                 <thead className="bg-gray-100">
                   <tr>
                     {[
@@ -139,7 +139,7 @@ const StudentOverview = () => {
                           </a>
                         </td>
                         <td className="border border-[#D7D7D7] px-4 py-2">
-                          <a href="/admin-dashboard?activeSidebar=update-section">
+                          <a href="/admin-dashboard?activeSidebar=student-progress">
                             <button
                               className="text-blue-600 mr-3 hover:underline"
                               onClick={() => {
