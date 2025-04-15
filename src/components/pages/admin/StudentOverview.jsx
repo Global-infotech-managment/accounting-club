@@ -58,138 +58,152 @@ const StudentOverview = () => {
     }
 
     return (
-        <div className='bg-[#F7F7F7] p-4 rounded-xl'>
-            <div className="mb-4">
-                <p className="w-full text-[16px] font-semibold text-black md:text-[18px] text-center sm:text-start mb-2 sm:mb-0 pb-2">
-                    Result Overview
-                </p>
-                <hr className="mb-2 w-full bg-black opacity-10" />
-                <div className='flex gap-4 flex-wrap'>
-                    <div className='text-sm'>Name: <span className='font-medium'>Mohit</span></div>
-                    <div className='text-sm'>Email: <span className='font-medium'>name@gmail.com</span></div>
-                    <div className='text-sm'>Admission Number: <span className='font-medium'>12346666</span></div>
-                </div>
-                <div className="grid grid-cols-1 gap-4 pt-4">
-                    <div className='bg-[#EFEFEF] p-4 border border-[#E8E8E8] rounded-xl transition-all duration-300 hover:border-[#253466]'>
-                        <div className='flex gap-1 items-center'>
-                            <img src={courses} alt="icon" />
-                            <span>Courses</span>
-                        </div>
-                        <h3 className='pt-3 text-[#606060]'><span className='text-[20px] text-[#253466] font-semibold'>15 Courses</span>/20 Courses</h3>
-                        <div className='flex gap-1 pt-10'>
-                            <span className='text-sm'>View Details</span>
-                            <img src={arrow} alt="arrow" />
-                        </div>
-                    </div>
-                </div>
-                <p className="w-full pt-3 sm:pt-[22px] text-[16px] font-semibold text-black md:text-[20px] text-center sm:text-start mt-5  border-[#00000067]  border-t">
-                Courses
-                </p>
-                <div>
-                    <table className="border-gray-200 shadow-md min-w-full overflow-hidden rounded-xl border bg-white mt-2">
-                        <thead className="bg-gray-100">
-                            <tr>
-                                {[
-                                'No.',
-                                'Release Date',
-                                'Courses',
-                                'Status',
-                                'Watch Status'
-                                ].map((header, index) => (
-                                <th
-                                    key={index}
-                                    className="text-nowrap border border-[#FFFFFF33] bg-[#253466] px-4 py-2 text-center text-sm font-semibold text-white"
-                                >
-                                    {header}
-                                </th>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody className="bg-[#EFEFEF]">
-                            {paginatedLessons.length > 0 ? (
-                                paginatedLessons.map((lesson, index) => (
-                                <tr
-                                    key={lesson.id}
-                                    className="hover:bg-gray-50 text-nowrap border-t border-[#EFEFEF] border-[2px] bg-[#F7F7F7] text-center"
-                                >
-                                    <td className="border border-[#D7D7D7] px-4 py-2">
-                                    {startIndex + index + 1}
-                                    </td>
-                                    <td className="border border-[#D7D7D7] px-4 py-2">
-                                    {new Date(lesson.releaseDate).toLocaleDateString()}
-                                    </td>
-                                    <td className="border border-[#D7D7D7] px-4 py-2">
-                                    {lesson.name}
-                                    </td>
-                                    <td className="border border-[#D7D7D7] px-4 py-2">
-                                    <a href="/admin-dashboard?activeSidebar=update-test">{lesson.courseStatus}</a>
-                                    </td>
-                                    <td className="border border-[#D7D7D7] px-4 py-2">
-                                    <a href="/admin-dashboard?activeSidebar=update-section">
-                                        <button
-                                        className="text-blue-600 hover:underline mr-3"
-                                        onClick={() => {
-                                            // Handle edit action
-                                            console.log('Edit lesson:', lesson)
-                                        }}
-                                        >
-                                        View
-                                        </button>
-                                    </a>
-                                    </td>
-                                </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                <td colSpan="5" className="text-center py-4">
-                                    No Courses found
-                                </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
-
-                {/* Pagination controls */}
-                {totalPages > 1 && (
-                    <div className="flex justify-center mt-4">
-                        <nav className="inline-flex rounded-md shadow">
-                            <button
-                                onClick={() => handlePageChange(currentPage - 1)}
-                                disabled={currentPage === 1}
-                                className={`px-3 py-1 rounded-l-md border ${currentPage === 1 ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'bg-white text-gray-700 hover:bg-gray-50'}`}
-                            >
-                                Previous
-                            </button>
-                            
-                            {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-                                <button
-                                    key={page}
-                                    onClick={() => handlePageChange(page)}
-                                    className={`px-3 py-1 border-t border-b hover:bg-[#253466] hover:text-white ${currentPage === page ? 'bg-blue-500 bg-[#253466] text-white' : 'bg-white text-gray-700 hover:bg-gray-50'}`}
-                                >
-                                    {page}
-                                </button>
-                            ))}
-                            
-                            <button
-                                onClick={() => handlePageChange(currentPage + 1)}
-                                disabled={currentPage === totalPages}
-                                className={`px-3 py-1 rounded-r-md border ${currentPage === totalPages ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'bg-white text-gray-700 hover:bg-gray-50'}`}
-                            >
-                                Next
-                            </button>
-                        </nav>
-                    </div>
-                )}
-
-                {/* Display current page info */}
-                <div className="text-center mt-2 text-sm text-[#243466]">
-                    Page {currentPage} of {totalPages} | Showing {paginatedLessons.length} of {totalCount} courses
-                </div>
+      <div className="overflow-hidden md:p-4">
+        <div className="rounded-xl bg-[#F7F7F7] p-4">
+          <div className="mb-4">
+            <p className="mb-2 w-full pb-2 text-center text-[16px] font-semibold text-black sm:mb-0 sm:text-start md:text-[18px]">
+              Result Overview
+            </p>
+            <hr className="mb-2 w-full bg-black opacity-10" />
+            <div className="flex flex-wrap gap-4">
+              <div className="text-sm">
+                Name: <span className="font-medium">Mohit</span>
+              </div>
+              <div className="text-sm">
+                Email: <span className="font-medium">name@gmail.com</span>
+              </div>
+              <div className="text-sm">
+                Admission Number: <span className="font-medium">12346666</span>
+              </div>
             </div>
+            <div className="grid grid-cols-1 gap-4 pt-4">
+              <div className="rounded-xl border border-[#E8E8E8] bg-[#EFEFEF] p-4 transition-all duration-300 hover:border-[#253466]">
+                <div className="flex items-center gap-1">
+                  <img src={courses} alt="icon" />
+                  <span>Courses</span>
+                </div>
+                <h3 className="pt-3 text-[#606060]">
+                  <span className="text-[20px] font-semibold text-[#253466]">
+                    15 Courses
+                  </span>
+                  /20 Courses
+                </h3>
+                <div className="flex gap-1 pt-10">
+                  <span className="text-sm">View Details</span>
+                  <img src={arrow} alt="arrow" />
+                </div>
+              </div>
+            </div>
+            <p className="mt-5 w-full border-t border-[#00000067] pt-3 text-center text-[16px] font-semibold text-black sm:pt-[22px] sm:text-start md:text-[20px]">
+              Courses
+            </p>
+            <div className='overflow-x-auto'>
+              <table className="border-gray-200 shadow-md mt-2 min-w-[700px] w-full  overflow-hidden rounded-xl border bg-white">
+                <thead className="bg-gray-100">
+                  <tr>
+                    {[
+                      'No.',
+                      'Release Date',
+                      'Courses',
+                      'Status',
+                      'Watch Status',
+                    ].map((header, index) => (
+                      <th
+                        key={index}
+                        className="text-nowrap border border-[#FFFFFF33] bg-[#253466] px-4 py-2 text-center text-sm font-semibold text-white"
+                      >
+                        {header}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="bg-[#EFEFEF]">
+                  {paginatedLessons.length > 0 ? (
+                    paginatedLessons.map((lesson, index) => (
+                      <tr
+                        key={lesson.id}
+                        className="hover:bg-gray-50 text-nowrap border-[2px] border-t border-[#EFEFEF] bg-[#F7F7F7] text-center"
+                      >
+                        <td className="border border-[#D7D7D7] px-4 py-2">
+                          {startIndex + index + 1}
+                        </td>
+                        <td className="border border-[#D7D7D7] px-4 py-2">
+                          {new Date(lesson.releaseDate).toLocaleDateString()}
+                        </td>
+                        <td className="border border-[#D7D7D7] px-4 py-2">
+                          {lesson.name}
+                        </td>
+                        <td className="border border-[#D7D7D7] px-4 py-2">
+                          <a href="/admin-dashboard?activeSidebar=update-test">
+                            {lesson.courseStatus}
+                          </a>
+                        </td>
+                        <td className="border border-[#D7D7D7] px-4 py-2">
+                          <a href="/admin-dashboard?activeSidebar=update-section">
+                            <button
+                              className="text-blue-600 mr-3 hover:underline"
+                              onClick={() => {
+                                // Handle edit action
+                                console.log('Edit lesson:', lesson)
+                              }}
+                            >
+                              View
+                            </button>
+                          </a>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="5" className="py-4 text-center">
+                        No Courses found
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+            {/* Pagination controls */}
+            {totalPages > 1 && (
+              <div className="mt-4 flex justify-center">
+                <nav className="shadow inline-flex rounded-md">
+                  <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className={`rounded-l-md border px-3 py-1 ${currentPage === 1 ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'text-gray-700 hover:bg-gray-50 bg-white'}`}
+                  >
+                    Previous
+                  </button>
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                    (page) => (
+                      <button
+                        key={page}
+                        onClick={() => handlePageChange(page)}
+                        className={`px-3 py-1 hover:bg-[#253466] hover:text-white ${currentPage === page ? 'bg-blue-500 bg-[#253466] text-white' : 'text-gray-700 hover:bg-gray-50 bg-white'}`}
+                      >
+                        {page}
+                      </button>
+                    )
+                  )}
+                  <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className={`rounded-r-md border px-3 py-1 ${currentPage === totalPages ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'text-gray-700 hover:bg-gray-50 bg-white'}`}
+                  >
+                    Next
+                  </button>
+                </nav>
+              </div>
+            )}
+            {/* Display current page info */}
+            <div className="mt-2 text-center text-sm text-[#243466]">
+              Page {currentPage} of {totalPages} | Showing{' '}
+              {paginatedLessons.length} of {totalCount} courses
+            </div>
+          </div>
         </div>
-    );
+      </div>
+    )
 };
 
 export default StudentOverview;

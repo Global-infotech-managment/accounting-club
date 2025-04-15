@@ -82,54 +82,56 @@ const UpdateLesson = () => {
   }
 
   return (
-    <div className="overflow-x-auto md:p-4">
- <p className="w-full text-[16px] font-semibold text-black md:text-[18px] text-center sm:text-start mb-2 sm:mb-0 pb-2 border-[#00000067]  border-b">
-          All Lesson
-        </p>
-        
+    <div className="md:p-4">
+      <p className="mb-2 w-full border-b border-[#00000067] pb-2 text-center text-[16px] font-semibold text-black sm:mb-0 sm:text-start md:text-[18px]">
+        All Lesson
+      </p>
 
-      <table className="border-gray-200 shadow-md min-w-full overflow-hidden rounded-xl border bg-white mt-2">
-        <thead className="bg-gray-100">
-          <tr>
-            {[
-              'No.',
-              'Release Date',
-              'Lesson Name',
-              'Update Test',
-              'Edit'
-            ].map((header, index) => (
-              <th
-                key={index}
-                className="text-nowrap border border-[#FFFFFF33] bg-[#253466] px-4 py-2 text-center text-sm font-semibold text-white"
-              >
-                {header}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody className="bg-[#F7F7F7]">
-          {paginatedLessons.length > 0 ? (
-            paginatedLessons.map((lesson, index) => (
-              <tr
-                key={lesson.id}
-                className="hover:bg-gray-50 text-nowrap border-t bg-[#F7F7F7] text-center"
-              >
-                <td className="border border-[#D7D7D7] px-4 py-2">
-                  {startIndex + index + 1}
-                </td>
-                <td className="border border-[#D7D7D7] px-4 py-2">
-                  {new Date(lesson.releaseDate).toLocaleDateString()}
-                </td>
-                <td className="border border-[#D7D7D7] px-4 py-2">
-                  {lesson.name}
-                </td>
-                <td className="border border-[#D7D7D7] px-4 py-2">
-                  <a href="/admin-dashboard?activeSidebar=update-test">{lesson.editTest}</a>
-                </td>
-                <td className="border border-[#D7D7D7] px-4 py-2">
-                  <a href="/admin-dashboard?activeSidebar=update-section">
+      <div className="overflow-x-auto">
+        <table className="border-gray-200 shadow-md mt-2 overflow-hidden min-w-[700px] w-full rounded-xl border bg-white">
+          <thead className="bg-gray-100">
+            <tr>
+              {[
+                'No.',
+                'Release Date',
+                'Lesson Name',
+                'Update Test',
+                'Edit',
+              ].map((header, index) => (
+                <th
+                  key={index}
+                  className="text-nowrap border border-[#FFFFFF33] bg-[#253466] px-4 py-2 text-center text-sm font-semibold text-white"
+                >
+                  {header}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="bg-[#F7F7F7]">
+            {paginatedLessons.length > 0 ? (
+              paginatedLessons.map((lesson, index) => (
+                <tr
+                  key={lesson.id}
+                  className="hover:bg-gray-50 text-nowrap border-t bg-[#F7F7F7] text-center"
+                >
+                  <td className="border border-[#D7D7D7] px-4 py-2">
+                    {startIndex + index + 1}
+                  </td>
+                  <td className="border border-[#D7D7D7] px-4 py-2">
+                    {new Date(lesson.releaseDate).toLocaleDateString()}
+                  </td>
+                  <td className="border border-[#D7D7D7] px-4 py-2">
+                    {lesson.name}
+                  </td>
+                  <td className="border border-[#D7D7D7] px-4 py-2">
+                    <a href="/admin-dashboard?activeSidebar=update-test">
+                      {lesson.editTest}
+                    </a>
+                  </td>
+                  <td className="border border-[#D7D7D7] px-4 py-2">
+                    <a href="/admin-dashboard?activeSidebar=update-section">
                       <button
-                        className="text-blue-600 hover:underline mr-3"
+                        className="text-blue-600 mr-3 hover:underline"
                         onClick={() => {
                           // Handle edit action
                           console.log('Edit lesson:', lesson)
@@ -137,28 +139,29 @@ const UpdateLesson = () => {
                       >
                         Edit
                       </button>
-                  </a>
-                  <button
-                    onClick={() => {
-                      setSelectedLesson(lesson)
-                      setShowDeletePopup(true)
-                    }}
-                    className="text-orange-red hover:underline"
-                  >
-                    Delete
-                  </button>
+                    </a>
+                    <button
+                      onClick={() => {
+                        setSelectedLesson(lesson)
+                        setShowDeletePopup(true)
+                      }}
+                      className="text-orange-red hover:underline"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5" className="py-4 text-center">
+                  No lessons found
                 </td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="5" className="text-center py-4">
-                No lessons found
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+            )}
+          </tbody>
+        </table>
+      </div>
 
       {totalPages > 1 && (
         <div className="mt-4 flex flex-col items-center">
@@ -166,31 +169,37 @@ const UpdateLesson = () => {
             <Button
               disabled={currentPage === 1}
               transparentBtn="Previous"
-              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             />
             <div className="flex gap-1">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-                <button
-                  key={page}
-                  onClick={() => setCurrentPage(page)}
-                  className={`px-3 py-1 rounded ${
-                    currentPage === page 
-                      ? 'bg-[#253466] text-white' 
-                      : 'bg-gray-200 hover:bg-gray-300'
-                  }`}
-                >
-                  {page}
-                </button>
-              ))}
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (page) => (
+                  <button
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    className={`rounded px-3 py-1 ${
+                      currentPage === page
+                        ? 'bg-[#253466] text-white'
+                        : 'bg-gray-200 hover:bg-gray-300'
+                    }`}
+                  >
+                    {page}
+                  </button>
+                )
+              )}
             </div>
             <Button
               disabled={currentPage === totalPages}
               transparentBtn="Next"
-              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
             />
           </div>
-          <p className="mt-2 text-sm text-gray-600">
-            Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, totalCount)} of {totalCount} lessons
+          <p className="text-gray-600 mt-2 text-sm">
+            Showing {startIndex + 1} to{' '}
+            {Math.min(startIndex + itemsPerPage, totalCount)} of {totalCount}{' '}
+            lessons
           </p>
         </div>
       )}
