@@ -147,7 +147,7 @@ const UpdateLesson = () => {
                     {startIndex + index + 1}
                   </td>
                   <td className="border border-[#D7D7D7] px-4 py-2">
-                    {new Date(lesson.releaseDate).toLocaleDateString()}
+                  {lesson.createdAt}
                   </td>
                   <td className="border border-[#D7D7D7] px-4 py-2">
                     {lesson.name}
