@@ -62,12 +62,16 @@ export default function AddTest() {
           q.correctAnswer
       )
     ) {
-      console.log(questions,"add test")
-      navigate('/admin-dashboard?activeSidebar=create-test')
+      console.log(questions, "add test");
+      
+      // Show JavaScript alert popup
+      window.alert("Questions added successfully!");
+      
+      navigate('/admin-dashboard?activeSidebar=dashboard');
       setQuestions([
         { question: '', options: ['', '', '', ''], correctAnswer: '' },
-      ])
-      setCurrentIndex(0)
+      ]);
+      setCurrentIndex(0);
     }
   }
 
