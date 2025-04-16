@@ -139,7 +139,7 @@ const UpdateLesson = () => {
               </tr>
             ) : paginatedLessons.length > 0 ? (
               paginatedLessons.map((lesson, index) => (
-                <tr
+               <tr
                   key={lesson.id}
                   className="hover:bg-gray-50 text-nowrap border-t bg-[#F7F7F7] text-center"
                 >
