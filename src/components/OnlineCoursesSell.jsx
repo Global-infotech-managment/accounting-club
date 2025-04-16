@@ -61,7 +61,7 @@ const OnlineCoursesSell = () => {
               heading={course.name}
               image={course?.file?.url || 'https://via.placeholder.com/300x200?text=No+Image'}
               enrollPath={`/enroll/${course.id}`}
-              detailPath={`/courses/${course.name.replaceAll(' ', '-').toLowerCase()}`}
+              detailPath={`/courses/${course.id}`}
             />
           ))}
         </div>
