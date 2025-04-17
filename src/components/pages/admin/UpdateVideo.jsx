@@ -9,7 +9,8 @@ import { useMutation } from '@tanstack/react-query'
 import { showToast } from '../../../services/toast/toast.service'
 import { uploadFile } from '../../../services/uploads/upload.service'
 
-const AddVideo = () => {
+const UpdateVideo = () => {
+  const [fileId, setFileId] = useState(null)
   const [previewUrl, setPreviewUrl] = useState(null)
   const { courseData, updateCourseData } = useContext(AppContext)
   const navigate = useNavigate()
@@ -17,9 +18,8 @@ const AddVideo = () => {
   const uploadFileMutation = useMutation({
     mutationFn: (file) => uploadFile(file, 'study-materials'),
     onSuccess: (response) => {
-      const uploadedId = response.id || response
       showToast.success('Study material uploaded successfully')
-      updateCourseData({ studyMaterialId: uploadedId })
+      setFileId(response.id || response)
     },
     onError: () => {
       showToast.error('Study material upload failed')
@@ -44,9 +44,8 @@ const AddVideo = () => {
     }
   }
 
-  const formSubmit = async (e) => {
+  const formSubmit = (e) => {
     e.preventDefault()
-
     const requiredFields = [
       'name',
       'lessonNumber',
@@ -55,42 +54,52 @@ const AddVideo = () => {
       'videoDescription',
       'embedCode',
       'status',
-      'studyMaterialId',
+      'studyMaterial',
     ]
 
-    const isValid = requiredFields.every((field) => !!courseData[field])
-
+    const isValid = requiredFields.every((field) => courseData[field])
     if (!isValid) {
       showToast.error('Please fill all required fields')
       return
     }
 
     showToast.success('Video section updated successfully!')
-
-    // ✅ Add delay for visual effect and debug
-    setTimeout(() => {
-      console.log('Navigating to: /admin-dashboard?activeSidebar=add-test')
-      navigate('/admin-dashboard?activeSidebar=add-test')
-    }, 500)
+    navigate('/admin-dashboard?activeSidebar=section')
   }
 
   return (
     <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
       <div className="flex justify-between items-center pb-3">
-        <p className="text-[16px] font-semibold text-black lg:text-[18px]">Add Video</p>
+        <p className="text-[16px] font-semibold text-black lg:text-[18px]">Edit Video</p>
+        <div className="flex items-center gap-4">
+          <a href="/admin-dashboard?activeSidebar=update-lesson">
+              <Button
+                type="submit"
+                className="col-span-2 mt-4 !py-2 px-5 !bg-transparent"
+                bgBtn="Update Lesson"
+                disabled={uploadFileMutation.isLoading}
+              />
+          </a>
+          <a href="/admin-dashboard?activeSidebar=update-test">
+              <Button
+                type="submit"
+                className="col-span-2 mt-4 w-[149px] text-nowrap"
+                bgBtn="Update Test"
+                disabled={uploadFileMutation.isLoading}
+              />
+          </a>
+        </div>
       </div>
 
       <form className="flex flex-col gap-3 sm:gap-4" onSubmit={formSubmit}>
-
         <div>
-          <label className="text-sm">Select Course*</label>
-          <Dropdown
-            label=""
-            options={[
-              { value: 'lesson first', label: 'lesson first' },
-              { value: 'lesson second', label: 'lesson second' }
-            ]}
-            onChange={handleDropdownChange('name')}
+          <label htmlFor="name" className="text-sm">Select Course*</label>
+          <Input
+            id="name"
+            name="name"
+            placeholder="Basics of Business Accounting"
+            value={courseData.name}
+            onChange={handleInputChange}
           />
         </div>
 
@@ -100,7 +109,7 @@ const AddVideo = () => {
             id="lessonNumber"
             name="lessonNumber"
             placeholder="1"
-            value={courseData.lessonNumber || ''}
+            value={courseData.lessonNumber}
             onChange={handleInputChange}
           />
         </div>
@@ -111,7 +120,7 @@ const AddVideo = () => {
             id="chapter"
             name="chapter"
             placeholder="Chapter 1 - Introduction"
-            value={courseData.chapter || ''}
+            value={courseData.chapter}
             onChange={handleInputChange}
           />
         </div>
@@ -120,10 +129,7 @@ const AddVideo = () => {
           <label className="text-sm">Is it mandatory to move for next*</label>
           <Dropdown
             label=""
-            options={[
-              { value: 'Yes', label: 'Yes' },
-              { value: 'No', label: 'No' }
-            ]}
+            options={[{ value: 'Yes', label: 'Yes' }, { value: 'No', label: 'No' }]}
             onChange={handleDropdownChange('mandatory')}
           />
         </div>
@@ -134,7 +140,7 @@ const AddVideo = () => {
             id="videoDescription"
             name="videoDescription"
             placeholder="Short summary of the video..."
-            value={courseData.videoDescription || ''}
+            value={courseData.videoDescription}
             onChange={handleInputChange}
           />
         </div>
@@ -145,7 +151,7 @@ const AddVideo = () => {
             id="embedCode"
             name="embedCode"
             placeholder="<iframe src='...' />"
-            value={courseData.embedCode || ''}
+            value={courseData.embedCode}
             onChange={handleInputChange}
           />
         </div>
@@ -167,13 +173,10 @@ const AddVideo = () => {
         </div>
 
         <div>
-          <label className="text-sm">Status*</label>
+          <label className="text-sm">Status</label>
           <Dropdown
             label=""
-            options={[
-              { value: 'Active', label: 'Active' },
-              { value: 'Inactive', label: 'Inactive' }
-            ]}
+            options={[{ value: 'Active', label: 'Active' }, { value: 'Inactive', label: 'Inactive' }]}
             onChange={handleDropdownChange('status')}
           />
         </div>
@@ -181,7 +184,7 @@ const AddVideo = () => {
         <Button
           type="submit"
           className="col-span-2 w-full mt-4"
-          bgBtn="Add Video"
+          bgBtn="Update Video"
           disabled={uploadFileMutation.isLoading}
         />
       </form>
@@ -189,4 +192,4 @@ const AddVideo = () => {
   )
 }
 
-export default AddVideo
+export default UpdateVideo

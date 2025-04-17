@@ -14,6 +14,12 @@ import AddVideo from './admin/AddVideo'
 import AddTest from './admin/AddTest'
 import CreateTest from './admin/CreateTest'
 import UpdateCourse from './admin/UpdateCourse'
+import UpdateSection from './admin/UpdateSection'
+import UpdateVideo from './admin/UpdateVideo'
+import UpdateTest from './admin/UpdateTest'
+import UpdateLesson from './admin/UpdateLesson'
+import StudentOverview from './admin/StudentOverview'
+import StudentLessonProgress from './admin/StudentLessonProgress'
 
 const AdminMain = () => {
   const location = useLocation()
@@ -50,6 +56,12 @@ const AdminMain = () => {
                     {activeSidebar === 'all-employers-' && <AllEmployers />}
                     {activeSidebar === 'all-courses' && <AllCourses />}
                     {activeSidebar === 'update-course' && <UpdateCourse />}
+                    {activeSidebar === 'update-section' && <UpdateSection />}
+                    {activeSidebar === 'update-video' && <UpdateVideo />}
+                    {activeSidebar === 'update-test' && <UpdateTest />}
+                    {activeSidebar === 'update-lesson' && <UpdateLesson />}
+                    {activeSidebar === 'student-overview' && <StudentOverview />}
+                    {activeSidebar === 'student-progress' && <StudentLessonProgress />}
                   </>
                 }
               />
