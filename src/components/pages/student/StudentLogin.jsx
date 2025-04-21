@@ -4,12 +4,26 @@ import Heading from '../../common/Heading'
 import Paragraph from '../../common/Paragraph'
 import { Link, useNavigate } from 'react-router-dom'
 import {
+  ADMIN_DASHBOARD_ROUTE,
   FORGOT_PASSWORD_ROUTE,
   STUDENT_DASHBOARD_ROUTE,
 } from '../../../utils/constant'
 import Button from '../../common/Button'
+import { loginUser } from '../../../services/auth/auth.service'
 
 const StudentLogin = () => {
+  const { data } = useMutation({
+    mutationFn: loginUser,
+    onSuccess: (data) => {
+      dispatch(setUser(data))
+      showToast.success('Login Successfully')
+      navigate(STUDENT_DASHBOARD_ROUTE)
+    },
+    onError: (error) => {
+      setErrors({ api: error.response?.data?.message || 'Login failed' })
+    },
+  })
+
   const [loginInput, setLoginInput] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState({})
@@ -74,7 +88,7 @@ const StudentLogin = () => {
           className="mb-3 text-center xl:mb-4"
           middleText={
             <>
-              <span className="text-black">Welcome</span>{' '}
+              <span className="text-black">Welcome</span>
               <span className="text-red-500">Back!</span>
             </>
           }

@@ -33,6 +33,7 @@ import {
   STUDENT_DASHBOARD_ROUTE,
   STUDENT_LOGIN_ROUTE,
   STUDENT_SIGNUP_ROUTE,
+  ADD_COURSES_ROUTE,
 } from './utils/constant'
 import CoursesPage from './components/pages/CoursesPage'
 import StudentSignUp from './components/pages/student/StudentSignUp'
@@ -122,6 +123,14 @@ function AppContent() {
           element={
             <ProtectedRoute requiredRole="Admin">
               <AdminMain />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={ADD_COURSES_ROUTE}
+          element={
+            <ProtectedRoute requiredRole="Student">
+              <CoursesPage />
             </ProtectedRoute>
           }
         />
