@@ -9,6 +9,13 @@ export const loginUser = async (data) => {
   }
 }
 
+export const registerUser = async (data) => {
+  const response = await API.post('/auth/create', data)
+  return {
+    user: response.data,
+  }
+}
+
 export const fetchStudents = async (params) => {
   const response = await API.get('/auth', {
     params,
@@ -20,7 +27,7 @@ export const fetchStudents = async (params) => {
     },
   })
   return {
-    data: response.data.data.users, 
+    data: response.data.data.users,
     total: response.data.data.total,
   }
 }

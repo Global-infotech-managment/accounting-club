@@ -10,6 +10,7 @@ export default function useAuth() {
   return {
     isAuthenticated: !!token, // Token hai to true, nahi to false
     isAdmin: role === 'Admin',
+    isStudent: role === 'Student',
     userRole: role,
   }
 }
