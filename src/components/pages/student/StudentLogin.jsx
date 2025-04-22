@@ -10,24 +10,29 @@ import {
 } from '../../../utils/constant'
 import Button from '../../common/Button'
 import { loginUser } from '../../../services/auth/auth.service'
+import { useMutation } from '@tanstack/react-query'
+import { toast } from 'sonner'
+import { setUser } from '../../../features/authSlice'
+import { useDispatch } from 'react-redux'
 
 const StudentLogin = () => {
-  const { data } = useMutation({
-    mutationFn: loginUser,
+  const [loginInput, setLoginInput] = useState('')
+  const [password, setPassword] = useState('')
+  const [errors, setErrors] = useState({})
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const { mutate, isLoading } = useMutation({
+    mutationFn: loginUser, // Required in v5
     onSuccess: (data) => {
       dispatch(setUser(data))
-      showToast.success('Login Successfully')
+      toast.success('Login Successfully')
       navigate(STUDENT_DASHBOARD_ROUTE)
     },
     onError: (error) => {
       setErrors({ api: error.response?.data?.message || 'Login failed' })
     },
   })
-
-  const [loginInput, setLoginInput] = useState('')
-  const [password, setPassword] = useState('')
-  const [errors, setErrors] = useState({})
-  const navigate = useNavigate()
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -77,6 +82,7 @@ const StudentLogin = () => {
     if (Object.keys(newErrors).length === 0) {
       setLoginInput('')
       setPassword('')
+      mutate({ email: loginInput, password })
       navigate(STUDENT_DASHBOARD_ROUTE)
     }
   }

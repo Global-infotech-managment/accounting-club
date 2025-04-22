@@ -4,8 +4,13 @@ import Paragraph from './Paragraph'
 import Button from './Button'
 import RadioGroup from './RadioGroup'
 import Input from './Input'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { STUDENT_SIGNUP_ROUTE } from '../../utils/constant'
+import { useQuery } from '@tanstack/react-query'
+import {
+  findCourseByCourseId,
+  findCourseById,
+} from '../../services/course/course.service'
 
 const PaymentMethod = () => {
   const [paymentMethod, setPaymentMethod] = useState('credit')
@@ -14,6 +19,7 @@ const PaymentMethod = () => {
   const [expiry, setExpiry] = useState('')
   const [cvv, setCvv] = useState('')
   const navigate = useNavigate()
+  const { courseId } = useParams()
   const handleSubmit = (e) => {
     e.preventDefault()
     if (
@@ -30,6 +36,17 @@ const PaymentMethod = () => {
     setCvv('')
     navigate(STUDENT_SIGNUP_ROUTE)
   }
+
+  const {
+    data: course,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['course', courseId],
+    queryFn: () => findCourseById(courseId),
+    enabled: !!courseId, // only run query if slug exists
+  })
+  console.log('course data ', course)
 
   return (
     <div className="container px-3 lg:max-w-[1184px]">

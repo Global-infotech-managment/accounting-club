@@ -17,6 +17,22 @@ export const fetchCourses = async (params) => {
   }
 }
 
+export const fetchCoursesForStudent = async (params) => {
+  const response = await API.get('/course/student', {
+    params,
+    paramsSerializer: (params) => {
+      return Object.entries(params)
+        .filter(([_, value]) => value !== undefined)
+        .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+        .join('&')
+    },
+  })
+  return {
+    data: response.data.data.courses,
+    total: response.data.data.total,
+  }
+}
+
 export const fetchAllCourses = async () => {
   const response = await API.get('/course/admin')
   return response.data.data.courses
@@ -38,14 +54,19 @@ export const deleteCourseById = async (id) => {
   await API.delete(`/course/admin/${id}`)
 }
 
-export const findCourseById = async (id) => {
-  const response = await API.get(`/course/${id}`)
+export const findCourseById = async (slug) => {
+  const response = await API.get(`/course/${slug}`)
+  console.log('response data', response.data.data)
+  return response.data.data
+}
+export const findCourseByCourseId = async (courseId) => {
+  const response = await API.get(`/course/${courseId}`)
   console.log('response data', response.data.data)
   return response.data.data
 }
 
 export const deleteCourse = async (id) => {
-    await API.delete(`/course/admin/${id}`)
+  await API.delete(`/course/admin/${id}`)
 }
 
 export const toggleCourseStatus = async (id, status) => {

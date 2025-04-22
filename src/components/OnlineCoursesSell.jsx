@@ -5,7 +5,10 @@ import Paragraph from './common/Paragraph'
 import OnlineCourse from './common/OnlineCourse'
 import Button from './common/Button'
 import leftLinear from '../assets/images/png/courses-left-ellips.png'
-import { fetchCourses } from '../services/course/course.service'
+import {
+  fetchCourses,
+  fetchCoursesForStudent,
+} from '../services/course/course.service'
 
 const OnlineCoursesSell = () => {
   const [coursesToDisplay, setCoursesToDisplay] = useState(6)
@@ -13,10 +16,11 @@ const OnlineCoursesSell = () => {
   // Fetch courses using React Query
   const { data, isLoading, isError } = useQuery({
     queryKey: ['courses'],
-    queryFn: () => fetchCourses({
-      page: 1,
-      limit: 100 // Fetch enough courses to handle pagination client-side
-    }),
+    queryFn: () =>
+      fetchCourses({
+        page: 1,
+        limit: 100, // Fetch enough courses to handle pagination client-side
+      }),
   })
 
   const toggleCourses = () => {
@@ -27,17 +31,23 @@ const OnlineCoursesSell = () => {
     }
   }
 
-  if (isLoading) return <div className="flex justify-center py-10">Loading courses...</div>
-  if (isError) return <div className="flex justify-center py-10 text-red-500">Error loading courses</div>
+  if (isLoading)
+    return <div className="flex justify-center py-10">Loading courses...</div>
+  if (isError)
+    return (
+      <div className="text-red-500 flex justify-center py-10">
+        Error loading courses
+      </div>
+    )
 
   const courses = data?.data || []
 
   return (
     <div className="relative">
-      <img 
-        src={leftLinear} 
-        alt="leftLinear" 
-        className="max-h-[370px] max-w-[150px] w-full absolute end-0 top-0 -z-10 pointer-events-none" 
+      <img
+        src={leftLinear}
+        alt="leftLinear"
+        className="pointer-events-none absolute end-0 top-0 -z-10 max-h-[370px] w-full max-w-[150px]"
       />
       <div className="container max-w-[1184px] py-12 sm:py-14 lg:mb-10 lg:py-[84px]">
         <Heading
@@ -59,7 +69,10 @@ const OnlineCoursesSell = () => {
               key={course.id}
               description={course.description}
               heading={course.name}
-              image={course?.file?.url || 'https://via.placeholder.com/300x200?text=No+Image'}
+              image={
+                course?.file?.url ||
+                'https://via.placeholder.com/300x200?text=No+Image'
+              }
               enrollPath={`/enroll/${course.id}`}
               detailPath={`/courses/${course.id}`}
             />
