@@ -4,15 +4,24 @@ import Heading from '../../common/Heading'
 import Paragraph from '../../common/Paragraph'
 import { Link, useNavigate } from 'react-router-dom'
 import {
+  useMutation
+} from '@tanstack/react-query'
+import {
   ADMIN_DASHBOARD_ROUTE,
   FORGOT_PASSWORD_ROUTE,
   STUDENT_DASHBOARD_ROUTE,
 } from '../../../utils/constant'
 import Button from '../../common/Button'
 import { loginUser } from '../../../services/auth/auth.service'
+import { setUser } from '../../../features/authSlice' 
+import { useDispatch } from 'react-redux'
+import { showToast } from '../../../services/toast/toast.service'
 
 const StudentLogin = () => {
-  const { data } = useMutation({
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  
+  const { mutate } = useMutation({
     mutationFn: loginUser,
     onSuccess: (data) => {
       dispatch(setUser(data))
@@ -27,7 +36,6 @@ const StudentLogin = () => {
   const [loginInput, setLoginInput] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState({})
-  const navigate = useNavigate()
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -75,9 +83,8 @@ const StudentLogin = () => {
     setErrors(newErrors)
 
     if (Object.keys(newErrors).length === 0) {
-      setLoginInput('')
-      setPassword('')
-      navigate(STUDENT_DASHBOARD_ROUTE)
+      // Call the mutation instead of navigating directly
+      mutate({ loginInput, password })
     }
   }
 
@@ -137,6 +144,10 @@ const StudentLogin = () => {
               Forgot Password?
             </Link>
           </div>
+
+          {errors.api && (
+            <p className="text-sm text-orange-red">{errors.api}</p>
+          )}
 
           <Button className={'rounded-xl'} type="submit" bgBtn="Get Started" />
         </form>

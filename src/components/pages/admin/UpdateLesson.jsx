@@ -139,7 +139,7 @@ const UpdateLesson = () => {
               </tr>
             ) : paginatedLessons.length > 0 ? (
               paginatedLessons.map((lesson, index) => (
-                <tr
+               <tr
                   key={lesson.id}
                   className="hover:bg-gray-50 text-nowrap border-t bg-[#F7F7F7] text-center"
                 >
@@ -147,7 +147,7 @@ const UpdateLesson = () => {
                     {startIndex + index + 1}
                   </td>
                   <td className="border border-[#D7D7D7] px-4 py-2">
-                    {new Date(lesson.releaseDate).toLocaleDateString()}
+                  {lesson.createdAt}
                   </td>
                   <td className="border border-[#D7D7D7] px-4 py-2">
                     {lesson.name}

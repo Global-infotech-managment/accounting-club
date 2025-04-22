@@ -35,12 +35,16 @@ const AllCourses = () => {
   // Delete course mutation
   const { mutate: deleteCourseMutation } = useMutation({
     mutationFn: deleteCourse,
-    onSuccess: () => {
-      toast.success('Course deleted successfully!')
+    onSuccess: (deletedId) => {
+      toast.success(`Course with ID ${deletedId} deleted successfully!`)
       refetch()
     },
     onError: (error) => {
-      toast.error(error.response?.data?.message || 'Failed to delete course')
+      toast.error(
+        error.response?.data?.message || 
+        error.message || 
+        'Failed to delete course'
+      )
     },
   })
 
@@ -54,7 +58,9 @@ const AllCourses = () => {
     },
     onError: (error) => {
       toast.error(
-        error.response?.data?.message || 'Failed to update course status'
+        error.response?.data?.message || 
+        error.message || 
+        'Failed to update course status'
       )
     },
   })
@@ -79,21 +85,20 @@ const AllCourses = () => {
     setSearchTerm('')
     setSearchQuery('')
     setCurrentPage(1)
-    searchInputRef.current.focus()
+    if (searchInputRef.current) {
+      searchInputRef.current.focus()
+    }
   }
 
-  if (isLoading)
-    return <div className="flex justify-center py-10">Loading...</div>
-  if (isError)
-    return (
-      <div className="text-red-500 flex justify-center py-10">
-        Error loading courses
-      </div>
-    )
+  if (isLoading) return <div className="flex justify-center py-10">Loading...</div>
+  if (isError) return (
+    <div className="text-red-500 flex justify-center py-10">
+      Error loading courses
+    </div>
+  )
 
-  // Safely extract data and total count
   const courses = data?.data || []
-  const totalCount = data?.total || data?.totalCount || 0 // Check for both `total` and `totalCount`
+  const totalCount = data?.total || 0
   const totalPages = Math.ceil(totalCount / itemsPerPage)
 
   return (
@@ -146,8 +151,11 @@ const AllCourses = () => {
                 <div>
                   <img
                     src={course?.file?.url}
-                    alt={course.heading}
+                    alt={course.name}
                     className="h-40 w-full rounded-md object-cover"
+                    onError={(e) => {
+                      e.target.src = 'https://via.placeholder.com/300x200?text=No+Image'
+                    }}
                   />
                   <div className="flex items-center justify-between pt-2.5">
                     <h3 className="text-lg mt-3 font-semibold">
@@ -179,44 +187,46 @@ const AllCourses = () => {
                   >
                     <Button bgBtn="Edit" />
                   </a>
-                  <Button
-                    className="!border-orange-red bg-white !text-orange-red transition-all duration-300 hover:bg-orange-red hover:text-white"
-                    bgBtn="Delete"
+                  <button
+                    className="rounded border border-orange-red bg-white px-4 py-2 text-orange-red transition-all duration-300 hover:bg-orange-red hover:text-white"
                     onClick={() => handleDelete(course.id)}
-                  />
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Fixed Pagination Controls */}
           {totalPages > 1 && (
             <div className="mt-6 flex items-center justify-center gap-4">
-              <Button
-                className={`!border-orange-red bg-white !text-orange-red transition-all duration-300 hover:bg-orange-red hover:text-white ${
+              <button
+                className={`rounded border border-orange-red bg-white px-4 py-2 text-orange-red transition-all duration-300 hover:bg-orange-red hover:text-white ${
                   currentPage === 1 ? 'cursor-not-allowed opacity-50' : ''
                 }`}
-                bgBtn="Previous"
                 onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-              />
+              >
+                Previous
+              </button>
 
               <span className="bg-gray-100 rounded-md px-4 py-2 font-medium">
                 Page {currentPage} of {totalPages}
               </span>
 
-              <Button
-                className={`!border-orange-red bg-white !text-orange-red transition-all duration-300 hover:bg-orange-red hover:text-white ${
+              <button
+                className={`rounded border border-orange-red bg-white px-4 py-2 text-orange-red transition-all duration-300 hover:bg-orange-red hover:text-white ${
                   currentPage >= totalPages
                     ? 'cursor-not-allowed opacity-50'
                     : ''
                 }`}
-                bgBtn="Next"
                 onClick={() =>
                   setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                 }
                 disabled={currentPage >= totalPages}
-              />
+              >
+                Next
+              </button>
             </div>
           )}
         </>
