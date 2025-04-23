@@ -10,11 +10,24 @@ import { useParams } from 'react-router-dom'
 import { onlineCoursesData } from '../../utils/helper'
 import { PAYMENT_METHOD_ROUTE } from '../../utils/constant'
 import ReactPlayer from 'react-player'
+import { useQuery } from '@tanstack/react-query'
+import { findCourseById } from '../../services/course/course.service'
+
 const CourseDetail = () => {
   const { slug } = useParams()
-  const course = onlineCoursesData.find(
-    (course) => course.heading.replaceAll(' ', '-').toLowerCase() === slug
-  )
+  console.log('Slug ', slug)
+  const {
+    data: course,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['course', slug],
+    queryFn: () => findCourseById(slug),
+    enabled: !!slug, // only run query if slug exists
+  })
+  // const course = onlineCoursesData.find(
+  //   (course) => course.heading.replaceAll(' ', '-').toLowerCase() === slug
+  // )
 
   if (!course) {
     return <div className="text-red-500 text-center">Course not found</div>
@@ -35,16 +48,14 @@ const CourseDetail = () => {
         <div className="flex flex-wrap px-4 sm:px-0">
           <div className="lg:w-8/12 lg:pe-12">
             <ReactPlayer
-              url={course.video}
+              url={course?.file?.url}
               className="max-h-[438px] !w-full overflow-hidden rounded-[24px] object-cover lg:max-w-[677px]"
             />
             <Heading
               className="mb-3 pt-4 md:pt-6 xl:mb-4"
               middleText={
                 <>
-                  <span className="text-red-500 capitalize">
-                    {course.heading}
-                  </span>
+                  <span className="text-red-500 capitalize">{course.name}</span>
                 </>
               }
             />
@@ -58,7 +69,7 @@ const CourseDetail = () => {
               </div>
               <Paragraph
                 className="text-orange-red"
-                text={`${course.discount}% Off`}
+                text={`${course.price}% Off`}
               />
             </div>
             <div className="mt-2 flex rounded-[10px] border border-black border-opacity-20 px-5">
@@ -135,7 +146,7 @@ const CourseDetail = () => {
                       Additional Resources:
                     </span>
                     <span className="font-medium">
-                      {course.fileNumber} Files
+                      {course.file?.url} Files
                     </span>
                   </>
                 }
@@ -157,7 +168,8 @@ const CourseDetail = () => {
               <Button
                 className="w-full !rounded-xl max-sm:px-3 max-sm:py-2 max-sm:text-center"
                 bgBtn="Enroll Now"
-                path={PAYMENT_METHOD_ROUTE}
+                path={`${PAYMENT_METHOD_ROUTE}/${course.id}`}
+                // path={`${PAYMENT_METHOD_ROUTE}`}
               />
             </div>
           </div>
