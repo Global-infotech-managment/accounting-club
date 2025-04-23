@@ -3,6 +3,7 @@ import Button from '../../common/Button'
 import Icons from '../../common/Icons'
 import Input from '../../common/Input'
 import { useNavigate } from 'react-router-dom'
+import { Dropdown } from '../../common/Dropdown'
 
 export default function AddTest() {
   const navigate = useNavigate()
@@ -104,9 +105,29 @@ export default function AddTest() {
 
   return (
     <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
-      <p className="mb-4 text-[16px] font-semibold text-black lg:text-[18px]">
-        Add Test
-      </p>
+      <div className='flex justify-between items-center mb-4 flex-col sm:flex-row'>
+        <p className=" text-[16px] font-semibold text-black lg:text-[18px] mb-3 sm:mb-0">
+          Add Test
+        </p>
+        <div className='flex gap-4 justify-center items-center'>
+          <Dropdown
+                   name="Select Course"
+                   label="Select Course"
+                   options={[
+                     { value: 'true', label: 'Yes' },
+                     { value: 'false', label: 'No' },
+                   ]}
+                 />
+           <Dropdown
+                    name="Select Chapter"
+                    label="Select Chapter"
+                    options={[
+                      { value: 'true', label: 'Yes' },
+                      { value: 'false', label: 'No' },
+                    ]}
+                  />
+        </div>
+      </div>
       <hr className="mb-4 w-full bg-black opacity-10" />
       <p className="mb-2 text-[17px] font-medium text-black">Question</p>
       <p className="text-[14px] font-normal text-black">

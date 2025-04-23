@@ -4,34 +4,38 @@ import Heading from '../../common/Heading'
 import Paragraph from '../../common/Paragraph'
 import { Link, useNavigate } from 'react-router-dom'
 import {
+  useMutation
+} from '@tanstack/react-query'
+import {
+  ADMIN_DASHBOARD_ROUTE,
   FORGOT_PASSWORD_ROUTE,
   STUDENT_DASHBOARD_ROUTE,
 } from '../../../utils/constant'
 import Button from '../../common/Button'
 import { loginUser } from '../../../services/auth/auth.service'
-import { useMutation } from '@tanstack/react-query'
-import { toast } from 'sonner'
-import { setUser } from '../../../features/authSlice'
+import { setUser } from '../../../features/authSlice' 
 import { useDispatch } from 'react-redux'
+import { showToast } from '../../../services/toast/toast.service'
 
 const StudentLogin = () => {
-  const [loginInput, setLoginInput] = useState('')
-  const [password, setPassword] = useState('')
-  const [errors, setErrors] = useState({})
-  const navigate = useNavigate()
   const dispatch = useDispatch()
-
-  const { mutate, isLoading } = useMutation({
-    mutationFn: loginUser, // Required in v5
+  const navigate = useNavigate()
+  
+  const { mutate } = useMutation({
+    mutationFn: loginUser,
     onSuccess: (data) => {
       dispatch(setUser(data))
-      toast.success('Login Successfully')
+      showToast.success('Login Successfully')
       navigate(STUDENT_DASHBOARD_ROUTE)
     },
     onError: (error) => {
       setErrors({ api: error.response?.data?.message || 'Login failed' })
     },
   })
+
+  const [loginInput, setLoginInput] = useState('')
+  const [password, setPassword] = useState('')
+  const [errors, setErrors] = useState({})
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -79,10 +83,8 @@ const StudentLogin = () => {
     setErrors(newErrors)
 
     if (Object.keys(newErrors).length === 0) {
-      setLoginInput('')
-      setPassword('')
-      mutate({ email: loginInput, password })
-      navigate(STUDENT_DASHBOARD_ROUTE)
+      // Call the mutation instead of navigating directly
+      mutate({ loginInput, password })
     }
   }
 
@@ -142,6 +144,10 @@ const StudentLogin = () => {
               Forgot Password?
             </Link>
           </div>
+
+          {errors.api && (
+            <p className="text-sm text-orange-red">{errors.api}</p>
+          )}
 
           <Button className={'rounded-xl'} type="submit" bgBtn="Get Started" />
         </form>
