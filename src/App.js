@@ -33,6 +33,8 @@ import {
   STUDENT_DASHBOARD_ROUTE,
   STUDENT_LOGIN_ROUTE,
   STUDENT_SIGNUP_ROUTE,
+  UPDATE_PROFILE_ROUTE,
+  UPDATE_PASSWORD_ROUTE,
 } from './utils/constant'
 import CoursesPage from './components/pages/CoursesPage'
 import StudentSignUp from './components/pages/student/StudentSignUp'
@@ -55,6 +57,8 @@ import AdminLogin from './components/AdminLogin'
 import useAuth from './hooks/useAuth'
 import ProtectedRoute from './components/ProtectedRoute'
 import UpdateCourse from './components/pages/admin/UpdateCourse'
+import EditProfile from './components/pages/student/dashboard/EditProfile'
+import UpdatePassword from './components/pages/student/dashboard/UpdatePassword'
 
 const queryClient = new QueryClient()
 
@@ -104,9 +108,21 @@ function AppContent() {
         <Route path={FORGOT_PASSWORD_ROUTE} element={<ForgetPassword />} />
         <Route path={COURSES_DETAIL_ROUTE} element={<CoursesInfo />} />
         <Route path={JOBS_DETAIL_ROUTE} element={<JobDetail />} />
-        <Route
+      {/*  <Route
           path={STUDENT_DASHBOARD_ROUTE}
           element={isAuthenticated ? <Dashboard /> : <StudentLogin />}
+        />*/}
+        <Route
+          path={STUDENT_DASHBOARD_ROUTE}
+          element={<Dashboard />}
+        />
+        <Route
+          path={UPDATE_PROFILE_ROUTE}
+          element={<EditProfile />}
+        />
+        <Route
+          path={UPDATE_PASSWORD_ROUTE}
+          element={<UpdatePassword />}
         />
         <Route path={POST_RESUME_ROUTE} element={<PostResume />} />
         <Route path={PAYMENT_METHOD_ROUTE} element={<PaymentMethod />} />

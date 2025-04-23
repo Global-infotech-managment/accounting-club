@@ -7,6 +7,7 @@ import Icons from './Icons'
 import {
   ADMIN_DASHBOARD_ROUTE,
   STUDENT_DASHBOARD_ROUTE,
+  UPDATE_PROFILE_ROUTE,
 } from '../../utils/constant'
 
 const DashboardNav = () => {
@@ -91,6 +92,12 @@ const DashboardNav = () => {
                     className="inline-block px-4 py-3 text-left text-[14px] text-black opacity-70 transition-all duration-300 ease-in-out hover:text-orange-red md:text-[16px]"
                   >
                     Log Out
+                  </Link>
+                  <Link
+                    to={UPDATE_PROFILE_ROUTE}
+                    className="inline-block px-4 py-3 text-left text-[14px] text-black opacity-70 transition-all duration-300 ease-in-out hover:text-orange-red md:text-[16px]"
+                  >
+                   Update Profile
                   </Link>
                 </div>
               </div>
