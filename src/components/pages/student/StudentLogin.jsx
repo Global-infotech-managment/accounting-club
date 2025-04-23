@@ -3,9 +3,7 @@ import Input from '../../common/Input'
 import Heading from '../../common/Heading'
 import Paragraph from '../../common/Paragraph'
 import { Link, useNavigate } from 'react-router-dom'
-import {
-  useMutation
-} from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import {
   ADMIN_DASHBOARD_ROUTE,
   FORGOT_PASSWORD_ROUTE,
@@ -13,14 +11,14 @@ import {
 } from '../../../utils/constant'
 import Button from '../../common/Button'
 import { loginUser } from '../../../services/auth/auth.service'
-import { setUser } from '../../../features/authSlice' 
+import { setUser } from '../../../features/authSlice'
 import { useDispatch } from 'react-redux'
 import { showToast } from '../../../services/toast/toast.service'
 
 const StudentLogin = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  
+
   const { mutate } = useMutation({
     mutationFn: loginUser,
     onSuccess: (data) => {
@@ -84,7 +82,7 @@ const StudentLogin = () => {
 
     if (Object.keys(newErrors).length === 0) {
       // Call the mutation instead of navigating directly
-      mutate({ loginInput, password })
+      mutate({ email: loginInput, password })
     }
   }
 

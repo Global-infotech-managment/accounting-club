@@ -20,6 +20,7 @@ const PaymentMethod = () => {
   const [cvv, setCvv] = useState('')
   const navigate = useNavigate()
   const { courseId } = useParams()
+  console.log('courseId ', courseId)
   const handleSubmit = (e) => {
     e.preventDefault()
     if (

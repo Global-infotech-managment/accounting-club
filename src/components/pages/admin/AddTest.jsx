@@ -63,16 +63,16 @@ export default function AddTest() {
           q.correctAnswer
       )
     ) {
-      console.log(questions, "add test");
-      
+      console.log(questions, 'add test')
+
       // Show JavaScript alert popup
-      window.alert("Questions added successfully!");
-      
-      navigate('/admin-dashboard?activeSidebar=dashboard');
+      window.alert('Questions added successfully!')
+
+      navigate('/admin-dashboard?activeSidebar=dashboard')
       setQuestions([
         { question: '', options: ['', '', '', ''], correctAnswer: '' },
-      ]);
-      setCurrentIndex(0);
+      ])
+      setCurrentIndex(0)
     }
   }
 
@@ -105,27 +105,27 @@ export default function AddTest() {
 
   return (
     <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
-      <div className='flex justify-between items-center mb-4 flex-col sm:flex-row'>
-        <p className=" text-[16px] font-semibold text-black lg:text-[18px] mb-3 sm:mb-0">
+      <div className="mb-4 flex flex-col items-center justify-between sm:flex-row">
+        <p className="mb-3 text-[16px] font-semibold text-black sm:mb-0 lg:text-[18px]">
           Add Test
         </p>
-        <div className='flex gap-4 justify-center items-center'>
+        <div className="flex items-center justify-center gap-4">
           <Dropdown
-                   name="Select Course"
-                   label="Select Course"
-                   options={[
-                     { value: 'true', label: 'Yes' },
-                     { value: 'false', label: 'No' },
-                   ]}
-                 />
-           <Dropdown
-                    name="Select Chapter"
-                    label="Select Chapter"
-                    options={[
-                      { value: 'true', label: 'Yes' },
-                      { value: 'false', label: 'No' },
-                    ]}
-                  />
+            name="Select Course"
+            label="Select Course"
+            options={[
+              { value: 'true', label: 'Yes' },
+              { value: 'false', label: 'No' },
+            ]}
+          />
+          <Dropdown
+            name="Select Chapter"
+            label="Select Chapter"
+            options={[
+              { value: 'true', label: 'Yes' },
+              { value: 'false', label: 'No' },
+            ]}
+          />
         </div>
       </div>
       <hr className="mb-4 w-full bg-black opacity-10" />

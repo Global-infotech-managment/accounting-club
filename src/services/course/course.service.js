@@ -55,6 +55,7 @@ export const deleteCourseById = async (id) => {
 }
 
 export const findCourseById = async (slug) => {
+  console.log('slug 58', slug)
   const response = await API.get(`/course/${slug}`)
   console.log('response data', response.data.data)
   return response.data.data

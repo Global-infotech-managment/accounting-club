@@ -168,7 +168,7 @@ const CourseDetail = () => {
               <Button
                 className="w-full !rounded-xl max-sm:px-3 max-sm:py-2 max-sm:text-center"
                 bgBtn="Enroll Now"
-                path={`${PAYMENT_METHOD_ROUTE}/${course.id}`}
+                path={`${PAYMENT_METHOD_ROUTE}${course.id}`}
                 // path={`${PAYMENT_METHOD_ROUTE}`}
               />
             </div>
