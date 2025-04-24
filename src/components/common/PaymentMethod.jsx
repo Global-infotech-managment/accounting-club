@@ -1,3 +1,4 @@
+// components/PaymentMethod.js
 import React, { useState } from 'react'
 import Heading from './Heading'
 import Paragraph from './Paragraph'
@@ -7,10 +8,11 @@ import Input from './Input'
 import { useNavigate, useParams } from 'react-router-dom'
 import { STUDENT_SIGNUP_ROUTE } from '../../utils/constant'
 import { useQuery } from '@tanstack/react-query'
+import { findCourseById } from '../../services/course/course.service'
 import {
-  findCourseByCourseId,
-  findCourseById,
-} from '../../services/course/course.service'
+  createRazorpayOrder,
+  verifyPayment,
+} from '../../services/payments/payment.service'
 
 const PaymentMethod = () => {
   const [paymentMethod, setPaymentMethod] = useState('credit')
@@ -20,8 +22,8 @@ const PaymentMethod = () => {
   const [cvv, setCvv] = useState('')
   const navigate = useNavigate()
   const { courseId } = useParams()
-  console.log('courseId ', courseId)
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (
       !name ||
@@ -30,12 +32,64 @@ const PaymentMethod = () => {
       return alert('Please fill all the required fields.')
     }
 
-    alert('Payment Successful!')
-    setName('')
-    setCardNumber('')
-    setExpiry('')
-    setCvv('')
-    navigate(STUDENT_SIGNUP_ROUTE)
+    try {
+      // Create Razorpay Order
+      const orderData = await createRazorpayOrder(
+        course?.price || 1000,
+        courseId
+      )
+
+      console.log('Razorpay Order Data:', orderData?.data)
+      console.log('Order ID:', orderData?.data?.orderId?.id)
+
+      if (!orderData?.data?.orderId?.id) {
+        alert('Order creation failed. Please try again.')
+        return
+      }
+
+      const options = {
+        key: 'rzp_test_4OgH6LvK2UwJ9o', // Use your Razorpay key
+        amount: course?.price * 100,
+        currency: 'INR',
+        name: 'Course Purchase',
+        description: 'Pay for your course',
+        order_id: orderData?.data?.orderId.id,
+        handler: async function (response) {
+          console.log('Razorpay Response:', response) // Log payment response
+          // Verify Razorpay Payment
+          const verifyRes = await verifyPayment(
+            response.razorpay_order_id,
+            response.razorpay_payment_id,
+            response.razorpay_signature,
+            'test-user-id', // Replace with logged in user's ID
+            courseId,
+            course?.price
+          )
+          console.log('verifyRes line 668 ', verifyRes)
+          if (verifyRes.success) {
+            alert('Payment Successful and Course Access Granted!')
+            navigate(STUDENT_SIGNUP_ROUTE)
+          } else {
+            // alert('Payment Verification Failed')
+          }
+        },
+        prefill: {
+          name,
+        },
+        theme: {
+          color: '#F37254',
+        },
+      }
+
+      // Debugging: Check if rzp object is created correctly
+      console.log('Razorpay options:', options)
+
+      const rzp = new window.Razorpay(options)
+      rzp.open() // Open Razorpay modal
+    } catch (err) {
+      console.error('Error during payment flow:', err)
+      alert('Payment Failed. Try again later.')
+    }
   }
 
   const {
@@ -45,9 +99,8 @@ const PaymentMethod = () => {
   } = useQuery({
     queryKey: ['course', courseId],
     queryFn: () => findCourseById(courseId),
-    enabled: !!courseId, // only run query if slug exists
+    enabled: !!courseId,
   })
-  console.log('course data ', course)
 
   return (
     <div className="container px-3 lg:max-w-[1184px]">
@@ -71,7 +124,7 @@ const PaymentMethod = () => {
           options={[{ value: 'credit', label: 'Credit Card' }]}
           selected={paymentMethod}
           onChange={setPaymentMethod}
-        />{' '}
+        />
         <Paragraph
           className="mb-6 ps-[25px] text-black"
           text="Secure and fast credit card payments with advanced security and fraud protection."
@@ -79,7 +132,6 @@ const PaymentMethod = () => {
         {/* Conditional Credit Card Form */}
         {paymentMethod === 'credit' && (
           <div className="mb-6">
-            {' '}
             <div className="flex flex-wrap gap-y-4">
               <div className="w-full px-[10px] md:w-1/2">
                 <Input
@@ -124,7 +176,7 @@ const PaymentMethod = () => {
           options={[{ value: 'paypal', label: 'PayPal' }]}
           selected={paymentMethod}
           onChange={setPaymentMethod}
-        />{' '}
+        />
         <Paragraph
           className="mb-6 ps-[25px] text-black"
           text="Secure and fast PayPal payments with advanced security and reliability."
@@ -133,12 +185,11 @@ const PaymentMethod = () => {
           options={[{ value: 'bank', label: 'Bank Transfer' }]}
           selected={paymentMethod}
           onChange={setPaymentMethod}
-        />{' '}
+        />
         <Paragraph
           className="mb-6 ps-[25px] text-black"
           text="Secure and reliable bank transfers with fast processing and enhanced security."
         />
-        {/* Pay Now Button */}
         <Button
           onClick={handleSubmit}
           className="mt-4 w-full md:mt-6 lg:mt-10"
