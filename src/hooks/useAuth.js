@@ -3,6 +3,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from '../features/authSlice'
 import { loginUser } from '../services/auth/auth.service'
+import { addLessonTest } from '../services/lessonTest/lessonTest.services'
 
 export default function useAuth() {
   const { token, role } = useSelector((state) => state.auth)
@@ -29,3 +30,16 @@ export default function useAuth() {
 //     },
 //   })
 // }
+
+export const useCreateTest = () => {
+  return useMutation({
+    mutationFn: addLessonTest,
+    onSuccess: () => {
+      // You can add success handling here
+    },
+    onError: (error) => {
+      // You can add error handling here
+      console.error('Error creating test:', error);
+    },
+  });
+};
