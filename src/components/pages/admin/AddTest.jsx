@@ -1,176 +1,230 @@
-import { useContext, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import Button from '../../common/Button';
-import Icons from '../../common/Icons';
-import Input from '../../common/Input';
-import { Dropdown } from '../../common/Dropdown';
-import { useCreateTest } from '../../../hooks/useAuth';
-import { fetchAllCourses } from '../../../services/course/course.service';
-import { AppContext } from '../../../utils/AppContext';
+import { useContext, useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import Button from '../../common/Button'
+import Icons from '../../common/Icons'
+import Input from '../../common/Input'
+import { Dropdown } from '../../common/Dropdown'
+import { useCreateTest } from '../../../hooks/useAuth'
+import { fetchAllCourses } from '../../../services/course/course.service'
+import { AppContext } from '../../../utils/AppContext'
+import { fetchAllSections } from '../../../services/section/section.services'
+import { toast } from 'sonner'
 
 export default function AddTest() {
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
-  const { mutate: createTest, isPending } = useCreateTest();
-  const { courseData, updateCourseData } = useContext(AppContext);
-  
-  const [selectedLessonId, setSelectedLessonId] = useState('');
-  const [selectedChapterId, setSelectedChapterId] = useState('');
+  const queryClient = useQueryClient()
+  const navigate = useNavigate()
+  const { mutate: createTest, isPending } = useCreateTest()
+  const { courseData, updateCourseData } = useContext(AppContext)
+
+  const [selectedLessonId, setSelectedLessonId] = useState(null)
   const [questions, setQuestions] = useState([
     { question: '', options: ['', '', '', ''], correctAnswer: '' },
-  ]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  ])
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   // Fetch courses data
-  const { 
-    data: courses, 
-    isLoading: isCoursesLoading, 
-    isError: isCoursesError 
+  const {
+    data: courses,
+    isLoading: isCoursesLoading,
+    isError: isCoursesError,
   } = useQuery({
     queryKey: ['courses'],
     queryFn: fetchAllCourses,
     onSuccess: (data) => {
       if (data?.courses?.length > 0) {
-        updateCourseData({ courseId: data.courses[0].id });
+        updateCourseData({ courseId: data.courses[0].id })
       }
     },
-  });
+  })
 
-  const courseOptions = courses?.map((course) => ({
-    value: course.id,
-    label: course.name,
-  })) || [];
+  const {
+    data: lesson,
+    isLoading: isLessonLoading,
+    isError: isLessonError,
+  } = useQuery({
+    queryKey: ['lessons'],
+    queryFn: fetchAllSections,
+    onSuccess: (data) => {
+      console.log('lessons data:', data)
+      if (data?.length > 0) {
+        setSelectedLessonId(data?.[0].id)
+      }
+    },
+  })
+
+  const courseOptions =
+    courses?.map((course) => ({
+      value: course.id,
+      label: course.name,
+    })) || []
+
+  const lessonOptions =
+    lesson?.map((lesson) => ({
+      value: lesson?.id,
+      label: lesson?.name,
+    })) || []
 
   const handleQuestionChange = (e) => {
-    const newQuestions = [...questions];
-    newQuestions[currentIndex].question = e.target.value;
-    setQuestions(newQuestions);
-  };
+    const newQuestions = [...questions]
+    newQuestions[currentIndex].question = e.target.value
+    setQuestions(newQuestions)
+  }
 
   const handleOptionChange = (index, value) => {
-    const newQuestions = [...questions];
-    newQuestions[currentIndex].options[index] = value;
-    setQuestions(newQuestions);
-  };
+    const newQuestions = [...questions]
+    newQuestions[currentIndex].options[index] = value
+    setQuestions(newQuestions)
+  }
 
   const handleCorrectAnswerChange = (answer) => {
-    const newQuestions = [...questions];
-    newQuestions[currentIndex].correctAnswer = answer;
-    setQuestions(newQuestions);
-  };
+    const newQuestions = [...questions]
+    newQuestions[currentIndex].correctAnswer = answer
+    setQuestions(newQuestions)
+  }
 
   const addNewQuestion = () => {
     setQuestions([
       ...questions,
       { question: '', options: ['', '', '', ''], correctAnswer: '' },
-    ]);
-    setCurrentIndex(questions.length);
-  };
+    ])
+    setCurrentIndex(questions.length)
+  }
 
   const navigateNext = () => {
-    if (!isCurrentQuestionValid()) return;
-    
+    if (!isCurrentQuestionValid()) return
+
     if (currentIndex === questions.length - 1) {
-      addNewQuestion();
+      addNewQuestion()
     } else {
-      setCurrentIndex(currentIndex + 1);
+      setCurrentIndex(currentIndex + 1)
     }
-  };
+  }
 
   const navigatePrevious = () => {
     if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
+      setCurrentIndex(currentIndex - 1)
     }
-  };
+  }
 
   const isCurrentQuestionValid = () => {
-    const currentQuestion = questions[currentIndex];
+    const currentQuestion = questions[currentIndex]
     return (
       currentQuestion.question.trim() &&
       currentQuestion.options.every((opt) => opt.trim()) &&
       currentQuestion.correctAnswer
-    );
-  };
+    )
+  }
 
   const handleDeleteQuestion = () => {
     if (questions.length === 1) {
       // Reset if it's the only question
       setQuestions([
         { question: '', options: ['', '', '', ''], correctAnswer: '' },
-      ]);
-      setCurrentIndex(0);
-      return;
+      ])
+      setCurrentIndex(0)
+      return
     }
 
     const updatedQuestions = questions.filter(
       (_, index) => index !== currentIndex
-    );
-    setQuestions(updatedQuestions);
+    )
+    setQuestions(updatedQuestions)
 
     // Adjust index to prevent out-of-range issue
-    setCurrentIndex((prevIndex) => Math.max(0, prevIndex - 1));
-  };
+    setCurrentIndex((prevIndex) => Math.max(0, prevIndex - 1))
+  }
 
   const isFormValid = () => {
-    return questions.every(
-      (q) =>
-        q.question.trim() &&
-        q.options.every((opt) => opt.trim()) &&
-        q.correctAnswer
-    ) && selectedLessonId;
-  };
+    return (
+      questions.every(
+        (q) =>
+          q.question.trim() &&
+          q.options.every((opt) => opt.trim()) &&
+          q.correctAnswer
+      ) && selectedLessonId
+    )
+  }
 
   const handleSubmit = () => {
     if (!isFormValid()) {
-      window.alert('Please fill all fields and select a lesson');
-      return;
+      window.alert('Please fill all fields and select a lesson')
+      return
     }
 
-    // Prepare the data for API
-    const testData = {
-      lessonId: selectedLessonId,
-      questions: questions.map(q => ({
+    // Prepare the data for API - FIX: Use selectedLessonId directly
+    // const testData = {
+    //   lessonId: selectedLessonId, // Fixed: Use the actual ID value
+    //   questions: questions.map((q) => ({
+    //     question: q.question,
+    //     options: q.options,
+    //     answer: q.correctAnswer,
+    //   })),
+    // }
+
+    function getAnswerIndex(answerLetter) {
+      console.log('sdnsdjjsdsjd : ', answerLetter)
+      const validAnswers = ['A', 'B', 'C', 'D']
+      const index = validAnswers.indexOf(answerLetter.toUpperCase())
+      console.log('index ', index)
+      if (index === -1) {
+        throw new Error(`Invalid answer: ${answerLetter}`)
+      }
+      return index
+    }
+
+    const testData = questions.map((q) => {
+      const correctIndex = getAnswerIndex(q.correctAnswer)
+      const correctAnswer = q.options[correctIndex]
+      console.log('q.correctAnswer ', q.options)
+      return {
+        lessonId: selectedLessonId,
         question: q.question,
         options: q.options,
-        answer: q.correctAnswer,
-      })),
-    };
+        answer: correctAnswer,
+      }
+    })
 
-    createTest(testData, {
+    console.log('lesson test data ', testData)
+
+    // Uncomment to actually submit the test
+    createTest(testData[0], {
       onSuccess: () => {
         // Invalidate queries to refresh data
-        queryClient.invalidateQueries({ queryKey: ['tests', selectedLessonId] });
-        
+        queryClient.invalidateQueries({ queryKey: ['tests', selectedLessonId] })
+
         // Show success message
-        window.alert('Test created successfully!');
-        
+        toast.success('Test created successfully!')
+
         // Reset form
         setQuestions([
           { question: '', options: ['', '', '', ''], correctAnswer: '' },
-        ]);
-        setCurrentIndex(0);
-        
+        ])
+        setCurrentIndex(0)
+
         // Navigate back
-        navigate('/admin-dashboard?activeSidebar=dashboard');
+        navigate('/admin-dashboard?activeSidebar=dashboard')
       },
       onError: (error) => {
-        window.alert(`Error creating test: ${error.message}`);
-      }
-    });
-  };
+        window.alert(`Error creating test: ${error.message}`)
+      },
+    })
+  }
 
-  const handleLessonChange = (value) => {
-    setSelectedLessonId(value);
-  };
-
-  const handleChapterChange = (value) => {
-    setSelectedChapterId(value);
-  };
+  // FIX: Update the handleLessonChange function to directly set the lessonId
+  const handleLessonChange = (name, value) => {
+    console.log('Lesson changed - value:', value)
+    setSelectedLessonId(value)
+  }
 
   const handleDropdownChange = (name, value) => {
-    updateCourseData({ [name]: value });
-  };
+    updateCourseData({ [name]: value })
+  }
+
+  // For debugging
+  useEffect(() => {
+    console.log('Current selectedLessonId:', selectedLessonId)
+  }, [selectedLessonId])
 
   return (
     <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
@@ -189,14 +243,13 @@ export default function AddTest() {
             isError={isCoursesError}
           />
           <Dropdown
-            name="chapterId"
-            label="Select Chapter"
-            options={[
-              { value: 'chapter1', label: 'Chapter 1' },
-              { value: 'chapter2', label: 'Chapter 2' },
-            ]}
-            value={selectedChapterId}
-            onChange={handleChapterChange}
+            name="lessonId"
+            label="Select Lesson"
+            options={lessonOptions}
+            defaultValue={selectedLessonId} // Use defaultValue prop instead of value
+            onChange={handleLessonChange}
+            isLoading={isLessonLoading}
+            isError={isLessonError}
           />
         </div>
       </div>
@@ -212,7 +265,7 @@ export default function AddTest() {
         <div className="flex w-full items-center gap-2">
           <button
             disabled={currentIndex === 0}
-            className={`${currentIndex === 0 ? 'opacity-10 cursor-not-allowed' : 'cursor-pointer'}`}
+            className={`${currentIndex === 0 ? 'cursor-not-allowed opacity-10' : 'cursor-pointer'}`}
             onClick={navigatePrevious}
             aria-label="Previous question"
           >
@@ -223,7 +276,7 @@ export default function AddTest() {
           </div>
           <button
             disabled={!isCurrentQuestionValid()}
-            className={`rotate-180 ${!isCurrentQuestionValid() ? 'opacity-10 cursor-not-allowed' : 'cursor-pointer'}`}
+            className={`rotate-180 ${!isCurrentQuestionValid() ? 'cursor-not-allowed opacity-10' : 'cursor-pointer'}`}
             onClick={navigateNext}
             aria-label="Next question"
           >
@@ -281,9 +334,10 @@ export default function AddTest() {
             <button
               key={index}
               className={`flex h-[40px] w-[40px] items-center justify-center rounded-[12px] border border-[#4e4e4e] border-opacity-10 transition-colors ${
-                questions[currentIndex].correctAnswer === String.fromCharCode(65 + index) 
-                  ? '!bg-primary text-white' 
-                  : 'bg-[#fbfbfb] hover:bg-gray-100'
+                questions[currentIndex].correctAnswer ===
+                String.fromCharCode(65 + index)
+                  ? '!bg-primary text-white'
+                  : 'hover:bg-gray-100 bg-[#fbfbfb]'
               }`}
               onClick={() =>
                 handleCorrectAnswerChange(String.fromCharCode(65 + index))
@@ -303,5 +357,5 @@ export default function AddTest() {
         aria-label="Submit test"
       />
     </div>
-  );
+  )
 }
