@@ -10,7 +10,7 @@ import updateIcon from '../../../../assets/images/png/update-icon.png'
 import { studentSidebarItems } from '../../../../utils/helper'
 
 const EditProfile = () => {
-  const { userId } = useParams(); // assuming userId is in the URL
+  const { userId } = useParams();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   let activeSidebar = queryParams.get('activeSidebar') || 'dashboard';
@@ -33,7 +33,8 @@ const EditProfile = () => {
     pinCode: '',
   });
 
-  // Initialize form data when profile is loaded
+  const [updateSuccess, setUpdateSuccess] = useState(false);
+
   useEffect(() => {
     if (profile) {
       setFormData({
@@ -71,9 +72,10 @@ const EditProfile = () => {
     e.preventDefault();
     try {
       await updateProfile(formData);
-      // Success toast can be shown here
+      setUpdateSuccess(true);
+      setTimeout(() => setUpdateSuccess(false), 3000);
     } catch (error) {
-      // Error handling is already in the mutation
+      console.error('Update failed:', error);
     }
   };
 
@@ -84,7 +86,6 @@ const EditProfile = () => {
     <div className="flex h-screen flex-col">
       <DashboardNav />
       <div className="flex flex-grow overflow-auto">
-        {/* Sidebar */}
         <div className="h-full bg-[#fa7f7f0c] lg:w-3/12 lg:max-w-[250px]">
           <StudentSidebar sidebarOptions={studentSidebarItems} />
         </div>
@@ -118,6 +119,11 @@ const EditProfile = () => {
             </Link>
           </div>
           <form onSubmit={handleSubmit}>
+            {updateSuccess && (
+              <div className="mb-4 rounded bg-green-100 p-3 text-green-700">
+                Profile updated successfully!
+              </div>
+            )}
             <div className="relative inline-block py-5">
               <img height={73} width={73} src={profile} alt="profile img" />
               <img
