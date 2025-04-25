@@ -66,16 +66,16 @@
 <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1110_896" result="shape"/>
 </filter>
 <linearGradient id="paint0_linear_1110_896" x1="913.5" y1="148" x2="913.5" y2="195" gradientUnits="userSpaceOnUse">
-<stop stop-color="#FF9796"/>
-<stop offset="1" stop-color="#D3D3D3"/>
+<stop stopColor="#FF9796"/>
+<stop offset="1" stopColor="#D3D3D3"/>
 </linearGradient>
 <linearGradient id="paint1_linear_1110_896" x1="434" y1="85" x2="434" y2="123" gradientUnits="userSpaceOnUse">
-<stop stop-color="#FF9796"/>
-<stop offset="1" stop-color="#D3D3D3"/>
+<stop stopColor="#FF9796"/>
+<stop offset="1" stopColor="#D3D3D3"/>
 </linearGradient>
 <linearGradient id="paint2_linear_1110_896" x1="801.5" y1="18" x2="801.5" y2="53" gradientUnits="userSpaceOnUse">
-<stop stop-color="#FF9796"/>
-<stop offset="1" stop-color="#D3D3D3"/>
+<stop stopColor="#FF9796"/>
+<stop offset="1" stopColor="#D3D3D3"/>
 </linearGradient>
 </defs>
 </svg>

@@ -46,14 +46,14 @@ const Icons = ({ iconName, className }) => {
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M7.65039 17V0H9.35039V17H7.65039Z"
           fill="black"
         />
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M0 7.65002L17 7.65002L17 9.35002L-7.43094e-08 9.35002L0 7.65002Z"
           fill="black"
         />
@@ -244,9 +244,9 @@ const Icons = ({ iconName, className }) => {
             y2="22.1353"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#253466" />
-            <stop offset="0.184592" stop-color="#413660" />
-            <stop offset="1" stop-color="#E5413F" />
+            <stop stopColor="#253466" />
+            <stop offset="0.184592" stopColor="#413660" />
+            <stop offset="1" stopColor="#E5413F" />
           </linearGradient>
         </defs>
       </svg>
@@ -260,8 +260,8 @@ const Icons = ({ iconName, className }) => {
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M0 0.650024L17 0.650024L17 2.35002L-7.43094e-08 2.35002L0 0.650024Z"
           fill="black"
         />

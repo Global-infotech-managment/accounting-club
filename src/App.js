@@ -35,6 +35,7 @@ import {
   STUDENT_SIGNUP_ROUTE,
   UPDATE_PROFILE_ROUTE,
   UPDATE_PASSWORD_ROUTE,
+  NEW_PASSWORD_ROUTE,
 } from './utils/constant'
 import CoursesPage from './components/pages/CoursesPage'
 import StudentSignUp from './components/pages/student/StudentSignUp'
@@ -59,6 +60,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import UpdateCourse from './components/pages/admin/UpdateCourse'
 import EditProfile from './components/pages/student/dashboard/EditProfile'
 import UpdatePassword from './components/pages/student/dashboard/UpdatePassword'
+import UpdateNewPassword from './components/pages/UpdateNewPassword'
 
 const queryClient = new QueryClient()
 
@@ -106,6 +108,7 @@ function AppContent() {
         <Route path={EMPLOYER_LOGIN_ROUTE} element={<EmployerLogin />} />
         <Route path={EMPLOYER_REGISTER_ROUTE} element={<EmployerSignUp />} />
         <Route path={FORGOT_PASSWORD_ROUTE} element={<ForgetPassword />} />
+        <Route path={NEW_PASSWORD_ROUTE} element={<UpdateNewPassword />} />
         <Route path={COURSES_DETAIL_ROUTE} element={<CoursesInfo />} />
         <Route path={JOBS_DETAIL_ROUTE} element={<JobDetail />} />
       {/*  <Route
