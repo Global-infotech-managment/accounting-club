@@ -28,3 +28,8 @@ export const fetchStudents = async (params) => {
 export const deleteStudent = async (id) => {
   await API.delete(`/auth/${id}`)
 }
+
+export const updateStudentProfile = async (userId, profileData) => {
+  const response = await API.put(`/auth/${userId}`, profileData);
+  return response.data.data;
+};

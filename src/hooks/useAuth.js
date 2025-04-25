@@ -1,45 +1,93 @@
-// hooks/useAuth.js
-import { useMutation } from '@tanstack/react-query'
-import { useDispatch, useSelector } from 'react-redux'
-import { setUser } from '../features/authSlice'
-import { loginUser } from '../services/auth/auth.service'
-import { addLessonTest } from '../services/lessonTest/lessonTest.services'
+// src/hooks/useAuth.js
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../features/authSlice';
+import { loginUser } from '../services/auth/auth.service';
+import { addLessonTest } from '../services/lessonTest/lessonTest.services'; 
+import { 
+  getStudentProfile,
+  createStudentProfile,
+  updateStudentProfile 
+} from '../services/student/student.services';
 
+// Main authentication hook
 export default function useAuth() {
-  const { token, role } = useSelector((state) => state.auth)
-
+  const { token, role, userId } = useSelector((state) => state.auth);
+  
   return {
-    isAuthenticated: !!token, // Token hai to true, nahi to false
+    isAuthenticated: !!token,
     isAdmin: role === 'Admin',
+    isStudent: role === 'Student',
     userRole: role,
-  }
+    userId, 
+  };
 }
 
-// export const useLogin = () => {
-//   const dispatch = useDispatch()
-//   return useMutation({
-//     mutationFn: loginUser,
-//     onSuccess: (data) => {
-//       dispatch(setUser(data))
-//     },
-//     onError: (error) => {
-//       console.error(
-//         'Login Failed:',
-//         error.response?.data?.message || error.message
-//       )
-//     },
-//   })
-// }
+// Authentication operations
+export const useLogin = () => {
+  const dispatch = useDispatch();
+  
+  return useMutation({
+    mutationFn: loginUser,
+    onSuccess: (data) => {
+      dispatch(setUser(data));
+    },
+    onError: (error) => {
+      console.error('Login Failed:', error.response?.data?.message || error.message);
+    },
+  });
+};
 
+// Student profile operations
+export const useStudentProfile = (studentId) => {
+  return useQuery({
+    queryKey: ['studentProfile', studentId],
+    queryFn: () => getStudentProfile(studentId),
+    enabled: !!studentId,
+  });
+};
+
+export const useCreateStudentProfile = () => {
+  const dispatch = useDispatch();
+  
+  return useMutation({
+    mutationFn: createStudentProfile,
+    onSuccess: (data) => {
+      dispatch(setUser({ user: data }));
+    },
+    onError: (error) => {
+      console.error('Create Profile Failed:', error.response?.data?.message || error.message);
+    },
+  });
+};
+
+export const useUpdateStudentProfile = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: updateStudentProfile,
+    onSuccess: (data, variables) => {
+      // Update the cache with new data
+      queryClient.setQueryData(['studentProfile', variables.userId], data);
+      return data;
+    },
+    onError: (error) => {
+      console.error('Update Profile Failed:', error.response?.data?.message || error.message);
+      throw error;
+    },
+  });
+};
+
+// Test operations
 export const useCreateTest = () => {
   return useMutation({
     mutationFn: addLessonTest,
-    onSuccess: () => {
-      // You can add success handling here
+    onSuccess: (data) => {
+      return data;
     },
     onError: (error) => {
-      // You can add error handling here
       console.error('Error creating test:', error);
+      throw error;
     },
   });
 };

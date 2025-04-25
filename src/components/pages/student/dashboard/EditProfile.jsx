@@ -1,24 +1,84 @@
-import React from 'react'
-import { Routes, Route, useLocation, useParams, Link } from 'react-router-dom'
-import DashboardNav from '../../../common/DashboardNav'
-import StudentSidebar from '../StudentSidebar'
-import { studentSidebarItems } from '../../../../utils/helper'
-import Input from '../../../common/Input'
-import { Dropdown } from '../../../common/Dropdown'
-import Button from '../../../common/Button'
-import profile from '../../../../assets/images/png/profile-photo.png'
+import React, { useState, useEffect } from 'react';
+import { useLocation, Link, useParams } from 'react-router-dom';
+import { useStudentProfile } from '../../../../hooks/useAuth';
+import Button from '../../../common/Button';
+import Input from '../../../common/Input';
+import { Dropdown } from '../../../common/Dropdown';
+import StudentSidebar from '../StudentSidebar';
+import DashboardNav from '../../../common/DashboardNav';
 import updateIcon from '../../../../assets/images/png/update-icon.png'
+import { studentSidebarItems } from '../../../../utils/helper'
 
 const EditProfile = () => {
-  const location = useLocation()
-  const queryParams = new URLSearchParams(location.search)
-  let activeSidebar = queryParams.get('activeSidebar') || 'dashboard'
+  const { userId } = useParams(); // assuming userId is in the URL
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  let activeSidebar = queryParams.get('activeSidebar') || 'dashboard';
+  const isEditProfileRoute = location.pathname.includes('update-profile');
+  activeSidebar = activeSidebar.replace(/~/g, '-');
 
-  // Check if current route is update-profile
-  const isEditProfileRoute = location.pathname.includes('update-profile')
+  const { profile, isLoading, isError, updateProfile, isUpdating } = useStudentProfile(userId);
 
-  // Normalize sidebar key
-  activeSidebar = activeSidebar.replace(/~/g, '-')
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    age: '',
+    experience: '',
+    address1: '',
+    address2: '',
+    city: '',
+    state: '',
+    country: '',
+    pinCode: '',
+  });
+
+  // Initialize form data when profile is loaded
+  useEffect(() => {
+    if (profile) {
+      setFormData({
+        name: profile.name || '',
+        email: profile.email || '',
+        phone: profile.phone || '',
+        age: profile.age || '',
+        experience: profile.experience || '',
+        address1: profile.address1 || '',
+        address2: profile.address2 || '',
+        city: profile.city || '',
+        state: profile.state || '',
+        country: profile.country || '',
+        pinCode: profile.pinCode || '',
+      });
+    }
+  }, [profile]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleDropdownChange = (name, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await updateProfile(formData);
+      // Success toast can be shown here
+    } catch (error) {
+      // Error handling is already in the mutation
+    }
+  };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error loading profile</div>;
 
   return (
     <div className="flex h-screen flex-col">
@@ -57,7 +117,7 @@ const EditProfile = () => {
               />
             </Link>
           </div>
-          <form action="">
+          <form onSubmit={handleSubmit}>
             <div className="relative inline-block py-5">
               <img height={73} width={73} src={profile} alt="profile img" />
               <img
@@ -68,66 +128,102 @@ const EditProfile = () => {
             </div>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <Input
-                name="First Name* "
-                label="First Name* "
-                placeholder="First Name* "
+                name="name"
+                label="Name*"
+                placeholder="Name*"
+                value={formData.name}
+                onChange={handleChange}
               />
               <Input
-                name="Last Name* "
-                label="Last Name* "
-                placeholder="Last Name* "
-              />
-              <Input
-                name="Email Address*"
-                label=" Email Address* "
+                name="email"
+                label="Email Address*"
                 placeholder="abc@gmail.com"
+                value={formData.email}
+                onChange={handleChange}
+                disabled 
               />
               <Input
-                name=" Phone Number* "
-                label=" Phone Number* "
-                placeholder="+91 00000 00000 "
+                name="phone"
+                label="Phone Number*"
+                placeholder="+91 00000 00000"
+                value={formData.phone}
+                onChange={handleChange}
               />
               <Input
-                name=" Date of Birth* "
-                label=" Date of Birth* "
-                placeholder="01/01/2001"
+                name="age"
+                label="Age*"
+                placeholder="22"
+                value={formData.age}
+                onChange={handleChange}
+                type="number"
               />
-
+              <Input
+                name="experience"
+                label="Experience"
+                placeholder="Fresher"
+                value={formData.experience}
+                onChange={handleChange}
+              />
+              <Input
+                name="address1"
+                label="Address Line 1*"
+                placeholder="123 Main Street"
+                value={formData.address1}
+                onChange={handleChange}
+              />
+              <Input
+                name="address2"
+                label="Address Line 2"
+                placeholder="Apt 4B"
+                value={formData.address2}
+                onChange={handleChange}
+              />
+              <Input
+                name="city"
+                label="City*"
+                placeholder="New York"
+                value={formData.city}
+                onChange={handleChange}
+              />
               <Dropdown
-                label="Country* "
+                name="country"
+                label="Country*"
                 options={[
+                  { value: 'USA', label: 'USA' },
                   { value: 'India', label: 'India' },
-                  { value: 'Pakistan', label: 'Pakistan' },
                 ]}
-                defaultValue="Active"
+                value={formData.country}
+                onChange={(value) => handleDropdownChange('country', value)}
               />
               <Dropdown
+                name="state"
                 label="State*"
                 options={[
-                  { value: 'Haryana', label: 'Haryana' },
-                  { value: 'Punjab', label: 'Punjab' },
+                  { value: 'NewYork', label: 'New York' },
+                  { value: 'California', label: 'California' },
                 ]}
-                defaultValue="Active"
+                value={formData.state}
+                onChange={(value) => handleDropdownChange('state', value)}
               />
-              <Dropdown
+              <Input
+                name="pinCode"
                 label="Zip Code*"
-                options={[
-                  { value: 125033, label: '125033' },
-                  { value: 125001, label: '125001' },
-                ]}
-                defaultValue="Active"
+                placeholder="10001"
+                value={formData.pinCode}
+                onChange={handleChange}
               />
             </div>
             <Button
               type="submit"
               className="mt-5 w-full md:mt-10"
-              bgBtn="Save Change "
+              bgBtn={isUpdating ? "Saving..." : "Save Changes"}
+              disabled={isUpdating}
             />
           </form>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default EditProfile
+export default EditProfile;
