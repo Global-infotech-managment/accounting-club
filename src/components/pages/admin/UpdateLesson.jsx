@@ -7,6 +7,7 @@ import popupImage from '../../../assets/images/webp/popup-icon.webp'
 import { fetchAllCourses } from '../../../services/course/course.service'
 import { fetchAllSections } from '../../../services/section/section.services'
 import { useDeleteLesson } from '../../../hooks/useAuth'
+import { deleteLesson } from '../../../services/lessonTest/lessonTest.services'; 
 
 const itemsPerPage = 6
 
@@ -48,6 +49,7 @@ const UpdateLesson = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedLesson, setSelectedLesson] = useState(null)
   const [showDeletePopup, setShowDeletePopup] = useState(false)
+  
 
   // Fetch courses using React Query
   const {
@@ -87,7 +89,6 @@ const UpdateLesson = () => {
     deleteLessonMutation(id, {
       onSuccess: () => {
         setShowDeletePopup(false);
-        // Reset to first page if the last item on current page is deleted
         if (paginatedLessons.length === 1 && currentPage > 1) {
           setCurrentPage(currentPage - 1);
         }
