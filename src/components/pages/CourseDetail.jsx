@@ -15,7 +15,6 @@ import { findCourseById } from '../../services/course/course.service'
 
 const CourseDetail = () => {
   const { slug } = useParams()
-  console.log('Slug ', slug)
   const {
     data: course,
     isLoading,
@@ -23,45 +22,56 @@ const CourseDetail = () => {
   } = useQuery({
     queryKey: ['course', slug],
     queryFn: () => findCourseById(slug),
-    enabled: !!slug, // only run query if slug exists
+    enabled: !!slug,
   })
-  // const course = onlineCoursesData.find(
-  //   (course) => course.heading.replaceAll(' ', '-').toLowerCase() === slug
-  // )
 
-  if (!course) {
-    return <div className="text-red-500 text-center">Course not found</div>
-  }
+  if (isLoading) return <div className="text-center">Loading...</div>
+  if (isError) return <div className="text-red-500 text-center">Error loading course</div>
+  if (!course) return <div className="text-red-500 text-center">Course not found</div>
+
   return (
-    <div className="position-relative mb-10 md:mb-16 lg:mb-[100px]">
+    <div className="relative  pb-20">
+      {/* Background elements */}
       <img
-        className="pointer-events-none absolute bottom-72 left-0 max-xl:hidden"
+        className="pointer-events-none absolute bottom-1/3 left-0 max-xl:hidden"
         src={StudentEllipse}
         alt="student ellipse"
       />
       <img
         className="pointer-events-none absolute bottom-0 right-0 max-xl:hidden"
         src={bookImage}
-        alt="student ellipse"
+        alt="book"
       />
-      <div className="container max-w-[1184px] pt-5 sm:pt-10 lg:pt-14 xl:pt-20">
-        <div className="flex flex-wrap px-4 sm:px-0">
-          <div className="lg:w-8/12 lg:pe-12">
-            <ReactPlayer
-              url={course?.file?.url}
-              className="max-h-[438px] !w-full overflow-hidden rounded-[24px] object-cover lg:max-w-[677px]"
-            />
-            <Heading
-              className="mb-3 pt-4 md:pt-6 xl:mb-4"
-              middleText={
-                <>
+
+      <div className="container mx-auto max-w-6xl px-4 sm:px-6 pt-5 sm:pt-10 lg:pt-14 xl:pt-20">
+        <div className="flex flex-col lg:flex-row gap-3 lg:gap-8">
+          {/* Left column - Course content */}
+          <div className="lg:w-8/12">
+            <div className="aspect-w-16 aspect-h-9 rounded-3xl overflow-hidden">
+              <ReactPlayer
+                url={course?.file?.url}
+                controls={true}
+                width="100%"
+                height="100%"
+                className="rounded-2xl"
+              />
+            </div>
+            
+            <div className="mt-6">
+              <Heading
+                level={1}
+                className="mb-4 text-3xl md:text-4xl font-bold"
+                middleText={
                   <span className="text-red-500 capitalize">{course.name}</span>
-                </>
-              }
-            />
-            <Paragraph className="text-black" text={course.description} />
+                }
+              />
+              <Paragraph className="text-gray-700 text-lg" text={course.description} />
+            </div>
           </div>
-          <div className="mt-6 w-full md:mt-10 lg:w-4/12">
+
+          {/* Right column - Course details */}
+          <div className="lg:w-4/12">
+            <div className="bg-white rounded-xl shadow-md p-6 sticky top-20">
             <div className="flex items-end justify-between">
               <div className="flex items-end">
                 <Heading className="pe-2 !text-black" middleText={'₹'} />
@@ -72,7 +82,7 @@ const CourseDetail = () => {
                 text={`${course.price}% Off`}
               />
             </div>
-            <div className="mt-2 flex rounded-[10px] border border-black border-opacity-20 px-5">
+              <div className="mt-2 flex rounded-[10px] border border-black border-opacity-20 px-5">
               <div className="flex w-6/12 items-center gap-2.5 border-r border-black border-opacity-20">
                 <Icons iconName="bookImage" className="size-4" />
                 <div className="py-2.5">
@@ -88,89 +98,57 @@ const CourseDetail = () => {
                 </div>
               </div>
             </div>
-            <div className="mt-3 flex items-center gap-2.5">
-              <Icons iconName="students" className="size-4" />
-              <Paragraph
-                className="!text-lg"
-                text={
-                  <>
-                    <span className="pe-1 !opacity-80">Students:</span>
-                    <span className="font-medium">{course.students}</span>
-                  </>
-                }
-              />
-            </div>
-            <div className="mt-3 flex items-center gap-2.5">
-              <Icons iconName="language" className="size-4" />
-              <Paragraph
-                className="!text-lg"
-                text={
-                  <>
-                    <span className="pe-1 !opacity-80">Language:</span>
-                    <span className="font-medium">{course.language}</span>
-                  </>
-                }
-              />
-            </div>
-            {/* <div className="mt-3 flex items-center gap-2.5">
-              <Icons iconName="subtitle" className="size-4 w-2/12" />
-              <Paragraph
-                className="w-10/12 !text-lg"
-                text={
-                  <>
-                    <span className="pe-1 !opacity-80">Subtitles:</span>
-                    <span className="font-medium">{course.subtitle}</span>
-                  </>
-                }
-              />
-            </div> */}
-            {/* <div className="mt-3 flex items-center gap-2.5">
-              <Icons iconName="duration" className="size-4" />
-              <Paragraph
-                className="!text-lg"
-                text={
-                  <>
-                    <span className="pe-1 !opacity-80">Duration:</span>
-                    <span className="font-medium">{course.duration}</span>
-                  </>
-                }
-              />
-            </div> */}
-            <div className="mt-3 flex items-center gap-2.5">
-              <Icons iconName="resources" className="size-4" />
-              <Paragraph
-                className="!text-lg"
-                text={
-                  <>
-                    <span className="pe-1 !opacity-80">
-                      Additional Resources:
-                    </span>
-                    <span className="font-medium">
-                      {course.file?.url} Files
-                    </span>
-                  </>
-                }
-              />
-            </div>
-            <div className="mt-3 flex items-center gap-2.5">
-              <Icons iconName="certificate" className="size-4" />
-              <Paragraph
-                className="!text-lg"
-                text={
-                  <>
-                    <span className="pe-1 !opacity-80">Certificate:</span>
-                    <span className="font-medium"> {course.certificate}</span>
-                  </>
-                }
-              />
-            </div>
-            <div className="mt-6 border-t border-black border-opacity-10 pt-8">
-              <Button
-                className="w-full !rounded-xl max-sm:px-3 max-sm:py-2 max-sm:text-center"
-                bgBtn="Enroll Now"
-                path={`${PAYMENT_METHOD_ROUTE.replace(':courseId', course.id)}`}
-                // path={`${PAYMENT_METHOD_ROUTE}`}
-              />
+              <div className="space-y-2 mt-3">
+                <div className="flex items-center gap-3">
+                  <Icons iconName="bookImage" className="w-5 h-5 text-gray-500" />
+                  <div>
+                    <p className="text-gray-500 text-sm">Lessons</p>
+                    <p className="font-medium">{course.lessons}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <Icons iconName="difficulty" className="w-5 h-5 text-gray-500" />
+                  <div>
+                    <p className="text-gray-500 text-sm">Difficulty</p>
+                    <p className="font-medium capitalize">{course.difficulty}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <Icons iconName="students" className="w-5 h-5 text-gray-500" />
+                  <div>
+                    <p className="text-gray-500 text-sm">Students</p>
+                    <p className="font-medium">{course.students}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <Icons iconName="language" className="w-5 h-5 text-gray-500" />
+                  <div>
+                    <p className="text-gray-500 text-sm">Language</p>
+                    <p className="font-medium">{course.language}</p>
+                  </div>
+                </div>
+
+                {course.certificate && (
+                  <div className="flex items-center gap-3">
+                    <Icons iconName="certificate" className="w-5 h-5 text-gray-500" />
+                    <div>
+                      <p className="text-gray-500 text-sm">Certificate</p>
+                      <p className="font-medium">{course.certificate}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="mt-8 pt-6 border-t border-gray-200">
+                <Button
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition duration-200"
+                  bgBtn="Enroll Now"
+                  path={`${PAYMENT_METHOD_ROUTE.replace(':courseId', course.id)}`}
+                />
+              </div>
             </div>
           </div>
         </div>
