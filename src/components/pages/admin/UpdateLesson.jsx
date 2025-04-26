@@ -6,6 +6,7 @@ import Input from '../../common/Input'
 import popupImage from '../../../assets/images/webp/popup-icon.webp'
 import { fetchAllCourses } from '../../../services/course/course.service'
 import { fetchAllSections } from '../../../services/section/section.services'
+import { useDeleteLesson } from '../../../hooks/useAuth'
 
 const itemsPerPage = 6
 
@@ -41,6 +42,7 @@ const DeleteModal = ({ onConfirm, onClose }) => (
 )
 
 const UpdateLesson = () => {
+  const { mutate: deleteLessonMutation, isLoading: isDeleting } = useDeleteLesson();
   const navigate = useNavigate()
   const [currentPage, setCurrentPage] = useState(1)
   const [searchTerm, setSearchTerm] = useState('')
@@ -65,7 +67,6 @@ const UpdateLesson = () => {
       name: 'Introduction to React',
       editTest: 'Edit Test',
     },
-    // ... (keep your existing dummy data as fallback)
   ]
 
   // Filter lessons based on search term
@@ -83,15 +84,20 @@ const UpdateLesson = () => {
   )
 
   const handleDelete = (id) => {
-    // Implement actual API delete call here
-    console.log('Delete lesson with ID:', id)
-    setShowDeletePopup(false)
-    // Reset to first page if the last item on current page is deleted
-    if (paginatedLessons.length === 1 && currentPage > 1) {
-      setCurrentPage(currentPage - 1)
-    }
-  }
-
+    deleteLessonMutation(id, {
+      onSuccess: () => {
+        setShowDeletePopup(false);
+        // Reset to first page if the last item on current page is deleted
+        if (paginatedLessons.length === 1 && currentPage > 1) {
+          setCurrentPage(currentPage - 1);
+        }
+      },
+      onError: (error) => {
+        console.error('Error deleting lesson:', error);
+        setShowDeletePopup(false);
+      }
+    });
+  };
   const handleEdit = (lessonId) => {
     navigate(
       `/admin-dashboard?activeSidebar=update-section&lessonId=${lessonId}`
@@ -112,8 +118,8 @@ const UpdateLesson = () => {
                 'No.',
                 'Release Date',
                 'Lesson Name',
-                'Update Test',
-                'Edit',
+                'Update section and Test',
+                'delete',
               ].map((header, index) => (
                 <th
                   key={index}
@@ -153,19 +159,15 @@ const UpdateLesson = () => {
                     {lesson.name}
                   </td>
                   <td className="border border-[#D7D7D7] px-4 py-2">
-                    <a
-                      href={`/admin-dashboard?activeSidebar=update-test&lessonId=${lesson.id}`}
-                    >
-                      {lesson.editTest}
-                    </a>
-                  </td>
-                  <td className="border border-[#D7D7D7] px-4 py-2">
-                    <button
+                  <button
                       className="text-blue-600 mr-3 hover:underline"
                       onClick={() => handleEdit(lesson.id)}
                     >
                       Edit
                     </button>
+                  </td>
+                  <td className="border border-[#D7D7D7] px-4 py-2">
+                 
                     <button
                       onClick={() => {
                         setSelectedLesson(lesson)

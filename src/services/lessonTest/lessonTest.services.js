@@ -17,3 +17,8 @@ export const getLessonTest = async (id) => {
   console.log(response, 'create course-lesson-test response')
   return response.data.data
 }
+
+export const deleteLessonTest = async (testId) => {
+  const response = await API.delete(`/course-lesson-test/admin/${testId}`)
+  return response.data
+}

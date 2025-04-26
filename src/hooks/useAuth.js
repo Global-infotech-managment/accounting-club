@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../features/authSlice';
 import { loginUser } from '../services/auth/auth.service';
-import { addLessonTest } from '../services/lessonTest/lessonTest.services'; 
+import { addLessonTest, deleteLessonTest } from '../services/lessonTest/lessonTest.services'; 
 import { 
   getStudentProfile,
   createStudentProfile,
@@ -91,3 +91,22 @@ export const useCreateTest = () => {
     },
   });
 };
+
+// delete lesson
+
+export const useDeleteLesson = () => {
+  const queryClient = useQueryClient()
+  
+  return useMutation({
+    mutationFn: deleteLessonTest,
+    onSuccess: (data, variables) => {
+      // Invalidate the sections query to refresh the list
+      queryClient.invalidateQueries(['sections'])
+      return data
+    },
+    onError: (error) => {
+      console.error('Delete Lesson Failed:', error.response?.data?.message || error.message)
+      throw error
+    },
+  })
+}
