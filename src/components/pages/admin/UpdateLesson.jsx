@@ -7,7 +7,8 @@ import popupImage from '../../../assets/images/webp/popup-icon.webp'
 import { fetchAllCourses } from '../../../services/course/course.service'
 import { fetchAllSections } from '../../../services/section/section.services'
 import { useDeleteLesson } from '../../../hooks/useAuth'
-import { deleteLesson } from '../../../services/lessonTest/lessonTest.services'; 
+import { deleteLesson } from '../../../services/lessonTest/lessonTest.services'
+import { toast } from 'sonner'
 
 const itemsPerPage = 6
 
@@ -43,13 +44,13 @@ const DeleteModal = ({ onConfirm, onClose }) => (
 )
 
 const UpdateLesson = () => {
-  const { mutate: deleteLessonMutation, isLoading: isDeleting } = useDeleteLesson();
+  const { mutate: deleteLessonMutation, isLoading: isDeleting } =
+    useDeleteLesson()
   const navigate = useNavigate()
   const [currentPage, setCurrentPage] = useState(1)
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedLesson, setSelectedLesson] = useState(null)
   const [showDeletePopup, setShowDeletePopup] = useState(false)
-  
 
   // Fetch courses using React Query
   const {
@@ -88,17 +89,18 @@ const UpdateLesson = () => {
   const handleDelete = (id) => {
     deleteLessonMutation(id, {
       onSuccess: () => {
-        setShowDeletePopup(false);
+        setShowDeletePopup(false)
         if (paginatedLessons.length === 1 && currentPage > 1) {
-          setCurrentPage(currentPage - 1);
+          setCurrentPage(currentPage - 1)
         }
+        toast.success('Lesson Deleted Success Fully')
       },
       onError: (error) => {
-        console.error('Error deleting lesson:', error);
-        setShowDeletePopup(false);
-      }
-    });
-  };
+        console.error('Error deleting lesson:', error)
+        setShowDeletePopup(false)
+      },
+    })
+  }
   const handleEdit = (lessonId) => {
     navigate(
       `/admin-dashboard?activeSidebar=update-section&lessonId=${lessonId}`
@@ -146,7 +148,7 @@ const UpdateLesson = () => {
               </tr>
             ) : paginatedLessons.length > 0 ? (
               paginatedLessons.map((lesson, index) => (
-               <tr
+                <tr
                   key={lesson.id}
                   className="hover:bg-gray-50 text-nowrap border-t bg-[#F7F7F7] text-center"
                 >
@@ -154,13 +156,13 @@ const UpdateLesson = () => {
                     {startIndex + index + 1}
                   </td>
                   <td className="border border-[#D7D7D7] px-4 py-2">
-                  {lesson.createdAt}
+                    {lesson.createdAt}
                   </td>
                   <td className="border border-[#D7D7D7] px-4 py-2">
                     {lesson.name}
                   </td>
                   <td className="border border-[#D7D7D7] px-4 py-2">
-                  <button
+                    <button
                       className="text-blue-600 mr-3 hover:underline"
                       onClick={() => handleEdit(lesson.id)}
                     >
@@ -168,7 +170,6 @@ const UpdateLesson = () => {
                     </button>
                   </td>
                   <td className="border border-[#D7D7D7] px-4 py-2">
-                 
                     <button
                       onClick={() => {
                         setSelectedLesson(lesson)

@@ -55,19 +55,21 @@ export const deleteCourseById = async (id) => {
 }
 
 export const findCourseById = async (slug) => {
-  console.log('slug 58', slug)
   const response = await API.get(`/course/${slug}`)
-  console.log('response data', response.data.data)
   return response.data.data
 }
 export const findCourseByCourseId = async (courseId) => {
   const response = await API.get(`/course/${courseId}`)
-  console.log('response data', response.data.data)
   return response.data.data
 }
 
 export const deleteCourse = async (id) => {
   await API.delete(`/course/admin/${id}`)
+}
+
+export const courseEnrollmentForAdmin = async (id) => {
+  const response = await API.get(`/course-enrollment/admin/${id}`)
+  return response
 }
 
 export const toggleCourseStatus = async (id, status) => {

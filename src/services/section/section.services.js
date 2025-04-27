@@ -18,6 +18,10 @@ export const fetchAllSections = async () => {
 
 export const fetchCourseById = async (id) => {
   const response = await API.get(`/course-lesson/${id}`)
-  console.log(':response data ', response.data.data)
   return response.data.data
+}
+
+export const deleteLessonById = async (id) => {
+  const response = await API.delete(`course-lesson/admin/${id}`)
+  return response.data
 }
