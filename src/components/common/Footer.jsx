@@ -20,8 +20,7 @@ const Footer = () => {
               />
             </Link>
             <p className="!leading-150 mt-2 text-[14px] text-white">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolor
+            Empowering careers in accounting since 1999. Learn from industry experts and master practical skills in Tally, Taxation, GST, and Payroll.
             </p>
             <div className="mt-3 flex items-center gap-3 sm:hidden">
               <Icons iconName="twitter" />

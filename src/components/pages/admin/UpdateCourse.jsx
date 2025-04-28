@@ -138,7 +138,7 @@ const UpdateCourse = () => {
           Edit Course
         </p>
         <div className="flex items-center gap-4">
-          <a href="/admin-dashboard?activeSidebar=update-section">
+          {/* <a href="/admin-dashboard?activeSidebar=update-section">
             <Button
               type="submit"
               className="!bg-transparent col-span-2 mt-4  !py-2 sm:px-5  !px-3"
@@ -147,7 +147,7 @@ const UpdateCourse = () => {
                 updateCourseMutation.isLoading || uploadFileMutation.isLoading
               }
             />
-          </a>
+          </a> */}
           <a href="/admin-dashboard?activeSidebar=update-lesson">
             <Button
               type="submit"
