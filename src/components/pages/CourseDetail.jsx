@@ -48,13 +48,14 @@ const CourseDetail = () => {
           {/* Left column - Course content */}
           <div className="lg:w-8/12">
             <div className="aspect-w-16 aspect-h-9 rounded-3xl overflow-hidden">
-              <ReactPlayer
+              {/* <ReactPlayer
                 url={course?.file?.url}
                 controls={true}
                 width="100%"
                 height="100%"
                 className="rounded-2xl"
-              />
+              /> */}
+              <img src={course?.file?.url} alt="" />
             </div>
             
             <div className="mt-6">

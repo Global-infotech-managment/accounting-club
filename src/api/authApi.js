@@ -4,8 +4,8 @@ import Cookies from 'js-cookie'
 
 const API = axios.create({
   // baseURL: 'https://ec2-51-20-34-228.eu-north-1.compute.amazonaws.com:4000/api/v1',
-  baseURL: 'http://localhost:4000/api/v1',
-  // baseURL: 'https://accountants-club-api.onrender.com/api/v1',
+  // baseURL: 'http://localhost:4000/api/v1',
+  baseURL: 'https://accountants-club-api.onrender.com/api/v1',
   headers: {
     'Content-Type': 'application/json',
   },
