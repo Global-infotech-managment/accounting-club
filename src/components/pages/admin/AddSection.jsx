@@ -31,7 +31,7 @@ const AddSection = () => {
     mutationFn: addSection,
     onSuccess: () => {
       showToast.success('Section created successfully')
-      navigate('/admin-dashboard?activeSidebar=add-video')
+      navigate('/admin-dashboard?activeSidebar=add-test')
     },
     onError: (error) => {
       showToast.error(
@@ -77,7 +77,7 @@ const AddSection = () => {
   return (
     <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
       <p className="mb-4 text-[16px] font-semibold text-black lg:text-[18px]">
-        Add Section
+        Add Lesson
       </p>
       <hr className="mb-4 w-full bg-black opacity-10" />
       <form className="flex flex-col gap-4">
@@ -92,7 +92,7 @@ const AddSection = () => {
         />
         <Input
           name="addLesson"
-          placeholder="Section Name"
+          placeholder="Lesson Name"
           value={courseData.addLesson}
           onChange={handleInputChange}
         />
