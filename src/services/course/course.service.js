@@ -50,9 +50,6 @@ export const updateCourse = async (data) => {
   return response.data.data
 }
 
-export const deleteCourseById = async (id) => {
-  await API.delete(`/course/admin/${id}`)
-}
 
 export const findCourseById = async (slug) => {
   const response = await API.get(`/course/${slug}`)
@@ -64,7 +61,8 @@ export const findCourseByCourseId = async (courseId) => {
 }
 
 export const deleteCourse = async (id) => {
-  await API.delete(`/course/admin/${id}`)
+  const response = await API.delete(`/course/admin/${id}`)
+  return response.data.data
 }
 
 export const courseEnrollmentForAdmin = async (id) => {
