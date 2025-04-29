@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import courseImage from '../../assets/images/png/course-details-hero.png'
 import Heading from '../common/Heading'
 import Paragraph from '../common/Paragraph'
@@ -6,15 +7,16 @@ import Icons from '../common/Icons'
 import Button from '../common/Button'
 import StudentEllipse from '../../assets/images/png/second-hero-ellipse.png'
 import bookImage from '../../assets/images/png/online-book.png'
-import { useParams } from 'react-router-dom'
-import { onlineCoursesData } from '../../utils/helper'
-import { PAYMENT_METHOD_ROUTE } from '../../utils/constant'
-import ReactPlayer from 'react-player'
+import { PAYMENT_METHOD_ROUTE, STUDENT_LOGIN_ROUTE } from '../../utils/constant'
 import { useQuery } from '@tanstack/react-query'
 import { findCourseById } from '../../services/course/course.service'
+import useAuth from '../../hooks/useAuth'
 
 const CourseDetail = () => {
   const { slug } = useParams()
+  const navigate = useNavigate()
+  const { isAuthenticated } = useAuth()
+
   const {
     data: course,
     isLoading,
@@ -25,12 +27,26 @@ const CourseDetail = () => {
     enabled: !!slug,
   })
 
+  const handleEnrollClick = () => {
+    if (isAuthenticated) {
+      navigate(PAYMENT_METHOD_ROUTE)
+    } else {
+      const shouldLogin = window.confirm("You need to login first to enroll in this course.");
+      if (shouldLogin) {
+        navigate(STUDENT_LOGIN_ROUTE, {
+          state: { from: `/course/${slug}` },
+        })
+      }
+    }
+  }
+  
+
   if (isLoading) return <div className="text-center">Loading...</div>
   if (isError) return <div className="text-red-500 text-center">Error loading course</div>
   if (!course) return <div className="text-red-500 text-center">Course not found</div>
 
   return (
-    <div className="relative  pb-20">
+    <div className="relative pb-20">
       {/* Background elements */}
       <img
         className="pointer-events-none absolute bottom-1/3 left-0 max-xl:hidden"
@@ -48,14 +64,7 @@ const CourseDetail = () => {
           {/* Left column - Course content */}
           <div className="lg:w-8/12">
             <div className="aspect-w-16 aspect-h-9 rounded-3xl overflow-hidden">
-              {/* <ReactPlayer
-                url={course?.file?.url}
-                controls={true}
-                width="100%"
-                height="100%"
-                className="rounded-2xl"
-              /> */}
-              <img src={course?.file?.url} alt="" />
+              <img height={300} className='w-full' src={course?.fileId?.url || courseImage} alt="course img" />
             </div>
             
             <div className="mt-6">
@@ -73,32 +82,32 @@ const CourseDetail = () => {
           {/* Right column - Course details */}
           <div className="lg:w-4/12">
             <div className="bg-white rounded-xl shadow-md p-6 sticky top-20">
-            <div className="flex items-end justify-between">
-              <div className="flex items-end">
-                <Heading className="pe-2 !text-black" middleText={'₹'} />
-                <Heading className="!text-black" middleText={course.price} />
+              <div className="flex items-end justify-between">
+                <div className="flex items-end">
+                  <Heading className="pe-2 !text-black" middleText={'₹'} />
+                  <Heading className="!text-black" middleText={course.price} />
+                </div>
+                <Paragraph
+                  className="text-orange-red"
+                  text={`${course.price}% Off`}
+                />
               </div>
-              <Paragraph
-                className="text-orange-red"
-                text={`${course.price}% Off`}
-              />
-            </div>
               <div className="mt-2 flex rounded-[10px] border border-black border-opacity-20 px-5">
-              <div className="flex w-6/12 items-center gap-2.5 border-r border-black border-opacity-20">
-                <Icons iconName="bookImage" className="size-4" />
-                <div className="py-2.5">
-                  <Paragraph className="opacity-80" text="Lessons" />
-                  <Paragraph className="" text={course.lessons} />
+                <div className="flex w-6/12 items-center gap-2.5 border-r border-black border-opacity-20">
+                  <Icons iconName="bookImage" className="size-4" />
+                  <div className="py-2.5">
+                    <Paragraph className="opacity-80" text="Lessons" />
+                    <Paragraph className="" text={course.lessons} />
+                  </div>
+                </div>
+                <div className="ms-5 flex w-6/12 items-center gap-2.5">
+                  <Icons iconName="difficulty" className="size-4" />
+                  <div className="py-2.5">
+                    <Paragraph className="opacity-80" text="Difficulty" />
+                    <Paragraph className="capitalize" text={course.difficulty} />
+                  </div>
                 </div>
               </div>
-              <div className="ms-5 flex w-6/12 items-center gap-2.5">
-                <Icons iconName="difficulty" className="size-4" />
-                <div className="py-2.5">
-                  <Paragraph className="opacity-80" text="Difficulty" />
-                  <Paragraph className="capitalize" text={course.difficulty} />
-                </div>
-              </div>
-            </div>
               <div className="space-y-2 mt-3">
                 <div className="flex items-center gap-3">
                   <Icons iconName="bookImage" className="w-5 h-5 text-gray-500" />
@@ -147,7 +156,7 @@ const CourseDetail = () => {
                 <Button
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition duration-200"
                   bgBtn="Enroll Now"
-                  path={`${PAYMENT_METHOD_ROUTE.replace(':courseId', course.id)}`}
+                  onClick={handleEnrollClick}
                 />
               </div>
             </div>
