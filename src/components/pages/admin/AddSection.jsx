@@ -22,6 +22,7 @@ const AddSection = () => {
     queryFn: fetchAllCourses,
     onSuccess: (data) => {
       if (data?.courses?.length > 0) {
+        console.log('data.courses[0].id ', data.courses[0].id)
         updateCourseData({ courseId: data.courses[0].id })
       }
     },
@@ -57,12 +58,12 @@ const AddSection = () => {
 
     const statusAsBoolean =
       courseData.status === 'true' || courseData.status === true
-
+    console.log('course data ', courseData)
     createSection.mutate({
       courseId: courseData.courseId,
       name: courseData.addLesson,
       link: courseData.link,
-      num: +courseData.num,
+      // num: +courseData.num,
       isMandatory: moveNext,
       status: statusAsBoolean,
     })

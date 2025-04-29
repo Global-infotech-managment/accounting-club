@@ -19,6 +19,7 @@ const UpdateCourse = () => {
   const [fileId, setFileId] = useState(null)
   const { courseData, updateCourseData } = useContext(AppContext)
   const [dataFetched, setDataFetched] = useState(false)
+  const [isDisabled, setIsDisabled] = useState(false)
   const navigate = useNavigate()
 
   const [searchParams] = useSearchParams()
@@ -82,8 +83,15 @@ const UpdateCourse = () => {
   const handleFileChange = async (event) => {
     const file = event.target.files?.[0]
     if (file) {
-      updateCourseData({ selectedFile: file })
-      await uploadFileMutation.mutateAsync(file)
+      try {
+        updateCourseData({ selectedFile: file })
+        setIsDisabled(true)
+        await uploadFileMutation.mutateAsync(file)
+        setIsDisabled(false)
+        console.log('Upload loading:', uploadFileMutation)
+      } catch {
+        setIsDisabled(false)
+      }
     }
   }
 
@@ -93,25 +101,37 @@ const UpdateCourse = () => {
 
   const formSubmit = async (e) => {
     e.preventDefault()
-    if (
-      !courseData.name ||
-      !courseData.description ||
-      !courseData.price ||
-      !courseData.validity
-    ) {
-      showToast.error('Please fill all required fields')
-      return
-    }
+    console.log('course data ', courseData)
+    // if (
+    //   !courseData.name ||
+    //   !courseData.description ||
+    //   !courseData.price ||
+    //   !courseData.validity
+    // ) {
+    //   showToast.error('Please fill all required fields')
+    //   return
+    // }
 
     try {
       const coursePayload = {
+        // courseId: courseId,
+        // name: courseData.name,
+        // description: courseData.description,
+        // price: Number(courseData.price),
+        // validity: Number(courseData.validity),
+        // status: courseData.status,
+        // ...(fileId && { fileId: fileId }),
+
         courseId: courseId,
-        name: courseData.name,
-        description: courseData.description,
-        price: Number(courseData.price),
-        validity: Number(courseData.validity),
-        status: courseData.status,
-        ...(fileId && { fileId: fileId }),
+
+        ...(courseData.name && { name: courseData.name }),
+        ...(courseData.description && { description: courseData.description }),
+        ...(courseData.price != null && { price: Number(courseData.price) }),
+        ...(courseData.validity != null && {
+          validity: Number(courseData.validity),
+        }),
+        ...(courseData.status && { status: courseData.status }),
+        ...(fileId && { fileId }),
       }
 
       await updateCourseMutation.mutateAsync(coursePayload)
@@ -133,7 +153,7 @@ const UpdateCourse = () => {
 
   return (
     <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
-      <div className="flex flex-col sm:flex-row items-center justify-between pb-3">
+      <div className="flex flex-col items-center justify-between pb-3 sm:flex-row">
         <p className="text-[16px] font-semibold text-black lg:text-[18px]">
           Edit Course
         </p>
@@ -151,7 +171,7 @@ const UpdateCourse = () => {
           <a href="/admin-dashboard?activeSidebar=update-lesson">
             <Button
               type="submit"
-              className="col-span-2 mt-4 !py-2 sm:px-5  !px-3"
+              className="col-span-2 mt-4 !px-3 !py-2 sm:px-5"
               bgBtn="Update Lesson"
               disabled={
                 updateCourseMutation.isLoading || uploadFileMutation.isLoading
@@ -223,9 +243,7 @@ const UpdateCourse = () => {
           type="submit"
           className="col-span-2 mt-4 w-full"
           bgBtn={uploadFileMutation.isLoading ? 'Uploading...' : 'Update'}
-          disabled={
-            updateCourseMutation.isLoading || uploadFileMutation.isLoading
-          }
+          disabled={isDisabled}
         />
       </form>
     </div>
