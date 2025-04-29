@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useQueryClient } from '@tanstack/react-query'
 import logo from '../../assets/images/png/dashboard-logo.png'
 import profile from '../../assets/images/png/profile-photo.png'
 import Paragraph from './Paragraph'
@@ -9,12 +10,16 @@ import {
   STUDENT_DASHBOARD_ROUTE,
   UPDATE_PROFILE_ROUTE,
 } from '../../utils/constant'
+import { logout } from '../../services/student/student.services'
 
 const DashboardNav = () => {
   const [isOpen, setIsOpen] = useState(false)
   const popupRef = useRef(null)
   const navigation = useLocation()
   const path = navigation.pathname
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
+
   // Close popup when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -27,6 +32,19 @@ const DashboardNav = () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [])
+
+  // Logout function
+  const handleLogout = async () => {
+    try {
+      await logout()
+      localStorage.removeItem('token') // Or your auth key
+      queryClient.clear()
+      navigate('/') // Redirect to home
+    } catch (error) {
+      console.error('Logout failed:', error)
+      alert('Logout failed. Please try again.')
+    }
+  }
 
   return (
     <div className="relative border-b border-black border-opacity-5 bg-[#fa7f7f0c]">
@@ -63,12 +81,12 @@ const DashboardNav = () => {
                 height={48}
                 width={48}
                 src={profile}
-                className="w-[36px] rounded-xl "
+                className="w-[36px] rounded-xl"
                 alt="profile"
               />
             </button>
 
-            {/* Logout Popup */}
+            {/* Popup */}
             {isOpen && (
               <div
                 ref={popupRef}
@@ -83,21 +101,18 @@ const DashboardNav = () => {
                   <p className="mt-2 font-semibold">Yogesh Sharma</p>
                 </div>
                 <div className="mt-3">
-                  {/* <button className="px-4 py-2 text-left text-[14px] text-black opacity-70 transition-all duration-300 ease-in-out hover:text-orange-red md:text-[16px]">
-                    Settings
-                  </button> */}
                   <hr className="bg-black opacity-70" />
-                  <Link
-                    to="/"
-                    className="inline-block px-4 py-3 text-left text-[14px] text-black opacity-70 transition-all duration-300 ease-in-out hover:text-orange-red md:text-[16px]"
+                  <button
+                    onClick={handleLogout}
+                    className="w-full text-left px-4 py-3 text-[14px] text-black opacity-70 transition-all duration-300 ease-in-out hover:text-orange-red md:text-[16px]"
                   >
                     Log Out
-                  </Link>
+                  </button>
                   <Link
                     to={UPDATE_PROFILE_ROUTE}
                     className="inline-block px-4 py-3 text-left text-[14px] text-black opacity-70 transition-all duration-300 ease-in-out hover:text-orange-red md:text-[16px]"
                   >
-                   Update Profile
+                    Update Profile
                   </Link>
                 </div>
               </div>

@@ -105,6 +105,7 @@ const AdminCoursesAdd = () => {
         <hr className="mb-4 w-full bg-black opacity-10" />
         <form className="flex flex-col gap-4" onSubmit={formSubmit}>
           <Input
+           label="Course Name"
             name="name"
             placeholder="Course Name"
             value={courseData.name}
@@ -113,6 +114,7 @@ const AdminCoursesAdd = () => {
             }
           />
           <Input
+           label="description"
             name="description"
             placeholder="Description"
             value={courseData.description}
@@ -121,6 +123,7 @@ const AdminCoursesAdd = () => {
             }
           />
           <Input
+          label="Price"
             name="price"
             type="number"
             placeholder="Price"
@@ -130,9 +133,10 @@ const AdminCoursesAdd = () => {
             }
           />
           <Input
+          label="validity"
             name="validity"
             type="number"
-            placeholder="Validity"
+            placeholder="180d"
             value={courseData.validity}
             onChange={(e) =>
               updateCourseData({ [e.target.name]: e.target.value })

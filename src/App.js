@@ -111,7 +111,7 @@ function AppContent() {
         <Route path={NEW_PASSWORD_ROUTE} element={<UpdateNewPassword />} />
         <Route path={COURSES_DETAIL_ROUTE} element={<CoursesInfo />} />
         <Route path={JOBS_DETAIL_ROUTE} element={<JobDetail />} />
-      {/*  <Route
+        {/*  <Route
           path={STUDENT_DASHBOARD_ROUTE}
           element={isAuthenticated ? <Dashboard /> : <StudentLogin />}
         />*/}
@@ -128,7 +128,14 @@ function AppContent() {
           element={<UpdatePassword />}
         />
         <Route path={POST_RESUME_ROUTE} element={<PostResume />} />
-        <Route path={PAYMENT_METHOD_ROUTE} element={<PaymentMethod />} />
+        <Route
+          path={PAYMENT_METHOD_ROUTE}
+          element={
+            <ProtectedRoute requireFirstLogin requiredRole="Student">
+              <PaymentMethod />
+            </ProtectedRoute>
+          }
+        />
         <Route path={SEARCH_WORK_FROM_HOME_JOBS_ROUTE} element={<JobList />} />
         <Route path={ADMIN_LOGIN_ROUTE} element={<AdminLogin />} />
         <Route path={UPDATE_COURSE} element={<UpdateCourse />} />
