@@ -110,13 +110,13 @@ const AddSection = () => {
           value={courseData.link}
           onChange={handleInputChange}
         />
-        <Input
+        {/* <Input
           name="num"
           type={'number'}
           placeholder="number of lessons"
           value={courseData.num}
           onChange={handleInputChange}
-        />
+        /> */}
 
         <Dropdown
           name="isMandatory"
