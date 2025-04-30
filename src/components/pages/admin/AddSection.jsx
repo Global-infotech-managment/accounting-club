@@ -47,9 +47,15 @@ const AddSection = () => {
   }
 
   const handleDropdownChange = (name, value) => {
-    console.log('Dropdown change:', { name, value })
-    updateCourseData({ [name]: value })
-  }
+    updateCourseData({ [name]: value });
+  
+    if (name === 'courseId') {
+      const searchParams = new URLSearchParams(window.location.search);
+      searchParams.set('courseId', value);
+      navigate(`?${searchParams.toString()}`, { replace: true });
+    }
+  };
+  
 
   const formSubmit = (e) => {
     e.preventDefault()
