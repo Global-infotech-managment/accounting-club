@@ -16,6 +16,12 @@ export const fetchAllSections = async () => {
   return response.data.data.courseLessons
 }
 
+export const fetchAllSectionsByCourseId = async (courseId) => {
+  const response = await API.get(`course-lesson/admin/${courseId}`)
+  console.log('response ', response?.data?.data?.lessons)
+  return response?.data?.data?.lessons
+}
+
 export const fetchCourseById = async (id) => {
   const response = await API.get(`/course-lesson/${id}`)
   return response.data.data

@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import Button from '../../common/Button'
 import Input from '../../common/Input'
 import popupImage from '../../../assets/images/webp/popup-icon.webp'
 import { fetchAllCourses } from '../../../services/course/course.service'
-import { fetchAllSections } from '../../../services/section/section.services'
+import {
+  fetchAllSections,
+  fetchAllSectionsByCourseId,
+} from '../../../services/section/section.services'
 import { useDeleteLesson } from '../../../hooks/useAuth'
 import { deleteLesson } from '../../../services/lessonTest/lessonTest.services'
 import { toast } from 'sonner'
@@ -51,6 +54,8 @@ const UpdateLesson = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedLesson, setSelectedLesson] = useState(null)
   const [showDeletePopup, setShowDeletePopup] = useState(false)
+  const [searchParams] = useSearchParams()
+  const courseId = searchParams.get('courseId')
 
   // Fetch courses using React Query
   const {
@@ -59,18 +64,22 @@ const UpdateLesson = () => {
     isError,
   } = useQuery({
     queryKey: ['sections'],
-    queryFn: fetchAllSections,
+    queryFn: () => fetchAllSectionsByCourseId(courseId),
+    enabled: !!courseId,
   })
+  console.log('course ', courses)
 
   // Get lessons from courses data or use dummy data if not available
-  const allLessons = courses || [
-    {
-      id: 1,
-      releaseDate: '2023-01-15',
-      name: 'Introduction to React',
-      editTest: 'Edit Test',
-    },
-  ]
+  const allLessons =
+    courses ||
+    [
+      // {
+      //   id: 1,
+      //   releaseDate: '2023-01-15',
+      //   name: 'Introduction to React',
+      //   editTest: 'Edit Test',
+      // },
+    ]
 
   // Filter lessons based on search term
   const filteredLessons = allLessons.filter((lesson) =>

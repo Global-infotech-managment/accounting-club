@@ -17,6 +17,11 @@ export const fetchCourses = async (params) => {
   }
 }
 
+export const fetchEnrollmentCourses = async () => {
+  const response = await API.get('course-enrollment/student')
+  return response.data?.data?.courses || []
+}
+
 export const fetchCoursesForStudent = async (params) => {
   const response = await API.get('/course/student', {
     params,
@@ -49,7 +54,6 @@ export const updateCourse = async (data) => {
   console.log(response, 'update course response')
   return response.data.data
 }
-
 
 export const findCourseById = async (slug) => {
   const response = await API.get(`/course/${slug}`)

@@ -28,14 +28,15 @@ const UpdateSection = () => {
     queryFn: () => fetchCourseById(sectionId),
     enabled: !!sectionId,
   })
+  console.log('section Data ', sectionData)
 
   useEffect(() => {
     if (sectionData) {
       setCourseData({
         addLesson: sectionData.name || '',
         link: sectionData.link || '',
-        isMandatory: sectionData.isMandatory ? true : false,
-        status: sectionData.status ? true : false,
+        isMandatory: sectionData.isMandatory ? 'true' : 'false',
+        status: sectionData.status ? 'true' : 'false',
       })
     }
   }, [sectionData])
@@ -102,7 +103,7 @@ const UpdateSection = () => {
             />
           </a> */}
           <a
-            href={`/admin-dashboard?activeSidebar=all-test`}
+            href={`/admin-dashboard?activeSidebar=all-test&lessonId=${sectionId}`}
           >
             <Button
               type="button"

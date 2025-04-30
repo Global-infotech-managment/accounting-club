@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import Button from '../../common/Button'
 import Input from '../../common/Input'
 import popupImage from '../../../assets/images/webp/popup-icon.webp'
 import { fetchAllCourses } from '../../../services/course/course.service'
 import { fetchAllSections } from '../../../services/section/section.services'
-import { useDeleteLesson } from '../../../hooks/useAuth'
-import { deleteLesson } from '../../../services/lessonTest/lessonTest.services'
+import { useDeleteLesson, useDeleteLessonTest } from '../../../hooks/useAuth'
+import {
+  deleteLesson,
+  fetchAllTestsByLessonId,
+} from '../../../services/lessonTest/lessonTest.services'
 import { toast } from 'sonner'
 
 const itemsPerPage = 6
@@ -45,12 +48,15 @@ const DeleteModal = ({ onConfirm, onClose }) => (
 
 const AllTest = () => {
   const { mutate: deleteLessonMutation, isLoading: isDeleting } =
-    useDeleteLesson()
+    useDeleteLessonTest()
   const navigate = useNavigate()
   const [currentPage, setCurrentPage] = useState(1)
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedLesson, setSelectedLesson] = useState(null)
   const [showDeletePopup, setShowDeletePopup] = useState(false)
+
+  const [searchParams] = useSearchParams()
+  const lessonId = searchParams.get('lessonId')
 
   // Fetch courses using React Query
   const {
@@ -59,29 +65,27 @@ const AllTest = () => {
     isError,
   } = useQuery({
     queryKey: ['sections'],
-    queryFn: fetchAllSections,
+    queryFn: () => fetchAllTestsByLessonId(lessonId),
+    onSuccess: (data) => {
+      console.log('data ', data)
+    },
+    enabled: !!lessonId,
   })
 
+  console.log('courses tests ', courses)
+
   // Get lessons from courses data or use dummy data if not available
-  const allLessons = courses || [
-    {
-      id: 1,
-      releaseDate: '2023-01-15',
-      name: 'Introduction to React',
-      editTest: 'Edit Test',
-    },
-  ]
+  const allLessons = courses
+  console.log('All lessons ', allLessons?.[0])
 
   // Filter lessons based on search term
-  const filteredLessons = allLessons.filter((lesson) =>
-    lesson.name.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  const filteredLessons = allLessons
 
   // Pagination logic
-  const totalCount = filteredLessons.length
+  const totalCount = filteredLessons?.length
   const totalPages = Math.ceil(totalCount / itemsPerPage)
   const startIndex = (currentPage - 1) * itemsPerPage
-  const paginatedLessons = filteredLessons.slice(
+  const paginatedLessons = filteredLessons?.slice(
     startIndex,
     startIndex + itemsPerPage
   )
@@ -93,7 +97,7 @@ const AllTest = () => {
         if (paginatedLessons.length === 1 && currentPage > 1) {
           setCurrentPage(currentPage - 1)
         }
-        toast.success('Lesson Deleted Success Fully')
+        toast.success('Test Deleted Success Fully')
       },
       onError: (error) => {
         console.error('Error deleting lesson:', error)
@@ -102,9 +106,7 @@ const AllTest = () => {
     })
   }
   const handleEdit = (lessonId) => {
-    navigate(
-      `/admin-dashboard?activeSidebar=update-test&id=${lessonId}`
-    )
+    navigate(`/admin-dashboard?activeSidebar=update-test&id=${lessonId}`)
   }
 
   return (
@@ -159,7 +161,7 @@ const AllTest = () => {
                     {lesson.createdAt}
                   </td>
                   <td className="border border-[#D7D7D7] px-4 py-2">
-                    {lesson.name}
+                    {lesson.question}
                   </td>
                   <td className="border border-[#D7D7D7] px-4 py-2">
                     <button

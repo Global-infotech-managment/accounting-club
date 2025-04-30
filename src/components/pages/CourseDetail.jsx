@@ -27,12 +27,14 @@ const CourseDetail = () => {
     enabled: !!slug,
   })
 
-
   const handleEnrollClick = () => {
     if (isAuthenticated) {
-      navigate(PAYMENT_METHOD_ROUTE)
+      // navigate(PAYMENT_METHOD_ROUTE)
+      navigate(PAYMENT_METHOD_ROUTE.replace(':courseId', slug))
     } else {
-      const shouldLogin = window.confirm("You need to login first to enroll in this course.");
+      const shouldLogin = window?.confirm(
+        'You need to login first to enroll in this course.'
+      )
       if (shouldLogin) {
         navigate(STUDENT_LOGIN_ROUTE, {
           state: { from: `/course/${slug}` },
@@ -40,12 +42,12 @@ const CourseDetail = () => {
       }
     }
   }
-  
-  
 
   if (isLoading) return <div className="text-center">Loading...</div>
-  if (isError) return <div className="text-red-500 text-center">Error loading course</div>
-  if (!course) return <div className="text-red-500 text-center">Course not found</div>
+  if (isError)
+    return <div className="text-red-500 text-center">Error loading course</div>
+  if (!course)
+    return <div className="text-red-500 text-center">Course not found</div>
 
   return (
     <div className="relative pb-20">
@@ -61,29 +63,37 @@ const CourseDetail = () => {
         alt="book"
       />
 
-      <div className="container mx-auto max-w-6xl px-4 sm:px-6 pt-5 sm:pt-10 lg:pt-14 xl:pt-20">
-        <div className="flex flex-col lg:flex-row gap-3 lg:gap-8">
+      <div className="container mx-auto max-w-6xl px-4 pt-5 sm:px-6 sm:pt-10 lg:pt-14 xl:pt-20">
+        <div className="flex flex-col gap-3 lg:flex-row lg:gap-8">
           {/* Left column - Course content */}
           <div className="lg:w-8/12">
-            <div className="aspect-w-16 aspect-h-9 rounded-3xl overflow-hidden">
-              <img height={300} className='w-full' src={course?.fileId?.url || courseImage} alt="course img" />
+            <div className="aspect-w-16 aspect-h-9 overflow-hidden rounded-3xl">
+              <img
+                height={300}
+                className="w-full"
+                src={course?.fileId?.url || courseImage}
+                alt="course img"
+              />
             </div>
-            
+
             <div className="mt-6">
               <Heading
                 level={1}
-                className="mb-4 text-3xl md:text-4xl font-bold"
+                className="mb-4 text-3xl font-bold md:text-4xl"
                 middleText={
                   <span className="text-red-500 capitalize">{course.name}</span>
                 }
               />
-              <Paragraph className="text-gray-700 text-lg" text={course.description} />
+              <Paragraph
+                className="text-gray-700 text-lg"
+                text={course.description}
+              />
             </div>
           </div>
 
           {/* Right column - Course details */}
           <div className="lg:w-4/12">
-            <div className="bg-white rounded-xl shadow-md p-6 sticky top-20">
+            <div className="shadow-md sticky top-20 rounded-xl bg-white p-6">
               <div className="flex items-end justify-between">
                 <div className="flex items-end">
                   <Heading className="pe-2 !text-black" middleText={'₹'} />
@@ -106,13 +116,19 @@ const CourseDetail = () => {
                   <Icons iconName="difficulty" className="size-4" />
                   <div className="py-2.5">
                     <Paragraph className="opacity-80" text="Difficulty" />
-                    <Paragraph className="capitalize" text={course.difficulty} />
+                    <Paragraph
+                      className="capitalize"
+                      text={course.difficulty}
+                    />
                   </div>
                 </div>
               </div>
-              <div className="space-y-2 mt-3">
+              <div className="mt-3 space-y-2">
                 <div className="flex items-center gap-3">
-                  <Icons iconName="bookImage" className="w-5 h-5 text-gray-500" />
+                  <Icons
+                    iconName="bookImage"
+                    className="text-gray-500 h-5 w-5"
+                  />
                   <div>
                     <p className="text-gray-500 text-sm">Lessons</p>
                     <p className="font-medium">{course.lessons}</p>
@@ -120,15 +136,23 @@ const CourseDetail = () => {
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <Icons iconName="difficulty" className="w-5 h-5 text-gray-500" />
+                  <Icons
+                    iconName="difficulty"
+                    className="text-gray-500 h-5 w-5"
+                  />
                   <div>
                     <p className="text-gray-500 text-sm">Difficulty</p>
-                    <p className="font-medium capitalize">{course.difficulty}</p>
+                    <p className="font-medium capitalize">
+                      {course.difficulty}
+                    </p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <Icons iconName="students" className="w-5 h-5 text-gray-500" />
+                  <Icons
+                    iconName="students"
+                    className="text-gray-500 h-5 w-5"
+                  />
                   <div>
                     <p className="text-gray-500 text-sm">Students</p>
                     <p className="font-medium">{course.students}</p>
@@ -136,7 +160,10 @@ const CourseDetail = () => {
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <Icons iconName="language" className="w-5 h-5 text-gray-500" />
+                  <Icons
+                    iconName="language"
+                    className="text-gray-500 h-5 w-5"
+                  />
                   <div>
                     <p className="text-gray-500 text-sm">Language</p>
                     <p className="font-medium">{course.language}</p>
@@ -145,7 +172,10 @@ const CourseDetail = () => {
 
                 {course.certificate && (
                   <div className="flex items-center gap-3">
-                    <Icons iconName="certificate" className="w-5 h-5 text-gray-500" />
+                    <Icons
+                      iconName="certificate"
+                      className="text-gray-500 h-5 w-5"
+                    />
                     <div>
                       <p className="text-gray-500 text-sm">Certificate</p>
                       <p className="font-medium">{course.certificate}</p>
@@ -154,9 +184,9 @@ const CourseDetail = () => {
                 )}
               </div>
 
-              <div className="mt-8 pt-6 border-t border-gray-200">
+              <div className="border-gray-200 mt-8 border-t pt-6">
                 <Button
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition duration-200"
+                  className="bg-blue-600 hover:bg-blue-700 w-full rounded-xl px-4 py-3 font-bold text-white transition duration-200"
                   bgBtn="Enroll Now"
                   onClick={handleEnrollClick}
                 />

@@ -6,6 +6,7 @@ import { loginUser } from '../services/auth/auth.service'
 import {
   addLessonTest,
   deleteLessonTest,
+  deleteLessonTestById,
 } from '../services/lessonTest/lessonTest.services'
 import {
   getStudentProfile,
@@ -120,6 +121,26 @@ export const useDeleteLesson = () => {
     onError: (error) => {
       console.error(
         'Delete Lesson Failed:',
+        error.response?.data?.message || error.message
+      )
+      throw error
+    },
+  })
+}
+
+export const useDeleteLessonTest = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (id) => deleteLessonTestById(id),
+    onSuccess: (data, variables) => {
+      // Invalidate the sections query to refresh the list
+      queryClient.invalidateQueries(['sections'])
+      return data
+    },
+    onError: (error) => {
+      console.error(
+        'Delete Lesson Test Failed:',
         error.response?.data?.message || error.message
       )
       throw error

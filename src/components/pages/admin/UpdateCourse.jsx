@@ -38,7 +38,7 @@ const UpdateCourse = () => {
             description: data.description,
             price: data.price,
             validity: data.validity,
-            status: data.status,
+            status: data.status ? true : false,
             fileId: data.fileId,
             courseId: data.id,
           })
@@ -168,7 +168,9 @@ const UpdateCourse = () => {
               }
             />
           </a> */}
-          <a href="/admin-dashboard?activeSidebar=update-lesson">
+          <a
+            href={`/admin-dashboard?activeSidebar=update-lesson&courseId=${courseId}`}
+          >
             <Button
               type="submit"
               className="col-span-2 mt-4 !px-3 !py-2 sm:px-5"

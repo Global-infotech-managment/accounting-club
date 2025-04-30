@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import Input from '../../common/Input'
 import Button from '../../common/Button'
-import { Dropdown } from '../../common/Dropdown'
+import { Dropdown, Dropdown3 } from '../../common/Dropdown'
 import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../../../utils/AppContext'
 import { useMutation, useQuery } from '@tanstack/react-query'
@@ -24,6 +24,8 @@ const AddSection = () => {
       if (data?.courses?.length > 0) {
         console.log('data.courses[0].id ', data.courses[0].id)
         updateCourseData({ courseId: data.courses[0].id })
+
+        handleDropdownChange('courseId', data.courses[0].id)
       }
     },
   })
@@ -47,15 +49,14 @@ const AddSection = () => {
   }
 
   const handleDropdownChange = (name, value) => {
-    updateCourseData({ [name]: value });
-  
+    updateCourseData({ [name]: value })
+
     if (name === 'courseId') {
-      const searchParams = new URLSearchParams(window.location.search);
-      searchParams.set('courseId', value);
-      navigate(`?${searchParams.toString()}`, { replace: true });
+      const searchParams = new URLSearchParams(window.location.search)
+      searchParams.set('courseId', value)
+      navigate(`?${searchParams.toString()}`, { replace: true })
     }
-  };
-  
+  }
 
   const formSubmit = (e) => {
     e.preventDefault()
@@ -128,7 +129,7 @@ const AddSection = () => {
           value={courseData.isMandatory}
           onChange={handleDropdownChange}
         />
-        <Dropdown
+        <Dropdown3
           name="status"
           label="Status"
           options={[

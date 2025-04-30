@@ -256,6 +256,7 @@ import Icons from '../../common/Icons'
 import Input from '../../common/Input'
 import {
   getLessonTest,
+  getLessonTestById,
   updateLessonTest,
 } from '../../../services/lessonTest/lessonTest.services'
 import { toast } from 'sonner'
@@ -275,8 +276,9 @@ export default function UpdateTest() {
     const fetchTest = async () => {
       if (!lessonId) return
       try {
-        const testData = await getLessonTest(lessonId)
-        const test = testData[0]
+        const testData = await getLessonTestById(lessonId)
+        console.log('test data ', testData)
+        const test = testData
         setQuestions([
           {
             id: test.id,
