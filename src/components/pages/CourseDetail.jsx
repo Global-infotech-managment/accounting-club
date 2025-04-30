@@ -27,6 +27,7 @@ const CourseDetail = () => {
     enabled: !!slug,
   })
 
+
   const handleEnrollClick = () => {
     if (isAuthenticated) {
       navigate(PAYMENT_METHOD_ROUTE)
@@ -39,6 +40,7 @@ const CourseDetail = () => {
       }
     }
   }
+  
   
 
   if (isLoading) return <div className="text-center">Loading...</div>
