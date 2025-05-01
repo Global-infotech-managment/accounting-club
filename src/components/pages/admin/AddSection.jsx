@@ -21,12 +21,8 @@ const AddSection = () => {
     queryKey: ['courses'],
     queryFn: fetchAllCourses,
     onSuccess: (data) => {
-      if (data?.courses?.length > 0) {
-        console.log('data.courses[0].id ', data.courses[0].id)
-        updateCourseData({ courseId: data.courses[0].id })
-
-        handleDropdownChange('courseId', data.courses[0].id)
-      }
+      console.log('Courses fetched successfully')
+      // No auto-select to allow user to manually pick a course
     },
   })
 
@@ -58,29 +54,31 @@ const AddSection = () => {
     }
   }
 
+  const courseOptions = [
+    { value: '', label: 'Select Course' },
+    ...(courses?.map((course) => ({
+      value: course.id,
+      label: course.name,
+    })) || [])
+  ]
+
   const formSubmit = (e) => {
     e.preventDefault()
 
     const moveNext = courseData.isMandatory === 'Yes' ? true : false
-
     const statusAsBoolean =
       courseData.status === 'true' || courseData.status === true
+
     console.log('course data ', courseData)
+
     createSection.mutate({
       courseId: courseData.courseId,
       name: courseData.addLesson,
       link: courseData.link,
-      // num: +courseData.num,
       isMandatory: moveNext,
       status: statusAsBoolean,
     })
   }
-
-  const courseOptions =
-    courses?.map((course) => ({
-      value: course.id,
-      label: course.name,
-    })) || []
 
   return (
     <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
@@ -111,14 +109,6 @@ const AddSection = () => {
           value={courseData.link}
           onChange={handleInputChange}
         />
-        {/* <Input
-          name="num"
-          type={'number'}
-          placeholder="number of lessons"
-          value={courseData.num}
-          onChange={handleInputChange}
-        /> */}
-
         <Dropdown
           name="isMandatory"
           label="Is mandatory to move next"
@@ -139,7 +129,6 @@ const AddSection = () => {
           value={courseData.status}
           onChange={handleDropdownChange}
         />
-
         <Button
           onClick={formSubmit}
           className="mt-5 md:mt-10"

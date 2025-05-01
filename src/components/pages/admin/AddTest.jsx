@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import Button from '../../common/Button'
 import Icons from '../../common/Icons'
@@ -14,16 +14,16 @@ import { toast } from 'sonner'
 export default function AddTest() {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
+  const location = useLocation()
   const { mutate: createTest, isPending } = useCreateTest()
   const { courseData, updateCourseData } = useContext(AppContext)
 
-  const [selectedLessonId, setSelectedLessonId] = useState(null)
+  const [selectedLessonId, setSelectedLessonId] = useState('')
   const [questions, setQuestions] = useState([
     { question: '', options: ['', '', '', ''], correctAnswer: '' },
   ])
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  // Fetch courses data
   const {
     data: courses,
     isLoading: isCoursesLoading,
@@ -31,11 +31,6 @@ export default function AddTest() {
   } = useQuery({
     queryKey: ['courses'],
     queryFn: fetchAllCourses,
-    onSuccess: (data) => {
-      if (data?.courses?.length > 0) {
-        updateCourseData({ courseId: data.courses[0].id })
-      }
-    },
   })
 
   const {
@@ -45,25 +40,42 @@ export default function AddTest() {
   } = useQuery({
     queryKey: ['lessons'],
     queryFn: fetchAllSections,
-    onSuccess: (data) => {
-      console.log('lessons data:', data)
-      if (data?.length > 0) {
-        setSelectedLessonId(data?.[0].id)
-      }
-    },
   })
 
-  const courseOptions =
-    courses?.map((course) => ({
+  const courseOptions = [
+    { value: '', label: 'Select Course' },
+    ...(courses?.map((course) => ({
       value: course.id,
       label: course.name,
-    })) || []
+    })) || []),
+  ]
 
-  const lessonOptions =
-    lesson?.map((lesson) => ({
-      value: lesson?.id,
-      label: lesson?.name,
-    })) || []
+  const lessonOptions = [
+    { value: '', label: 'Select Lesson' },
+    ...(lesson?.map((lesson) => ({
+      value: lesson.id,
+      label: lesson.name,
+    })) || []),
+  ]
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const lessonIdFromURL = params.get('lessonId')
+    if (lessonIdFromURL) setSelectedLessonId(lessonIdFromURL)
+  }, [location.search])
+
+  const handleLessonChange = (name, value) => {
+    setSelectedLessonId(value)
+
+    const searchParams = new URLSearchParams(window.location.search)
+    searchParams.set('lessonId', value)
+
+    navigate(`?${searchParams.toString()}`, { replace: true })
+  }
+
+  const handleDropdownChange = (name, value) => {
+    updateCourseData({ [name]: value })
+  }
 
   const handleQuestionChange = (e) => {
     const newQuestions = [...questions]
@@ -93,7 +105,6 @@ export default function AddTest() {
 
   const navigateNext = () => {
     if (!isCurrentQuestionValid()) return
-
     if (currentIndex === questions.length - 1) {
       addNewQuestion()
     } else {
@@ -118,20 +129,13 @@ export default function AddTest() {
 
   const handleDeleteQuestion = () => {
     if (questions.length === 1) {
-      // Reset if it's the only question
-      setQuestions([
-        { question: '', options: ['', '', '', ''], correctAnswer: '' },
-      ])
+      setQuestions([{ question: '', options: ['', '', '', ''], correctAnswer: '' }])
       setCurrentIndex(0)
       return
     }
 
-    const updatedQuestions = questions.filter(
-      (_, index) => index !== currentIndex
-    )
+    const updatedQuestions = questions.filter((_, index) => index !== currentIndex)
     setQuestions(updatedQuestions)
-
-    // Adjust index to prevent out-of-range issue
     setCurrentIndex((prevIndex) => Math.max(0, prevIndex - 1))
   }
 
@@ -152,21 +156,9 @@ export default function AddTest() {
       return
     }
 
-    // Prepare the data for API - FIX: Use selectedLessonId directly
-    // const testData = {
-    //   lessonId: selectedLessonId, // Fixed: Use the actual ID value
-    //   questions: questions.map((q) => ({
-    //     question: q.question,
-    //     options: q.options,
-    //     answer: q.correctAnswer,
-    //   })),
-    // }
-
-    function getAnswerIndex(answerLetter) {
-      console.log('sdnsdjjsdsjd : ', answerLetter)
+    const getAnswerIndex = (answerLetter) => {
       const validAnswers = ['A', 'B', 'C', 'D']
       const index = validAnswers.indexOf(answerLetter.toUpperCase())
-      console.log('index ', index)
       if (index === -1) {
         throw new Error(`Invalid answer: ${answerLetter}`)
       }
@@ -176,7 +168,6 @@ export default function AddTest() {
     const testData = questions.map((q) => {
       const correctIndex = getAnswerIndex(q.correctAnswer)
       const correctAnswer = q.options[correctIndex]
-      console.log('q.correctAnswer ', q.options)
       return {
         lessonId: selectedLessonId,
         question: q.question,
@@ -185,24 +176,12 @@ export default function AddTest() {
       }
     })
 
-    console.log('lesson test data ', testData)
-
-    // Uncomment to actually submit the test
     createTest(testData[0], {
       onSuccess: () => {
-        // Invalidate queries to refresh data
         queryClient.invalidateQueries({ queryKey: ['tests', selectedLessonId] })
-
-        // Show success message
         toast.success('Test created successfully!')
-
-        // Reset form
-        setQuestions([
-          { question: '', options: ['', '', '', ''], correctAnswer: '' },
-        ])
+        setQuestions([{ question: '', options: ['', '', '', ''], correctAnswer: '' }])
         setCurrentIndex(0)
-
-        // Navigate back
         navigate('/admin-dashboard?activeSidebar=dashboard')
       },
       onError: (error) => {
@@ -211,27 +190,10 @@ export default function AddTest() {
     })
   }
 
-  // FIX: Update the handleLessonChange function to directly set the lessonId
-  const handleLessonChange = (name, value) => {
-    console.log('Lesson changed - value:', value)
-    setSelectedLessonId(value)
-  }
-
-  const handleDropdownChange = (name, value) => {
-    updateCourseData({ [name]: value })
-  }
-
-  // For debugging
-  useEffect(() => {
-    console.log('Current selectedLessonId:', selectedLessonId)
-  }, [selectedLessonId])
-
   return (
     <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
       <div className="mb-4 flex flex-col items-center justify-between sm:flex-row">
-        <p className="mb-3 text-[16px] font-semibold text-black sm:mb-0 lg:text-[18px]">
-          Add Test
-        </p>
+        <p className="mb-3 text-[16px] font-semibold text-black sm:mb-0 lg:text-[18px]">Add Test</p>
         <div className="flex items-center justify-center gap-4">
           <Dropdown
             name="courseId"
@@ -246,14 +208,16 @@ export default function AddTest() {
             name="lessonId"
             label="Select Lesson"
             options={lessonOptions}
-            defaultValue={selectedLessonId} // Use defaultValue prop instead of value
+            value={selectedLessonId}
             onChange={handleLessonChange}
             isLoading={isLessonLoading}
             isError={isLessonError}
           />
         </div>
       </div>
+
       <hr className="mb-4 w-full bg-black opacity-10" />
+
       <p className="mb-2 text-[17px] font-medium text-black">Question</p>
       <p className="text-[14px] font-normal text-black">
         Choose appropriate options <span className="font-medium">A</span>,
@@ -261,6 +225,7 @@ export default function AddTest() {
         <span className="font-medium">C</span> or{' '}
         <span className="font-medium">D</span>
       </p>
+
       <div className="mb-3 mt-4 flex flex-col justify-between gap-5 sm:flex-row sm:gap-0 md:items-center">
         <div className="flex w-full items-center gap-2">
           <button
@@ -284,21 +249,23 @@ export default function AddTest() {
           </button>
         </div>
         <Button
-          className={`max-h-[37px] whitespace-nowrap !text-[14px] ${!isCurrentQuestionValid() && 'pointer-events-none opacity-70'}`}
+          className={`max-h-[37px] whitespace-nowrap !text-[14px] ${!isCurrentQuestionValid() ? 'pointer-events-none opacity-70' : ''}`}
           bgBtn={'Add Question'}
           disabled={!isCurrentQuestionValid()}
           onClick={addNewQuestion}
         />
       </div>
+
       <hr className="mb-4 w-full bg-black opacity-10" />
+
       <div className="mb-3 w-full">
         <Input
           placeholder="Enter your question"
           value={questions[currentIndex].question}
           onChange={handleQuestionChange}
-          aria-label="Question input"
         />
       </div>
+
       <div className="mb-4">
         <p className="mb-3 text-[17px] font-medium text-black">Options</p>
         {questions[currentIndex].options.map((option, index) => (
@@ -310,8 +277,6 @@ export default function AddTest() {
               placeholder="Your answer here"
               value={option}
               onChange={(e) => handleOptionChange(index, e.target.value)}
-              label={''}
-              aria-label={`Option ${String.fromCharCode(65 + index)}`}
             />
           </div>
         ))}
@@ -319,42 +284,36 @@ export default function AddTest() {
           <button
             className="text-orange-red transition-all duration-300 ease-in-out hover:text-primary"
             onClick={handleDeleteQuestion}
-            aria-label="Delete question"
           >
             Delete Question
           </button>
         </div>
       </div>
+
       <div className="mb-4">
-        <div className="mb-3 text-[17px] font-medium text-black">
-          Correct Answer
-        </div>
+        <div className="mb-3 text-[17px] font-medium text-black">Correct Answer</div>
         <div className="mb-10 flex items-center gap-3">
           {questions[currentIndex].options.map((_, index) => (
             <button
               key={index}
-              className={`flex h-[40px] w-[40px] items-center justify-center rounded-[12px] border border-[#4e4e4e] border-opacity-10 transition-colors ${
-                questions[currentIndex].correctAnswer ===
-                String.fromCharCode(65 + index)
+              className={`flex h-[40px] w-[40px] items-center justify-center rounded-[12px] border transition-colors ${
+                questions[currentIndex].correctAnswer === String.fromCharCode(65 + index)
                   ? '!bg-primary text-white'
                   : 'hover:bg-gray-100 bg-[#fbfbfb]'
               }`}
-              onClick={() =>
-                handleCorrectAnswerChange(String.fromCharCode(65 + index))
-              }
-              aria-label={`Set ${String.fromCharCode(65 + index)} as correct answer`}
+              onClick={() => handleCorrectAnswerChange(String.fromCharCode(65 + index))}
             >
               {String.fromCharCode(65 + index)}
             </button>
           ))}
         </div>
       </div>
+
       <Button
         disabled={!isFormValid() || isPending}
         onClick={handleSubmit}
         bgBtn={isPending ? 'Submitting...' : 'Submit'}
         className={'w-full'}
-        aria-label="Submit test"
       />
     </div>
   )
