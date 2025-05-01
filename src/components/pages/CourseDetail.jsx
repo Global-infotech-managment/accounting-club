@@ -71,7 +71,10 @@ const CourseDetail = () => {
               <img
                 height={300}
                 className="w-full"
-                src={course?.fileId?.url || courseImage}
+                src={
+                  course?.file?.url ||
+                  'https://via.placeholder.com/300x200?text=No+Image'
+                }
                 alt="course img"
               />
             </div>
