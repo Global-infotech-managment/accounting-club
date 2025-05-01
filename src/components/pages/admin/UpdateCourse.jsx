@@ -17,6 +17,8 @@ const UpdateCourse = () => {
   const { courseData, updateCourseData } = useContext(AppContext)
   const [dataFetched, setDataFetched] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
+  const [isStatusChanged, setIsStatusChanged] = useState(false)
+
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const courseId = searchParams.get('id')
@@ -26,12 +28,14 @@ const UpdateCourse = () => {
       setDataFetched(true)
       findCourseById(courseId)
         .then((data) => {
+          console.log('data line 31 ', data)
           updateCourseData({
             name: data.name,
             description: data.description,
             price: data.price,
             validity: data.validity,
-            status: data.status, // use boolean directly
+            status:
+              data.status === true || data.status === 'true' ? true : false,
             fileId: data.fileId,
             courseId: data.id,
           })
@@ -40,6 +44,7 @@ const UpdateCourse = () => {
           console.error('Error fetching course data:', error)
           showToast.error('Failed to fetch course data')
         })
+      console.log('course data line 102 ', typeof courseData.status)
     }
   }, [courseId, dataFetched, updateCourseData])
 
@@ -86,12 +91,17 @@ const UpdateCourse = () => {
   }
 
   const handleDropdownChange = (name, value) => {
+    console.log('Dropdown changed:', name, value)
+    if (name === 'status') {
+      setIsStatusChanged(true)
+      value = value === 'true' ? true : false
+    }
     updateCourseData({ [name]: value })
   }
 
   const formSubmit = async (e) => {
     e.preventDefault()
-
+    console.log('course data line 102 ', typeof courseData.status)
     try {
       const coursePayload = {
         courseId: courseId,
@@ -103,9 +113,17 @@ const UpdateCourse = () => {
         ...(courseData.validity !== undefined && {
           validity: Number(courseData.validity),
         }),
-        ...(courseData.status !== undefined && { status: courseData.status }),
+        // ...(courseData.status !== undefined && {
+        //   status: courseData.status ? true : false,
+        // }),
+        ...(isStatusChanged && {
+          status: courseData.status ? true : false,
+        }),
+
         ...(fileId && { fileId }),
       }
+
+      console.log('course payload ', coursePayload)
 
       await updateCourseMutation.mutateAsync(coursePayload)
     } catch (error) {
@@ -179,8 +197,8 @@ const UpdateCourse = () => {
           label="Status"
           name="status"
           options={[
-            { value: true, label: 'Active' },
-            { value: false, label: 'Inactive' },
+            { value: 'true', label: 'Active' },
+            { value: 'false', label: 'Inactive' },
           ]}
           value={courseData.status}
           onChange={handleDropdownChange}
@@ -197,12 +215,11 @@ const UpdateCourse = () => {
         </div>
 
         <Button
-  type="submit"
-  className="col-span-2 mt-4 w-full"
-  bgBtn={uploadFileMutation.isLoading ? 'Uploading...' : 'Update'}
-  disabled={isDisabled || uploadFileMutation.isLoading}
-/>
-
+          type="submit"
+          className="col-span-2 mt-4 w-full"
+          bgBtn={uploadFileMutation.isLoading ? 'Uploading...' : 'Update'}
+          disabled={isDisabled || uploadFileMutation.isLoading}
+        />
       </form>
     </div>
   )
