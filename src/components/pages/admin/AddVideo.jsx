@@ -3,7 +3,7 @@ import React, { useContext, useState } from 'react'
 import Input from '../../common/Input'
 import Button from '../../common/Button'
 import { Dropdown } from '../../common/Dropdown'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { AppContext } from '../../../utils/AppContext'
 import { useMutation } from '@tanstack/react-query'
 import { showToast } from '../../../services/toast/toast.service'
@@ -76,16 +76,28 @@ const AddVideo = () => {
 
   return (
     <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
-      <div className="flex justify-between items-center pb-3">
+      {/* <div className="flex justify-between items-center pb-3">
         <p className="text-[16px] font-semibold text-black lg:text-[18px]">Add Video</p>
+        /admin-dashboard?activeSidebar=add-test
+      </div> */}
+      <div className="mb-4 flex flex-col items-center justify-between sm:flex-row">
+        <p className="mb-2 w-full text-center text-[16px] font-semibold text-black sm:mb-0 sm:text-start md:text-[18px]">
+          Add Video And Study Material        </p>
+        <div className="flex items-center gap-2">
+         
+          <Link to="/admin-dashboard?activeSidebar=add-test">
+            <button className="rounded text-nowrap bg-[#252466] px-3 py-1.5 text-sm text-white">Add test
+            </button>
+          </Link>
+        
+        </div>
       </div>
 
       <form className="flex flex-col gap-3 sm:gap-4" onSubmit={formSubmit}>
 
         <div>
-          <label className="text-sm">Select Course*</label>
           <Dropdown
-            label=""
+           label="Select Course"
             options={[
               { value: 'lesson first', label: 'lesson first' },
               { value: 'lesson second', label: 'lesson second' }
@@ -93,33 +105,19 @@ const AddVideo = () => {
             onChange={handleDropdownChange('name')}
           />
         </div>
-
         <div>
-          <label htmlFor="lessonNumber" className="text-sm">Lesson Number*</label>
-          <Input
-            id="lessonNumber"
-            name="lessonNumber"
-            placeholder="1"
-            value={courseData.lessonNumber || ''}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="chapter" className="text-sm">Select Chapter*</label>
-          <Input
-            id="chapter"
-            name="chapter"
-            placeholder="Chapter 1 - Introduction"
-            value={courseData.chapter || ''}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div>
-          <label className="text-sm">Is it mandatory to move for next*</label>
           <Dropdown
-            label=""
+           label="Select Chapter"
+            options={[
+              { value: 'Select Chapter', label: 'Select Chapter' },
+              { value: 'Select Chapter', label: 'Select Chapter' }
+            ]}
+            onChange={handleDropdownChange('name')}
+          />
+        </div>
+        <div>
+          <Dropdown
+            label="Is it mandatory to move for next"
             options={[
               { value: 'Yes', label: 'Yes' },
               { value: 'No', label: 'No' }
@@ -129,8 +127,9 @@ const AddVideo = () => {
         </div>
 
         <div>
-          <label htmlFor="videoDescription" className="text-sm">Video Description*</label>
+          <label htmlFor="videoDescription" className="text-sm"></label>
           <Input
+          label="Video Description"
             id="videoDescription"
             name="videoDescription"
             placeholder="Short summary of the video..."
@@ -140,8 +139,8 @@ const AddVideo = () => {
         </div>
 
         <div>
-          <label htmlFor="embedCode" className="text-sm">Video Embed Code*</label>
           <Input
+          label="Video Embed Code"
             id="embedCode"
             name="embedCode"
             placeholder="<iframe src='...' />"
@@ -151,8 +150,8 @@ const AddVideo = () => {
         </div>
 
         <div className="flex flex-col items-start">
-          <label htmlFor="studyMaterial" className="text-sm">Study Material*</label>
           <Input
+           label="Study Material"
             id="studyMaterial"
             name="studyMaterial"
             type="file"
@@ -167,9 +166,8 @@ const AddVideo = () => {
         </div>
 
         <div>
-          <label className="text-sm">Status*</label>
           <Dropdown
-            label=""
+            label="Status"
             options={[
               { value: 'Active', label: 'Active' },
               { value: 'Inactive', label: 'Inactive' }

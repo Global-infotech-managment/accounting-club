@@ -83,7 +83,7 @@ const AddSection = () => {
   return (
     <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
       <p className="mb-4 text-[16px] font-semibold text-black lg:text-[18px]">
-        Add Lesson
+        Add Section
       </p>
       <hr className="mb-4 w-full bg-black opacity-10" />
       <form className="flex flex-col gap-4">
@@ -97,15 +97,17 @@ const AddSection = () => {
           isError={isError}
         />
         <Input
+        label="Chapter Name"
           name="addLesson"
-          placeholder="Lesson Name"
+          placeholder="Chapter Name"
           value={courseData.addLesson}
           onChange={handleInputChange}
         />
         <Input
-          name="link"
+          label="Description"
+          name="Description"
           type={'text'}
-          placeholder="Link"
+          placeholder="Description"
           value={courseData.link}
           onChange={handleInputChange}
         />

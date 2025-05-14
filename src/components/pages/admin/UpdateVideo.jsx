@@ -76,7 +76,7 @@ const UpdateVideo = () => {
               <Button
                 type="submit"
                 className="col-span-2 mt-4 !py-2 px-5 !bg-transparent"
-                bgBtn="Update Lesson"
+                bgBtn="Update Section"
                 disabled={uploadFileMutation.isLoading}
               />
           </a>

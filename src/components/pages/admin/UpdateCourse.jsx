@@ -144,7 +144,7 @@ const UpdateCourse = () => {
             <Button
               type="button"
               className="col-span-2 mt-4 !px-3 !py-2 sm:px-5"
-              bgBtn="Update Lesson"
+              bgBtn="Update Section"
               disabled={
                 updateCourseMutation.isLoading || uploadFileMutation.isLoading
               }
