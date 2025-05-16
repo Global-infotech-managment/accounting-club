@@ -125,7 +125,16 @@ const AddVideo = () => {
             onChange={handleDropdownChange('mandatory')}
           />
         </div>
-
+        <div>
+          <Input
+          label="Chapter Description"
+            id="embedCode"
+            name="embedCode"
+            placeholder="<iframe src='...' />"
+            value={courseData.embedCode || ''}
+            onChange={handleInputChange}
+          />
+        </div>
         <div>
           <label htmlFor="videoDescription" className="text-sm"></label>
           <Input
@@ -138,6 +147,7 @@ const AddVideo = () => {
           />
         </div>
 
+     
         <div>
           <Input
           label="Video Embed Code"
