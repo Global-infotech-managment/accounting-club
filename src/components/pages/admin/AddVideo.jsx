@@ -127,10 +127,20 @@ const AddVideo = () => {
         </div>
         <div>
           <Input
+          label="Chapter No."
+            id="embedCode"
+            name="embedCode"
+            placeholder="1"
+            value={courseData.embedCode || ''}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div>
+          <Input
           label="Chapter Description"
             id="embedCode"
             name="embedCode"
-            placeholder="<iframe src='...' />"
+            placeholder="Chapter Description"
             value={courseData.embedCode || ''}
             onChange={handleInputChange}
           />
@@ -145,9 +155,7 @@ const AddVideo = () => {
             value={courseData.videoDescription || ''}
             onChange={handleInputChange}
           />
-        </div>
-
-     
+        </div>   
         <div>
           <Input
           label="Video Embed Code"
@@ -158,7 +166,6 @@ const AddVideo = () => {
             onChange={handleInputChange}
           />
         </div>
-
         <div className="flex flex-col items-start">
           <Input
            label="Study Material"
@@ -174,7 +181,6 @@ const AddVideo = () => {
             </p>
           )}
         </div>
-
         <div>
           <Dropdown
             label="Status"

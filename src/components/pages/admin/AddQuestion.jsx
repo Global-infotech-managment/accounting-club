@@ -10,15 +10,32 @@ import { fetchAllCourses } from '../../../services/course/course.service';
 import { AppContext } from '../../../utils/AppContext';
 import { fetchAllSections } from '../../../services/section/section.services';
 import { toast } from 'sonner';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
-/**
- * Updated AddQuestion component
- * --------------------------------------------------------------
- * 1. Correct dropdown names & wiring (course, lesson, questionType, testLevel, marks, negativeMarks).
- * 2. Provide dummy fallback options if API returns no data.
- * 3. Dynamically change the question‑answer UI based on selected questionType (MCQ, True/False, Fill in the Blanks).
- */
+
 export default function AddQuestion() {
+  // advance text editor
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ['bold', 'italic', 'underline'],
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      ['link', 'image'],
+      ['clean'],
+    ],
+  };
+  
+  const formats = [
+    'header',
+    'bold',
+    'italic',
+    'underline',
+    'list',
+    'bullet',
+    'link',
+    'image',
+  ];
   /* -------------------- React Query -------------------- */
   const queryClient = useQueryClient();
   const navigate = useNavigate();
