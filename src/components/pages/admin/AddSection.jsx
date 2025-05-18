@@ -30,7 +30,7 @@ const AddSection = () => {
     mutationFn: addSection,
     onSuccess: () => {
       showToast.success('Section created successfully')
-      navigate('/admin-dashboard?activeSidebar=add-test')
+      navigate('/admin-dashboard?activeSidebar=add-video')
     },
     onError: (error) => {
       showToast.error(
