@@ -28,14 +28,15 @@ const UpdateSection = () => {
     queryFn: () => fetchCourseById(sectionId),
     enabled: !!sectionId,
   })
+  console.log('section Data ', sectionData)
 
   useEffect(() => {
     if (sectionData) {
       setCourseData({
         addLesson: sectionData.name || '',
         link: sectionData.link || '',
-        isMandatory: sectionData.isMandatory ? true : false,
-        status: sectionData.status ? true : false,
+        isMandatory: sectionData.isMandatory ? 'true' : 'false',
+        status: sectionData.status ? 'true' : 'false',
       })
     }
   }, [sectionData])
@@ -92,7 +93,7 @@ const UpdateSection = () => {
           Edit Section
         </p>
         <div className="flex items-center gap-4">
-          <a
+          {/* <a
             href={`/admin-dashboard?activeSidebar=update-video&id=${sectionId}`}
           >
             <Button
@@ -100,14 +101,14 @@ const UpdateSection = () => {
               className="col-span-2 mt-4 w-[149px] text-nowrap"
               bgBtn="Update Video"
             />
-          </a>
+          </a> */}
           <a
-            href={`/admin-dashboard?activeSidebar=update-test&id=${sectionId}`}
+            href={`/admin-dashboard?activeSidebar=all-test&lessonId=${sectionId}`}
           >
             <Button
               type="button"
               className="!bg-transparent col-span-2 mt-4 !py-2 px-5"
-              bgBtn="Update Test"
+              bgBtn="All Chapter"
             />
           </a>
         </div>
@@ -115,16 +116,18 @@ const UpdateSection = () => {
       <hr className="mb-4 w-full bg-black opacity-10" />
       <form className="flex flex-col gap-4">
         <Input
+        label={"Update Name"}
           name="addLesson"
           placeholder="Section Name"
           value={courseData.addLesson || ''}
           onChange={handleInputChange}
         />
         <Input
+        label={"Description"}
           name="link"
           type={'text'}
-          placeholder="Link"
-          value={courseData.link || ''}
+          placeholder="Description"
+          value={courseData.Description || ''}
           onChange={handleInputChange}
         />
         <Dropdown

@@ -185,7 +185,7 @@ const Navbar = () => {
                     >
                       <div className="h-[1px] w-full border-t border-[#25346633]"></div>
                       <div className="container mx-auto px-3 lg:max-w-[1184px]">
-                        <div className="flex w-full flex-wrap py-6">
+                        <div className="flex w-full flex-col py-6">
                           {obj.subLinks.map((subLink, subIndex) => (
                             <Link
                               key={subIndex}

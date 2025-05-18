@@ -9,6 +9,12 @@ export const loginUser = async (data) => {
   }
 }
 
+export const updateStatus = async (data) => {
+  const response = await API.put('/auth/status', data)
+  return {
+    token: response,
+  }
+}
 export const fetchStudents = async (params) => {
   const response = await API.get('/auth', {
     params,
@@ -20,7 +26,7 @@ export const fetchStudents = async (params) => {
     },
   })
   return {
-    data: response.data.data.users, 
+    data: response.data.data.users,
     total: response.data.data.total,
   }
 }
@@ -30,6 +36,6 @@ export const deleteStudent = async (id) => {
 }
 
 export const updateStudentProfile = async (userId, profileData) => {
-  const response = await API.put(`/auth/${userId}`, profileData);
-  return response.data.data;
-};
+  const response = await API.put(`/auth/${userId}`, profileData)
+  return response.data.data
+}

@@ -9,17 +9,17 @@ import API from '../../api/authApi'; // Your configured API instance
 export const getStudentProfile = async (studentId) => {
   try {
     const response = await API.get(`/students/${studentId}`);
-    return response.data.data; // Assuming your API wraps data in a data object
+    return response.data.data; 
   } catch (error) {
     console.error('Error fetching student profile:', error);
-    throw error; // Re-throw for error handling in components
+    throw error; 
   }
 };
 
 /**
  * Creates a new student profile
- * @param {Object} profileData - The student profile data to create
- * @returns {Promise<Object>} Created student profile
+ * @param {Object} profileData 
+ * @returns {Promise<Object>} 
  */
 export const createStudentProfile = async (profileData) => {
   try {
@@ -93,3 +93,17 @@ export const deleteStudentProfile = async (userId) => {
     throw error;
   }
 };
+
+/**
+ * Logs out the current user
+ * @returns {Promise<Object>} Logout response
+ */
+export const logout = async () => {
+  try {
+    const response = await API.post('/auth/logout')
+    return response.data
+  } catch (error) {
+    console.error('Error during logout:', error)
+    throw error
+  }
+}

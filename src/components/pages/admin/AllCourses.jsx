@@ -31,21 +31,21 @@ const AllCourses = () => {
     keepPreviousData: true,
   });
 
-  const { mutate: deleteCourseMutation } = useMutation({
+  const { mutate: deleteCourseMutation, isLoading: isDeleting } = useMutation({
     mutationFn: deleteCourse,
     onSuccess: (deletedId) => {
-      toast.success(`Course with ID ${deletedId} deleted successfully!`);
-      refetch();
+      toast.success(`Course with ID ${deletedId} deleted successfully!`)
+      refetch() // ✅ Refetch courses
     },
     onError: (error) => {
       toast.error(
         error.response?.data?.message ||
         error.message ||
         'Failed to delete course'
-      );
+      )
     },
-  });
-
+  })
+  
   const { mutate: toggleStatusMutation } = useMutation({
     mutationFn: ({ id, status }) => toggleCourseStatus(id, status),
     onSuccess: (_, variables) => {
@@ -178,6 +178,7 @@ const AllCourses = () => {
                   <button
                     className="rounded border border-orange-red bg-white px-4 py-2 text-orange-red transition-all duration-300 hover:bg-orange-red hover:text-white"
                     onClick={() => handleDelete(course.id)}
+
                   >
                     Delete
                   </button>

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import Input from '../../common/Input'
 import Button from '../../common/Button'
-import { Dropdown } from '../../common/Dropdown'
+import { Dropdown, Dropdown3 } from '../../common/Dropdown'
 import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../../../utils/AppContext'
 import { useMutation, useQuery } from '@tanstack/react-query'
@@ -21,9 +21,8 @@ const AddSection = () => {
     queryKey: ['courses'],
     queryFn: fetchAllCourses,
     onSuccess: (data) => {
-      if (data?.courses?.length > 0) {
-        updateCourseData({ courseId: data.courses[0].id })
-      }
+      console.log('Courses fetched successfully')
+      // No auto-select to allow user to manually pick a course
     },
   })
 
@@ -46,38 +45,45 @@ const AddSection = () => {
   }
 
   const handleDropdownChange = (name, value) => {
-    console.log('Dropdown change:', { name, value })
     updateCourseData({ [name]: value })
+
+    if (name === 'courseId') {
+      const searchParams = new URLSearchParams(window.location.search)
+      searchParams.set('courseId', value)
+      navigate(`?${searchParams.toString()}`, { replace: true })
+    }
   }
+
+  const courseOptions = [
+    { value: '', label: 'Select Course' },
+    ...(courses?.map((course) => ({
+      value: course.id,
+      label: course.name,
+    })) || [])
+  ]
 
   const formSubmit = (e) => {
     e.preventDefault()
 
     const moveNext = courseData.isMandatory === 'Yes' ? true : false
-
     const statusAsBoolean =
       courseData.status === 'true' || courseData.status === true
+
+    console.log('course data ', courseData)
 
     createSection.mutate({
       courseId: courseData.courseId,
       name: courseData.addLesson,
       link: courseData.link,
-      num: +courseData.num,
       isMandatory: moveNext,
       status: statusAsBoolean,
     })
   }
 
-  const courseOptions =
-    courses?.map((course) => ({
-      value: course.id,
-      label: course.name,
-    })) || []
-
   return (
     <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
       <p className="mb-4 text-[16px] font-semibold text-black lg:text-[18px]">
-        Add Lesson
+        Add Section
       </p>
       <hr className="mb-4 w-full bg-black opacity-10" />
       <form className="flex flex-col gap-4">
@@ -91,26 +97,20 @@ const AddSection = () => {
           isError={isError}
         />
         <Input
+        label="Chapter Name"
           name="addLesson"
-          placeholder="Lesson Name"
+          placeholder="Chapter Name"
           value={courseData.addLesson}
           onChange={handleInputChange}
         />
         <Input
-          name="link"
+          label="Description"
+          name="Description"
           type={'text'}
-          placeholder="Link"
+          placeholder="Description"
           value={courseData.link}
           onChange={handleInputChange}
         />
-        <Input
-          name="num"
-          type={'number'}
-          placeholder="number of lessons"
-          value={courseData.num}
-          onChange={handleInputChange}
-        />
-
         <Dropdown
           name="isMandatory"
           label="Is mandatory to move next"
@@ -121,7 +121,7 @@ const AddSection = () => {
           value={courseData.isMandatory}
           onChange={handleDropdownChange}
         />
-        <Dropdown
+        <Dropdown3
           name="status"
           label="Status"
           options={[
@@ -131,7 +131,6 @@ const AddSection = () => {
           value={courseData.status}
           onChange={handleDropdownChange}
         />
-
         <Button
           onClick={formSubmit}
           className="mt-5 md:mt-10"
