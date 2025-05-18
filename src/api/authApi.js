@@ -1,7 +1,7 @@
 // api/authApi.js
 import axios from 'axios'
 import Cookies from 'js-cookie'
-
+console.log('Change for push')
 const API = axios.create({
   baseURL: 'http://localhost:4000/api/v1',
   // baseURL: 'https://api.aabhimal.com/api/v1',
