@@ -15,7 +15,7 @@ const AdminDashboardUi = () => {
       description: 'Customize your course with sections.',
     },
     {
-      link: '/admin-dashboard?activeSidebar=add-test',
+      link: '/admin-dashboard?activeSidebar=add-video',
       title: 'Add Video + Test + Study Material',
       description:
         'Customize your learning course with video, test, and study material for growth.',

@@ -17,7 +17,6 @@ const UpdateCourse = () => {
   const { courseData, updateCourseData } = useContext(AppContext)
   const [dataFetched, setDataFetched] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
-  const [isStatusChanged, setIsStatusChanged] = useState(false)
 
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
@@ -28,23 +27,21 @@ const UpdateCourse = () => {
       setDataFetched(true)
       findCourseById(courseId)
         .then((data) => {
-          console.log('data line 31 ', data)
           updateCourseData({
             name: data.name,
             description: data.description,
             price: data.price,
             validity: data.validity,
-            status:
-              data.status === true || data.status === 'true' ? true : false,
-            fileId: data.fileId,
+            status: String(data.status), // ✅ boolean to string
+            fileId: data.file?.id,
             courseId: data.id,
           })
+          setFileId(data.file?.id || null)
         })
         .catch((error) => {
           console.error('Error fetching course data:', error)
           showToast.error('Failed to fetch course data')
         })
-      console.log('course data line 102 ', typeof courseData.status)
     }
   }, [courseId, dataFetched, updateCourseData])
 
@@ -64,7 +61,9 @@ const UpdateCourse = () => {
     mutationFn: (file) => uploadFile(file, 'courses'),
     onSuccess: (response) => {
       showToast.success('File uploaded successfully')
-      setFileId(response.id || response)
+      const uploadedFileId = response.id || response
+      setFileId(uploadedFileId)
+      updateCourseData({ fileId: uploadedFileId })
     },
     onError: () => {
       showToast.error('File upload failed')
@@ -83,48 +82,38 @@ const UpdateCourse = () => {
         updateCourseData({ selectedFile: file })
         setIsDisabled(true)
         await uploadFileMutation.mutateAsync(file)
-        setIsDisabled(false)
       } catch {
+        // Handled in onError
+      } finally {
         setIsDisabled(false)
       }
     }
   }
 
   const handleDropdownChange = (name, value) => {
-    console.log('Dropdown changed:', name, value)
-    if (name === 'status') {
-      setIsStatusChanged(true)
-      value = value === 'true' ? true : false
-    }
-    updateCourseData({ [name]: value })
+    updateCourseData({ [name]: value }) // keep string: 'true' or 'false'
   }
 
   const formSubmit = async (e) => {
     e.preventDefault()
-    console.log('course data line 102 ', typeof courseData.status)
+
+    const coursePayload = {
+      courseId: courseId,
+      ...(courseData.name && { name: courseData.name }),
+      ...(courseData.description && { description: courseData.description }),
+      ...(courseData.price !== undefined && {
+        price: Number(courseData.price),
+      }),
+      ...(courseData.validity !== undefined && {
+        validity: Number(courseData.validity),
+      }),
+      ...(courseData.status !== undefined && {
+        status: courseData.status === 'true', // ✅ convert back to boolean
+      }),
+      ...(fileId && { fileId }),
+    }
+
     try {
-      const coursePayload = {
-        courseId: courseId,
-        ...(courseData.name && { name: courseData.name }),
-        ...(courseData.description && { description: courseData.description }),
-        ...(courseData.price !== undefined && {
-          price: Number(courseData.price),
-        }),
-        ...(courseData.validity !== undefined && {
-          validity: Number(courseData.validity),
-        }),
-        // ...(courseData.status !== undefined && {
-        //   status: courseData.status ? true : false,
-        // }),
-        ...(isStatusChanged && {
-          status: courseData.status ? true : false,
-        }),
-
-        ...(fileId && { fileId }),
-      }
-
-      console.log('course payload ', coursePayload)
-
       await updateCourseMutation.mutateAsync(coursePayload)
     } catch (error) {
       console.error('Error updating course:', error)
@@ -144,7 +133,7 @@ const UpdateCourse = () => {
             <Button
               type="button"
               className="col-span-2 mt-4 !px-3 !py-2 sm:px-5"
-              bgBtn="Update Lesson"
+              bgBtn="Update Section"
               disabled={
                 updateCourseMutation.isLoading || uploadFileMutation.isLoading
               }
@@ -159,7 +148,7 @@ const UpdateCourse = () => {
           <Input
             name="name"
             placeholder="Basics of Business Accounting"
-            value={courseData.name}
+            value={courseData?.name || ''}
             onChange={handleInputChange}
           />
         </div>
@@ -167,8 +156,8 @@ const UpdateCourse = () => {
           <span className="text-sm">Description* </span>
           <Input
             name="description"
-            placeholder="This is basic course for Accountants"
-            value={courseData.description}
+            placeholder="This is a basic course for Accountants"
+            value={courseData?.description || ''}
             onChange={handleInputChange}
           />
         </div>
@@ -178,7 +167,7 @@ const UpdateCourse = () => {
             name="price"
             placeholder="4900/-"
             type="text"
-            value={courseData.price}
+            value={courseData?.price || ''}
             onChange={handleInputChange}
           />
         </div>
@@ -188,21 +177,23 @@ const UpdateCourse = () => {
             name="validity"
             placeholder="180 Days"
             type="text"
-            value={courseData.validity}
+            value={courseData?.validity || ''}
             onChange={handleInputChange}
           />
         </div>
 
-        <Dropdown
-          label="Status"
-          name="status"
-          options={[
-            { value: 'true', label: 'Active' },
-            { value: 'false', label: 'Inactive' },
-          ]}
-          value={courseData.status}
-          onChange={handleDropdownChange}
-        />
+        <div>
+          <span className="text-sm">Status*</span>
+          <Dropdown
+            name="status"
+            value={courseData?.status || 'false'}
+            options={[
+              { label: 'Active', value: 'true' },
+              { label: 'Inactive', value: 'false' },
+            ]}
+            onChange={handleDropdownChange}
+          />
+        </div>
 
         <div className="flex flex-col items-start">
           <span>Thumbnail* </span>
@@ -217,7 +208,13 @@ const UpdateCourse = () => {
         <Button
           type="submit"
           className="col-span-2 mt-4 w-full"
-          bgBtn={uploadFileMutation.isLoading ? 'Uploading...' : 'Update'}
+          bgBtn={
+            uploadFileMutation.isLoading
+              ? 'Uploading...'
+              : updateCourseMutation.isLoading
+              ? 'Updating...'
+              : 'Update'
+          }
           disabled={isDisabled || uploadFileMutation.isLoading}
         />
       </form>

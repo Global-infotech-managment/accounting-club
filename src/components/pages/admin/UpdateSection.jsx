@@ -108,7 +108,7 @@ const UpdateSection = () => {
             <Button
               type="button"
               className="!bg-transparent col-span-2 mt-4 !py-2 px-5"
-              bgBtn="All Test"
+              bgBtn="All Chapter"
             />
           </a>
         </div>
@@ -116,16 +116,18 @@ const UpdateSection = () => {
       <hr className="mb-4 w-full bg-black opacity-10" />
       <form className="flex flex-col gap-4">
         <Input
+        label={"Update Name"}
           name="addLesson"
           placeholder="Section Name"
           value={courseData.addLesson || ''}
           onChange={handleInputChange}
         />
         <Input
+        label={"Description"}
           name="link"
           type={'text'}
-          placeholder="Link"
-          value={courseData.link || ''}
+          placeholder="Description"
+          value={courseData.Description || ''}
           onChange={handleInputChange}
         />
         <Dropdown
