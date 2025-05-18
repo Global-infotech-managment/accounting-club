@@ -1,116 +1,100 @@
-import { useContext, useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useContext, useState, useEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 
-import Button from '../../common/Button';
-import Input from '../../common/Input';
-import { Dropdown } from '../../common/Dropdown';
+import Button from '../../common/Button'
+import Input from '../../common/Input'
+import { Dropdown } from '../../common/Dropdown'
 
-import { useCreateTest } from '../../../hooks/useAuth';
-import { fetchAllCourses } from '../../../services/course/course.service';
-import { fetchAllSections } from '../../../services/section/section.services';
+import { useCreateTest } from '../../../hooks/useAuth'
+import { fetchAllCourses } from '../../../services/course/course.service'
+import { fetchAllSections } from '../../../services/section/section.services'
 
-import { AppContext } from '../../../utils/AppContext';
-import { toast } from 'sonner';
+import { AppContext } from '../../../utils/AppContext'
+import { toast } from 'sonner'
 
 export default function AddTest() {
-  // -------------------------------------------------------------------------
-  // hooks & context
-  // -------------------------------------------------------------------------
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { courseData, updateCourseData } = useContext(AppContext);
+  const queryClient = useQueryClient()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const { courseData, updateCourseData } = useContext(AppContext)
 
-  // -------------------------------------------------------------------------
-  // local state
-  // -------------------------------------------------------------------------
-  const [selectedLessonId, setSelectedLessonId] = useState('');
+  const [selectedLessonId, setSelectedLessonId] = useState('')
 
-  // -------------------------------------------------------------------------
-  // data – queries
-  // -------------------------------------------------------------------------
   const {
     data: courses = [],
     isLoading: isCoursesLoading,
     isError: isCoursesError,
-  } = useQuery({ queryKey: ['courses'], queryFn: fetchAllCourses });
+  } = useQuery({ queryKey: ['courses'], queryFn: fetchAllCourses })
 
   const {
     data: lessons = [],
     isLoading: isLessonLoading,
     isError: isLessonError,
-  } = useQuery({ queryKey: ['lessons'], queryFn: fetchAllSections });
+  } = useQuery({
+    queryKey: ['lessons', courseData.courseId],
+    queryFn: () => fetchAllSections(courseData.courseId),
+    enabled: !!courseData.courseId,
+  })
 
-  // -------------------------------------------------------------------------
-  // mutations
-  // -------------------------------------------------------------------------
-  const { mutate: createTest, isPending } = useCreateTest();
+  const { mutate: createTest, isPending } = useCreateTest()
 
-  // -------------------------------------------------------------------------
-  // options for dropdowns
-  // -------------------------------------------------------------------------
   const courseOptions = [
     { value: '', label: 'Select Course' },
     ...courses.map((c) => ({ value: c.id, label: c.name })),
-  ];
+  ]
 
   const lessonOptions = [
     { value: '', label: 'Select Chapter' },
     ...lessons.map((l) => ({ value: l.id, label: l.name })),
-  ];
+  ]
 
-  // -------------------------------------------------------------------------
-  // effects – sync URL ↔ state
-  // -------------------------------------------------------------------------
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const lessonIdFromURL = params.get('lessonId');
-    if (lessonIdFromURL) setSelectedLessonId(lessonIdFromURL);
-  }, [location.search]);
+    const params = new URLSearchParams(location.search)
+    const lessonIdFromURL = params.get('lessonId')
+    if (lessonIdFromURL) setSelectedLessonId(lessonIdFromURL)
+  }, [location.search])
 
-  // -------------------------------------------------------------------------
-  // handlers
-  // -------------------------------------------------------------------------
   const handleLessonChange = (_name, value) => {
-    setSelectedLessonId(value);
+    setSelectedLessonId(value)
 
-    const params = new URLSearchParams(location.search);
-    params.set('lessonId', value);
-    navigate(`?${params.toString()}`, { replace: true });
-  };
+    const params = new URLSearchParams(location.search)
+    params.set('lessonId', value)
+    navigate(`?${params.toString()}`, { replace: true })
+  }
 
-  /** Generic handler so every field can update context */
   const handleFieldChange = (name, value) => {
-    updateCourseData({ [name]: value });
-  };
+    updateCourseData({ [name]: value })
 
-  const isFormValid = () => Boolean(selectedLessonId);
+    // Reset selected lesson when course changes
+    if (name === 'courseId') {
+      setSelectedLessonId('')
+    }
+  }
+
+  const isFormValid = () => Boolean(selectedLessonId)
 
   const handleSubmit = () => {
     if (!isFormValid()) {
-      toast.error('Please fill all fields and select a lesson');
-      return;
+      toast.error('Please fill all fields and select a lesson')
+      return
     }
 
     const payload = {
       ...courseData,
       lessonId: selectedLessonId,
-    };
+    }
 
     createTest(payload, {
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['tests', selectedLessonId] });
-        toast.success('Test created successfully!');
-        navigate('/admin-dashboard?activeSidebar=add-question');
+        queryClient.invalidateQueries({ queryKey: ['tests', selectedLessonId] })
+        toast.success('Test created successfully!')
+        navigate('/admin-dashboard?activeSidebar=add-question')
       },
       onError: (error) => toast.error(`Error creating test: ${error.message}`),
-    });
-  };
+    })
+  }
 
-  // -------------------------------------------------------------------------
-  // ui
-  // -------------------------------------------------------------------------
   return (
     <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
       <div className="mb-4 flex flex-col items-center justify-between sm:flex-row">
@@ -119,9 +103,7 @@ export default function AddTest() {
         </p>
       </div>
 
-      {/* basic info ------------------------------------------------------ */}
       <div className="flex flex-col gap-4">
-        {/* course + chapter */}
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Dropdown
             name="courseId"
@@ -141,10 +123,10 @@ export default function AddTest() {
             onChange={handleLessonChange}
             isLoading={isLessonLoading}
             isError={isLessonError}
+            disabled={!courseData.courseId}
           />
         </div>
 
-        {/* identifiers */}
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Input
             name="testCode"
@@ -162,7 +144,6 @@ export default function AddTest() {
           />
         </div>
 
-        {/* topic + total questions */}
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Dropdown
             name="topic"
@@ -182,7 +163,6 @@ export default function AddTest() {
           />
         </div>
 
-        {/* passing % + time */}
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Input
             name="passingPercentage"
@@ -200,7 +180,6 @@ export default function AddTest() {
           />
         </div>
 
-        {/* attempts + result declaration */}
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Dropdown
             name="maxAttempts"
@@ -222,7 +201,6 @@ export default function AddTest() {
           />
         </div>
 
-        {/* other info */}
         <Input
           name="otherInfo"
           label="Other Information"
@@ -231,8 +209,6 @@ export default function AddTest() {
           onChange={handleFieldChange}
         />
       </div>
-
-      {/* submit ----------------------------------------------------------- */}
       <Button
         disabled={!isFormValid() || isPending}
         onClick={handleSubmit}
@@ -240,5 +216,5 @@ export default function AddTest() {
         className="mt-4 w-full"
       />
     </div>
-  );
+  )
 }
