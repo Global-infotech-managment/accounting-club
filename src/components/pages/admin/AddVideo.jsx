@@ -11,7 +11,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { showToast } from '../../../services/toast/toast.service';
 import { uploadFile } from '../../../services/uploads/upload.service';
 import { fetchAllCourses } from '../../../services/course/course.service';
-import { fetchAllSections } from '../../../services/section/section.services';
+import { addSectionChapter, fetchAllSections } from '../../../services/section/section.services';
 
 const AddVideo = () => {
   /** ─────────────────────────────────────────────────────────
@@ -42,6 +42,19 @@ const AddVideo = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const addVideoMutation = useMutation({
+    mutationFn: (data) => addSectionChapter(data),
+    onSuccess: () => {
+      showToast.success('Video section added successfully!');
+      setTimeout(() => {
+        navigate('/admin-dashboard?activeSidebar=add-test');
+      }, 600);
+    },
+    onError: (error) => {
+      showToast.error(error.message || 'Failed to add video section');
+    }
+  });
 
   /** ─────────────────────────────────────────────────────────
    *  Data fetching
@@ -142,10 +155,26 @@ const AddVideo = () => {
       showToast.error('Please fill all required fields');
       return;
     }
-    showToast.success('Video section updated successfully!');
-    setTimeout(() => {
-      navigate('/admin-dashboard?activeSidebar=add-test');
-    }, 600);
+    console.log("course data ", courseData)
+    // showToast.success('Video section updated successfully!');
+    // setTimeout(() => {
+    //   navigate('/admin-dashboard?activeSidebar=add-test');
+    // }, 600);
+
+    const payload = {
+      sectionId: courseData.lessonId,
+      chapterDescription: courseData.chapterDescription,
+      status: courseData.status,
+      videoCode: courseData.embedCode,
+      studyMaterialId: courseData.studyMaterialId,
+      isMandatory: courseData.isMandatory ?? true,
+      videoDescription: courseData.videoDescription,
+      chapterNumber: +courseData.lessonNumber
+    };
+
+    console.log("payload ", payload)
+
+    addVideoMutation.mutate(payload);
   };
 
   /** ─── Static options ───────────────────────────────────── */

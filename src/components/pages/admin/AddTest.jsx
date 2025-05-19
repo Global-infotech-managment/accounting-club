@@ -8,7 +8,7 @@ import { Dropdown } from '../../common/Dropdown'
 
 import { useCreateTest } from '../../../hooks/useAuth'
 import { fetchAllCourses } from '../../../services/course/course.service'
-import { fetchAllSections } from '../../../services/section/section.services'
+import {  fetchAllSectionsChapters } from '../../../services/section/section.services'
 
 import { AppContext } from '../../../utils/AppContext'
 import { toast } from 'sonner'
@@ -33,20 +33,21 @@ export default function AddTest() {
     isError: isLessonError,
   } = useQuery({
     queryKey: ['lessons', courseData.courseId],
-    queryFn: () => fetchAllSections(courseData.courseId),
-    enabled: !!courseData.courseId,
+    // queryFn: () => fetchAllSections(courseData.courseId),
+    queryFn: fetchAllSectionsChapters,
+    // enabled: !!courseData.courseId,
   })
 
   const { mutate: createTest, isPending } = useCreateTest()
 
   const courseOptions = [
     { value: '', label: 'Select Course' },
-    ...courses.map((c) => ({ value: c.id, label: c.name })),
+    ...courses.map((c) => ({ value: c.id, label: c.chapterNumber })),
   ]
 
   const lessonOptions = [
     { value: '', label: 'Select Chapter' },
-    ...lessons.map((l) => ({ value: l.id, label: l.name })),
+    ...lessons?.map((l) => ({ value: l.id, label: l.name })),
   ]
 
   useEffect(() => {

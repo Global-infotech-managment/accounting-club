@@ -10,18 +10,27 @@ export const addSection = async (data) => {
   return response.data
 }
 
+export const addSectionChapter = async (data) => {
+  const response = await API.post(`/course-sections/chapters`, data)
+  return response.data
+}
+
 export const updateSection = async (id, data) => {
   const response = await API.put(`/course-lesson/admin/${id}`, data)
   return response.data
 }
 
-// export const fetchAllSections = async () => {
-//   const response = await API.get('/course-lesson/admin')
-//   return response.data.data.courseLessons
-// }
-export const fetchAllSections = async (courseId) => {
+export const fetchAllSections = async () => {
+  const response = await API.get('/course-lesson/admin')
+  return response.data.data.courseLessons
+}
+export const fetchAllSectionsChapter = async (courseId) => {
   const response = await API.get(`/course-sections/course/${courseId}`)
   return response.data.data.sections
+}
+export const fetchAllSectionsChapters = async () => {
+  const response = await API.get(`/course-sections/chapters/all/`)
+  return response.data.data.courses
 }
 
 export const fetchAllSectionsByCourseId = async (courseId) => {
