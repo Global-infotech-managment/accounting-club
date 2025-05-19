@@ -22,7 +22,6 @@ const AddSection = () => {
     queryFn: fetchAllCourses,
     onSuccess: (data) => {
       console.log('Courses fetched successfully')
-      // No auto-select to allow user to manually pick a course
     },
   })
 
@@ -30,7 +29,7 @@ const AddSection = () => {
     mutationFn: addSection,
     onSuccess: () => {
       showToast.success('Section created successfully')
-      navigate('/admin-dashboard?activeSidebar=add-test')
+      navigate('/admin-dashboard?activeSidebar=add-video')
     },
     onError: (error) => {
       showToast.error(
@@ -121,7 +120,7 @@ const AddSection = () => {
           value={courseData.isMandatory}
           onChange={handleDropdownChange}
         />
-        <Dropdown3
+        <Dropdown
           name="status"
           label="Status"
           options={[

@@ -1,33 +1,51 @@
-'use client'
-import React, { useContext, useState, useEffect } from 'react'
-import Input from '../../common/Input'
-import Button from '../../common/Button'
-import { Dropdown, Dropdown2 } from '../../common/Dropdown'
-import { Link, useNavigate } from 'react-router-dom'
-import { AppContext } from '../../../utils/AppContext'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { showToast } from '../../../services/toast/toast.service'
-import { uploadFile } from '../../../services/uploads/upload.service'
-import { fetchAllCourses } from '../../../services/course/course.service'
-import { fetchAllSections } from '../../../services/section/section.services'
+/* AddVideo.jsx — fixed */
+
+'use client';
+import React, { useContext, useState, useEffect, useCallback } from 'react';
+import Input from '../../common/Input';
+import Button from '../../common/Button';
+import { Dropdown } from '../../common/Dropdown';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { AppContext } from '../../../utils/AppContext';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { showToast } from '../../../services/toast/toast.service';
+import { uploadFile } from '../../../services/uploads/upload.service';
+import { fetchAllCourses } from '../../../services/course/course.service';
+import { fetchAllSections } from '../../../services/section/section.services';
 
 const AddVideo = () => {
-  const { courseData, updateCourseData } = useContext(AppContext)
-  const navigate = useNavigate()
+  /** ─────────────────────────────────────────────────────────
+   *  Local-state + context
+   *  ───────────────────────────────────────────────────────── */
+  const { courseData, updateCourseData } = useContext(AppContext);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  // Initialize selectedCourseId from URL param if exists
-  const [selectedCourseId, setSelectedCourseId] = useState('')
+  const [selectedCourseId, setSelectedCourseId] = useState('');
+  const [selectedLessonId, setSelectedLessonId] = useState('');
 
+  /** ─────────────────────────────────────────────────────────
+   *  Pull any query-string params into local + context state
+   *  ───────────────────────────────────────────────────────── */
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    const urlCourseId = params.get('courseId') || ''
-    if (urlCourseId) {
-      setSelectedCourseId(urlCourseId)
-      updateCourseData({ courseId: urlCourseId, chapter: '' })
-    }
-  }, [])
+    const params = new URLSearchParams(location.search);
+    const urlCourseId = params.get('courseId') || '';
+    const urlLessonId = params.get('lessonId') || '';
 
-  // Fetch all courses
+    if (urlCourseId) {
+      setSelectedCourseId(urlCourseId);
+      updateCourseData({ courseId: urlCourseId });
+    }
+    if (urlLessonId) {
+      setSelectedLessonId(urlLessonId);
+      updateCourseData({ lessonId: urlLessonId });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  /** ─────────────────────────────────────────────────────────
+   *  Data fetching
+   *  ───────────────────────────────────────────────────────── */
   const {
     data: courses = [],
     isLoading: isCoursesLoading,
@@ -35,264 +53,233 @@ const AddVideo = () => {
   } = useQuery({
     queryKey: ['courses'],
     queryFn: fetchAllCourses,
-  })
+  });
 
-  // Fetch sections when selectedCourseId changes
   const {
     data: lessons = [],
-    isLoading: isLessonLoading,
-    isError: isLessonError,
+    isLoading: isLessonsLoading,
+    isError: isLessonsError,
     refetch: refetchLessons,
   } = useQuery({
     queryKey: ['lessons', selectedCourseId],
     queryFn: () => fetchAllSections(selectedCourseId),
     enabled: !!selectedCourseId,
-  })
+  });
 
-  // Update context and refetch lessons on courseId change
-  useEffect(() => {
-    updateCourseData({ courseId: selectedCourseId, chapter: '' })
-    if (selectedCourseId) {
-      refetchLessons()
-    }
-  }, [selectedCourseId])
+  /** ─────────────────────────────────────────────────────────
+   *  Helpers
+   *  ───────────────────────────────────────────────────────── */
+  const syncSearchParams = (key, value) => {
+    const params = new URLSearchParams(location.search);
+    if (value) params.set(key, value);
+    else params.delete(key);
+    navigate(`?${params.toString()}`, { replace: true });
+  };
 
-  // Mutation for uploading file
+  const handleCourseChange = useCallback(
+    (_name, value) => {
+      setSelectedCourseId(value);
+      setSelectedLessonId(''); // reset chapter list-box
+      updateCourseData({ courseId: value, lessonId: '' });
+      syncSearchParams('courseId', value);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+
+  const handleLessonChange = useCallback(
+    (_name, value) => {
+      setSelectedLessonId(value);
+      updateCourseData({ lessonId: value });
+      syncSearchParams('lessonId', value);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+
+  const handleGenericDropdown = (_name, value) => {
+    updateCourseData({ [_name]: value });
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    updateCourseData({ [name]: value });
+  };
+
+  /** ─── File upload ───────────────────────────────────────── */
   const uploadFileMutation = useMutation({
     mutationFn: (file) => uploadFile(file, 'study-materials'),
     onSuccess: (response) => {
-      const uploadedId = response.id || response
-      showToast.success('Study material uploaded successfully')
-      updateCourseData({ studyMaterialId: uploadedId })
+      const uploadedId = response.id || response;
+      showToast.success('Study material uploaded successfully');
+      updateCourseData({ studyMaterialId: uploadedId });
     },
-    onError: () => {
-      showToast.error('Study material upload failed')
-    },
-  })
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
-    updateCourseData({ [name]: value })
-  }
-
-  // Handle dropdown changes, update URL query param on course select
-  const handleDropdownChange = (field) => (selectedOption) => {
-    if (field === 'courseId') {
-      const newCourseId = selectedOption?.value || ''
-      setSelectedCourseId(newCourseId)
-      updateCourseData({ courseId: newCourseId, chapter: '' })
-
-      // Update URL query param for courseId
-      const params = new URLSearchParams(window.location.search)
-      if (newCourseId) {
-        params.set('courseId', newCourseId)
-      } else {
-        params.delete('courseId')
-      }
-      navigate(`${window.location.pathname}?${params.toString()}`, {
-        replace: true,
-      })
-    } else {
-      updateCourseData({ [field]: selectedOption?.value || '' })
-    }
-  }
+    onError: () => showToast.error('Study material upload failed'),
+  });
 
   const handleFileChange = async (event) => {
-    const file = event.target.files?.[0]
+    const file = event.target.files?.[0];
     if (file) {
-      updateCourseData({ studyMaterial: file })
-      await uploadFileMutation.mutateAsync(file)
+      updateCourseData({ studyMaterial: file });
+      await uploadFileMutation.mutateAsync(file);
     }
-  }
+  };
 
-  const formSubmit = async (e) => {
-    e.preventDefault()
-
-    const requiredFields = [
-      'name',
+  /** ─── Submit ────────────────────────────────────────────── */
+  const formSubmit = (e) => {
+    e.preventDefault();
+    const required = [
+      'courseId',
+      'lessonId',
       'lessonNumber',
-      'chapter',
-      'mandatory',
+      'chapterDescription',
       'videoDescription',
       'embedCode',
       'status',
-      'studyMaterialId',
-    ]
-
-    const isValid = requiredFields.every((field) => !!courseData[field])
-
+    ];
+    const isValid = required.every((k) => courseData[k]);
     if (!isValid) {
-      showToast.error('Please fill all required fields')
-      return
+      showToast.error('Please fill all required fields');
+      return;
     }
-
-    showToast.success('Video section updated successfully!')
-
+    showToast.success('Video section updated successfully!');
     setTimeout(() => {
-      navigate('/admin-dashboard?activeSidebar=add-test')
-    }, 500)
-  }
+      navigate('/admin-dashboard?activeSidebar=add-test');
+    }, 600);
+  };
 
+  /** ─── Static options ───────────────────────────────────── */
   const courseOptions = [
     { value: '', label: 'Select Course' },
-    ...courses.map((course) => ({
-      value: course.id,
-      label: course.name,
-    })),
-  ]
-
-  const chapterOptions = [
+    ...courses.map((c) => ({ value: c.id, label: c.name })),
+  ];
+  const lessonOptions = [
     { value: '', label: 'Select Chapter' },
-    ...lessons.map((lesson) => ({
-      value: lesson.id,
-      label: lesson.name,
-    })),
-  ]
-
-  const mandatoryOptions = [
-    { value: 'Yes', label: 'Yes' },
-    { value: 'No', label: 'No' },
-  ]
-
+    ...lessons.map((l) => ({ value: l.id, label: l.name })),
+  ];
+  const yesNo = [
+    { value: 'true', label: 'Yes' },
+    { value: 'false', label: 'No' },
+  ];
   const statusOptions = [
-    { value: 'Active', label: 'Active' },
-    { value: 'Inactive', label: 'Inactive' },
-  ]
+    { value: 'true', label: 'Active' },
+    { value: 'false', label: 'Disable' },
+  ];
 
-  const selectedCourse =
-    courseOptions.find((opt) => opt.value === selectedCourseId) ||
-    courseOptions[0]
-
-  const selectedChapter =
-    chapterOptions.find((opt) => opt.value === courseData.chapter) ||
-    chapterOptions[0]
-
-  const selectedMandatory =
-    mandatoryOptions.find((opt) => opt.value === courseData.mandatory) ||
-    mandatoryOptions[0]
-
-  const selectedStatus =
-    statusOptions.find((opt) => opt.value === courseData.status) ||
-    statusOptions[0]
-
+  /** ─── UI ───────────────────────────────────────────────── */
   return (
-    <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
+    <div className="rounded-xl border border-black/30 bg-black/5 px-4 py-5">
+      {/* Header */}
       <div className="mb-4 flex flex-col items-center justify-between sm:flex-row">
-        <p className="mb-2 w-full text-center text-[16px] font-semibold text-black sm:mb-0 sm:text-start md:text-[18px]">
+        <p className="mb-2 w-full text-center text-base font-semibold sm:mb-0 sm:text-left md:text-lg">
           Add Video And Study Material
         </p>
-        <div className="flex items-center gap-2">
-          <Link to="/admin-dashboard?activeSidebar=add-test">
-            <button className="text-nowrap rounded bg-[#252466] px-3 py-1.5 text-sm text-white">
-              Add test
-            </button>
-          </Link>
-        </div>
+        <Link to="/admin-dashboard?activeSidebar=add-test">
+          <button className="rounded bg-[#252466] px-3 py-1.5 text-sm text-white">
+            Add test
+          </button>
+        </Link>
       </div>
 
+      {/* Form */}
       <form className="flex flex-col gap-3 sm:gap-4" onSubmit={formSubmit}>
-        <div>
-          <Dropdown
-            label="Select Course"
-            options={courseOptions}
-            value={selectedCourse}
-            onChange={handleDropdownChange('courseId')}
-            isLoading={isCoursesLoading}
-            isError={isCoursesError}
-          />
-        </div>
+        {/* Course */}
+        <Dropdown
+          name="courseId"
+          label="Select Course"
+          options={courseOptions}
+          value={selectedCourseId}
+          onChange={handleCourseChange}
+          isLoading={isCoursesLoading}
+          isError={isCoursesError}
+        />
 
-        <div>
-          <Dropdown
-            label="Select Chapter"
-            options={chapterOptions}
-            value={selectedChapter}
-            onChange={handleDropdownChange('chapter')}
-            isLoading={isLessonLoading}
-            isError={isLessonError}
-            disabled={!selectedCourseId || isLessonLoading}
-          />
-        </div>
+        {/* Chapter */}
+        <Dropdown
+          name="lessonId"
+          label="Select Chapter"
+          options={lessonOptions}
+          value={selectedLessonId}
+          onChange={handleLessonChange}
+          isLoading={isLessonsLoading}
+          isError={isLessonsError}
+          disabled={!selectedCourseId}
+        />
 
-        <div>
-          <Dropdown
-            label="Is it mandatory to move for next"
-            options={mandatoryOptions}
-            value={selectedMandatory}
-            onChange={handleDropdownChange('mandatory')}
-          />
-        </div>
+        {/* Mandatory? */}
+        <Dropdown
+          name="isMandatory"
+          label="Is mandatory to move next"
+          options={yesNo}
+          value={courseData.isMandatory || ''}
+          onChange={handleGenericDropdown}
+        />
 
-        <div>
-          <Input
-            label="Chapter No."
-            id="lessonNumber"
-            name="lessonNumber"
-            placeholder="1"
-            value={courseData.lessonNumber || ''}
-            onChange={handleInputChange}
-          />
-        </div>
+        {/* Chapter No. */}
+        <Input
+          label="Chapter No."
+          id="lessonNumber"
+          name="lessonNumber"
+          placeholder="1"
+          value={courseData.lessonNumber || ''}
+          onChange={handleInputChange}
+        />
 
-        <div>
-          <Input
-            label="Chapter Description"
-            id="chapterDescription"
-            name="chapterDescription"
-            placeholder="Chapter Description"
-            value={courseData.chapterDescription || ''}
-            onChange={handleInputChange}
-          />
-        </div>
+        {/* Chapter description */}
+        <Input
+          label="Chapter Description"
+          id="chapterDescription"
+          name="chapterDescription"
+          placeholder="Chapter Description"
+          value={courseData.chapterDescription || ''}
+          onChange={handleInputChange}
+        />
 
-        <div>
-          <Input
-            label="Video Description"
-            id="videoDescription"
-            name="videoDescription"
-            placeholder="Short summary of the video..."
-            value={courseData.videoDescription || ''}
-            onChange={handleInputChange}
-          />
-        </div>
+        {/* Video description */}
+        <Input
+          label="Video Description"
+          id="videoDescription"
+          name="videoDescription"
+          placeholder="Short summary of the video..."
+          value={courseData.videoDescription || ''}
+          onChange={handleInputChange}
+        />
 
-        <div>
-          <Input
-            label="Video Embed Code"
-            id="embedCode"
-            name="embedCode"
-            placeholder="<iframe src='...' />"
-            value={courseData.embedCode || ''}
-            onChange={handleInputChange}
-          />
-        </div>
+        {/* Embed code */}
+        <Input
+          label="Video Embed Code"
+          id="embedCode"
+          name="embedCode"
+          placeholder="<iframe src='...' />"
+          value={courseData.embedCode || ''}
+          onChange={handleInputChange}
+        />
 
-        <div className="flex flex-col items-start">
-          <Input
-            label="Study Material"
-            id="studyMaterial"
-            name="studyMaterial"
-            type="file"
-            accept=".pdf,.docx,.pptx"
-            onChange={handleFileChange}
-          />
-          {courseData.studyMaterial && (
-            <p className="text-xs text-gray-600 mt-1">
-              File selected:{' '}
-              {courseData.studyMaterial.name || 'Preview available'}
-            </p>
-          )}
-        </div>
+        {/* Study material */}
+        <Input
+          label="Study Material"
+          id="studyMaterial"
+          name="studyMaterial"
+          type="file"
+          accept=".pdf,.docx,.pptx"
+          onChange={handleFileChange}
+        />
+        {courseData.studyMaterial && (
+          <p className="mt-1 text-xs text-gray-600">
+            File selected: {courseData.studyMaterial.name}
+          </p>
+        )}
 
-        <div>
-          <Dropdown
-            label="Status"
-            options={statusOptions}
-            value={selectedStatus}
-            onChange={handleDropdownChange('status')}
-          />
-        </div>
+        {/* Status */}
+        <Dropdown
+          name="status"
+          label="Status"
+          options={statusOptions}
+          value={courseData.status || ''}
+          onChange={handleGenericDropdown}
+        />
 
+        {/* Submit */}
         <Button
           type="submit"
           className="col-span-2 mt-4 w-full"
@@ -301,7 +288,7 @@ const AddVideo = () => {
         />
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default AddVideo
+export default AddVideo;
