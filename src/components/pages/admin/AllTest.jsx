@@ -111,9 +111,12 @@ const AllTest = () => {
 
   return (
     <div className="md:p-4">
-      <p className="mb-2 w-full border-b border-[#00000067] pb-2 text-center text-[16px] font-semibold text-black sm:mb-0 sm:text-start md:text-[18px]">
-        All Questions
-      </p>
+    
+        <p className="mb-2 w-full border-b border-[#00000067] pb-2 text-center text-[16px] font-semibold text-black sm:mb-0 sm:text-start md:text-[18px]">
+          All Questions
+        </p>
+         
+      
 
       <div className="overflow-x-auto">
         <table className="border-gray-200 shadow-md mt-2 w-full min-w-[700px] overflow-hidden rounded-xl border bg-white">

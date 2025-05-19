@@ -145,14 +145,12 @@ export default function AddTest() {
         </div>
 
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <Dropdown
+            <Input
             name="topic"
             label="Topic"
-            options={courseOptions}
+            placeholder="This is basic course for Accountants"
             value={courseData.topic}
             onChange={handleFieldChange}
-            isLoading={isCoursesLoading}
-            isError={isCoursesError}
           />
           <Input
             name="totalQuestions"
@@ -181,24 +179,31 @@ export default function AddTest() {
         </div>
 
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <Dropdown
-            name="maxAttempts"
-            label="Maximum Attempts"
-            options={courseOptions}
-            value={courseData.maxAttempts}
-            onChange={handleFieldChange}
-            isLoading={isCoursesLoading}
-            isError={isCoursesError}
-          />
-          <Dropdown
-            name="resultDeclaration"
-            label="Result Declaration"
-            options={lessonOptions}
-            value={courseData.resultDeclaration}
-            onChange={handleFieldChange}
-            isLoading={isLessonLoading}
-            isError={isLessonError}
-          />
+        <Dropdown
+  name="maxAttempts"
+  label="Maximum Attempts"
+  options={[
+    { value: '1', label: '1' },
+    { value: '2', label: '2' },
+    { value: '3', label: '3' },
+    { value: 'unlimited', label: 'Unlimited' },
+  ]}
+  value={courseData.maxAttempts || ''}
+  onChange={handleFieldChange}
+/>
+
+<Dropdown
+  name="resultDeclaration"
+  label="Result Declaration"
+  options={[
+    { value: 'immediate', label: 'Immediate' },
+    { value: 'scheduled', label: 'Scheduled' },
+    { value: 'manual', label: 'Manual' },
+  ]}
+  value={courseData.resultDeclaration}
+  nChange={handleFieldChange}
+/>
+
         </div>
 
         <Input
