@@ -11,7 +11,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { showToast } from '../../../services/toast/toast.service';
 import { uploadFile } from '../../../services/uploads/upload.service';
 import { fetchAllCourses } from '../../../services/course/course.service';
-import { addSectionChapter, fetchAllSections } from '../../../services/section/section.services';
+import { addSectionChapter, fetchAllSections, fetchAllSectionsByCourseId } from '../../../services/section/section.services';
 
 const AddVideo = () => {
   /** ─────────────────────────────────────────────────────────
@@ -68,6 +68,16 @@ const AddVideo = () => {
     queryFn: fetchAllCourses,
   });
 
+  // const {
+  //   data: lessons = [],
+  //   isLoading: isLessonsLoading,
+  //   isError: isLessonsError,
+  //   refetch: refetchLessons,
+  // } = useQuery({
+  //   queryKey: ['lessons', selectedCourseId],
+  //   queryFn: () => fetchAllSections(selectedCourseId),
+  //   enabled: !!selectedCourseId,
+  // });
   const {
     data: lessons = [],
     isLoading: isLessonsLoading,
@@ -75,7 +85,7 @@ const AddVideo = () => {
     refetch: refetchLessons,
   } = useQuery({
     queryKey: ['lessons', selectedCourseId],
-    queryFn: () => fetchAllSections(selectedCourseId),
+    queryFn: () => fetchAllSectionsByCourseId(selectedCourseId),
     enabled: !!selectedCourseId,
   });
 
