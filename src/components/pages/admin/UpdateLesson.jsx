@@ -120,7 +120,7 @@ const UpdateLesson = () => {
     <div className="md:p-4">
       <div className='flex justify-between items-center border-b pb-4 mb-2 border-[#00000067]'>
         <p className="w-full  text-center text-[16px] font-semibold text-black sm:mb-0 sm:text-start md:text-[18px]">
-          All Lesson
+          All Chapters
         </p>
          <Link  to="/admin-dashboard?activeSidebar=update-video">
                           <button className="rounded bg-[#252466] text-nowrap px-3 py-1.5 text-sm text-white">
