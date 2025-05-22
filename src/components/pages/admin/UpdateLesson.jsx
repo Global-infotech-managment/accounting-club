@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import Button from '../../common/Button'
 import Input from '../../common/Input'
 import popupImage from '../../../assets/images/webp/popup-icon.webp'
@@ -118,9 +118,16 @@ const UpdateLesson = () => {
 
   return (
     <div className="md:p-4">
-      <p className="mb-2 w-full border-b border-[#00000067] pb-2 text-center text-[16px] font-semibold text-black sm:mb-0 sm:text-start md:text-[18px]">
-        All Lesson
-      </p>
+      <div className='flex justify-between items-center border-b pb-4 mb-2 border-[#00000067]'>
+        <p className="w-full  text-center text-[16px] font-semibold text-black sm:mb-0 sm:text-start md:text-[18px]">
+          All Chapters
+        </p>
+         <Link  to="/admin-dashboard?activeSidebar=update-video">
+                          <button className="rounded bg-[#252466] text-nowrap px-3 py-1.5 text-sm text-white">
+                            Update Video and Study material
+                          </button>
+                        </Link>
+      </div>
 
       <div className="overflow-x-auto">
         <table className="border-gray-200 shadow-md mt-2 w-full min-w-[700px] overflow-hidden rounded-xl border bg-white">

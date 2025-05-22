@@ -108,7 +108,7 @@ const UpdateSection = () => {
             <Button
               type="button"
               className="!bg-transparent col-span-2 mt-4 !py-2 px-5"
-              bgBtn="All Chapter"
+              bgBtn="All Questions"
             />
           </a>
         </div>
