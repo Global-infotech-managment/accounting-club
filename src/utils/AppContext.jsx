@@ -1,3 +1,4 @@
+// utils/AppContext.js
 import { createContext, useState } from 'react'
 
 export const AppContext = createContext()
@@ -5,6 +6,7 @@ export const AppContext = createContext()
 export const AppProvider = ({ children }) => {
   const [courseData, setCourseData] = useState({
     courseId: null,
+    lessonId: '', // Added for AddTest form
     name: '',
     chapter: '',
     description: '',
@@ -12,6 +14,15 @@ export const AppProvider = ({ children }) => {
     price: 1,
     validity: 1,
     status: true,
+    testCode: '', // Added for test fields
+    exerciseName: '',
+    topic: '',
+    totalQuestions: '',
+    passingPercentage: '',
+    timeAllowed: '',
+    maxAttempts: '',
+    resultDeclaration: '',
+    otherInfo: '',
   })
 
   const [activeVideoIndex, setActiveVideoIndex] = useState({
@@ -20,12 +31,12 @@ export const AppProvider = ({ children }) => {
   })
 
   const updateCourseData = (newData) => {
-    console.log('Previous courseData:', courseData) 
-    console.log('New data received:', newData) 
+    console.log('Previous courseData:', courseData)
+    console.log('New data received:', newData)
 
     setCourseData((prevData) => {
       const updatedData = { ...prevData, ...newData }
-      console.log('Updated courseData:', updatedData) 
+      console.log('Updated courseData:', updatedData)
       return updatedData
     })
   }

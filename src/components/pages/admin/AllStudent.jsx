@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react'
 import { useQuery, useMutation } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
@@ -21,14 +20,14 @@ const itemsPerPage = 6
    ────────────────────────────── */
 const InactiveModal = ({ onConfirm, onClose }) => (
   <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-    <div className="max-w-sm rounded-lg border border-[#253466] bg-white p-6 text-center shadow-lg">
+    <div className="shadow-lg max-w-sm rounded-lg border border-[#253466] bg-white p-6 text-center">
       <div className="flex justify-center">
         <img src={popupImage} alt="popup" width={100} height={100} />
       </div>
-      <h2 className="mb-2 text-lg font-semibold text-red-600">
+      <h2 className="text-lg text-red-600 mb-2 font-semibold">
         Confirm Account Inactive
       </h2>
-      <p className="mb-4 text-sm text-gray-700">
+      <p className="text-gray-700 mb-4 text-sm">
         Your account is currently inactive. Please confirm your action to
         proceed further.
       </p>
@@ -41,7 +40,7 @@ const InactiveModal = ({ onConfirm, onClose }) => (
         </button>
         <button
           onClick={onClose}
-          className="rounded border border-gray-300 px-4 py-2 hover:bg-gray-100"
+          className="border-gray-300 hover:bg-gray-100 rounded border px-4 py-2"
         >
           Cancel
         </button>
@@ -56,32 +55,17 @@ const InactiveModal = ({ onConfirm, onClose }) => (
 const AllStudent = () => {
   const navigate = useNavigate()
 
-  /* ─── Local state ────────────────────────── */
   const [currentPage, setCurrentPage] = useState(1)
   const [searchTerm, setSearchTerm] = useState('')
-  const [purchaseFilter, setPurchaseFilter] = useState('all') // 'all' | 'purchased' | 'unpurchased'
+  const [purchaseFilter, setPurchaseFilter] = useState('all')
   const [selectedStudent, setSelectedStudent] = useState(null)
   const [showInactivePopup, setShowInactivePopup] = useState(false)
 
-  /* ─── React-Query: list ───────────────────── */
-  const {
-    data,
-    isLoading,
-    isError,
-    refetch,
-  } = useQuery({
-    queryKey: ['students', currentPage, searchTerm, purchaseFilter],
-    keepPreviousData: true,
-    queryFn: () =>
-      fetchStudents({
-        page: currentPage.toString(),
-        limit: itemsPerPage.toString(),
-        search: searchTerm || undefined,
-        purchase: purchaseFilter !== 'all' ? purchaseFilter : undefined,
-      }),
+  const { data, isLoading, isError, refetch } = useQuery({
+    queryKey: ['students'],
+    queryFn: () => fetchStudents(),
   })
 
-  /* ─── React-Query: mutation ───────────────── */
   const { mutate: changeStatus, isLoading: isUpdating } = useMutation({
     mutationFn: updateStatus,
     onSuccess: () => {
@@ -93,12 +77,6 @@ const AllStudent = () => {
     onError: (err) => console.error('Status update failed', err),
   })
 
-  /* ─── Keep list fresh when filters change ─── */
-  useEffect(() => {
-    refetch()
-  }, [currentPage, searchTerm, purchaseFilter, refetch])
-
-  /* ─── Actions ─────────────────────────────── */
   const handleDelete = async (id) => {
     try {
       await deleteStudent(id)
@@ -109,15 +87,28 @@ const AllStudent = () => {
     }
   }
 
-  /* ─── Derived data ────────────────────────── */
   const students = data?.data ?? []
-  const totalCount = data?.total ?? 0
-  const totalPages = Math.ceil(totalCount / itemsPerPage)
 
-  /* ─── Render ──────────────────────────────── */
+  const filteredStudents = students.filter((student) => {
+    const name = student?.profile?.name?.toLowerCase() || ''
+    const email = student?.email?.toLowerCase() || ''
+    const search = searchTerm.toLowerCase()
+    const matchesSearch = name.includes(search) || email.includes(search)
+    const purchaseStatus = student?.profile?.view ? 'purchased' : 'unpurchased'
+    const matchesPurchase =
+      purchaseFilter === 'all' || purchaseStatus === purchaseFilter
+    return matchesSearch && matchesPurchase
+  })
+
+  const totalCount = filteredStudents.length
+  const totalPages = Math.ceil(totalCount / itemsPerPage)
+  const paginatedStudents = filteredStudents.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  )
+
   return (
     <div className="overflow-x-auto md:p-4">
-      {/* Search + Purchase filter */}
       <div className="mb-5 flex flex-col gap-4 md:flex-row md:items-end">
         <Input
           value={searchTerm}
@@ -140,7 +131,7 @@ const AllStudent = () => {
               setPurchaseFilter(e.target.value)
               setCurrentPage(1)
             }}
-            className="w-full rounded border border-gray-300 px-3 py-2 text-sm"
+            className="border-gray-300 w-full rounded border px-3 py-2 text-sm"
           >
             <option value="all">All</option>
             <option value="purchased">Purchased</option>
@@ -149,8 +140,7 @@ const AllStudent = () => {
         </div>
       </div>
 
-      {/* Table */}
-      <table className="min-w-full overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md">
+      <table className="border-gray-200 shadow-md min-w-full overflow-hidden rounded-xl border bg-white">
         <thead className="bg-gray-100">
           <tr>
             {[
@@ -175,30 +165,27 @@ const AllStudent = () => {
         </thead>
 
         <tbody className="bg-[#F7F7F7]">
-          {students.length ? (
-            students.map((item, i) => (
+          {paginatedStudents.length ? (
+            paginatedStudents.map((item, i) => (
               <tr
                 key={item._id}
-                className="border-t text-center hover:bg-gray-50"
+                className="hover:bg-gray-50 border-t text-center"
               >
-                {/* Sr No */}
                 <td className="border border-[#D7D7D7] px-4 py-2">
                   {((currentPage - 1) * itemsPerPage + i + 1)
                     .toString()
                     .padStart(2, '0')}
                 </td>
 
-                {/* Date */}
                 <td className="border border-[#D7D7D7] px-4 py-2">
                   {new Date(item.createdAt).toLocaleDateString()}
                 </td>
 
-                {/* Name (clickable) */}
                 <td className="border border-[#D7D7D7] px-4 py-2">
                   <button
                     onClick={() =>
                       navigate(
-                        `/admin-dashboard?activeSidebar=student-overview&studentId=${item.id}`,
+                        `/admin-dashboard?activeSidebar=student-overview&studentId=${item.id}`
                       )
                     }
                     className="text-blue-500 underline"
@@ -207,27 +194,22 @@ const AllStudent = () => {
                   </button>
                 </td>
 
-                {/* Email */}
                 <td className="border border-[#D7D7D7] px-4 py-2 text-left">
                   {item?.email ?? 'N/A'}
                 </td>
 
-                {/* State */}
                 <td className="border border-[#D7D7D7] px-4 py-2 capitalize">
                   {item?.profile?.state ?? 'N/A'}
                 </td>
 
-                {/* Pincode */}
                 <td className="border border-[#D7D7D7] px-4 py-2">
                   {item?.profile?.pinCode ?? 'N/A'}
                 </td>
 
-                {/* Purchase column */}
                 <td className="border border-[#D7D7D7] px-4 py-2">
                   {item?.profile?.view || 'not purchase'}
                 </td>
 
-                {/* Status toggle */}
                 <td className="border border-[#D7D7D7] px-4 py-2">
                   <button
                     disabled={isUpdating}
@@ -247,7 +229,6 @@ const AllStudent = () => {
                   </button>
                 </td>
 
-                {/* Extra action – delete */}
                 <td className="border border-[#D7D7D7] px-4 py-2">
                   <button
                     onClick={() => handleDelete(item.id)}
@@ -268,7 +249,6 @@ const AllStudent = () => {
         </tbody>
       </table>
 
-      {/* Pagination */}
       {totalPages > 1 && (
         <div className="relative mt-4 flex min-w-[500px] items-center justify-center gap-4">
           <Button
@@ -291,7 +271,6 @@ const AllStudent = () => {
         </div>
       )}
 
-      {/* Inactive confirmation modal */}
       {showInactivePopup && selectedStudent && (
         <InactiveModal
           onConfirm={() =>

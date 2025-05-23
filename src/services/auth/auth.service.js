@@ -32,7 +32,13 @@ export const fetchStudents = async (params) => {
 }
 
 export const deleteStudent = async (id) => {
-  await API.delete(`/auth/${id}`)
+  try {
+    const response = await API.delete(`auth/remove/${id}`)
+    return response.data
+  } catch (error) {
+    console.error('Delete student error:', error)
+    throw error
+  }
 }
 
 export const updateStudentProfile = async (userId, profileData) => {

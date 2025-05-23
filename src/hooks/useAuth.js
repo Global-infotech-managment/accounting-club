@@ -14,6 +14,7 @@ import {
   updateStudentProfile,
 } from '../services/student/student.services'
 import { deleteLessonById } from '../services/section/section.services'
+import { addquestion } from '../services/questions/questions.service'
 
 // Main authentication hook
 export default function useAuth() {
@@ -96,6 +97,20 @@ export const useUpdateStudentProfile = () => {
 export const useCreateTest = () => {
   return useMutation({
     mutationFn: addLessonTest,
+    onSuccess: (data) => {
+      return data
+    },
+    onError: (error) => {
+      console.error('Error creating test:', error)
+      throw error
+    },
+  })
+}
+
+// question operations
+export const useCreatequestion = () => {
+  return useMutation({
+    mutationFn: addquestion,
     onSuccess: (data) => {
       return data
     },
