@@ -7,15 +7,15 @@ import Button from '../../common/Button'
 import Input from '../../common/Input'
 import { Dropdown } from '../../common/Dropdown'
 import { fetchAllCourses } from '../../../services/course/course.service'
-import { fetchAllSections } from '../../../services/section/section.services'
+import { fetchAllSections } from '../../../services/section/section.services' // chapters
 import { addLessonTest } from '../../../services/lessonTest/lessonTest.services'
-import { fetchAllchapters } from '../../../services/chapters/chapter.service'
 
 export default function AddTest() {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const location = useLocation()
 
+  // 1) form data state
   const [formData, setFormData] = useState({
     courseId: '',
     testCode: '',
@@ -23,14 +23,27 @@ export default function AddTest() {
     topic: '',
     totalQuestions: '',
     passingPercentage: '',
-    timeAllowed: '60', // Default to 60 minutes
-    maxAttempts: '1', // Default to 1 attempt
+    timeAllowed: '60',
+    maxAttempts: '1',
     resultDeclaration: '',
     otherInfo: '',
   })
-  const [selectedChapterId, setSelectedChapterId] = useState('')
 
-  // Fetch courses
+  // 2) chapterId state
+  const [chapterId, setChapterId] = useState('')
+
+  // 3) pull IDs from URL on mount
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const cId = params.get('courseId') || ''
+    const lId = params.get('lessonId') || '' // if you need lessonId later
+    const chId = params.get('chapterId') || ''
+
+    setFormData((f) => ({ ...f, courseId: cId }))
+    setChapterId(chId)
+  }, [location.search])
+
+  // 4) fetch courses
   const {
     data: courses = [],
     isLoading: isCoursesLoading,
@@ -40,7 +53,7 @@ export default function AddTest() {
     queryFn: fetchAllCourses,
   })
 
-  // Fetch chapters when course is selected
+  // 5) fetch chapters when course changes
   const {
     data: chapters = [],
     isLoading: isChaptersLoading,
@@ -51,51 +64,39 @@ export default function AddTest() {
     enabled: !!formData.courseId,
   })
 
-  // Check for chapterId in URL params
-  useEffect(() => {
-    const params = new URLSearchParams(location.search)
-    const chapterIdFromUrl = params.get('lessonId')
-    if (chapterIdFromUrl) setSelectedChapterId(chapterIdFromUrl)
-  }, [location.search])
-
-  // Mutation for creating test
-  const { mutate: createTest, isPending: isSubmitting } = useMutation({
+  // 6) mutation to create test
+  const { mutate: createTest, isLoading: isSubmitting } = useMutation({
     mutationFn: addLessonTest,
-    onSuccess: () => {
+    onSuccess: (newTestId) => {
       toast.success('Test created successfully!')
-      queryClient.invalidateQueries(['tests', selectedChapterId])
-      navigate('/admin-dashboard?activeSidebar=add-question')
+      queryClient.invalidateQueries(['tests', chapterId])
+      // navigate with only testId
+      navigate(
+        `/admin-dashboard?activeSidebar=add-question&testId=${encodeURIComponent(newTestId)}`
+      )
     },
-    onError: (error) => {
-      toast.error(`Error creating test: ${error.message}`)
+    onError: (err) => {
+      toast.error(`Error creating test: ${err.message}`)
     },
   })
 
+  // 7) input handlers
   const handleInputChange = (name, value) => {
     setFormData((prev) => ({ ...prev, [name]: value }))
-
-    // Reset chapter selection when course changes
     if (name === 'courseId') {
-      setSelectedChapterId('')
-      // Clear chapterId from URL if needed
+      // reset chapter when course changes
+      setChapterId('')
+      // remove chapterId from URL
       const params = new URLSearchParams(location.search)
-      params.delete('lessonId')
+      params.delete('chapterId')
       navigate(`?${params.toString()}`, { replace: true })
     }
   }
 
-  const handleChapterChange = (name, value) => {
-    setSelectedChapterId(value)
-    // Update URL with chapterId
-    const params = new URLSearchParams(location.search)
-    params.set('lessonId', value)
-    navigate(`?${params.toString()}`, { replace: true })
-  }
-
+  // 8) submit
   const handleSubmit = () => {
-    // Basic validation
     if (
-      !selectedChapterId ||
+      !chapterId ||
       !formData.testCode ||
       !formData.exerciseName ||
       !formData.topic
@@ -103,10 +104,8 @@ export default function AddTest() {
       toast.error('Please fill all required fields')
       return
     }
-
-    // Prepare payload according to CreateCourseTestSchema
     const payload = {
-      chapterId: selectedChapterId,
+      chapterId,
       testCodeNumber: Number(formData.testCode),
       exerciseName: formData.exerciseName,
       topic: formData.topic,
@@ -115,7 +114,7 @@ export default function AddTest() {
       timeAllowed: Number(formData.timeAllowed) || 60,
       maximumAttempts:
         formData.maxAttempts === 'unlimited'
-          ? Infinity
+          ? Number.MAX_SAFE_INTEGER
           : Number(formData.maxAttempts) || 1,
       resultDeclaration:
         formData.resultDeclaration === 'immediate'
@@ -123,46 +122,42 @@ export default function AddTest() {
           : 'AFTER_REVIEW',
       otherInformation: formData.otherInfo || undefined,
     }
-
     createTest(payload)
   }
 
-  // Prepare dropdown options
+  // 9) dropdown options
   const courseOptions = [
     { value: '', label: 'Select Course' },
-    ...courses.map((course) => ({ value: course.id, label: course.name })),
+    ...courses.map((c) => ({ value: c.id, label: c.name })),
   ]
-
   const chapterOptions = [
     { value: '', label: 'Select Chapter' },
-    ...chapters.map((chapter) => ({ value: chapter.id, label: chapter.name })),
+    ...chapters.map((ch) => ({ value: ch.id, label: ch.name })),
   ]
-
   const attemptOptions = [
     { value: '1', label: '1' },
     { value: '2', label: '2' },
     { value: '3', label: '3' },
     { value: 'unlimited', label: 'Unlimited' },
   ]
-
   const resultDeclarationOptions = [
     { value: 'immediate', label: 'Immediate' },
     { value: 'after_review', label: 'After Review' },
   ]
 
   return (
-    <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] p-5">
+    <div className="rounded-xl border border-black/30 bg-black/5 p-5">
       <h2 className="text-lg mb-4 font-semibold">Add Test</h2>
 
       <div className="space-y-4">
-        {/* Course and Chapter Selection */}
+        {/* Course & Chapter */}
         <div className="flex flex-col gap-4 sm:flex-row">
           <Dropdown
             name="courseId"
             label="Select Course"
             options={courseOptions}
             value={formData.courseId}
-            onChange={handleInputChange}
+            onChange={(n, v) => handleInputChange(n, v)}
             isLoading={isCoursesLoading}
             isError={isCoursesError}
           />
@@ -170,15 +165,20 @@ export default function AddTest() {
             name="chapterId"
             label="Select Chapter"
             options={chapterOptions}
-            value={selectedChapterId}
-            onChange={handleChapterChange}
+            value={chapterId}
+            onChange={(_, v) => {
+              setChapterId(v)
+              const params = new URLSearchParams(location.search)
+              params.set('chapterId', v)
+              navigate(`?${params.toString()}`, { replace: true })
+            }}
             isLoading={isChaptersLoading}
             isError={isChaptersError}
             disabled={!formData.courseId}
           />
         </div>
 
-        {/* Test Basic Info */}
+        {/* Basic Info */}
         <div className="flex flex-col gap-4 sm:flex-row">
           <Input
             name="testCode"
@@ -186,19 +186,17 @@ export default function AddTest() {
             placeholder="302"
             value={formData.testCode}
             onChange={(e) => handleInputChange('testCode', e.target.value)}
-            required
           />
           <Input
             name="exerciseName"
             label="Exercise Name"
-            placeholder="Basic Accountants Course"
+            placeholder="Basic Course"
             value={formData.exerciseName}
             onChange={(e) => handleInputChange('exerciseName', e.target.value)}
-            required
           />
         </div>
 
-        {/* Test Details */}
+        {/* Details */}
         <div className="flex flex-col gap-4 sm:flex-row">
           <Input
             name="topic"
@@ -206,76 +204,73 @@ export default function AddTest() {
             placeholder="Test Topic"
             value={formData.topic}
             onChange={(e) => handleInputChange('topic', e.target.value)}
-            required
           />
           <Input
             name="totalQuestions"
             label="Total Questions"
             placeholder="50"
+            type="number"
             value={formData.totalQuestions}
             onChange={(e) =>
               handleInputChange('totalQuestions', e.target.value)
             }
-            type="number"
           />
         </div>
 
-        {/* Test Settings */}
+        {/* Settings */}
         <div className="flex flex-col gap-4 sm:flex-row">
           <Input
             name="passingPercentage"
-            label="Passing Percentage"
+            label="Passing %"
             placeholder="33"
+            type="number"
             value={formData.passingPercentage}
             onChange={(e) =>
               handleInputChange('passingPercentage', e.target.value)
             }
-            type="number"
           />
           <Input
             name="timeAllowed"
             label="Time Allowed (mins)"
             placeholder="60"
+            type="number"
             value={formData.timeAllowed}
             onChange={(e) => handleInputChange('timeAllowed', e.target.value)}
-            type="number"
           />
         </div>
 
-        {/* Test Restrictions */}
+        {/* Restrictions */}
         <div className="flex flex-col gap-4 sm:flex-row">
           <Dropdown
             name="maxAttempts"
-            label="Maximum Attempts"
+            label="Max Attempts"
             options={attemptOptions}
             value={formData.maxAttempts}
-            onChange={handleInputChange}
+            onChange={(n, v) => handleInputChange(n, v)}
           />
           <Dropdown
             name="resultDeclaration"
             label="Result Declaration"
             options={resultDeclarationOptions}
             value={formData.resultDeclaration}
-            onChange={handleInputChange}
+            onChange={(n, v) => handleInputChange(n, v)}
           />
         </div>
 
-        {/* Additional Info */}
         <Input
           name="otherInfo"
-          label="Other Information"
+          label="Other Info"
           placeholder="Additional details..."
+          textarea
           value={formData.otherInfo}
           onChange={(e) => handleInputChange('otherInfo', e.target.value)}
-          textarea
         />
       </div>
 
-      {/* Submit Button */}
       <Button
         className="mt-6 w-full"
         disabled={
-          !selectedChapterId ||
+          !chapterId ||
           !formData.testCode ||
           !formData.exerciseName ||
           !formData.topic ||

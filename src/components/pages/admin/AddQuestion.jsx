@@ -1,3 +1,313 @@
+// import { useContext, useState, useEffect } from 'react'
+// import {
+//   useNavigate,
+//   useLocation,
+//   useSearchParams,
+//   Link,
+// } from 'react-router-dom'
+// import { useQuery, useQueryClient } from '@tanstack/react-query'
+// import { toast } from 'sonner'
+
+// import Button from '../../common/Button'
+// import Input from '../../common/Input'
+// import { Dropdown } from '../../common/Dropdown'
+// import { fetchAllCourses } from '../../../services/course/course.service'
+// import { fetchAllSections } from '../../../services/section/section.services'
+// import { useCreateTest } from '../../../hooks/useAuth'
+// import { AppContext } from '../../../utils/AppContext'
+// // import { useSearchParams } from 'next/navigation'
+// export default function AddQuestion() {
+//   const queryClient = useQueryClient()
+//   const navigate = useNavigate()
+//   const location = useLocation()
+//   const [searchParams] = useSearchParams()
+//   const testId = searchParams.get('testId') || ''
+
+//   console.log('testid', testId)
+
+//   // const { courseData, updateCourseData } = useContext(AppContext)
+
+//   const [questionType, setQuestionType] = useState('MCQ') // MCQ|TF|FIB
+//   const [testLevel, setTestLevel] = useState('EASY') // EASY|MEDIUM|HARD
+//   const [marks, setMarks] = useState(1)
+//   const [negativeMarks, setNegativeMarks] = useState(0)
+
+//   const [questions, setQuestions] = useState([
+//     { question: '', options: ['', '', '', ''], correctAnswer: '' },
+//   ])
+//   const [currentIndex, setCurrentIndex] = useState(0)
+
+//   const { mutate: createTestQuestion, isPending } = useCreateTest()
+
+//   // Fetch courses and lessons if needed...
+//   const {
+//     data: courses = [],
+//     isLoading: isCoursesLoading,
+//     isError: isCoursesError,
+//   } = useQuery({ queryKey: ['courses'], queryFn: fetchAllCourses })
+
+//   const {
+//     data: lessons = [],
+//     isLoading: isLessonLoading,
+//     isError: isLessonError,
+//   } = useQuery({ queryKey: ['lessons'], queryFn: fetchAllSections })
+
+//   /* Handlers for dropdowns */
+//   const handleDropdownChange = (name, value) => {
+//     if (name === 'questionType') {
+//       setQuestionType(value)
+//       setQuestions([
+//         { question: '', options: ['', '', '', ''], correctAnswer: '' },
+//       ])
+//       setCurrentIndex(0)
+//     } else if (name === 'testLevel') {
+//       setTestLevel(value)
+//     } else if (name === 'marks') {
+//       setMarks(Number(value))
+//     } else if (name === 'negativeMarks') {
+//       setNegativeMarks(Number(value))
+//     }
+//   }
+
+//   /* Question text and options */
+//   const handleQuestionChange = (e) => {
+//     const qs = [...questions]
+//     qs[currentIndex].question = e.target.value
+//     setQuestions(qs)
+//   }
+
+//   const handleOptionChange = (idx, val) => {
+//     const qs = [...questions]
+//     qs[currentIndex].options[idx] = val
+//     setQuestions(qs)
+//   }
+
+//   const handleCorrectAnswerChange = (ans) => {
+//     const qs = [...questions]
+//     qs[currentIndex].correctAnswer = ans
+//     setQuestions(qs)
+//   }
+
+//   /* Navigation */
+//   const isCurrentValid = () => {
+//     const cur = questions[currentIndex]
+//     if (!cur.question.trim()) return false
+//     if (questionType === 'MCQ')
+//       return cur.options.every((o) => o.trim()) && !!cur.correctAnswer
+//     if (questionType === 'TF')
+//       return cur.correctAnswer === 'TRUE' || cur.correctAnswer === 'FALSE'
+//     if (questionType === 'FIB') return !!cur.correctAnswer.trim()
+//     return false
+//   }
+
+//   const addNew = () => {
+//     setQuestions([
+//       ...questions,
+//       { question: '', options: ['', '', '', ''], correctAnswer: '' },
+//     ])
+//     setCurrentIndex(questions.length)
+//   }
+//   const next = () =>
+//     isCurrentValid() &&
+//     (currentIndex === questions.length - 1
+//       ? addNew()
+//       : setCurrentIndex(currentIndex + 1))
+//   const prev = () => currentIndex > 0 && setCurrentIndex(currentIndex - 1)
+
+//   /* Submit */
+//   const handleSubmit = () => {
+//     if (!testId) {
+//       toast.error('Missing testId in URL')
+//       return
+//     }
+//     if (!isCurrentValid()) {
+//       toast.error('Please complete the current question')
+//       return
+//     }
+
+//     const cur = questions[currentIndex]
+//     // Map FIB→FILL_IN_THE_BLANK
+//     const qType = questionType === 'FIB' ? 'FILL_IN_THE_BLANK' : questionType
+//     // Determine answer: for MCQ, convert A/B/C/D to actual option text
+//     let answer = cur.correctAnswer
+//     if (questionType === 'MCQ') {
+//       const idx = ['A', 'B', 'C', 'D'].indexOf(answer)
+//       answer = cur.options[idx] || ''
+//     }
+
+//     const payload = {
+//       testId,
+//       questionType: qType,
+//       testLevel,
+//       marks,
+//       negativeMarks,
+//       question: cur.question,
+//       options: questionType === 'MCQ' ? cur.options : [],
+//       answer,
+//       explanation: cur.explanation || undefined,
+//     }
+
+//     createTestQuestion(payload, {
+//       onSuccess: () => {
+//         queryClient.invalidateQueries(['tests', testId])
+//         toast.success('Question added!')
+//         // reset or navigate on finish
+//         navigate('/admin-dashboard?activeSidebar=dashboard')
+//       },
+//       onError: (e) => {
+//         toast.error(`Error: ${e.message}`)
+//       },
+//     })
+//   }
+
+//   /* Render */
+//   return (
+//     <div className="bg-gray-50 rounded p-5">
+//       <h2 className="text-xl mb-4 font-semibold">Add Question</h2>
+
+//       {/* Dropdowns */}
+//       <div className="mb-4 flex gap-4">
+//         <Dropdown
+//           name="questionType"
+//           label="Type"
+//           options={[
+//             { value: 'MCQ', label: 'Multiple Choice' },
+//             { value: 'TF', label: 'True/False' },
+//             { value: 'FIB', label: 'Fill in the Blank' },
+//           ]}
+//           value={questionType}
+//           onChange={handleDropdownChange}
+//         />
+
+//         <Dropdown
+//           name="testLevel"
+//           label="Level"
+//           options={[
+//             { value: 'EASY', label: 'Easy' },
+//             { value: 'MEDIUM', label: 'Medium' },
+//             { value: 'HARD', label: 'Hard' },
+//           ]}
+//           value={testLevel}
+//           onChange={handleDropdownChange}
+//         />
+
+//         <Dropdown
+//           name="marks"
+//           label="Marks"
+//           options={Array.from({ length: 5 }, (_, i) => ({
+//             value: i + 1,
+//             label: `${i + 1}`,
+//           }))}
+//           value={marks}
+//           onChange={handleDropdownChange}
+//         />
+
+//         <Dropdown
+//           name="negativeMarks"
+//           label="Neg. Marks"
+//           options={Array.from({ length: 5 }, (_, i) => ({
+//             value: -(i + 1) / 2,
+//             label: `-${(i + 1) / 2}`,
+//           }))}
+//           value={negativeMarks}
+//           onChange={handleDropdownChange}
+//         />
+//       </div>
+
+//       {/* Question Input */}
+//       <Input
+//         placeholder="Enter question"
+//         value={questions[currentIndex].question}
+//         onChange={handleQuestionChange}
+//       />
+
+//       {/* MCQ Options */}
+//       {questionType === 'MCQ' && (
+//         <div className="mt-3 space-y-2">
+//           <p className="font-medium">Options &amp; Correct Answer</p>
+//           {questions[currentIndex].options.map((opt, i) => (
+//             <div key={i} className="flex items-center gap-2">
+//               <span className="w-6">{String.fromCharCode(65 + i)}</span>
+//               <Input
+//                 value={opt}
+//                 onChange={(e) => handleOptionChange(i, e.target.value)}
+//               />
+//               <button
+//                 onClick={() =>
+//                   handleCorrectAnswerChange(String.fromCharCode(65 + i))
+//                 }
+//                 className={
+//                   questions[currentIndex].correctAnswer ===
+//                   String.fromCharCode(65 + i)
+//                     ? 'text-green-600'
+//                     : 'text-gray-400'
+//                 }
+//               >
+//                 ✓
+//               </button>
+//             </div>
+//           ))}
+//         </div>
+//       )}
+
+//       {/* TF */}
+//       {questionType === 'TF' && (
+//         <div className="mt-3 flex gap-4">
+//           {['TRUE', 'FALSE'].map((v) => (
+//             <button
+//               key={v}
+//               onClick={() => handleCorrectAnswerChange(v)}
+//               className={
+//                 questions[currentIndex].correctAnswer === v
+//                   ? 'bg-blue-500 text-white'
+//                   : 'bg-gray-200'
+//               }
+//             >
+//               {v}
+//             </button>
+//           ))}
+//         </div>
+//       )}
+
+//       {/* FIB */}
+//       {questionType === 'FIB' && (
+//         <div className="mt-3">
+//           <Input
+//             placeholder="Enter correct text"
+//             value={questions[currentIndex].correctAnswer}
+//             onChange={(e) => handleCorrectAnswerChange(e.target.value)}
+//           />
+//         </div>
+//       )}
+
+//       {/* Nav */}
+//       <div className="mt-4 flex items-center justify-between">
+//         <button onClick={prev} disabled={currentIndex === 0}>
+//           Previous
+//         </button>
+//         <span>
+//           Q {currentIndex + 1} / {questions.length}
+//         </span>
+//         <button onClick={next} disabled={!isCurrentValid()}>
+//           Next
+//         </button>
+//       </div>
+
+//       {/* Submit */}
+//       <Button
+//         className="mt-6 w-full"
+//         onClick={handleSubmit}
+//         disabled={isPending || !isCurrentValid()}
+//       >
+//         {isPending ? 'Submitting...' : 'Submit Question'}
+//       </Button>
+//     </div>
+//   )
+// }
+
+
+
+
 import { useContext, useState, useEffect } from 'react'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
@@ -261,34 +571,64 @@ export default function AddQuestion() {
       return
     }
 
+    // Extract testId from URL
+    const params = new URLSearchParams(location.search)
+    const testId = params.get('testId')
+
+    if (!testId) {
+      window.alert('Test ID is missing from the URL')
+      return
+    }
+
     const getAnswerIndex = (answerLetter) => {
       const valid = ['A', 'B', 'C', 'D']
       return valid.indexOf(answerLetter)
     }
 
-    // For the sake of simplicity we only create a single question per submit (matching previous behavior)
+    // Map questionType to schema-compatible values
+    const mapQuestionType = (type) => {
+      switch (type) {
+        case 'FIB':
+          return 'FILL_IN_THE_BLANK'
+        case 'MCQ':
+          return 'MCQ'
+        default:
+          return 'MCQ' // Fallback for TF (not in schema, so default to MCQ)
+      }
+    }
+
+    // For simplicity, only submit the first question (matching previous behavior)
     const q = questions[0]
 
     let answer = q.correctAnswer
+    let options = questionType === 'MCQ' ? q.options : []
     if (questionType === 'MCQ') {
       const idx = getAnswerIndex(q.correctAnswer)
-      answer = q.options[idx]
+      answer = idx !== -1 ? q.options[idx] : ''
+    } else if (questionType === 'TF') {
+      // Convert TRUE/FALSE to string for schema compatibility
+      options = ['TRUE', 'FALSE']
+      answer = q.correctAnswer
+    } else if (questionType === 'FIB') {
+      answer = q.correctAnswer
+      options = [] // No options for FIB
     }
 
     const payload = {
-      sectionId: selectedLessonId, // Using sectionId instead of testId
-      questionType,
+      testId, // Use testId from URL
+      questionType: mapQuestionType(questionType),
       testLevel,
       marks,
       negativeMarks,
-      question: q.question,
-      options: questionType === 'MCQ' ? q.options : undefined,
-      answer,
+      question: q.question || undefined, // Ensure optional field
+      options, // Options array (empty for FIB, populated for MCQ/TF)
+      answer: answer || undefined, // Ensure optional field
+      explanation: undefined, // Optional, not provided in UI
     }
 
     createTest(payload, {
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['tests', selectedLessonId] })
+        queryClient.invalidateQueries({ queryKey: ['tests', testId] })
         toast.success('Test created successfully!')
         // Reset state
         setQuestions([
@@ -308,15 +648,15 @@ export default function AddQuestion() {
     <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
       {/* Header */}
       <div className="mb-4 flex flex-col items-center justify-between sm:flex-row">
-              <p className="mb-2 w-full text-center text-base font-semibold sm:mb-0 sm:text-left md:text-lg">
-                 Add Question
-              </p>
-              <Link to="/admin-dashboard?activeSidebar=all-chapters">
-                <button className="rounded text-nowrap bg-[#252466] px-3 py-1.5 text-sm text-white">
-                  All Questions
-                </button>
-              </Link>
-            </div>
+        <p className="md:text-lg mb-2 w-full text-center text-base font-semibold sm:mb-0 sm:text-left">
+          Add Question
+        </p>
+        <Link to="/admin-dashboard?activeSidebar=all-chapters">
+          <button className="text-nowrap rounded bg-[#252466] px-3 py-1.5 text-sm text-white">
+            All Questions
+          </button>
+        </Link>
+      </div>
 
       {/* -------------------- Dropdowns -------------------- */}
       <div className="space-y-4">

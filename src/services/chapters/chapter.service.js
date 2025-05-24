@@ -1,3 +1,4 @@
+import { createAction } from '@reduxjs/toolkit'
 import API from '../../api/authApi'
 
 export const fetchAllchapters = async (sectionId) => {
@@ -6,4 +7,11 @@ export const fetchAllchapters = async (sectionId) => {
   )
   console.log('response ', response?.data?.data?.chapters)
   return response?.data?.data?.chapters
+}
+
+
+export const createChapter = async (data) => {
+  const response = await API.post('/course-sections/chapters', data)
+  console.log(response, 'create chapter response')
+  return response.data.data
 }

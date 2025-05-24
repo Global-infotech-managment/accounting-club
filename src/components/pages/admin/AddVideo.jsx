@@ -1,51 +1,42 @@
-/* AddVideo.jsx — fixed */
+'use client'
+import React, { useContext, useState, useEffect, useCallback } from 'react'
+import Input from '../../common/Input'
+import Button from '../../common/Button'
+import { Dropdown } from '../../common/Dropdown'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { AppContext } from '../../../utils/AppContext'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { showToast } from '../../../services/toast/toast.service'
+import { uploadFile } from '../../../services/uploads/upload.service'
+import { fetchAllCourses } from '../../../services/course/course.service'
+import { fetchAllSections } from '../../../services/section/section.services'
+import { createChapter } from '../../../services/chapters/chapter.service'
 
-'use client';
-import React, { useContext, useState, useEffect, useCallback } from 'react';
-import Input from '../../common/Input';
-import Button from '../../common/Button';
-import { Dropdown } from '../../common/Dropdown';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { AppContext } from '../../../utils/AppContext';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { showToast } from '../../../services/toast/toast.service';
-import { uploadFile } from '../../../services/uploads/upload.service';
-import { fetchAllCourses } from '../../../services/course/course.service';
-import { fetchAllSections } from '../../../services/section/section.services';
+export default function AddVideo() {
+  const { courseData, updateCourseData } = useContext(AppContext)
+  const navigate = useNavigate()
+  const location = useLocation()
 
-const AddVideo = () => {
-  /** ─────────────────────────────────────────────────────────
-   *  Local-state + context
-   *  ───────────────────────────────────────────────────────── */
-  const { courseData, updateCourseData } = useContext(AppContext);
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [selectedCourseId, setSelectedCourseId] = useState('')
+  const [selectedLessonId, setSelectedLessonId] = useState('')
 
-  const [selectedCourseId, setSelectedCourseId] = useState('');
-  const [selectedLessonId, setSelectedLessonId] = useState('');
-
-  /** ─────────────────────────────────────────────────────────
-   *  Pull any query-string params into local + context state
-   *  ───────────────────────────────────────────────────────── */
+  // 1) Sync URL params → state & context
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const urlCourseId = params.get('courseId') || '';
-    const urlLessonId = params.get('lessonId') || '';
+    const params = new URLSearchParams(location.search)
+    const urlCourseId = params.get('courseId') || ''
+    const urlLessonId = params.get('lessonId') || ''
 
     if (urlCourseId) {
-      setSelectedCourseId(urlCourseId);
-      updateCourseData({ courseId: urlCourseId });
+      setSelectedCourseId(urlCourseId)
+      updateCourseData({ courseId: urlCourseId })
     }
     if (urlLessonId) {
-      setSelectedLessonId(urlLessonId);
-      updateCourseData({ lessonId: urlLessonId });
+      setSelectedLessonId(urlLessonId)
+      updateCourseData({ lessonId: urlLessonId })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [location.search, updateCourseData])
 
-  /** ─────────────────────────────────────────────────────────
-   *  Data fetching
-   *  ───────────────────────────────────────────────────────── */
+  // 2) Fetch dropdown data
   const {
     data: courses = [],
     isLoading: isCoursesLoading,
@@ -53,127 +44,149 @@ const AddVideo = () => {
   } = useQuery({
     queryKey: ['courses'],
     queryFn: fetchAllCourses,
-  });
-
+  })
   const {
     data: lessons = [],
     isLoading: isLessonsLoading,
     isError: isLessonsError,
-    refetch: refetchLessons,
   } = useQuery({
     queryKey: ['lessons', selectedCourseId],
     queryFn: () => fetchAllSections(selectedCourseId),
     enabled: !!selectedCourseId,
-  });
+  })
 
-  /** ─────────────────────────────────────────────────────────
-   *  Helpers
-   *  ───────────────────────────────────────────────────────── */
+  // 3) Helpers to keep URL in sync
   const syncSearchParams = (key, value) => {
-    const params = new URLSearchParams(location.search);
-    if (value) params.set(key, value);
-    else params.delete(key);
-    navigate(`?${params.toString()}`, { replace: true });
-  };
+    const params = new URLSearchParams(location.search)
+    if (value) params.set(key, value)
+    else params.delete(key)
+    navigate(`?${params.toString()}`, { replace: true })
+  }
 
   const handleCourseChange = useCallback(
     (_name, value) => {
-      setSelectedCourseId(value);
-      setSelectedLessonId(''); // reset chapter list-box
-      updateCourseData({ courseId: value, lessonId: '' });
-      syncSearchParams('courseId', value);
+      setSelectedCourseId(value)
+      setSelectedLessonId('')
+      updateCourseData({ courseId: value, lessonId: '' })
+      syncSearchParams('courseId', value)
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
+    [updateCourseData, syncSearchParams]
+  )
 
   const handleLessonChange = useCallback(
     (_name, value) => {
-      setSelectedLessonId(value);
-      updateCourseData({ lessonId: value });
-      syncSearchParams('lessonId', value);
+      setSelectedLessonId(value)
+      updateCourseData({ lessonId: value })
+      syncSearchParams('lessonId', value)
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
+    [updateCourseData, syncSearchParams]
+  )
 
   const handleGenericDropdown = (_name, value) => {
-    updateCourseData({ [_name]: value });
-  };
+    updateCourseData({ [_name]: value })
+  }
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    updateCourseData({ [name]: value });
-  };
+    const { name, value } = e.target
+    updateCourseData({ [name]: value })
+  }
 
-  /** ─── File upload ───────────────────────────────────────── */
+  // 4) File upload mutation
   const uploadFileMutation = useMutation({
     mutationFn: (file) => uploadFile(file, 'study-materials'),
     onSuccess: (response) => {
-      const uploadedId = response.id || response;
-      showToast.success('Study material uploaded successfully');
-      updateCourseData({ studyMaterialId: uploadedId });
+      const uploadedId = response.id || response
+      showToast.success('Study material uploaded successfully')
+      updateCourseData({ studyMaterialId: uploadedId })
     },
     onError: () => showToast.error('Study material upload failed'),
-  });
+  })
 
-  const handleFileChange = async (event) => {
-    const file = event.target.files?.[0];
+  const handleFileChange = async (e) => {
+    const file = e.target.files?.[0]
     if (file) {
-      updateCourseData({ studyMaterial: file });
-      await uploadFileMutation.mutateAsync(file);
+      updateCourseData({ studyMaterial: file })
+      await uploadFileMutation.mutateAsync(file)
     }
-  };
+  }
 
-  /** ─── Submit ────────────────────────────────────────────── */
+  // 5) Chapter-creation mutation
+  const createVideoMutation = useMutation({
+    mutationFn: (payload) => createChapter(payload),
+    onSuccess: (createdChapter) => {
+      // createdChapter.id should be the new chapter ID
+      const chapterId = createdChapter.id || createdChapter
+      showToast.success('Chapter created successfully!')
+      // Append chapterId to URL along with existing search params
+      const params = new URLSearchParams(location.search)
+      params.set('chapterId', chapterId)
+      navigate(`/admin-dashboard?activeSidebar=add-test&${params.toString()}`)
+    },
+    onError: (error) => {
+      showToast.error(`Error creating chapter: ${error.message}`)
+    },
+  })
+
+  // 6) Form submit
   const formSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
+    // validate required fields per DTO
     const required = [
       'courseId',
       'lessonId',
-      'lessonNumber',
+      'lessonNumber', // maps to chapterNumber
       'chapterDescription',
       'videoDescription',
-      'embedCode',
+      'embedCode', // maps to videoCode
       'status',
-    ];
-    const isValid = required.every((k) => courseData[k]);
+      'studyMaterialId',
+    ]
+    const isValid = required.every((k) => courseData[k])
     if (!isValid) {
-      showToast.error('Please fill all required fields');
-      return;
+      showToast.error('Please fill all required fields')
+      return
     }
-    showToast.success('Video section updated successfully!');
-    setTimeout(() => {
-      navigate('/admin-dashboard?activeSidebar=add-test');
-    }, 600);
-  };
 
-  /** ─── Static options ───────────────────────────────────── */
+    // Build payload matching CreateCourseSectionChapterSchema
+    const payload = {
+      sectionId: selectedLessonId,
+      name: courseData.chapterDescription, // DTO requires `name`: you can choose name or map differently
+      chapterNumber: Number(courseData.lessonNumber),
+      chapterDescription: courseData.chapterDescription,
+      videoDescription: courseData.videoDescription,
+      videoCode: courseData.embedCode,
+      isMandatory:
+        courseData.isMandatory === 'true' || courseData.isMandatory === true,
+      status: courseData.status === 'true' || courseData.status === true,
+      studyMaterialId: courseData.studyMaterialId,
+    }
+
+    createVideoMutation.mutate(payload)
+  }
+
+  // 7) Dropdown options
   const courseOptions = [
     { value: '', label: 'Select Course' },
     ...courses.map((c) => ({ value: c.id, label: c.name })),
-  ];
+  ]
   const lessonOptions = [
-    { value: '', label: 'Select Chapter' },
+    { value: '', label: 'Select Lesson' },
     ...lessons.map((l) => ({ value: l.id, label: l.name })),
-  ];
+  ]
   const yesNo = [
-    { value: 'true', label: 'Yes' },
-    { value: 'false', label: 'No' },
-  ];
+    { value: true, label: 'Yes' },
+    { value: false, label: 'No' },
+  ]
   const statusOptions = [
-    { value: 'true', label: 'Active' },
-    { value: 'false', label: 'Disable' },
-  ];
+    { value: true, label: 'Active' },
+    { value: false, label: 'Disable' },
+  ]
 
-  /** ─── UI ───────────────────────────────────────────────── */
   return (
     <div className="rounded-xl border border-black/30 bg-black/5 px-4 py-5">
       {/* Header */}
       <div className="mb-4 flex flex-col items-center justify-between sm:flex-row">
-        <p className="mb-2 w-full text-center text-base font-semibold sm:mb-0 sm:text-left md:text-lg">
-          Add Video And Study Material
-        </p>
+        <p className="md:text-lg text-base font-semibold">Add Chapter</p>
         <Link to="/admin-dashboard?activeSidebar=add-test">
           <button className="rounded bg-[#252466] px-3 py-1.5 text-sm text-white">
             Add test
@@ -181,9 +194,7 @@ const AddVideo = () => {
         </Link>
       </div>
 
-      {/* Form */}
-      <form className="flex flex-col gap-3 sm:gap-4" onSubmit={formSubmit}>
-        {/* Course */}
+      <form className="flex flex-col gap-4" onSubmit={formSubmit}>
         <Dropdown
           name="courseId"
           label="Select Course"
@@ -194,7 +205,6 @@ const AddVideo = () => {
           isError={isCoursesError}
         />
 
-        {/* Chapter */}
         <Dropdown
           name="lessonId"
           label="Select Chapter"
@@ -206,71 +216,59 @@ const AddVideo = () => {
           disabled={!selectedCourseId}
         />
 
-        {/* Mandatory? */}
-        <Dropdown
-          name="isMandatory"
-          label="Is mandatory to move next"
-          options={yesNo}
-          value={courseData.isMandatory || ''}
-          onChange={handleGenericDropdown}
-        />
-
-        {/* Chapter No. */}
         <Input
           label="Chapter No."
-          id="lessonNumber"
           name="lessonNumber"
           placeholder="1"
           value={courseData.lessonNumber || ''}
           onChange={handleInputChange}
         />
 
-        {/* Chapter description */}
         <Input
           label="Chapter Description"
-          id="chapterDescription"
           name="chapterDescription"
-          placeholder="Chapter Description"
+          placeholder="Description..."
           value={courseData.chapterDescription || ''}
           onChange={handleInputChange}
         />
 
-        {/* Video description */}
         <Input
           label="Video Description"
-          id="videoDescription"
           name="videoDescription"
-          placeholder="Short summary of the video..."
+          placeholder="Summary..."
           value={courseData.videoDescription || ''}
           onChange={handleInputChange}
         />
 
-        {/* Embed code */}
         <Input
           label="Video Embed Code"
-          id="embedCode"
           name="embedCode"
-          placeholder="<iframe src='...' />"
+          placeholder="<iframe ... />"
           value={courseData.embedCode || ''}
           onChange={handleInputChange}
         />
 
-        {/* Study material */}
         <Input
           label="Study Material"
-          id="studyMaterial"
           name="studyMaterial"
           type="file"
           accept=".pdf,.docx,.pptx"
           onChange={handleFileChange}
         />
-        {courseData.studyMaterial && (
-          <p className="mt-1 text-xs text-gray-600">
-            File selected: {courseData.studyMaterial.name}
+        {courseData.studyMaterial?.name && (
+          <p className="text-xs text-gray-600">
+            File: {courseData.studyMaterial.name}
           </p>
         )}
 
-        {/* Status */}
+        <Dropdown
+          name="isMandatory"
+          label="Is Mandatory?"
+          options={yesNo}
+          value={courseData.isMandatory || ''}
+          onChange={handleGenericDropdown}
+        />
+
         <Dropdown
           name="status"
           label="Status"
@@ -279,16 +277,14 @@ const AddVideo = () => {
           onChange={handleGenericDropdown}
         />
 
-        {/* Submit */}
         <Button
           type="submit"
-          className="col-span-2 mt-4 w-full"
-          bgBtn="Add Video"
-          disabled={uploadFileMutation.isLoading}
+          bgBtn="Create Chapter"
+          disabled={
+            uploadFileMutation.isLoading || createVideoMutation.isLoading
+          }
         />
       </form>
     </div>
-  );
-};
-
-export default AddVideo;
+  )
+}

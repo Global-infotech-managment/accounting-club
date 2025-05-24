@@ -1,12 +1,12 @@
-// utils/AppContext.js
-import { createContext, useState } from 'react'
+import { createContext, useState, useMemo } from 'react'
 
 export const AppContext = createContext()
 
 export const AppProvider = ({ children }) => {
   const [courseData, setCourseData] = useState({
     courseId: null,
-    lessonId: '', // Added for AddTest form
+    lessonId: null,
+    testId: '',
     name: '',
     chapter: '',
     description: '',
@@ -14,7 +14,7 @@ export const AppProvider = ({ children }) => {
     price: 1,
     validity: 1,
     status: true,
-    testCode: '', // Added for test fields
+    testCode: '',
     exerciseName: '',
     topic: '',
     totalQuestions: '',
@@ -41,16 +41,15 @@ export const AppProvider = ({ children }) => {
     })
   }
 
-  return (
-    <AppContext.Provider
-      value={{
-        courseData,
-        updateCourseData,
-        activeVideoIndex,
-        setActiveVideoIndex,
-      }}
-    >
-      {children}
-    </AppContext.Provider>
+  const value = useMemo(
+    () => ({
+      courseData,
+      updateCourseData,
+      activeVideoIndex,
+      setActiveVideoIndex,
+    }),
+    [courseData, activeVideoIndex]
   )
+
+  return <AppContext.Provider value={value}>{children}</AppContext.Provider>
 }
