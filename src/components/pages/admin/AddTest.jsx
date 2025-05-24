@@ -9,6 +9,7 @@ import { Dropdown } from '../../common/Dropdown'
 import { fetchAllCourses } from '../../../services/course/course.service'
 import { fetchAllSections } from '../../../services/section/section.services'
 import { addLessonTest } from '../../../services/lessonTest/lessonTest.services'
+import { fetchAllchapters } from '../../../services/chapters/chapter.service'
 
 export default function AddTest() {
   const queryClient = useQueryClient()
