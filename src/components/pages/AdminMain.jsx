@@ -65,7 +65,7 @@ const AdminMain = () => {
                     {activeSidebar === 'update-video' && <UpdateVideo />}
                     {activeSidebar === 'update-test' && <UpdateTest />}
                     {activeSidebar === 'update-lesson' && <UpdateLesson />}
-                    {activeSidebar === 'all-test' && <AllTest />}
+                    {activeSidebar === 'all-questions' && <AllTest />}
                     {activeSidebar === 'student-overview' && <StudentOverview />}
                     {activeSidebar === 'student-progress' && <StudentLessonProgress />}
                   </>

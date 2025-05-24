@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import Button from '../../common/Button'
 import Icons from '../../common/Icons'
@@ -308,10 +308,15 @@ export default function AddQuestion() {
     <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
       {/* Header */}
       <div className="mb-4 flex flex-col items-center justify-between sm:flex-row">
-        <p className="mb-3 text-[16px] font-semibold text-black sm:mb-0 lg:text-[18px]">
-          Add Question
-        </p>
-      </div>
+              <p className="mb-2 w-full text-center text-base font-semibold sm:mb-0 sm:text-left md:text-lg">
+                 Add Question
+              </p>
+              <Link to="/admin-dashboard?activeSidebar=all-chapters">
+                <button className="rounded text-nowrap bg-[#252466] px-3 py-1.5 text-sm text-white">
+                  All Questions
+                </button>
+              </Link>
+            </div>
 
       {/* -------------------- Dropdowns -------------------- */}
       <div className="space-y-4">

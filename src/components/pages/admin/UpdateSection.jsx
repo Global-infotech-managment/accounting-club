@@ -103,7 +103,7 @@ const UpdateSection = () => {
             />
           </a> */}
           <a
-            href={`/admin-dashboard?activeSidebar=all-test&lessonId=${sectionId}`}
+            href={`/admin-dashboard?activeSidebar=all-questions&lessonId=${sectionId}`}
           >
             <Button
               type="button"

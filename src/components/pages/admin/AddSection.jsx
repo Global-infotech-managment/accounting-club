@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import Input from '../../common/Input'
 import Button from '../../common/Button'
 import { Dropdown, Dropdown3 } from '../../common/Dropdown'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { AppContext } from '../../../utils/AppContext'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { fetchAllCourses } from '../../../services/course/course.service'
@@ -81,9 +81,16 @@ const AddSection = () => {
 
   return (
     <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
-      <p className="mb-4 text-[16px] font-semibold text-black lg:text-[18px]">
-        Add Section
-      </p>
+      <div className="mb-4 flex flex-col items-center justify-between sm:flex-row">
+              <p className="mb-2 w-full text-center text-base font-semibold sm:mb-0 sm:text-left md:text-lg">
+                  Add Section
+              </p>
+              <Link to="/admin-dashboard?activeSidebar=add-test">
+                <button className="rounded text-nowrap bg-[#252466] px-3 py-1.5 text-sm text-white">
+                  Add test
+                </button>
+              </Link>
+            </div>
       <hr className="mb-4 w-full bg-black opacity-10" />
       <form className="flex flex-col gap-4">
         <Dropdown

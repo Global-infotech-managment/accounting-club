@@ -119,7 +119,7 @@ const AllChapter = () => {
     <div className="md:p-4">
       <div className="mb-2 flex flex-col justify-between gap-2 sm:flex-row">
         <p className="text-center text-[16px] font-semibold text-black sm:text-start md:text-[18px]">
-          All Sections
+          All Chapters
         </p>
         {courseId && (
           <span className="text-sm text-gray-600">
