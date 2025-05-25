@@ -107,19 +107,19 @@ export const useCreateTest = () => {
   })
 }
 
-// question operations
-export const useCreatequestion = () => {
-  return useMutation({
-    mutationFn: addquestion,
-    onSuccess: (data) => {
-      return data
-    },
-    onError: (error) => {
-      console.error('Error creating test:', error)
-      throw error
-    },
-  })
-}
+// // question operations
+// export const useCreatequestion = () => {
+//   return useMutation({
+//     mutationFn: addquestion,
+//     onSuccess: (data) => {
+//       return data
+//     },
+//     onError: (error) => {
+//       console.error('Error creating test:', error)
+//       throw error
+//     },
+//   })
+// }
 
 // delete lesson
 

@@ -7,7 +7,7 @@ import Button from '../../common/Button'
 import Input from '../../common/Input'
 import { Dropdown } from '../../common/Dropdown'
 import { fetchAllCourses } from '../../../services/course/course.service'
-import { fetchAllSections } from '../../../services/section/section.services' // chapters
+import { fetchAllSections } from '../../../services/section/section.services'  // chapters
 import { addLessonTest } from '../../../services/lessonTest/lessonTest.services'
 
 export default function AddTest() {
@@ -36,7 +36,7 @@ export default function AddTest() {
   useEffect(() => {
     const params = new URLSearchParams(location.search)
     const cId = params.get('courseId') || ''
-    const lId = params.get('lessonId') || '' // if you need lessonId later
+    const lId = params.get('lessonId') || ''      // if you need lessonId later
     const chId = params.get('chapterId') || ''
 
     setFormData((f) => ({ ...f, courseId: cId }))
@@ -44,21 +44,13 @@ export default function AddTest() {
   }, [location.search])
 
   // 4) fetch courses
-  const {
-    data: courses = [],
-    isLoading: isCoursesLoading,
-    isError: isCoursesError,
-  } = useQuery({
+  const { data: courses = [], isLoading: isCoursesLoading, isError: isCoursesError } = useQuery({
     queryKey: ['courses'],
     queryFn: fetchAllCourses,
   })
 
   // 5) fetch chapters when course changes
-  const {
-    data: chapters = [],
-    isLoading: isChaptersLoading,
-    isError: isChaptersError,
-  } = useQuery({
+  const { data: chapters = [], isLoading: isChaptersLoading, isError: isChaptersError } = useQuery({
     queryKey: ['chapters', formData.courseId],
     queryFn: () => fetchAllSections(formData.courseId),
     enabled: !!formData.courseId,
@@ -71,9 +63,7 @@ export default function AddTest() {
       toast.success('Test created successfully!')
       queryClient.invalidateQueries(['tests', chapterId])
       // navigate with only testId
-      navigate(
-        `/admin-dashboard?activeSidebar=add-question&testId=${encodeURIComponent(newTestId)}`
-      )
+      navigate(`/admin-dashboard?activeSidebar=add-question&testId=${encodeURIComponent(newTestId)}`)
     },
     onError: (err) => {
       toast.error(`Error creating test: ${err.message}`)
@@ -95,12 +85,7 @@ export default function AddTest() {
 
   // 8) submit
   const handleSubmit = () => {
-    if (
-      !chapterId ||
-      !formData.testCode ||
-      !formData.exerciseName ||
-      !formData.topic
-    ) {
+    if (!chapterId || !formData.testCode || !formData.exerciseName || !formData.topic) {
       toast.error('Please fill all required fields')
       return
     }
@@ -117,9 +102,7 @@ export default function AddTest() {
           ? Number.MAX_SAFE_INTEGER
           : Number(formData.maxAttempts) || 1,
       resultDeclaration:
-        formData.resultDeclaration === 'immediate'
-          ? 'IMMEDIATE'
-          : 'AFTER_REVIEW',
+        formData.resultDeclaration === 'immediate' ? 'IMMEDIATE' : 'AFTER_REVIEW',
       otherInformation: formData.otherInfo || undefined,
     }
     createTest(payload)
@@ -211,9 +194,7 @@ export default function AddTest() {
             placeholder="50"
             type="number"
             value={formData.totalQuestions}
-            onChange={(e) =>
-              handleInputChange('totalQuestions', e.target.value)
-            }
+            onChange={(e) => handleInputChange('totalQuestions', e.target.value)}
           />
         </div>
 
@@ -225,9 +206,7 @@ export default function AddTest() {
             placeholder="33"
             type="number"
             value={formData.passingPercentage}
-            onChange={(e) =>
-              handleInputChange('passingPercentage', e.target.value)
-            }
+            onChange={(e) => handleInputChange('passingPercentage', e.target.value)}
           />
           <Input
             name="timeAllowed"
