@@ -24,7 +24,6 @@ export default function AddQuestion() {
   ])
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  // Use new object-based mutation signature
   const mutation = useMutation({
     mutationFn: addquestion,
     onSuccess: (_, variables) => {
@@ -71,12 +70,21 @@ export default function AddQuestion() {
   const handleOptionChange = (idx, value) => {
     const updated = [...questions]
     updated[currentIndex].options[idx] = value
+
+    // If the option being changed was the correct answer, reset it
+    if (
+      updated[currentIndex].correctAnswer ===
+      questions[currentIndex].options[idx]
+    ) {
+      updated[currentIndex].correctAnswer = ''
+    }
+
     setQuestions(updated)
   }
 
-  const handleCorrectAnswer = (ans) => {
+  const handleCorrectAnswer = (value) => {
     const updated = [...questions]
-    updated[currentIndex].correctAnswer = ans
+    updated[currentIndex].correctAnswer = value
     setQuestions(updated)
   }
 
@@ -84,7 +92,7 @@ export default function AddQuestion() {
     const q = questions[currentIndex]
     if (!q.question.trim()) return false
     if (questionType === 'MCQ') {
-      return q.options.every((o) => o.trim()) && !!q.correctAnswer
+      return q.options.every((o) => o.trim()) && !!q.correctAnswer.trim()
     }
     if (questionType === 'TRUE_FALSE') {
       return q.correctAnswer === 'TRUE' || q.correctAnswer === 'FALSE'
@@ -130,10 +138,7 @@ export default function AddQuestion() {
       negativeMarks,
       question: current.question,
       options: questionType === 'MCQ' ? current.options : [],
-      answer:
-        questionType === 'MCQ'
-          ? current.options[['A', 'B', 'C', 'D'].indexOf(current.correctAnswer)]
-          : current.correctAnswer,
+      answer: current.correctAnswer,
     }
 
     createQuestion(payload)
@@ -196,17 +201,16 @@ export default function AddQuestion() {
           <p className="font-medium">Options & Correct Answer</p>
           {questions[currentIndex].options.map((opt, i) => (
             <div key={i} className="flex items-center gap-2">
-              <span className="w-6">{['A', 'B', 'C', 'D'][i]}</span>
+              <span className="w-6 font-bold">{['A', 'B', 'C', 'D'][i]}</span>
               <Input
                 value={opt}
                 onChange={(e) => handleOptionChange(i, e.target.value)}
               />
               <button
-                onClick={() => handleCorrectAnswer(['A', 'B', 'C', 'D'][i])}
+                onClick={() => handleCorrectAnswer(opt)}
                 className={
-                  questions[currentIndex].correctAnswer ===
-                  ['A', 'B', 'C', 'D'][i]
-                    ? 'text-green-600'
+                  questions[currentIndex].correctAnswer === opt
+                    ? 'text-green-600 font-bold'
                     : 'text-gray-400'
                 }
               >
@@ -265,16 +269,28 @@ export default function AddQuestion() {
         </button>
       </div>
 
-      <Button
-        className="mt-6 w-full"
-        onClick={handleSubmit}
+      <button
+        style={{
+          border: '2px solid #4f46e5',
+          marginTop: '1.5rem',
+          width: '100%',
+          borderRadius: '0.50rem',
+          padding: '0.5rem',
+          color: '#4f46e5',
+        }}
         disabled={isSubmitting || !isCurrentValid()}
+        onClick={handleSubmit}
       >
         {isSubmitting ? 'Submitting...' : 'Submit Question'}
-      </Button>
+      </button>
     </div>
   )
 }
+
+  //  
+    //  
+// 
+
 
 // import { useContext, useState, useEffect } from 'react'
 // import { useNavigate, useLocation, Link } from 'react-router-dom'

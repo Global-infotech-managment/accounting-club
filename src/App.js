@@ -115,19 +115,19 @@ function AppContent() {
           path={STUDENT_DASHBOARD_ROUTE}
           element={isAuthenticated ? <Dashboard /> : <StudentLogin />}
         />*/}
-        <Route
-          path={STUDENT_DASHBOARD_ROUTE}
-          element={<Dashboard />}
-        />
-        <Route
-          path={UPDATE_PROFILE_ROUTE}
-          element={<EditProfile />}
-        />
-        <Route
-          path={UPDATE_PASSWORD_ROUTE}
-          element={<UpdatePassword />}
-        />
+        <Route path={STUDENT_DASHBOARD_ROUTE} element={<Dashboard />} />
+        <Route path={UPDATE_PROFILE_ROUTE} element={<EditProfile />} />
+        <Route path={UPDATE_PASSWORD_ROUTE} element={<UpdatePassword />} />
         <Route path={POST_RESUME_ROUTE} element={<PostResume />} />
+        <Route
+          path={PAYMENT_METHOD_ROUTE}
+          element={
+            <ProtectedRoute requireFirstLogin requiredRole="Student">
+              <PaymentMethod />
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path={PAYMENT_METHOD_ROUTE}
           element={

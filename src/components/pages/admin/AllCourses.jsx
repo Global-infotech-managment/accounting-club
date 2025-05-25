@@ -165,7 +165,7 @@ const AllCourses = () => {
                       {course.name}
                     </h3>
                     <button
-                      className={`!h-[30px] rounded-2xl px-2.5 text-[12px] transition-all duration-300 ease-in-out ${
+                      className={`h-[30px] rounded-2xl px-2.5 text-[12px] transition-all duration-300 ease-in-out ${
                         course.status === 'Enable'
                           ? 'bg-green-500 text-white'
                           : 'bg-red-500 text-white'
@@ -230,4 +230,3 @@ const AllCourses = () => {
 }
 
 export default AllCourses
-   
