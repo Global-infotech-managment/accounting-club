@@ -6,7 +6,8 @@ import {
   deleteCourse,
   toggleCourseStatus,
 } from '../../../services/course/course.service'
-import { toast } from 'react-toastify'
+import { toast } from 'sonner'
+
 
 const AllCourses = () => {
   const [visibleCount, setVisibleCount] = useState(6)
@@ -25,13 +26,10 @@ const AllCourses = () => {
     keepPreviousData: true,
   })
 
-  // Filter courses locally based on search term
   const filteredCourses = useMemo(() => {
     const allCourses = data?.data?.courses || data?.data || []
 
-    if (!searchTerm.trim()) {
-      return allCourses
-    }
+    if (!searchTerm.trim()) return allCourses
 
     return allCourses.filter((course) =>
       course.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -40,8 +38,8 @@ const AllCourses = () => {
 
   const { mutate: deleteCourseMutation, isLoading: isDeleting } = useMutation({
     mutationFn: deleteCourse,
-    onSuccess: (deletedId) => {
-      toast.success(`Course with ID ${deletedId} deleted successfully!`)
+    onSuccess: () => {
+      toast.success(`Course deleted successfully!`)
       refetch()
     },
     onError: (error) => {
@@ -69,9 +67,16 @@ const AllCourses = () => {
     },
   })
 
-  const handleDelete = (id) => {
-    if (window.confirm('Are you sure you want to delete this course?')) {
-      deleteCourseMutation(id)
+  const handleDelete = (course) => {
+    const courseId = course.id ?? course._id
+    console.log('Deleting course:', courseId)
+
+    if (!courseId) {
+      return toast.error('Invalid course ID. Cannot delete.')
+    }
+
+    if (window.confirm(`Are you sure you want to delete "${course.name}"?`)) {
+      deleteCourseMutation(courseId)
     }
   }
 
@@ -82,15 +87,13 @@ const AllCourses = () => {
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value)
-    setVisibleCount(6) // Reset visible count when searching
+    setVisibleCount(6)
   }
 
   const handleClearSearch = () => {
     setSearchTerm('')
     setVisibleCount(6)
-    if (searchInputRef.current) {
-      searchInputRef.current.focus()
-    }
+    if (searchInputRef.current) searchInputRef.current.focus()
   }
 
   if (isLoading) {
@@ -147,7 +150,7 @@ const AllCourses = () => {
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {coursesToShow.map((course) => (
               <div
-                key={course.id}
+                key={course.id ?? course._id}
                 className="shadow-md flex flex-col justify-between rounded-lg bg-white p-4"
               >
                 <div>
@@ -171,7 +174,10 @@ const AllCourses = () => {
                           : 'bg-red-500 text-white'
                       }`}
                       onClick={() =>
-                        handleToggleStatus(course.id, course.status)
+                        handleToggleStatus(
+                          course.id ?? course._id,
+                          course.status
+                        )
                       }
                     >
                       {course.status}
@@ -186,13 +192,13 @@ const AllCourses = () => {
                 </div>
                 <div className="mt-4 flex gap-5">
                   <a
-                    href={`/admin-dashboard?activeSidebar=update-course&id=${course.id}`}
+                    href={`/admin-dashboard?activeSidebar=update-course&id=${course.id ?? course._id}`}
                   >
                     <Button bgBtn="Edit" />
                   </a>
                   <button
                     className="rounded border border-orange-red bg-white px-4 py-2 text-orange-red transition-all duration-300 hover:bg-orange-red hover:text-white"
-                    onClick={() => handleDelete(course.id)}
+                    onClick={() => handleDelete(course)}
                     disabled={isDeleting}
                   >
                     Delete
