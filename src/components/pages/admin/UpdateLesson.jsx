@@ -4,13 +4,10 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import Button from '../../common/Button'
 import Input from '../../common/Input'
 import popupImage from '../../../assets/images/webp/popup-icon.webp'
-import { fetchAllCourses } from '../../../services/course/course.service'
 import {
-  fetchAllSections,
   fetchAllSectionsByCourseId,
 } from '../../../services/section/section.services'
 import { useDeleteLesson } from '../../../hooks/useAuth'
-import { deleteLesson } from '../../../services/lessonTest/lessonTest.services'
 import { toast } from 'sonner'
 
 const itemsPerPage = 6

@@ -41,18 +41,18 @@ const UpdateSection = () => {
     }
   }, [sectionData])
 
-  const updateSectionMutation = useMutation({
-    mutationFn: (data) => updateSection(sectionId, data),
-    onSuccess: () => {
-      showToast.success('Section updated successfully')
-      // navigate('/admin-dashboard?activeSidebar=section')
-    },
-    onError: (error) => {
-      showToast.error(
-        error.response?.data?.message || 'Failed to update section'
-      )
-    },
-  })
+  // const updateSectionMutation = useMutation({
+  //   mutationFn: (data) => updateSection(sectionId, data),
+  //   onSuccess: () => {
+  //     showToast.success('Section updated successfully')
+  //     // navigate('/admin-dashboard?activeSidebar=section')
+  //   },
+  //   onError: (error) => {
+  //     showToast.error(
+  //       error.response?.data?.message || 'Failed to update section'
+  //     )
+  //   },
+  // })
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -66,12 +66,12 @@ const UpdateSection = () => {
   const formSubmit = (e) => {
     e.preventDefault()
 
-    updateSectionMutation.mutate({
-      name: courseData.addLesson,
-      link: courseData.link,
-      isMandatory: courseData.isMandatory === 'true',
-      status: courseData.status === 'true',
-    })
+    // updateSectionMutation.mutate({
+    //   name: courseData.addLesson,
+    //   link: courseData.link,
+    //   isMandatory: courseData.isMandatory === 'true',
+    //   status: courseData.status === 'true',
+    // })
   }
 
   if (isSectionLoading) {
@@ -155,7 +155,7 @@ const UpdateSection = () => {
           onClick={formSubmit}
           className="col-span-2 mt-4 w-full"
           bgBtn="Update Section"
-          disabled={updateSectionMutation.isPending}
+          // disabled={updateSectionMutation.isPending}
         />
       </form>
     </div>

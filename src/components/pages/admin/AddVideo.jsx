@@ -279,10 +279,23 @@ export default function AddVideo() {
 
         <Button
           type="submit"
-          bgBtn="Create Chapter"
-          disabled={
-            uploadFileMutation.isLoading || createVideoMutation.isLoading
+          bgBtn={
+            uploadFileMutation.isLoading
+              ? 'Uploading...'
+              : createVideoMutation.isLoading
+                ? 'Creating...'
+                : 'Create Chapter'
           }
+          disabled={
+            uploadFileMutation.isLoading ||
+            createVideoMutation.isLoading ||
+            !courseData.studyMaterialId
+          }
+          className={`transition-opacity duration-200 ${
+            uploadFileMutation.isLoading || !courseData.studyMaterialId
+              ? 'pointer-events-none opacity-50'
+              : ''
+          }`}
         />
       </form>
     </div>

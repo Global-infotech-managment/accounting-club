@@ -123,25 +123,25 @@ export const useCreateTest = () => {
 
 // delete lesson
 
-export const useDeleteLesson = () => {
-  const queryClient = useQueryClient()
+// export const useDeleteLesson = () => {
+//   const queryClient = useQueryClient()
 
-  return useMutation({
-    mutationFn: deleteLessonById,
-    onSuccess: (data, variables) => {
-      // Invalidate the sections query to refresh the list
-      queryClient.invalidateQueries(['sections'])
-      return data
-    },
-    onError: (error) => {
-      console.error(
-        'Delete Lesson Failed:',
-        error.response?.data?.message || error.message
-      )
-      throw error
-    },
-  })
-}
+//   return useMutation({
+//     mutationFn: deleteLessonById,
+//     onSuccess: (data, variables) => {
+//       // Invalidate the sections query to refresh the list
+//       queryClient.invalidateQueries(['sections'])
+//       return data
+//     },
+//     onError: (error) => {
+//       console.error(
+//         'Delete Lesson Failed:',
+//         error.response?.data?.message || error.message
+//       )
+//       throw error
+//     },
+//   })
+// }
 
 export const useDeleteLessonTest = () => {
   const queryClient = useQueryClient()

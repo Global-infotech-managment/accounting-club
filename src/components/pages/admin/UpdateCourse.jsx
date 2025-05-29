@@ -16,7 +16,6 @@ const UpdateCourse = () => {
   const [fileId, setFileId] = useState(null)
   const { courseData, updateCourseData } = useContext(AppContext)
   const [dataFetched, setDataFetched] = useState(false)
-  const [isDisabled, setIsDisabled] = useState(false)
 
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
@@ -80,12 +79,9 @@ const UpdateCourse = () => {
     if (file) {
       try {
         updateCourseData({ selectedFile: file })
-        setIsDisabled(true)
         await uploadFileMutation.mutateAsync(file)
       } catch {
         // Handled in onError
-      } finally {
-        setIsDisabled(false)
       }
     }
   }
@@ -181,7 +177,6 @@ const UpdateCourse = () => {
             onChange={handleInputChange}
           />
         </div>
-
         <div>
           <span className="text-sm">Status*</span>
           <Dropdown
@@ -194,7 +189,6 @@ const UpdateCourse = () => {
             onChange={handleDropdownChange}
           />
         </div>
-
         <div className="flex flex-col items-start">
           <span>Thumbnail* </span>
           <Input
@@ -204,7 +198,6 @@ const UpdateCourse = () => {
             placeholder="Upload from file"
           />
         </div>
-
         <Button
           type="submit"
           className="col-span-2 mt-4 w-full"
@@ -212,10 +205,12 @@ const UpdateCourse = () => {
             uploadFileMutation.isLoading
               ? 'Uploading...'
               : updateCourseMutation.isLoading
-              ? 'Updating...'
-              : 'Update'
+                ? 'Updating...'
+                : 'Update'
           }
-          disabled={isDisabled || uploadFileMutation.isLoading}
+          disabled={
+            uploadFileMutation.isLoading || updateCourseMutation.isLoading
+          }
         />
       </form>
     </div>

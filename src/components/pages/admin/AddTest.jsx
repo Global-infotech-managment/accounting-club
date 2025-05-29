@@ -76,7 +76,8 @@ export default function AddTest() {
       )
     },
     onError: (err) => {
-      toast.error(`Error creating test: ${err.message}`)
+      const errorMessage = err?.response?.data?.message || 'Error creating test'
+      toast.error(errorMessage)
     },
   })
 

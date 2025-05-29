@@ -31,12 +31,13 @@ export const fetchAllSectionsByCourseId = async (courseId) => {
   return response?.data?.data?.lessons
 }
 
-export const fetchCourseById = async (id) => {
-  const response = await API.get(`/course-lesson/${id}`)
-  return response.data.data
+export const fetchAllsectionByCourseId = async (courseId) => {
+  const response = await API.get(`lessons/course/${courseId}`)
+  return response.data.data // Adjust based on your API response structure
 }
 
-export const deleteLessonById = async (id) => {
-  const response = await API.delete(`course-lesson/admin/${id}`)
+
+export const deletesectionById = async (id) => {
+  const response = await API.delete(`course-sections/course/${id}`)
   return response.data
 }

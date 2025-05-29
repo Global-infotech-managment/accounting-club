@@ -27,12 +27,18 @@ export default function AddQuestion() {
   const mutation = useMutation({
     mutationFn: addquestion,
     onSuccess: (_, variables) => {
-      toast.success('Question added!')
+      toast.success('Question added successfully!')
       queryClient.invalidateQueries(['tests', variables.testId])
       navigate('/admin-dashboard?activeSidebar=dashboard')
     },
     onError: (error) => {
-      toast.error(error?.message || 'Failed to add question')
+      if (error?.response?.data?.errorCode === 'P2002') {
+        toast.error(
+          'A question already exists for this test. Please use a different test ID or modify the existing question.'
+        )
+      } else {
+        toast.error(error?.message || 'Failed to add question')
+      }
     },
   })
 
@@ -70,15 +76,12 @@ export default function AddQuestion() {
   const handleOptionChange = (idx, value) => {
     const updated = [...questions]
     updated[currentIndex].options[idx] = value
-
-    // If the option being changed was the correct answer, reset it
     if (
       updated[currentIndex].correctAnswer ===
       questions[currentIndex].options[idx]
     ) {
       updated[currentIndex].correctAnswer = ''
     }
-
     setQuestions(updated)
   }
 
@@ -112,7 +115,10 @@ export default function AddQuestion() {
   }
 
   const next = () => {
-    if (!isCurrentValid()) return
+    if (!isCurrentValid()) {
+      toast.error('Please complete the current question')
+      return
+    }
     if (currentIndex === questions.length - 1) addNew()
     else setCurrentIndex(currentIndex + 1)
   }
@@ -124,23 +130,47 @@ export default function AddQuestion() {
       toast.error('Missing testId in URL')
       return
     }
-    if (!isCurrentValid()) {
-      toast.error('Complete current question')
+
+    const q = questions[currentIndex]
+    if (!q.question.trim()) {
+      toast.error('Question cannot be empty')
       return
     }
+    if (questionType === 'MCQ') {
+      if (!q.options.every((o) => o.trim())) {
+        toast.error('All options must be filled')
+        return
+      }
+      if (!q.correctAnswer.trim()) {
+        toast.error('Please select a correct answer')
+        return
+      }
+    }
+    if (questionType === 'TRUE_FALSE') {
+      if (q.correctAnswer !== 'TRUE' && q.correctAnswer !== 'FALSE') {
+        toast.error('Please select True or False as the correct answer')
+        return
+      }
+    }
+    if (questionType === 'FILL_IN_THE_BLANK') {
+      if (!q.correctAnswer.trim()) {
+        toast.error('Correct answer cannot be empty')
+        return
+      }
+    }
 
-    const current = questions[currentIndex]
     const payload = {
       testId,
       questionType,
       testLevel,
       marks,
       negativeMarks,
-      question: current.question,
-      options: questionType === 'MCQ' ? current.options : [],
-      answer: current.correctAnswer,
+      question: q.question,
+      options: questionType === 'MCQ' ? q.options : [],
+      answer: q.correctAnswer,
     }
 
+    console.log('Submitting payload:', payload)
     createQuestion(payload)
   }
 
@@ -148,7 +178,7 @@ export default function AddQuestion() {
     <div className="shadow rounded bg-white p-6">
       <h2 className="text-2xl mb-4 font-semibold">Add Question</h2>
 
-      <div className="mb-4 flex gap-4">
+      <div className="mb-Hostname: DESKTOP-K7E3G67 4 flex gap-4">
         <Dropdown
           name="questionType"
           label="Type"
@@ -287,10 +317,9 @@ export default function AddQuestion() {
   )
 }
 
-  //  
-    //  
-// 
-
+//
+//
+//
 
 // import { useContext, useState, useEffect } from 'react'
 // import { useNavigate, useLocation, Link } from 'react-router-dom'
