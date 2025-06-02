@@ -1,5 +1,5 @@
 'use client'
-import React, { useContext, useState, useEffect, useCallback } from 'react'
+import { useContext, useState, useEffect, useCallback } from 'react'
 import Input from '../../common/Input'
 import Button from '../../common/Button'
 import { Dropdown } from '../../common/Dropdown'
@@ -7,7 +7,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { AppContext } from '../../../utils/AppContext'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { showToast } from '../../../services/toast/toast.service'
-import { uploadFile } from '../../../services/uploads/upload.service'
+import { uploadPdfFile } from '../../../services/uploads/upload.service'
 import { fetchAllCourses } from '../../../services/course/course.service'
 import { fetchAllSections } from '../../../services/section/section.services'
 import { createChapter } from '../../../services/chapters/chapter.service'
@@ -93,7 +93,7 @@ export default function AddVideo() {
 
   // 4) File upload mutation
   const uploadFileMutation = useMutation({
-    mutationFn: (file) => uploadFile(file, 'study-materials'),
+    mutationFn: (file) => uploadPdfFile(file, 'study-materials'),
     onSuccess: (response) => {
       const uploadedId = response.id || response
       showToast.success('Study material uploaded successfully')
@@ -139,7 +139,6 @@ export default function AddVideo() {
       'videoDescription',
       'embedCode', // maps to videoCode
       'status',
-      'studyMaterialId',
     ]
     const isValid = required.every((k) => courseData[k])
     if (!isValid) {
@@ -158,7 +157,9 @@ export default function AddVideo() {
       isMandatory:
         courseData.isMandatory === 'true' || courseData.isMandatory === true,
       status: courseData.status === 'true' || courseData.status === true,
-      studyMaterialId: courseData.studyMaterialId,
+      ...(courseData.studyMaterial
+        ? { studyMaterialId: courseData.studyMaterialId }
+        : {}),
     }
 
     createVideoMutation.mutate(payload)
@@ -252,7 +253,7 @@ export default function AddVideo() {
           label="Study Material"
           name="studyMaterial"
           type="file"
-          accept=".pdf,.docx,.pptx"
+          accept=".pdf"
           onChange={handleFileChange}
         />
         {courseData.studyMaterial?.name && (
