@@ -166,13 +166,15 @@ export default function AddVideo() {
   }
 
   // 7) Dropdown options
+  const courseArray = Array.isArray(courses) ? courses : []
   const courseOptions = [
     { value: '', label: 'Select Course' },
-    ...courses.map((c) => ({ value: c.id, label: c.name })),
+    ...courseArray?.map((c) => ({ value: c.id, label: c.name })),
   ]
+  const lessonsArray = Array.isArray(lessons) ? lessons : []
   const lessonOptions = [
     { value: '', label: 'Select Lesson' },
-    ...lessons.map((l) => ({ value: l.id, label: l.name })),
+    ...lessonsArray?.map((l) => ({ value: l.id, label: l.name })),
   ]
   const yesNo = [
     { value: true, label: 'Yes' },
