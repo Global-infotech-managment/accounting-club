@@ -56,6 +56,7 @@ const UpdateLesson = () => {
   const [showDeletePopup, setShowDeletePopup] = useState(false)
   const [searchParams] = useSearchParams()
   const courseId = searchParams.get('courseId')
+  console.log('courseId', courseId)
 
   // Fetch courses using React Query
   const {
@@ -63,7 +64,7 @@ const UpdateLesson = () => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ['sections'],
+    queryKey: ['sections', courseId],
     queryFn: () => fetchAllSectionsByCourseId(courseId),
     enabled: !!courseId,
   })
@@ -118,15 +119,15 @@ const UpdateLesson = () => {
 
   return (
     <div className="md:p-4">
-      <div className='flex justify-between items-center border-b pb-4 mb-2 border-[#00000067]'>
-        <p className="w-full  text-center text-[16px] font-semibold text-black sm:mb-0 sm:text-start md:text-[18px]">
+      <div className="mb-2 flex items-center justify-between border-b border-[#00000067] pb-4">
+        <p className="w-full text-center text-[16px] font-semibold text-black sm:mb-0 sm:text-start md:text-[18px]">
           All Chapters
         </p>
-         <Link  to="/admin-dashboard?activeSidebar=update-video">
-                          <button className="rounded bg-[#252466] text-nowrap px-3 py-1.5 text-sm text-white">
-                            Update Video and Study material
-                          </button>
-                        </Link>
+        <Link to="/admin-dashboard?activeSidebar=update-video">
+          <button className="text-nowrap rounded bg-[#252466] px-3 py-1.5 text-sm text-white">
+            Update Video and Study material
+          </button>
+        </Link>
       </div>
 
       <div className="overflow-x-auto">
@@ -136,7 +137,7 @@ const UpdateLesson = () => {
               {[
                 'No.',
                 'Release Date',
-                'Lesson Name',
+                'Chapter Name',
                 'Update section and Test',
                 'delete',
               ].map((header, index) => (

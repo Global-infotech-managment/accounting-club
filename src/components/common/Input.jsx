@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Input = ({
   name,
   placeholder,
@@ -10,6 +8,7 @@ const Input = ({
   labelClassName = '',
   inputClassName = '',
   label,
+  accept,
 }) => {
   return (
     <div className={`flex w-full flex-col ${mainClassName}`}>
@@ -30,6 +29,7 @@ const Input = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        accept={accept}
       />
     </div>
   )

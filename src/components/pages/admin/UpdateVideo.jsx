@@ -1,40 +1,44 @@
 /* UpdateVideo.jsx — revised with pre-fill */
 
-'use client';
-import React, { useContext, useState, useEffect, useCallback } from 'react';
-import Input from '../../common/Input';
-import Button from '../../common/Button';
-import { Dropdown } from '../../common/Dropdown';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { AppContext } from '../../../utils/AppContext';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { showToast } from '../../../services/toast/toast.service';
-import { uploadFile } from '../../../services/uploads/upload.service';
-import { fetchAllCourses } from '../../../services/course/course.service';
-import { fetchAllSections } from '../../../services/section/section.services';
+'use client'
+import { useContext, useState, useEffect, useCallback, useRef } from 'react'
+import Input from '../../common/Input'
+import Button from '../../common/Button'
+import { Dropdown } from '../../common/Dropdown'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { AppContext } from '../../../utils/AppContext'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { showToast } from '../../../services/toast/toast.service'
+import { uploadPdfFile } from '../../../services/uploads/upload.service'
+import { fetchAllCourses } from '../../../services/course/course.service'
+import { fetchAllSections } from '../../../services/section/section.services'
 
 const UpdateVideo = () => {
-  const { courseData, updateCourseData } = useContext(AppContext);
-  const navigate = useNavigate();
-  const location = useLocation();
+  const { courseData, updateCourseData } = useContext(AppContext)
+  const navigate = useNavigate()
+  const location = useLocation()
 
-  const [selectedCourseId, setSelectedCourseId] = useState(courseData.courseId || '');
-  const [selectedLessonId, setSelectedLessonId] = useState(courseData.lessonId || '');
+  const [selectedCourseId, setSelectedCourseId] = useState(
+    courseData.courseId || ''
+  )
+  const [selectedLessonId, setSelectedLessonId] = useState(
+    courseData.lessonId || ''
+  )
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const urlCourseId = params.get('courseId') || '';
-    const urlLessonId = params.get('lessonId') || '';
+    const params = new URLSearchParams(location.search)
+    const urlCourseId = params.get('courseId') || ''
+    const urlLessonId = params.get('lessonId') || ''
 
     if (urlCourseId) {
-      setSelectedCourseId(urlCourseId);
-      updateCourseData({ courseId: urlCourseId });
+      setSelectedCourseId(urlCourseId)
+      updateCourseData({ courseId: urlCourseId })
     }
     if (urlLessonId) {
-      setSelectedLessonId(urlLessonId);
-      updateCourseData({ lessonId: urlLessonId });
+      setSelectedLessonId(urlLessonId)
+      updateCourseData({ lessonId: urlLessonId })
     }
-  }, []);
+  }, [])
 
   const {
     data: courses = [],
@@ -43,7 +47,7 @@ const UpdateVideo = () => {
   } = useQuery({
     queryKey: ['courses'],
     queryFn: fetchAllCourses,
-  });
+  })
 
   const {
     data: lessons = [],
@@ -54,57 +58,60 @@ const UpdateVideo = () => {
     queryKey: ['lessons', selectedCourseId],
     queryFn: () => fetchAllSections(selectedCourseId),
     enabled: !!selectedCourseId,
-  });
+  })
 
   const syncSearchParams = (key, value) => {
-    const params = new URLSearchParams(location.search);
-    if (value) params.set(key, value);
-    else params.delete(key);
-    navigate(`?${params.toString()}`, { replace: true });
-  };
+    const params = new URLSearchParams(location.search)
+    if (value) params.set(key, value)
+    else params.delete(key)
+    navigate(`?${params.toString()}`, { replace: true })
+  }
 
   const handleCourseChange = useCallback((_, value) => {
-    setSelectedCourseId(value);
-    setSelectedLessonId('');
-    updateCourseData({ courseId: value, lessonId: '' });
-    syncSearchParams('courseId', value);
-  }, []);
+    setSelectedCourseId(value)
+    setSelectedLessonId('')
+    updateCourseData({ courseId: value, lessonId: '' })
+    syncSearchParams('courseId', value)
+  }, [])
 
   const handleLessonChange = useCallback((_, value) => {
-    setSelectedLessonId(value);
-    updateCourseData({ lessonId: value });
-    syncSearchParams('lessonId', value);
-  }, []);
+    setSelectedLessonId(value)
+    updateCourseData({ lessonId: value })
+    syncSearchParams('lessonId', value)
+  }, [])
 
   const handleGenericDropdown = (_name, value) => {
-    updateCourseData({ [_name]: value });
-  };
+    updateCourseData({ [_name]: value })
+  }
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    updateCourseData({ [name]: value });
-  };
+    const { name, value } = e.target
+    updateCourseData({ [name]: value })
+  }
 
   const uploadFileMutation = useMutation({
-    mutationFn: (file) => uploadFile(file, 'study-materials'),
+    mutationFn: (file) => uploadPdfFile(file, 'study-materials'),
     onSuccess: (response) => {
-      const uploadedId = response.id || response;
-      showToast.success('Study material uploaded successfully');
-      updateCourseData({ studyMaterialId: uploadedId });
+      const uploadedId = response.id || response
+      showToast.success('Study material uploaded successfully')
+      updateCourseData({ studyMaterialId: uploadedId })
     },
-    onError: () => showToast.error('Study material upload failed'),
-  });
+    onError: () => {
+      showToast.error('Study material upload failed')
+      updateCourseData({ studyMaterial: null })
+    },
+  })
 
   const handleFileChange = async (event) => {
-    const file = event.target.files?.[0];
+    const file = event.target.files?.[0]
     if (file) {
-      updateCourseData({ studyMaterial: file });
-      await uploadFileMutation.mutateAsync(file);
+      updateCourseData({ studyMaterial: file })
+      uploadFileMutation.mutate(file)
     }
-  };
+  }
 
   const formSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     const required = [
       'courseId',
       'lessonId',
@@ -113,43 +120,43 @@ const UpdateVideo = () => {
       'videoDescription',
       'embedCode',
       'status',
-    ];
-    const isValid = required.every((k) => courseData[k]);
+    ]
+    const isValid = required.every((k) => courseData[k])
     if (!isValid) {
-      showToast.error('Please fill all required fields');
-      return;
+      showToast.error('Please fill all required fields')
+      return
     }
-    showToast.success('Video section updated successfully!');
+    showToast.success('Video section updated successfully!')
     setTimeout(() => {
-      navigate('/admin-dashboard?activeSidebar=add-test');
-    }, 600);
-  };
+      navigate('/admin-dashboard?activeSidebar=add-test')
+    }, 600)
+  }
 
   const courseOptions = [
     { value: '', label: 'Select Course' },
     ...courses.map((c) => ({ value: c.id, label: c.name })),
-  ];
+  ]
   const lessonOptions = [
     { value: '', label: 'Select Chapter' },
     ...lessons.map((l) => ({ value: l.id, label: l.name })),
-  ];
+  ]
   const yesNo = [
     { value: 'true', label: 'Yes' },
     { value: 'false', label: 'No' },
-  ];
+  ]
   const statusOptions = [
     { value: 'true', label: 'Active' },
     { value: 'false', label: 'Disable' },
-  ];
+  ]
 
   return (
     <div className="rounded-xl border border-black/30 bg-black/5 px-4 py-5">
       <div className="mb-4 flex flex-col items-center justify-between sm:flex-row">
-        <p className="mb-2 w-full text-center text-base font-semibold sm:mb-0 sm:text-left md:text-lg">
+        <p className="md:text-lg mb-2 w-full text-center text-base font-semibold sm:mb-0 sm:text-left">
           Update Video And Study Material
         </p>
         <Link to="/admin-dashboard?activeSidebar=all-courses">
-          <button className="rounded text-nowrap bg-[#252466] px-3 py-1.5 text-sm text-white">
+          <button className="text-nowrap rounded bg-[#252466] px-3 py-1.5 text-sm text-white">
             All Course
           </button>
         </Link>
@@ -226,12 +233,13 @@ const UpdateVideo = () => {
           id="studyMaterial"
           name="studyMaterial"
           type="file"
-          accept=".pdf,.docx,.pptx"
+          accept=".pdf"
           onChange={handleFileChange}
         />
         {courseData.studyMaterial && (
-          <p className="mt-1 text-xs text-gray-600">
-            File selected: {courseData.studyMaterial.name || 'Previously uploaded file'}
+          <p className="text-xs text-gray-600 mt-1">
+            File selected:{' '}
+            {courseData.studyMaterial.name || 'Previously uploaded file'}
           </p>
         )}
 
@@ -251,7 +259,7 @@ const UpdateVideo = () => {
         />
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default UpdateVideo;
+export default UpdateVideo

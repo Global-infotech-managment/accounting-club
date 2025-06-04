@@ -1,4 +1,3 @@
-// src/utils/toast.js
 import { toast } from 'sonner'
 
 export const showToast = {

@@ -1,7 +1,7 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import Input from '../../common/Input'
 import Button from '../../common/Button'
-import { Dropdown, Dropdown3 } from '../../common/Dropdown'
+import { Dropdown } from '../../common/Dropdown'
 import { Link, useNavigate } from 'react-router-dom'
 import { AppContext } from '../../../utils/AppContext'
 import { useMutation, useQuery } from '@tanstack/react-query'
@@ -14,14 +14,14 @@ const AddSection = () => {
   const navigate = useNavigate()
 
   const {
-    data: courses,
+    data: courses = [],
     isLoading,
     isError,
   } = useQuery({
     queryKey: ['courses'],
     queryFn: fetchAllCourses,
     onSuccess: (data) => {
-      console.log('Courses fetched successfully')
+      console.log('Courses fetched successfully:', data)
     },
   })
 
@@ -53,12 +53,14 @@ const AddSection = () => {
     }
   }
 
+  // To handle course.map is not a function
+  const courseArray = Array.isArray(courses) ? courses : []
   const courseOptions = [
     { value: '', label: 'Select Course' },
-    ...(courses?.map((course) => ({
+    ...(courseArray?.map((course) => ({
       value: course.id,
       label: course.name,
-    })) || [])
+    })) || []),
   ]
 
   const formSubmit = (e) => {
@@ -82,15 +84,15 @@ const AddSection = () => {
   return (
     <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
       <div className="mb-4 flex flex-col items-center justify-between sm:flex-row">
-              <p className="mb-2 w-full text-center text-base font-semibold sm:mb-0 sm:text-left md:text-lg">
-                  Add Section
-              </p>
-              <Link to="/admin-dashboard?activeSidebar=add-test">
-                <button className="rounded text-nowrap bg-[#252466] px-3 py-1.5 text-sm text-white">
-                  Add test
-                </button>
-              </Link>
-            </div>
+        <p className="md:text-lg mb-2 w-full text-center text-base font-semibold sm:mb-0 sm:text-left">
+          Add Section
+        </p>
+        <Link to="/admin-dashboard?activeSidebar=add-test">
+          <button className="text-nowrap rounded bg-[#252466] px-3 py-1.5 text-sm text-white">
+            Add test
+          </button>
+        </Link>
+      </div>
       <hr className="mb-4 w-full bg-black opacity-10" />
       <form className="flex flex-col gap-4">
         <Dropdown
@@ -103,7 +105,7 @@ const AddSection = () => {
           isError={isError}
         />
         <Input
-        label="Chapter Name"
+          label="Chapter Name"
           name="addLesson"
           placeholder="Chapter Name"
           value={courseData.addLesson}
