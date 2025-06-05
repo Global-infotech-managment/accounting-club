@@ -24,9 +24,8 @@ export const fetchAllSections = async (courseId) => {
   return response.data.data.sections
 }
 
-
 export const fetchAllSectionsByCourseId = async (courseId) => {
-  const response = await API.get(`course-lesson/admin/${courseId}`)
+  const response = await API.get(`course-sections/course/${courseId}`)
   console.log('response ', response?.data?.data?.lessons)
   return response?.data?.data?.lessons
 }
