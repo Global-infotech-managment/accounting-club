@@ -13,8 +13,8 @@ import { showToast } from '../../../services/toast/toast.service'
 
 const UpdateSection = () => {
   const [courseData, setCourseData] = useState({
-    name: '',
-    link: '',
+    addLesson: '',
+    description: '',
     status: 'true',
     isMandatory: 'true',
   })
@@ -34,7 +34,7 @@ const UpdateSection = () => {
     if (sectionData) {
       setCourseData({
         addLesson: sectionData.name || '',
-        link: sectionData.link || '',
+        description: sectionData.description || '',
         isMandatory: sectionData.isMandatory ? 'true' : 'false',
         status: sectionData.status ? 'true' : 'false',
       })
@@ -116,18 +116,18 @@ const UpdateSection = () => {
       <hr className="mb-4 w-full bg-black opacity-10" />
       <form className="flex flex-col gap-4">
         <Input
-        label={"Update Name"}
+          label={'Update Name'}
           name="addLesson"
           placeholder="Section Name"
           value={courseData.addLesson || ''}
           onChange={handleInputChange}
         />
         <Input
-        label={"Description"}
-          name="link"
+          label={'Description'}
+          name="description"
           type={'text'}
           placeholder="Description"
-          value={courseData.Description || ''}
+          value={courseData.description || ''}
           onChange={handleInputChange}
         />
         <Dropdown

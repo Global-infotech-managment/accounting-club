@@ -4,7 +4,7 @@ import API from '../../api/authApi'
 export const addLessonTest = async (data) => {
   const response = await API.post('/course-tests', data)
   console.log('create course-lesson-test response 1', response?.data?.data?.id)
- 
+
   return response?.data?.data?.id
 }
 
@@ -15,7 +15,7 @@ export const updateLessonTest = async (testId, data) => {
 
 export const fetchAllTestsByLessonId = async (lessonId) => {
   console.log('lessonId line 16 ', lessonId)
-  const response = await API.get(`/course-lesson-test/admin/${lessonId}`)
+  const response = await API.get(`/course-tests/chapter/${lessonId}`)
   console.log('response line 17 ', response?.data?.data?.courseLessonTests)
   return response?.data?.data?.courseLessonTests
 }

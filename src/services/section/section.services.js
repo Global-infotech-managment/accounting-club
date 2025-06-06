@@ -11,7 +11,7 @@ export const addSection = async (data) => {
 }
 
 export const updateSection = async (id, data) => {
-  const response = await API.put(`/course-lesson/admin/${id}`, data)
+  const response = await API.put(`/course-sections/${id}`, data)
   return response.data
 }
 
@@ -31,7 +31,7 @@ export const fetchAllSectionsByCourseId = async (courseId) => {
 }
 
 export const fetchCourseById = async (id) => {
-  const response = await API.get(`/course-lesson/${id}`)
+  const response = await API.get(`/course-sections/${id}`)
   return response.data.data
 }
 
