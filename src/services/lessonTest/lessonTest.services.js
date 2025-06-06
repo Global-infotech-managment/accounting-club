@@ -16,8 +16,8 @@ export const updateLessonTest = async (testId, data) => {
 export const fetchAllTestsByLessonId = async (lessonId) => {
   console.log('lessonId line 16 ', lessonId)
   const response = await API.get(`/course-tests/chapter/${lessonId}`)
-  console.log('response line 17 ', response?.data?.data?.courseLessonTests)
-  return response?.data?.data?.courseLessonTests
+  console.log('response line 17 ', response?.data?.data?.testQuestions)
+  return response?.data?.data?.testQuestions
 }
 
 export const getLessonTest = async (id) => {
@@ -27,7 +27,7 @@ export const getLessonTest = async (id) => {
 }
 
 export const getLessonTestById = async (id) => {
-  const response = await API.get(`/course-lesson-test/${id}`)
+  const response = await API.get(`/course-tests/chapter/${id}`)
   console.log(response?.data?.data, 'create course-lesson-test response')
   return response.data.data
 }

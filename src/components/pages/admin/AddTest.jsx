@@ -41,7 +41,7 @@ export default function AddTest() {
 
     setFormData((f) => ({ ...f, courseId: cId }))
     setChapterId(chId)
-  }, [location.search])
+  }, [])
 
   // 4) fetch courses
   const {
@@ -266,6 +266,15 @@ export default function AddTest() {
           onChange={(e) => handleInputChange('otherInfo', e.target.value)}
         />
       </div>
+
+      {console.log(
+        'line 270',
+        chapterId,
+        formData.testCode,
+        formData.exerciseName,
+        formData.topic,
+        isSubmitting
+      )}
 
       <button
         style={{
