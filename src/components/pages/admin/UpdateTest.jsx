@@ -1,514 +1,301 @@
-// import { useState, useEffect } from 'react'
-// import { useSearchParams } from 'react-router-dom'
-// import { useQuery } from '@tanstack/react-query'
-// import Button from '../../common/Button'
-// import Icons from '../../common/Icons'
-// import Input from '../../common/Input'
-// import { useNavigate } from 'react-router-dom'
-// import { getLessonTest } from '../../../services/lessonTest/lessonTest.services'
-
-// export default function UpdateTest() {
-//   const [searchParams] = useSearchParams()
-//   const lessonId = searchParams.get('id')
-//   const navigate = useNavigate()
-
-//   // State for questions
-//   const [questions, setQuestions] = useState([
-//     { question: '', options: ['', '', '', ''], correctAnswer: '' },
-//   ])
-//   const [currentIndex, setCurrentIndex] = useState(0)
-
-//   // Fetch test data for this lesson
-//   const [isLoading, setIsLoading] = useState(true)
-
-//   useEffect(() => {
-//     const fetchTest = async () => {
-//       if (!lessonId) return
-//       try {
-//         const testData = await getLessonTest(lessonId)
-//         const test = testData[0]
-//         console.log('test ', testData)
-//         setQuestions([
-//           {
-//             id: test.id,
-//             question: test.question,
-//             options: test.options,
-//             correctAnswer: test.answer,
-//           },
-//         ])
-//       } catch (error) {
-//         console.error('Failed to load test data', error)
-//       } finally {
-//         setIsLoading(false)
-//       }
-//     }
-
-//     fetchTest()
-//   }, [lessonId])
-
-//   const handleQuestionChange = (e) => {
-//     const newQuestions = [...questions]
-//     newQuestions[currentIndex].question = e.target.value
-//     setQuestions(newQuestions)
-//   }
-
-//   const handleOptionChange = (index, value) => {
-//     const newQuestions = [...questions]
-//     newQuestions[currentIndex].options[index] = value
-//     setQuestions(newQuestions)
-//   }
-
-//   const handleCorrectAnswerChange = (answer) => {
-//     const newQuestions = [...questions]
-//     newQuestions[currentIndex].correctAnswer = answer
-//     setQuestions(newQuestions)
-//   }
-
-//   const addNewQuestion = () => {
-//     setQuestions([
-//       ...questions,
-//       { question: '', options: ['', '', '', ''], correctAnswer: '' },
-//     ])
-//     setCurrentIndex(questions.length)
-//   }
-
-//   const navigateNext = () => {
-//     if (isCurrentQuestionValid()) {
-//       if (currentIndex === questions.length - 1) {
-//         addNewQuestion()
-//       } else {
-//         setCurrentIndex(currentIndex + 1)
-//       }
-//     }
-//   }
-
-//   const navigatePrevious = () => {
-//     if (currentIndex > 0) {
-//       setCurrentIndex(currentIndex - 1)
-//     }
-//   }
-
-//   const handleSubmit = () => {
-//     if (
-//       questions.every(
-//         (q) =>
-//           q.question?.trim() &&
-//           q.options.every((opt) => opt?.trim()) &&
-//           q.correctAnswer
-//       )
-//     ) {
-//       console.log('Test to update:', {
-//         lessonId,
-//         questions,
-//       })
-//       navigate('/admin-dashboard?activeSidebar=create-test')
-//     }
-//   }
-
-//   const isCurrentQuestionValid = () => {
-//     const currentQuestion = questions[currentIndex]
-//     return (
-//       currentQuestion.question?.trim() &&
-//       currentQuestion.options.every((opt) => opt?.trim()) &&
-//       currentQuestion.correctAnswer
-//     )
-//   }
-
-//   const handleDeleteQuestion = () => {
-//     if (questions.length === 1) {
-//       // Reset if it's the only question
-//       setQuestions([
-//         { question: '', options: ['', '', '', ''], correctAnswer: '' },
-//       ])
-//       setCurrentIndex(0)
-//       return
-//     }
-
-//     const updatedQuestions = questions.filter(
-//       (_, index) => index !== currentIndex
-//     )
-//     setQuestions(updatedQuestions)
-//     setCurrentIndex((prevIndex) => Math.max(0, prevIndex - 1))
-//   }
-
-//   if (isLoading) {
-//     return (
-//       <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
-//         <p className="mb-4 text-[16px] font-semibold text-black lg:text-[18px]">
-//           Loading test data...
-//         </p>
-//       </div>
-//     )
-//   }
-
-//   return (
-//     <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
-//       <p className="mb-4 text-[16px] font-semibold text-black lg:text-[18px]">
-//         Update Test
-//       </p>
-//       <hr className="mb-4 w-full bg-black opacity-10" />
-//       <p className="mb-2 text-[17px] font-medium text-black">Question</p>
-//       <p className="text-[14px] font-normal text-black">
-//         Choose appropriate options <span className="font-medium">A</span>,
-//         <span className="font-medium">B</span>,
-//         <span className="font-medium">C</span> or{' '}
-//         <span className="font-medium">D</span>
-//       </p>
-//       <div className="mb-3 mt-4 flex flex-col justify-between gap-5 sm:flex-row sm:gap-0 md:items-center">
-//         <div className="flex w-full items-center gap-2">
-//           <button
-//             disabled={currentIndex === 0}
-//             className={`${currentIndex === 0 && 'opacity-10'}`}
-//             onClick={navigatePrevious}
-//           >
-//             <Icons iconName={'prevArrow'} />
-//           </button>
-//           <div className="flex w-full items-center justify-center rounded-[10px] border border-[#4e4e4e] border-opacity-10 bg-white px-4 py-2 text-[14px] text-black md:w-auto">
-//             Question {currentIndex + 1}/{questions.length}
-//           </div>
-//           <button
-//             disabled={!isCurrentQuestionValid()}
-//             className={`rotate-180 ${!isCurrentQuestionValid() && 'opacity-10'} `}
-//             onClick={navigateNext}
-//           >
-//             <Icons iconName={'prevArrow'} />
-//           </button>
-//         </div>
-//         <Button
-//           className={`max-h-[37px] whitespace-nowrap !text-[14px] ${!isCurrentQuestionValid() && 'pointer-events-none opacity-70'}`}
-//           bgBtn={'Add Question'}
-//           disabled={!isCurrentQuestionValid()}
-//           onClick={navigateNext}
-//         />
-//       </div>
-//       <hr className="mb-4 w-full bg-black opacity-10" />
-//       <div className="mb-3 w-full">
-//         <Input
-//           placeholder="Enter your question"
-//           value={questions[currentIndex].question}
-//           onChange={handleQuestionChange}
-//         />
-//       </div>
-//       <div className="mb-4">
-//         <p className="mb-3 text-[17px] font-medium text-black">Options</p>
-//         {questions[currentIndex].options?.map((option, index) => (
-//           <div key={index} className="mb-4 flex items-center">
-//             <span className="mr-3 flex h-[40px] w-[40px] items-center justify-center rounded-full border border-[#4e4e4e] border-opacity-10 bg-[#fbfbfb] bg-opacity-50">
-//               {String.fromCharCode(65 + index)}
-//             </span>
-//             <Input
-//               placeholder="Your answer here"
-//               value={option}
-//               onChange={(e) => handleOptionChange(index, e.target.value)}
-//               label={''}
-//             />
-//           </div>
-//         ))}
-//         <div className="flex items-end justify-end">
-//           <button
-//             className="text-orange-red transition-all duration-300 ease-in-out hover:text-primary"
-//             onClick={handleDeleteQuestion}
-//           >
-//             Delete Question
-//           </button>
-//         </div>
-//       </div>
-//       <div className="mb-4">
-//         <div className="mb-3 text-[17px] font-medium text-black">
-//           Correct Answer
-//         </div>
-//         <div className="mb-10 flex items-center gap-3">
-//           {questions[currentIndex].options?.map((_, index) => (
-//             <button
-//               key={index}
-//               className={`flex h-[40px] w-[40px] items-center justify-center rounded-[12px] border border-[#4e4e4e] border-opacity-10 bg-[#fbfbfb] bg-opacity-50 ${questions[currentIndex].correctAnswer === String.fromCharCode(65 + index) ? '!bg-primary text-white' : 'bg-[#fbfbfb]'}`}
-//               onClick={() =>
-//                 handleCorrectAnswerChange(String.fromCharCode(65 + index))
-//               }
-//             >
-//               {String.fromCharCode(65 + index)}
-//             </button>
-//           ))}
-//         </div>
-//       </div>
-//       <Button
-//         disabled={
-//           !questions.every(
-//             (q) =>
-//               q.question?.trim() &&
-//               q.options.every((opt) => opt?.trim()) &&
-//               q.correctAnswer
-//           )
-//         }
-//         onClick={handleSubmit}
-//         bgBtn={'Update Test'}
-//         className={'w-full'}
-//       />
-//     </div>
-//   )
-// }
-
 import { useState, useEffect } from 'react'
-import { useSearchParams, useNavigate } from 'react-router-dom'
-import { useMutation } from '@tanstack/react-query'
-import Button from '../../common/Button'
-import Icons from '../../common/Icons'
-import Input from '../../common/Input'
-import {
-  getLessonTest,
-  getLessonTestById,
-  updateLessonTest,
-} from '../../../services/lessonTest/lessonTest.services'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
+import Button from '../../common/Button'
+import Input from '../../common/Input'
+import { Dropdown } from '../../common/Dropdown'
+import { fetchAllCourses } from '../../../services/course/course.service'
+import { fetchAllSections } from '../../../services/section/section.services' // chapters
+import { addLessonTest } from '../../../services/lessonTest/lessonTest.services'
+
 export default function UpdateTest() {
-  const [searchParams] = useSearchParams()
-  const lessonId = searchParams.get('id')
+  const queryClient = useQueryClient()
   const navigate = useNavigate()
+  const location = useLocation()
 
-  const [questions, setQuestions] = useState([
-    { question: '', options: ['', '', '', ''], correctAnswer: '' },
-  ])
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [isLoading, setIsLoading] = useState(true)
+  // 1) form data state
+  const [formData, setFormData] = useState({
+    courseId: '',
+    testCode: '',
+    exerciseName: '',
+    topic: '',
+    totalQuestions: '',
+    passingPercentage: '',
+    timeAllowed: '60',
+    maxAttempts: '1',
+    resultDeclaration: '',
+    otherInfo: '',
+  })
 
+  // 2) chapterId state
+  const [chapterId, setChapterId] = useState('')
+
+  // 3) pull IDs from URL on mount
   useEffect(() => {
-    const fetchTest = async () => {
-      if (!lessonId) return
-      try {
-        const testData = await getLessonTestById(lessonId)
-        console.log('test data ', testData)
-        const test = testData
-        setQuestions([
-          {
-            id: test.id,
-            question: test.question,
-            options: test.options,
-            correctAnswer: test.answer,
-          },
-        ])
-      } catch (error) {
-        console.error('Failed to load test data', error)
-      } finally {
-        setIsLoading(false)
-      }
-    }
+    const params = new URLSearchParams(location.search)
+    const cId = params.get('courseId') || ''
+    const lId = params.get('lessonId') || '' // if you need lessonId later
+    const chId = params.get('chapterId') || ''
 
-    fetchTest()
-  }, [lessonId])
+    setFormData((f) => ({ ...f, courseId: cId }))
+    setChapterId(chId)
+  }, [])
 
-  const updateTestMutation = useMutation({
-    mutationFn: ({ testId, data }) => updateLessonTest(testId, data),
-    onSuccess: () => {
-      console.log('Test updated successfully')
-      toast.success('Test Updated Successfully')
-      // navigate('/admin-dashboard?activeSidebar=create-test')
+  // 4) fetch courses
+  const {
+    data: courses = [],
+    isLoading: isCoursesLoading,
+    isError: isCoursesError,
+  } = useQuery({
+    queryKey: ['courses'],
+    queryFn: fetchAllCourses,
+  })
+
+  // 5) fetch chapters when course changes
+  const {
+    data: chapters = [],
+    isLoading: isChaptersLoading,
+    isError: isChaptersError,
+  } = useQuery({
+    queryKey: ['chapters', formData.courseId],
+    queryFn: () => fetchAllSections(formData.courseId),
+    enabled: !!formData.courseId,
+  })
+
+  // 6) mutation to create test
+  const { mutate: createTest, isLoading: isSubmitting } = useMutation({
+    mutationFn: addLessonTest,
+    onSuccess: (newTestId) => {
+      toast.success('Test created successfully!')
+      queryClient.invalidateQueries(['tests', chapterId])
+      // navigate with only testId
+      navigate(
+        `/admin-dashboard?activeSidebar=add-question&testId=${encodeURIComponent(newTestId)}`
+      )
     },
-    onError: (error) => {
-      console.error('Error updating test', error)
-      alert('Something went wrong while updating test!')
+    onError: (err) => {
+      toast.error(`Error creating test: ${err.message}`)
     },
   })
 
-  const handleQuestionChange = (e) => {
-    const newQuestions = [...questions]
-    newQuestions[currentIndex].question = e.target.value
-    setQuestions(newQuestions)
-  }
-
-  const handleOptionChange = (index, value) => {
-    const newQuestions = [...questions]
-    newQuestions[currentIndex].options[index] = value
-    setQuestions(newQuestions)
-  }
-
-  const handleCorrectAnswerChange = (answer) => {
-    const newQuestions = [...questions]
-    newQuestions[currentIndex].correctAnswer = answer
-    setQuestions(newQuestions)
-  }
-
-  const addNewQuestion = () => {
-    setQuestions([
-      ...questions,
-      { question: '', options: ['', '', '', ''], correctAnswer: '' },
-    ])
-    setCurrentIndex(questions.length)
-  }
-
-  const navigateNext = () => {
-    if (isCurrentQuestionValid()) {
-      if (currentIndex === questions.length - 1) {
-        addNewQuestion()
-      } else {
-        setCurrentIndex(currentIndex + 1)
-      }
+  // 7) input handlers
+  const handleInputChange = (name, value) => {
+    setFormData((prev) => ({ ...prev, [name]: value }))
+    if (name === 'courseId') {
+      // reset chapter when course changes
+      setChapterId('')
+      // remove chapterId from URL
+      const params = new URLSearchParams(location.search)
+      params.delete('chapterId')
+      navigate(`?${params.toString()}`, { replace: true })
     }
   }
 
-  const navigatePrevious = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1)
-    }
-  }
-
-  const isCurrentQuestionValid = () => {
-    const currentQuestion = questions[currentIndex]
-    return (
-      currentQuestion.question?.trim() &&
-      currentQuestion.options.every((opt) => opt?.trim()) &&
-      currentQuestion.correctAnswer
-    )
-  }
-
-  const handleDeleteQuestion = () => {
-    if (questions.length === 1) {
-      setQuestions([
-        { question: '', options: ['', '', '', ''], correctAnswer: '' },
-      ])
-      setCurrentIndex(0)
+  // 8) submit
+  const handleSubmit = () => {
+    if (
+      !chapterId ||
+      !formData.testCode ||
+      !formData.exerciseName ||
+      !formData.topic
+    ) {
+      toast.error('Please fill all required fields')
       return
     }
-
-    const updatedQuestions = questions.filter(
-      (_, index) => index !== currentIndex
-    )
-    setQuestions(updatedQuestions)
-    setCurrentIndex((prevIndex) => Math.max(0, prevIndex - 1))
-  }
-
-  const handleSubmit = () => {
-    const valid = questions.every(
-      (q) =>
-        q.question?.trim() &&
-        q.options.every((opt) => opt?.trim()) &&
-        q.correctAnswer
-    )
-    if (!valid) return
-
-    const test = questions[0] // assuming 1 test per lesson
     const payload = {
-      question: test.question,
-      options: test.options,
-      answer: test.correctAnswer,
+      chapterId,
+      testCodeNumber: Number(formData.testCode),
+      exerciseName: formData.exerciseName,
+      topic: formData.topic,
+      totalQuestions: Number(formData.totalQuestions) || 0,
+      passingPercentage: Number(formData.passingPercentage) || 0,
+      timeAllowed: Number(formData.timeAllowed) || 60,
+      maximumAttempts:
+        formData.maxAttempts === 'unlimited'
+          ? Number.MAX_SAFE_INTEGER
+          : Number(formData.maxAttempts) || 1,
+      resultDeclaration:
+        formData.resultDeclaration === 'immediate'
+          ? 'IMMEDIATE'
+          : 'AFTER_REVIEW',
+      otherInformation: formData.otherInfo || undefined,
     }
-
-    updateTestMutation.mutate({ testId: test.id, data: payload })
+    createTest(payload)
   }
 
-  if (isLoading) {
-    return (
-      <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
-        <p className="mb-4 text-[16px] font-semibold text-black lg:text-[18px]">
-          Loading test data...
-        </p>
-      </div>
-    )
-  }
+  // 9) dropdown options
+  const courseOptions = [
+    { value: '', label: 'Select Course' },
+    ...courses.map((c) => ({ value: c.id, label: c.name })),
+  ]
+  const chapterOptions = [
+    { value: '', label: 'Select Chapter' },
+    ...chapters.map((ch) => ({ value: ch.id, label: ch.name })),
+  ]
+  const attemptOptions = [
+    { value: '1', label: '1' },
+    { value: '2', label: '2' },
+    { value: '3', label: '3' },
+    { value: 'unlimited', label: 'Unlimited' },
+  ]
+  const resultDeclarationOptions = [
+    { value: 'immediate', label: 'Immediate' },
+    { value: 'after_review', label: 'After Review' },
+  ]
 
   return (
-    <div className="rounded-xl border border-black border-opacity-30 bg-black bg-opacity-[3%] px-4 py-[20px]">
-      <p className="mb-4 text-[16px] font-semibold text-black lg:text-[18px]">
-        Update Test
-      </p>
-      <hr className="mb-4 w-full bg-black opacity-10" />
-      <p className="mb-2 text-[17px] font-medium text-black">Question</p>
-      <p className="text-[14px] font-normal text-black">
-        Choose appropriate options <span className="font-medium">A</span>,
-        <span className="font-medium">B</span>,
-        <span className="font-medium">C</span> or{' '}
-        <span className="font-medium">D</span>
-      </p>
-      <div className="mb-3 mt-4 flex flex-col justify-between gap-5 sm:flex-row sm:gap-0 md:items-center">
-        <div className="flex w-full items-center gap-2">
-          <button
-            disabled={currentIndex === 0}
-            className={`${currentIndex === 0 && 'opacity-10'}`}
-            onClick={navigatePrevious}
-          >
-            <Icons iconName={'prevArrow'} />
-          </button>
-          <div className="flex w-full items-center justify-center rounded-[10px] border border-[#4e4e4e] border-opacity-10 bg-white px-4 py-2 text-[14px] text-black md:w-auto">
-            Question {currentIndex + 1}/{questions.length}
-          </div>
-          <button
-            disabled={!isCurrentQuestionValid()}
-            className={`rotate-180 ${!isCurrentQuestionValid() && 'opacity-10'} `}
-            onClick={navigateNext}
-          >
-            <Icons iconName={'prevArrow'} />
-          </button>
+    <div className="rounded-xl border border-black/30 bg-black/5 p-5">
+      <h2 className="text-lg mb-4 font-semibold">Update Test</h2>
+
+      <div className="space-y-4">
+        {/* Course & Chapter */}
+        <div className="flex flex-col gap-4 sm:flex-row">
+          <Dropdown
+            name="courseId"
+            label="Select Course"
+            options={courseOptions}
+            value={formData.courseId}
+            onChange={(n, v) => handleInputChange(n, v)}
+            isLoading={isCoursesLoading}
+            isError={isCoursesError}
+          />
+          <Dropdown
+            name="chapterId"
+            label="Select Chapter"
+            options={chapterOptions}
+            value={chapterId}
+            onChange={(_, v) => {
+              setChapterId(v)
+              const params = new URLSearchParams(location.search)
+              params.set('chapterId', v)
+              navigate(`?${params.toString()}`, { replace: true })
+            }}
+            isLoading={isChaptersLoading}
+            isError={isChaptersError}
+            disabled={!formData.courseId}
+          />
         </div>
-        <Button
-          className={`max-h-[37px] whitespace-nowrap !text-[14px] ${!isCurrentQuestionValid() && 'pointer-events-none opacity-70'}`}
-          bgBtn={'Add Question'}
-          disabled={!isCurrentQuestionValid()}
-          onClick={navigateNext}
-        />
-      </div>
-      <hr className="mb-4 w-full bg-black opacity-10" />
-      <div className="mb-3 w-full">
+
+        {/* Basic Info */}
+        <div className="flex flex-col gap-4 sm:flex-row">
+          <Input
+            name="testCode"
+            label="Test Code No"
+            placeholder="302"
+            value={formData.testCode}
+            onChange={(e) => handleInputChange('testCode', e.target.value)}
+          />
+          <Input
+            name="exerciseName"
+            label="Exercise Name"
+            placeholder="Basic Course"
+            value={formData.exerciseName}
+            onChange={(e) => handleInputChange('exerciseName', e.target.value)}
+          />
+        </div>
+
+        {/* Details */}
+        <div className="flex flex-col gap-4 sm:flex-row">
+          <Input
+            name="topic"
+            label="Topic"
+            placeholder="Test Topic"
+            value={formData.topic}
+            onChange={(e) => handleInputChange('topic', e.target.value)}
+          />
+          <Input
+            name="totalQuestions"
+            label="Total Questions"
+            placeholder="50"
+            type="number"
+            value={formData.totalQuestions}
+            onChange={(e) =>
+              handleInputChange('totalQuestions', e.target.value)
+            }
+          />
+        </div>
+
+        {/* Settings */}
+        <div className="flex flex-col gap-4 sm:flex-row">
+          <Input
+            name="passingPercentage"
+            label="Passing %"
+            placeholder="33"
+            type="number"
+            value={formData.passingPercentage}
+            onChange={(e) =>
+              handleInputChange('passingPercentage', e.target.value)
+            }
+          />
+          <Input
+            name="timeAllowed"
+            label="Time Allowed (mins)"
+            placeholder="60"
+            type="number"
+            value={formData.timeAllowed}
+            onChange={(e) => handleInputChange('timeAllowed', e.target.value)}
+          />
+        </div>
+
+        {/* Restrictions */}
+        <div className="flex flex-col gap-4 sm:flex-row">
+          <Dropdown
+            name="maxAttempts"
+            label="Max Attempts"
+            options={attemptOptions}
+            value={formData.maxAttempts}
+            onChange={(n, v) => handleInputChange(n, v)}
+          />
+          <Dropdown
+            name="resultDeclaration"
+            label="Result Declaration"
+            options={resultDeclarationOptions}
+            value={formData.resultDeclaration}
+            onChange={(n, v) => handleInputChange(n, v)}
+          />
+        </div>
+
         <Input
-          placeholder="Enter your question"
-          value={questions[currentIndex].question}
-          onChange={handleQuestionChange}
+          name="otherInfo"
+          label="Other Info"
+          placeholder="Additional details..."
+          textarea
+          value={formData.otherInfo}
+          onChange={(e) => handleInputChange('otherInfo', e.target.value)}
         />
       </div>
-      <div className="mb-4">
-        <p className="mb-3 text-[17px] font-medium text-black">Options</p>
-        {questions[currentIndex].options?.map((option, index) => (
-          <div key={index} className="mb-4 flex items-center">
-            <span className="mr-3 flex h-[40px] w-[40px] items-center justify-center rounded-full border border-[#4e4e4e] border-opacity-10 bg-[#fbfbfb] bg-opacity-50">
-              {String.fromCharCode(65 + index)}
-            </span>
-            <Input
-              placeholder="Your answer here"
-              value={option}
-              onChange={(e) => handleOptionChange(index, e.target.value)}
-              label={''}
-            />
-          </div>
-        ))}
-        <div className="flex items-end justify-end">
-          <button
-            className="text-orange-red transition-all duration-300 ease-in-out hover:text-primary"
-            onClick={handleDeleteQuestion}
-          >
-            Delete Question
-          </button>
-        </div>
-      </div>
-      <div className="mb-4">
-        <div className="mb-3 text-[17px] font-medium text-black">
-          Correct Answer
-        </div>
-        <div className="mb-10 flex items-center gap-3">
-          {questions[currentIndex].options?.map((_, index) => (
-            <button
-              key={index}
-              className={`flex h-[40px] w-[40px] items-center justify-center rounded-[12px] border border-[#4e4e4e] border-opacity-10 bg-[#fbfbfb] bg-opacity-50 ${questions[currentIndex].correctAnswer === String.fromCharCode(65 + index) ? '!bg-primary text-white' : 'bg-[#fbfbfb]'}`}
-              onClick={() =>
-                handleCorrectAnswerChange(String.fromCharCode(65 + index))
-              }
-            >
-              {String.fromCharCode(65 + index)}
-            </button>
-          ))}
-        </div>
-      </div>
-      <Button
+
+      {console.log(
+        'line 270',
+        chapterId,
+        formData.testCode,
+        formData.exerciseName,
+        formData.topic,
+        isSubmitting
+      )}
+
+      <button
+        style={{
+          border: '2px solid #4f46e5',
+          marginTop: '1.5rem',
+          width: '100%',
+          borderRadius: '0.50rem',
+          padding: '0.5rem',
+          color: '#4f46e5',
+        }}
         disabled={
-          !questions.every(
-            (q) =>
-              q.question?.trim() &&
-              q.options.every((opt) => opt?.trim()) &&
-              q.correctAnswer
-          ) || updateTestMutation.isLoading
+          !chapterId ||
+          !formData.testCode ||
+          !formData.exerciseName ||
+          !formData.topic ||
+          isSubmitting
         }
         onClick={handleSubmit}
-        bgBtn={updateTestMutation.isLoading ? 'Updating...' : 'Update Test'}
-        className={'w-full'}
-      />
+      >
+        {isSubmitting ? 'Submitting...' : 'Save And Next'}
+      </button>
     </div>
   )
 }

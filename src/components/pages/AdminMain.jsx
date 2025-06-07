@@ -23,6 +23,7 @@ import StudentLessonProgress from './admin/StudentLessonProgress'
 import AllTest from './admin/AllTest'
 import AddQuestion from './admin/AddQuestion'
 import AllChapter from './admin/AllChapter'
+import UpdateQuestion from './admin/UpdateQuestion'
 
 const AdminMain = () => {
   const location = useLocation()
@@ -64,6 +65,7 @@ const AdminMain = () => {
                     {activeSidebar === 'update-section' && <UpdateSection />}
                     {activeSidebar === 'update-video' && <UpdateVideo />}
                     {activeSidebar === 'update-test' && <UpdateTest />}
+                    {activeSidebar === 'update-question' && <UpdateQuestion />}
                     {activeSidebar === 'update-lesson' && <UpdateLesson />}
                     {activeSidebar === 'all-questions' && <AllTest />}
                     {activeSidebar === 'student-overview' && <StudentOverview />}

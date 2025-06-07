@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import Button from '../../common/Button'
 import Input from '../../common/Input'
 import popupImage from '../../../assets/images/webp/popup-icon.webp'
@@ -106,14 +106,19 @@ const AllTest = () => {
     })
   }
   const handleEdit = (lessonId) => {
-    navigate(`/admin-dashboard?activeSidebar=update-test&id=${lessonId}`)
+    navigate(`/admin-dashboard?activeSidebar=update-question&id=${lessonId}`)
   }
 
   return (
     <div className="md:p-4">
-      <p className="mb-2 w-full border-b border-[#00000067] pb-2 text-center text-[16px] font-semibold text-black sm:mb-0 sm:text-start md:text-[18px]">
-        All Questions
-      </p>
+     <div className="mb-4 flex flex-col items-center justify-between sm:flex-row">
+        <p className="md:text-lg text-base font-semibold">All Question</p>
+        <Link to="/admin-dashboard?activeSidebar=update-test">
+          <button className="rounded bg-[#252466] px-3 py-1.5 text-sm text-white">
+            Update test
+          </button>
+        </Link>
+      </div>
 
       <div className="overflow-x-auto">
         <table className="border-gray-200 shadow-md mt-2 w-full min-w-[700px] overflow-hidden rounded-xl border bg-white">
@@ -123,7 +128,7 @@ const AllTest = () => {
                 'No.',
                 'updateDate',
                 'Questions',
-                'Edit Test',
+                'Edit Question',
                 'Delete Question',
               ].map((header, index) => (
                 <th
