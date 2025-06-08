@@ -1,38 +1,31 @@
-import { useEffect, useState } from 'react'
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
-import { useQueryClient, useMutation } from '@tanstack/react-query'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
 import { toast } from 'sonner'
-
-import Button from '../../common/Button'
 import Input from '../../common/Input'
 import { Dropdown } from '../../common/Dropdown'
-import { addquestion } from '../../../services/questions/questions.service'
+import {
+  addquestion,
+  getQuestion,
+} from '../../../services/questions/questions.service'
+import { useState } from 'react'
 
 export default function UpdateQuestion() {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const location = useLocation()
+  const questionId = searchParams.get('id')
   const testId = searchParams.get('testId') || ''
 
-  // // 3) pull IDs from URL on mount
-  // useEffect(() => {
-  //   const params = new URLSearchParams(location.search)
-  //   const questionId = params.get('courseId')
+  const {
+    data: singleQuestionData,
+    isLoading: isCoursesLoading,
+    isError: isCoursesError,
+  } = useQuery({
+    queryKey: ['question', questionId],
+    queryFn: getQuestion(questionId),
+  })
 
-  //   setFormData((f) => ({ ...f, courseId: cId }))
-  //   setChapterId(chId)
-  // }, [])
-
-  // // 4) fetch courses
-  // const {
-  //   data: courses = [],
-  //   isLoading: isCoursesLoading,
-  //   isError: isCoursesError,
-  // } = useQuery({
-  //   queryKey: ['courses'],
-  //   queryFn: fetchAllCourses,
-  // })
+  console.log('singleQuestionData', singleQuestionData)
 
   const [questionType, setQuestionType] = useState('MCQ')
   const [testLevel, setTestLevel] = useState('EASY')

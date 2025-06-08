@@ -105,13 +105,15 @@ const AllTest = () => {
       },
     })
   }
-  const handleEdit = (lessonId) => {
-    navigate(`/admin-dashboard?activeSidebar=update-question&id=${lessonId}`)
+  const handleEdit = (questionId) => {
+    navigate(
+      `/admin-dashboard?activeSidebar=update-question&id=${questionId}&lessonId=${lessonId}`
+    )
   }
 
   return (
     <div className="md:p-4">
-     <div className="mb-4 flex flex-col items-center justify-between sm:flex-row">
+      <div className="mb-4 flex flex-col items-center justify-between sm:flex-row">
         <p className="md:text-lg text-base font-semibold">All Question</p>
         <Link to="/admin-dashboard?activeSidebar=update-test">
           <button className="rounded bg-[#252466] px-3 py-1.5 text-sm text-white">

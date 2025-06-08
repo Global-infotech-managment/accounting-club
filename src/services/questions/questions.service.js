@@ -12,3 +12,9 @@ export const gettest = async (data) => {
   console.log(response, 'get course-lesson-test response')
   return response.data
 }
+
+export const getQuestion = async (questionId) => {
+  const response = await API.get(`/course-tests/questions/${questionId}`)
+  console.log(response, questionId, 'get question by id')
+  return response.data
+}

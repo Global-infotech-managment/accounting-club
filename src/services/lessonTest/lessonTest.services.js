@@ -37,6 +37,6 @@ export const deleteLessonTest = async (testId) => {
   return response.data
 }
 export const deleteLessonTestById = async (testId) => {
-  const response = await API.delete(`/course-lesson-test/admin/${testId}`)
+  const response = await API.delete(`/course-tests/questions/${testId}`)
   return response.data
 }
