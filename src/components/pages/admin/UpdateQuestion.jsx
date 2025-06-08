@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
@@ -12,7 +12,27 @@ export default function UpdateQuestion() {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
+  const location = useLocation()
   const testId = searchParams.get('testId') || ''
+
+  // // 3) pull IDs from URL on mount
+  // useEffect(() => {
+  //   const params = new URLSearchParams(location.search)
+  //   const questionId = params.get('courseId')
+
+  //   setFormData((f) => ({ ...f, courseId: cId }))
+  //   setChapterId(chId)
+  // }, [])
+
+  // // 4) fetch courses
+  // const {
+  //   data: courses = [],
+  //   isLoading: isCoursesLoading,
+  //   isError: isCoursesError,
+  // } = useQuery({
+  //   queryKey: ['courses'],
+  //   queryFn: fetchAllCourses,
+  // })
 
   const [questionType, setQuestionType] = useState('MCQ')
   const [testLevel, setTestLevel] = useState('EASY')
