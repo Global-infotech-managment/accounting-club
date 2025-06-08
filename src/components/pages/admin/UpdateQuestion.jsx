@@ -13,7 +13,6 @@ export default function UpdateQuestion() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const questionId = searchParams.get('id') || ''
-  const testId = searchParams.get('testId') || ''
   const lessonId = searchParams.get('lessonId') || ''
 
   const [questionType, setQuestionType] = useState('MCQ')
@@ -53,7 +52,7 @@ export default function UpdateQuestion() {
     onSuccess: () => {
       toast.success('Question updated successfully!')
       navigate(
-        `admin-dashboard?activeSidebar=all-questions&lessonId=${lessonId}`
+        `/admin-dashboard?activeSidebar=all-questions&lessonId=${lessonId}`
       )
     },
     onError: (error) => {
@@ -114,8 +113,8 @@ export default function UpdateQuestion() {
   }
 
   const handleSubmit = () => {
-    if (!questionId || !testId) {
-      toast.error('Missing questionId or testId in URL')
+    if (!questionId) {
+      toast.error('Missing questionId')
       return
     }
     if (!isFormValid()) {
@@ -124,7 +123,6 @@ export default function UpdateQuestion() {
     }
 
     const payload = {
-      testId,
       questionType,
       testLevel,
       marks,
