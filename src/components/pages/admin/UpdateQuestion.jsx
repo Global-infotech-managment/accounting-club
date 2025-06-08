@@ -14,6 +14,7 @@ export default function UpdateQuestion() {
   const [searchParams] = useSearchParams()
   const questionId = searchParams.get('id') || ''
   const testId = searchParams.get('testId') || ''
+  const lessonId = searchParams.get('lessonId') || ''
 
   const [questionType, setQuestionType] = useState('MCQ')
   const [testLevel, setTestLevel] = useState('EASY')
@@ -51,7 +52,9 @@ export default function UpdateQuestion() {
     mutationFn: (payload) => updateQuestion(questionId, payload),
     onSuccess: () => {
       toast.success('Question updated successfully!')
-      navigate(`/admin-dashboard?activeSidebar=dashboard`)
+      navigate(
+        `admin-dashboard?activeSidebar=all-questions&lessonId=${lessonId}`
+      )
     },
     onError: (error) => {
       toast.error(error?.message || 'Failed to update question')
