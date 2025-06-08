@@ -15,6 +15,15 @@ export const gettest = async (data) => {
 
 export const getQuestion = async (questionId) => {
   const response = await API.get(`/course-tests/questions/${questionId}`)
-  console.log(response, questionId, 'get question by id')
+  console.log(response?.data?.data, 'get question by id')
+  return response?.data?.data
+}
+
+export const updateQuestion = async (questionId, data) => {
+  const response = await API.patch(
+    `/course-tests/questions/${questionId}`,
+    data
+  )
+  console.log(response, 'updated question')
   return response.data
 }

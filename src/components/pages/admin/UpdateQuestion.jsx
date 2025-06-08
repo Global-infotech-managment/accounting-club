@@ -1,64 +1,69 @@
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import Input from '../../common/Input'
 import { Dropdown } from '../../common/Dropdown'
 import {
-  addquestion,
   getQuestion,
+  updateQuestion,
 } from '../../../services/questions/questions.service'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function UpdateQuestion() {
-  const queryClient = useQueryClient()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const questionId = searchParams.get('id')
+  const questionId = searchParams.get('id') || ''
   const testId = searchParams.get('testId') || ''
-
-  const {
-    data: singleQuestionData,
-    isLoading: isCoursesLoading,
-    isError: isCoursesError,
-  } = useQuery({
-    queryKey: ['question', questionId],
-    queryFn: getQuestion(questionId),
-  })
-
-  console.log('singleQuestionData', singleQuestionData)
 
   const [questionType, setQuestionType] = useState('MCQ')
   const [testLevel, setTestLevel] = useState('EASY')
   const [marks, setMarks] = useState(1)
   const [negativeMarks, setNegativeMarks] = useState(0)
+  const [question, setQuestion] = useState('')
+  const [options, setOptions] = useState(['', '', '', ''])
+  const [correctAnswer, setCorrectAnswer] = useState('')
 
-  const [questions, setQuestions] = useState([
-    { question: '', options: ['', '', '', ''], correctAnswer: '' },
-  ])
-  const [currentIndex, setCurrentIndex] = useState(0)
-
-  const mutation = useMutation({
-    mutationFn: addquestion,
-    onSuccess: (_, variables) => {
-      toast.success('Question added!')
-      queryClient.invalidateQueries(['tests', variables.testId])
-      navigate('/admin-dashboard?activeSidebar=dashboard')
-    },
-    onError: (error) => {
-      toast.error(error?.message || 'Failed to add question')
-    },
+  // Fetch question data
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['question', questionId],
+    queryFn: getQuestion(questionId),
+    enabled: !!questionId,
   })
 
-  const { mutate: createQuestion, isLoading: isSubmitting } = mutation
+  // Set form data when question data is fetched
+  useEffect(() => {
+    if (data?.data) {
+      const questionData = data.data
+      setQuestionType(questionData.questionType)
+      setTestLevel(questionData.testLevel)
+      setMarks(questionData.marks)
+      setNegativeMarks(questionData.negativeMarks)
+      setQuestion(questionData.question)
+      setOptions(
+        questionData.options.length ? questionData.options : ['', '', '', '']
+      )
+      setCorrectAnswer(questionData.answer)
+    }
+  }, [data])
+
+  // Mutation for updating question
+  const { mutate: updateQuestionData, isLoading: isSubmitting } = useMutation({
+    mutationFn: (payload) => updateQuestion(questionId, payload),
+    onSuccess: () => {
+      toast.success('Question updated successfully!')
+      navigate(`/admin-dashboard?activeSidebar=dashboard`)
+    },
+    onError: (error) => {
+      toast.error(error?.message || 'Failed to update question')
+    },
+  })
 
   const handleDropdownChange = (name, value) => {
     switch (name) {
       case 'questionType':
         setQuestionType(value)
-        setQuestions([
-          { question: '', options: ['', '', '', ''], correctAnswer: '' },
-        ])
-        setCurrentIndex(0)
+        if (value !== 'MCQ') setOptions(['', '', '', ''])
+        setCorrectAnswer('')
         break
       case 'testLevel':
         setTestLevel(value)
@@ -75,87 +80,62 @@ export default function UpdateQuestion() {
   }
 
   const handleQuestionChange = (e) => {
-    const updated = [...questions]
-    updated[currentIndex].question = e.target.value
-    setQuestions(updated)
+    setQuestion(e.target.value)
   }
 
   const handleOptionChange = (idx, value) => {
-    const updated = [...questions]
-    updated[currentIndex].options[idx] = value
-
-    // If the option being changed was the correct answer, reset it
-    if (
-      updated[currentIndex].correctAnswer ===
-      questions[currentIndex].options[idx]
-    ) {
-      updated[currentIndex].correctAnswer = ''
+    const updatedOptions = [...options]
+    updatedOptions[idx] = value
+    if (correctAnswer === options[idx]) {
+      setCorrectAnswer('')
     }
-
-    setQuestions(updated)
+    setOptions(updatedOptions)
   }
 
-  const handleCorrectAnswer = (value) => {
-    const updated = [...questions]
-    updated[currentIndex].correctAnswer = value
-    setQuestions(updated)
-  }
-
-  const isCurrentValid = () => {
-    const q = questions[currentIndex]
-    if (!q.question.trim()) return false
+  const isFormValid = () => {
+    if (!question.trim()) return false
     if (questionType === 'MCQ') {
-      return q.options.every((o) => o.trim()) && !!q.correctAnswer.trim()
+      return options.every((o) => o.trim()) && !!correctAnswer.trim()
     }
     if (questionType === 'TRUE_FALSE') {
-      return q.correctAnswer === 'TRUE' || q.correctAnswer === 'FALSE'
+      return correctAnswer === 'TRUE' || correctAnswer === 'FALSE'
     }
     if (questionType === 'FILL_IN_THE_BLANK') {
-      return !!q.correctAnswer.trim()
+      return !!correctAnswer.trim()
     }
     return false
   }
 
-  const addNew = () => {
-    setQuestions([
-      ...questions,
-      { question: '', options: ['', '', '', ''], correctAnswer: '' },
-    ])
-    setCurrentIndex(questions.length)
+  const handleCorrectAnswer = (value) => {
+    setCorrectAnswer(value)
   }
-
-  const next = () => {
-    if (!isCurrentValid()) return
-    if (currentIndex === questions.length - 1) addNew()
-    else setCurrentIndex(currentIndex + 1)
-  }
-
-  const prev = () => currentIndex > 0 && setCurrentIndex(currentIndex - 1)
 
   const handleSubmit = () => {
-    if (!testId) {
-      toast.error('Missing testId in URL')
+    if (!questionId || !testId) {
+      toast.error('Missing questionId or testId in URL')
       return
     }
-    if (!isCurrentValid()) {
-      toast.error('Complete current question')
+    if (!isFormValid()) {
+      toast.error('Please complete all required fields')
       return
     }
 
-    const current = questions[currentIndex]
     const payload = {
       testId,
       questionType,
       testLevel,
       marks,
       negativeMarks,
-      question: current.question,
-      options: questionType === 'MCQ' ? current.options : [],
-      answer: current.correctAnswer,
+      question,
+      options: questionType === 'MCQ' ? options : [],
+      answer: correctAnswer,
     }
 
-    createQuestion(payload)
+    updateQuestionData(payload)
   }
+
+  if (isLoading) return <div>Loading...</div>
+  if (error) return <div>Error: {error.message}</div>
 
   return (
     <div className="shadow rounded bg-white p-6">
@@ -205,14 +185,14 @@ export default function UpdateQuestion() {
 
       <Input
         placeholder="Enter question"
-        value={questions[currentIndex].question}
+        value={question}
         onChange={handleQuestionChange}
       />
 
       {questionType === 'MCQ' && (
         <div className="mt-4 space-y-2">
           <p className="font-medium">Options & Correct Answer</p>
-          {questions[currentIndex].options.map((opt, i) => (
+          {options.map((opt, i) => (
             <div key={i} className="flex items-center gap-2">
               <span className="w-6 font-bold">{['A', 'B', 'C', 'D'][i]}</span>
               <Input
@@ -222,7 +202,7 @@ export default function UpdateQuestion() {
               <button
                 onClick={() => handleCorrectAnswer(opt)}
                 className={
-                  questions[currentIndex].correctAnswer === opt
+                  correctAnswer === opt
                     ? 'text-green-600 font-bold'
                     : 'text-gray-400'
                 }
@@ -241,7 +221,7 @@ export default function UpdateQuestion() {
               key={v}
               onClick={() => handleCorrectAnswer(v)}
               className={
-                questions[currentIndex].correctAnswer === v
+                correctAnswer === v
                   ? 'bg-blue-500 rounded px-4 py-2 text-light-blue'
                   : 'bg-gray-200 rounded px-4 py-2'
               }
@@ -256,45 +236,23 @@ export default function UpdateQuestion() {
         <div className="mt-4">
           <Input
             placeholder="Enter correct answer"
-            value={questions[currentIndex].correctAnswer}
+            value={correctAnswer}
             onChange={(e) => handleCorrectAnswer(e.target.value)}
           />
         </div>
       )}
 
-      <div className="mt-6 flex items-center justify-between">
-        <button
-          onClick={prev}
-          disabled={currentIndex === 0}
-          className="px-4 py-2"
-        >
-          Previous
-        </button>
-        <span>
-          Q {currentIndex + 1} / {questions.length}
-        </span>
-        <button
-          onClick={next}
-          disabled={!isCurrentValid()}
-          className="px-4 py-2"
-        >
-          Next
-        </button>
-      </div>
-
       <button
         style={{
-          border: '2px solid #4f46e5',
           marginTop: '1.5rem',
-          width: '100%',
           borderRadius: '0.50rem',
           padding: '0.5rem',
-          color: '#4f46e5',
         }}
-        disabled={isSubmitting || !isCurrentValid()}
+        className="w-full border-[2px] border-[#4f46e5] text-[#4f46e5]"
+        disabled={isSubmitting || !isFormValid()}
         onClick={handleSubmit}
       >
-        {isSubmitting ? 'Submitting...' : 'Submit Question'}
+        {isSubmitting ? 'Updating...' : 'Update Question'}
       </button>
     </div>
   )
