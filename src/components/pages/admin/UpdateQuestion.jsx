@@ -26,7 +26,7 @@ export default function UpdateQuestion() {
   // Fetch question data
   const { data, isLoading, error } = useQuery({
     queryKey: ['question', questionId],
-    queryFn: getQuestion(questionId),
+    queryFn: () => getQuestion(questionId),
     enabled: !!questionId,
   })
 
@@ -40,7 +40,7 @@ export default function UpdateQuestion() {
       setNegativeMarks(questionData.negativeMarks)
       setQuestion(questionData.question)
       setOptions(
-        questionData.options.length ? questionData.options : ['', '', '', '']
+        questionData?.options?.length ? questionData.options : ['', '', '', '']
       )
       setCorrectAnswer(questionData.answer)
     }
@@ -93,15 +93,15 @@ export default function UpdateQuestion() {
   }
 
   const isFormValid = () => {
-    if (!question.trim()) return false
+    if (!question?.trim()) return false
     if (questionType === 'MCQ') {
-      return options.every((o) => o.trim()) && !!correctAnswer.trim()
+      return options.every((o) => o?.trim()) && !!correctAnswer?.trim()
     }
     if (questionType === 'TRUE_FALSE') {
       return correctAnswer === 'TRUE' || correctAnswer === 'FALSE'
     }
     if (questionType === 'FILL_IN_THE_BLANK') {
-      return !!correctAnswer.trim()
+      return !!correctAnswer?.trim()
     }
     return false
   }

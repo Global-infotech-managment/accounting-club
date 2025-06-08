@@ -15,8 +15,8 @@ export const gettest = async (data) => {
 
 export const getQuestion = async (questionId) => {
   const response = await API.get(`/course-tests/questions/${questionId}`)
-  console.log(response?.data?.data, 'get question by id')
-  return response?.data?.data
+  console.log(response?.data, 'get question by id')
+  return response.data
 }
 
 export const updateQuestion = async (questionId, data) => {

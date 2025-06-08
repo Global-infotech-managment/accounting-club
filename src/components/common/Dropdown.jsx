@@ -53,23 +53,20 @@
 //   )
 // }
 
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 export const Dropdown = ({
   options,
   label,
   name,
-  defaultValue,
+  value,
   onChange,
   className,
   disabled,
 }) => {
-  const [selected, setSelected] = useState(defaultValue)
-
   const handleChange = (event) => {
     const { name, value } = event.target
     console.log('Dropdown Change - Name:', name, 'Value:', value)
-    setSelected(value)
     if (onChange) {
       onChange(name, value)
     }
@@ -82,7 +79,7 @@ export const Dropdown = ({
       </label>
       <select
         name={name}
-        value={selected}
+        value={value}
         onChange={handleChange}
         disabled={disabled}
         className="text-xs rounded-[4px] border border-[#4E4E4E1A] bg-[#FBFBFB80] p-2 focus-visible:outline-[1px] focus-visible:outline-orange-red"
